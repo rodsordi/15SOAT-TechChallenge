@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,10 +25,10 @@ import static lombok.AccessLevel.PROTECTED;
 public abstract class AuditableEntity implements Serializable {
 
     @CreatedDate
-    @Column(nullable = false, comment = "Momento da criação do registro. Dono: postgres")
+    @Column(nullable = false, comment = "Register created at. Owner: postgres")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(comment = "Momento da última atualização do registro. Dono: postgres")
+    @Column(comment = "Register updated at. Owner: postgres")
     private LocalDateTime updatedAt;
 }

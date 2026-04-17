@@ -1,6 +1,6 @@
 package br.com.fiap.mecanica.domain.entity;
 
-import br.com.fiap.mecanica.domain.entity.enums.OrdemDeServicoStatus;
+import br.com.fiap.mecanica.domain.entity.enums.WorkOrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 import java.util.UUID;
 
-import static br.com.fiap.mecanica.domain.entity.enums.OrdemDeServicoStatus.RECEBIDA;
+import static br.com.fiap.mecanica.domain.entity.enums.WorkOrderStatus.RECEIVED;
 import static jakarta.persistence.CascadeType.MERGE;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.EnumType.STRING;
@@ -22,49 +22,49 @@ import static lombok.AccessLevel.PROTECTED;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @MappedSuperclass
-public class OrdemDeServico extends AuditableEntity implements Serializable {
+public class WorkOrder extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Id da ordem de serviço. Dono: postgres")
+    @Column(comment = "WorkOrder id. Owner: postgres")
     private UUID id;
 
     @Enumerated(STRING)
-    @Column(comment = "Situação da ordem de serviço. Dono: eu-mesmo")
-    private OrdemDeServicoStatus status = RECEBIDA;
+    @Column(comment = "WorkOrder status. Owner: self")
+    private WorkOrderStatus status = RECEIVED;
 
     @ManyToOne(cascade = {MERGE, PERSIST}) //VO
-    @JoinColumn(updatable = false, comment = "Id do orçamento. Dono: postgres")
+    @JoinColumn(updatable = false, comment = "Estimate id. Owner: postgres")
     @Valid
-    private Orcamento orcamento;
+    private Estimate estimate;
 
-    public void diagnosticar() {
+    public void diagnose() {
         status = status.getState()
                 .apply(this)
-                .diagnosticar();
+                .diagnose();
     }
 
-    public void aguardarAprovacao() {
+    public void waitForApproval() {
         status = status.getState()
                 .apply(this)
-                .aguardarAprovacao();
+                .waitForApproval();
     }
 
-    public void executar() {
+    public void execute() {
         status = status.getState()
                 .apply(this)
-                .executar();
+                .execute();
     }
 
-    public void finalizar() {
+    public void finish() {
         status = status.getState()
                 .apply(this)
-                .finalizar();
+                .finish();
     }
 
-    public void entregar() {
+    public void release() {
         status = status.getState()
                 .apply(this)
-                .entregar();
+                .release();
     }
 }

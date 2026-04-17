@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -19,16 +20,13 @@ import static lombok.AccessLevel.PROTECTED;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @MappedSuperclass
-public class Proprietario extends AuditableEntity implements Serializable {
+public class Estimate extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Id do proprietário. Dono: postgres")
+    @Column(comment = "Estimate id. Owner: postgres")
     private UUID id;
 
-    @Column(nullable = false, length = 55, comment = "Nome do proprietário. Dono: eu-mesmo")
-    private String nome;
-
-    @Column(nullable = false, comment = "E-mail do proprietário. Dono: eu-mesmo")
-    private String email;
+    @Column(nullable = false, comment = "Estimate amount. Owner: self")
+    private BigDecimal amount;
 }

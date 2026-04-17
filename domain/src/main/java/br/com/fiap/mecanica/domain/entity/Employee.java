@@ -19,13 +19,13 @@ import static lombok.AccessLevel.PROTECTED;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @MappedSuperclass
-public class Funcionario extends AuditableEntity implements Serializable {
+public class Employee extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Id do funcionário. Dono: postgres")
+    @Column(comment = "Employee id. Owner: postgres")
     private UUID id;
 
-    @Column(nullable = false, length = 55, comment = "Nome do funcionário. Dono: eu-mesmo")
-    private String nome;
+    @Column(nullable = false, length = 55, comment = "Employee name. Owner: self")
+    private String name;
 }
