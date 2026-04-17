@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication
-public class MecanicaApplication {
+public class GarageApplication {
 
     static void main(String[] args) {
-        run(MecanicaApplication.class, args);
+        run(GarageApplication.class, args);
     }
 }
