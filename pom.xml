@@ -13,6 +13,14 @@
     <groupId>br.com.fiap</groupId>
     <artifactId>api-mecanica</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>domain</module>
+        <module>infra</module>
+        <module>application</module>
+        <module>iandt</module>
+    </modules>
 
     <properties>
         <java.version>26</java.version>
@@ -73,6 +81,49 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- Modules -->
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-mecanica.domain</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-mecanica.domain</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <type>test-jar</type>
+                <classifier>tests</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-mecanica.infra</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-mecanica.infra</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <type>test-jar</type>
+                <classifier>tests</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-mecanica.application</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-mecanica.application</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <type>test-jar</type>
+                <classifier>tests</classifier>
+            </dependency>
+
             <!-- Vulnerabilities -->
 
             <!-- Vulnerability -->
@@ -121,35 +172,6 @@
                 </exclusions>
             </dependency>
 
-            <!-- Vulnerabilities from openapi-generator-maven-plugin -->
-
-            <!-- Vulnerability -->
-            <dependency>
-                <groupId>org.openapitools</groupId>
-                <artifactId>jackson-databind-nullable</artifactId>
-                <version>0.2.9</version>
-                <!-- Vulnerability -->
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- Vulnerability -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-jsr310</artifactId>
-                <version>2.21.1</version>
-                <!-- Vulnerability -->
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.fasterxml.jackson.core</groupId>
-                        <artifactId>jackson-core</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -168,6 +190,23 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+        </dependency>
+
+        <!-- Commons -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-opentelemetry</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jackson</artifactId>
         </dependency>
 
         <!-- Vulnerabilities -->

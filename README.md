@@ -22,7 +22,6 @@ Tech Challenge do curso 15SOAT.
 | Nome                   | Valor |
 |------------------------|-------|
 | spring.profiles.active | local |
-| server.port            | 18080 |
 
 ## 📦 Construindo o Pacote
 
