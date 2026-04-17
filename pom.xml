@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>br.com.fiap</groupId>
-    <artifactId>api-mecanica</artifactId>
+    <artifactId>api-garage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -84,27 +84,13 @@
             <!-- Modules -->
             <dependency>
                 <groupId>br.com.fiap</groupId>
-                <artifactId>api-mecanica.domain</artifactId>
+                <artifactId>api-garage.domain</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>br.com.fiap</groupId>
-                <artifactId>api-mecanica.domain</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-                <type>test-jar</type>
-                <classifier>tests</classifier>
-            </dependency>
-
-            <dependency>
-                <groupId>br.com.fiap</groupId>
-                <artifactId>api-mecanica.infra</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>br.com.fiap</groupId>
-                <artifactId>api-mecanica.infra</artifactId>
+                <artifactId>api-garage.domain</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <type>test-jar</type>
                 <classifier>tests</classifier>
@@ -112,13 +98,27 @@
 
             <dependency>
                 <groupId>br.com.fiap</groupId>
-                <artifactId>api-mecanica.application</artifactId>
+                <artifactId>api-garage.infra</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <dependency>
                 <groupId>br.com.fiap</groupId>
-                <artifactId>api-mecanica.application</artifactId>
+                <artifactId>api-garage.infra</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <type>test-jar</type>
+                <classifier>tests</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-garage.application</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>br.com.fiap</groupId>
+                <artifactId>api-garage.application</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <type>test-jar</type>
                 <classifier>tests</classifier>

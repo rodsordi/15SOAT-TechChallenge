@@ -4,11 +4,11 @@
 
     <parent>
         <groupId>br.com.fiap</groupId>
-        <artifactId>api-mecanica</artifactId>
+        <artifactId>api-garage</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>api-mecanica.domain</artifactId>
+    <artifactId>api-garage.domain</artifactId>
 
     <dependencies>
         <dependency>

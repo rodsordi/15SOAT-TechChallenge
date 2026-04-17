@@ -32,7 +32,7 @@ mvn clean install -DskipTests
 ## 🎬 Executando a Aplicação
 
 ```shell
-java -jar application/target/api-mecanica.jar
+java -jar application/target/api-garage.jar
 ```
 
 ## 👌 Executando os Testes de Unidade

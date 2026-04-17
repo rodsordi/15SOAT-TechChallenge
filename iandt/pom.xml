@@ -5,11 +5,11 @@
 
     <parent>
         <groupId>br.com.fiap</groupId>
-        <artifactId>api-mecanica</artifactId>
+        <artifactId>api-garage</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>api-mecanica.iandt</artifactId>
+    <artifactId>api-garage.iandt</artifactId>
 
     <properties>
         <rest-assured.version>6.0.0</rest-assured.version>
@@ -20,13 +20,13 @@
 
         <dependency>
             <groupId>br.com.fiap</groupId>
-            <artifactId>api-mecanica.application</artifactId>
+            <artifactId>api-garage.application</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>br.com.fiap</groupId>
-            <artifactId>api-mecanica.application</artifactId>
+            <artifactId>api-garage.application</artifactId>
             <type>test-jar</type>
             <classifier>tests</classifier>
             <scope>test</scope>
@@ -34,7 +34,7 @@
 
         <dependency>
             <groupId>br.com.fiap</groupId>
-            <artifactId>api-mecanica.infra</artifactId>
+            <artifactId>api-garage.infra</artifactId>
             <type>test-jar</type>
             <classifier>tests</classifier>
             <scope>test</scope>
@@ -42,7 +42,7 @@
 
         <dependency>
             <groupId>br.com.fiap</groupId>
-            <artifactId>api-mecanica.domain</artifactId>
+            <artifactId>api-garage.domain</artifactId>
             <type>test-jar</type>
             <classifier>tests</classifier>
             <scope>test</scope>
