@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import static org.springframework.boot.SpringApplication.run;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "br.com.fiap")
 public class GarageApplication {
 
     static void main(String[] args) {

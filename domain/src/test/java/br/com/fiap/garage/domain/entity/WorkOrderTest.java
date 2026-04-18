@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
-import br.com.fiap.garage.domain.exception.BusinessException;
+import br.com.fiap.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

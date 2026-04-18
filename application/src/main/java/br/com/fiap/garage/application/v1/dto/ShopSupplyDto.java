@@ -1,4 +1,4 @@
-package br.com.fiap.garage.domain.entity;
+package br.com.fiap.garage.application.v1.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -13,14 +13,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-@Getter
-@NoArgsConstructor(access = PROTECTED)
-@SuperBuilder
-@EqualsAndHashCode(callSuper = false, exclude = "id")
-@MappedSuperclass
-public abstract class ShopSupplies extends AuditableEntity implements Serializable {
+@NoArgsConstructor(access = PRIVATE)
+public final class ShopSupplyDto {
 
     @Id
     @GeneratedValue

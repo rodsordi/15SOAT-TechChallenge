@@ -1,0 +1,23 @@
+package br.com.fiap.commons.domain.filter;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.domain.PageRequest;
+
+@Getter
+@Setter
+public abstract class PagedFilter {
+
+    @Schema(example = "0",
+            description = "Page index.")
+    private Integer page = 0;
+
+    @Schema(example = "10",
+            description = "Page size.")
+    private Integer size = 10;
+
+    public PageRequest buildPageRequest() {
+        return PageRequest.of(page, size);
+    }
+}

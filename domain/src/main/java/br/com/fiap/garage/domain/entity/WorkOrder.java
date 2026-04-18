@@ -1,5 +1,6 @@
 package br.com.fiap.garage.domain.entity;
 
+import br.com.fiap.commons.domain.entity.AuditableEntity;
 import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -21,7 +22,8 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
-@MappedSuperclass
+@Entity
+@Table(schema = "garage")
 public class WorkOrder extends AuditableEntity implements Serializable {
 
     @Id

@@ -2,7 +2,7 @@ package br.com.fiap.garage.domain.entity.work_order;
 
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
-import br.com.fiap.garage.domain.exception.BusinessException;
+import br.com.fiap.commons.domain.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.*;

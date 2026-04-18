@@ -1,4 +1,4 @@
-package br.com.fiap.garage.domain.exception;
+package br.com.fiap.commons.domain.exception;
 
 public class BusinessException extends RuntimeException {
 

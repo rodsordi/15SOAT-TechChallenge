@@ -1,4 +1,4 @@
-package br.com.fiap.garage.domain.entity;
+package br.com.fiap.commons.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

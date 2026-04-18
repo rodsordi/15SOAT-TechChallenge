@@ -1,9 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import br.com.fiap.commons.domain.entity.AuditableEntity;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +16,8 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
-@MappedSuperclass
+@Entity
+@Table(schema = "garage")
 public class Owner extends AuditableEntity implements Serializable {
 
     @Id
