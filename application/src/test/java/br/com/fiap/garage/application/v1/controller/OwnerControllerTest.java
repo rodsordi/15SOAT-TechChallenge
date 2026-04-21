@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.Request.createOwnerDto_Request;
-import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.createOwner;
+import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.Request.create_OwnerDto_Request;
+import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
@@ -78,7 +78,7 @@ class OwnerControllerTest {
             @Test
             void test1() throws Exception {
                 //Given
-                var requestBody = createOwnerDto_Request()
+                var requestBody = create_OwnerDto_Request()
                         .withAllFields();
                 //When
                 mockMvc.perform(post("/v1/owners")
@@ -107,7 +107,7 @@ class OwnerControllerTest {
                 when(ownerSearchUseCase.findById(any()))
                         .thenAnswer(invocationOnMock -> {
                             UUID ownerId = invocationOnMock.getArgument(0);
-                            var owner = createOwner().withAllFields();
+                            var owner = create_Owner().withAllFields();
                             setField(owner, "id", ownerId);
                             return owner;
                         });
@@ -142,9 +142,9 @@ class OwnerControllerTest {
                 when(ownerSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
                             var owners = List.of(
-                                    createOwner().withAllFields(),
-                                    createOwner().withAllFields(),
-                                    createOwner().withAllFields());
+                                    create_Owner().withAllFields(),
+                                    create_Owner().withAllFields(),
+                                    create_Owner().withAllFields());
                             return new PageImpl<>(owners);
                         });
             }

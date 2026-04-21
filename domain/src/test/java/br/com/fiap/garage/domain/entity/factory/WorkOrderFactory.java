@@ -4,7 +4,7 @@ import br.com.fiap.garage.domain.entity.WorkOrder;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.RECEIVED;
-import static br.com.fiap.garage.domain.entity.factory.EstimateFactory.createEstimate;
+import static br.com.fiap.garage.domain.entity.factory.EstimateFactory.create_Estimate;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static java.util.UUID.fromString;
@@ -15,7 +15,7 @@ public final class WorkOrderFactory {
 
     private final WorkOrder.WorkOrderBuilder<?, ?> builder;
 
-    public static WorkOrderFactory createWorkOrder() {
+    public static WorkOrderFactory create_WorkOrder() {
         return new WorkOrderFactory(WorkOrder.builder());
     }
 
@@ -25,7 +25,7 @@ public final class WorkOrderFactory {
                 .id(fromString("e48ad20c-69dd-4382-b567-0e02b2c3d480"))
                 .status(RECEIVED)
                 // Composition
-                .estimate(createEstimate().withAllFields())
+                .estimate(create_Estimate().withAllFields())
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
                 .updatedAt(newDateTime("21/04/2026 15:30:00"))
@@ -41,7 +41,7 @@ public final class WorkOrderFactory {
         withAllFields();
         return builder
                 .id(null)
-                .estimate(createEstimate().withAllFieldsExceptDB())
+                .estimate(create_Estimate().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)
                 .build();
@@ -50,13 +50,13 @@ public final class WorkOrderFactory {
     public WorkOrder valid() {
         return builder
                 .status(RECEIVED)
-                .estimate(createEstimate().valid())
+                .estimate(create_Estimate().valid())
                 .build();
     }
 
     public WorkOrder initiatedEmpty() {
         return builder
-                .estimate(createEstimate().initiatedEmpty())
+                .estimate(create_Estimate().initiatedEmpty())
                 .build();
     }
 }

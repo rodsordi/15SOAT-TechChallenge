@@ -1,0 +1,53 @@
+package br.com.fiap.garage.application.v1.dto.assertions;
+
+import br.com.fiap.garage.application.v1.dto.SparePartDto;
+import lombok.RequiredArgsConstructor;
+
+import java.math.BigDecimal;
+
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static lombok.AccessLevel.PRIVATE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+
+@RequiredArgsConstructor(access = PRIVATE)
+public final class SparePartDtoAssertions {
+
+    @RequiredArgsConstructor(access = PRIVATE)
+    public static final class Response {
+
+        private final SparePartDto.Response actual;
+
+        public static Response assertThat_SparePartDto_Response(SparePartDto.Response actual) {
+            assertThat(actual).isNotNull();
+            return new Response(spy(actual));
+        }
+
+        /**
+         * @see br.com.fiap.garage.domain.entity.factory.SparePartFactory
+         * .withAllFields()
+         */
+        public void wasConvertedFrom_SparePart() {
+            // Self
+            assertThat(actual.getId())
+                    .hasToString("4f9e8d2a-1c5b-4a32-9d8e-7f6a5b4c3d2e");
+            assertThat(actual.getName())
+                    .isEqualTo("Engine");
+            assertThat(actual.getPrice())
+                    .isEqualTo(new BigDecimal("10000.99"));
+            assertThat(actual.getQuantityInStock())
+                    .isEqualTo(1);
+
+            //Inheritance (AuditableTable)
+            assertThat(actual.getCreatedAt())
+                    .isEqualTo(newDateTime("13/12/2026 23:59:59"));
+            assertThat(actual.getUpdatedAt())
+                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
+
+            // And
+            assertThatObject(actual)
+                    .hasAllGetMethodsVerifiedOnceAtLeast();
+        }
+    }
+}

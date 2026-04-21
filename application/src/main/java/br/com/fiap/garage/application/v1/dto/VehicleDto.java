@@ -39,7 +39,7 @@ public final class VehicleDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Vehicle.Request")
+    @Schema(name = ".Vehicle.Response")
     public static class Response implements VehicleDef.Response {
         private UUID id;
         private String make;

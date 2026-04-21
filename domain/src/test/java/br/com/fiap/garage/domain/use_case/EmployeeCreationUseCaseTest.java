@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.createEmployee;
+import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
 import static java.util.UUID.fromString;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +49,7 @@ class EmployeeCreationUseCaseTest {
             @Test
             void test1() {
                 //Given
-                var employee = createEmployee()
+                var employee = create_Employee()
                         .withAllFields();
                 //When
                 var actual = employeeCreationUseCase.create(employee);

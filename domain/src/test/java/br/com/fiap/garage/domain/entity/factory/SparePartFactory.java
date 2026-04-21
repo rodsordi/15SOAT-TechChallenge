@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
@@ -14,7 +15,7 @@ public final class SparePartFactory {
 
     private final SparePart.SparePartBuilder<?, ?> builder;
 
-    public static SparePartFactory createSparePart() {
+    public static SparePartFactory create_SparePart() {
         return new SparePartFactory(SparePart.builder());
     }
 
@@ -22,9 +23,11 @@ public final class SparePartFactory {
         var result = builder
                 // Self
                 .id(fromString("4f9e8d2a-1c5b-4a32-9d8e-7f6a5b4c3d2e"))
-                .name("Synthetic Oil 5W-30")
-                .price(new BigDecimal("45.90"))
-                .quantityInStock(150)
+                .name("Engine")
+                .price(new BigDecimal("10000.99"))
+                .quantityInStock(1)
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
 
         // And

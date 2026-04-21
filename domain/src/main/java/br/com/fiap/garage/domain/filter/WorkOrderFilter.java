@@ -14,15 +14,13 @@ import org.jspecify.annotations.Nullable;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.jpa.domain.Specification;
 
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.RECEIVED;
-
 @Getter
 @Setter
 @ParameterObject
 public class WorkOrderFilter extends AuditableFilter<WorkOrder> implements Specification<WorkOrder> {
 
     @Schema(example = "RECEIVED", description = "WorkOrder status.")
-    private WorkOrderStatus status = RECEIVED;
+    private WorkOrderStatus status;
 
     private Specification<WorkOrder> statusEqual() {
         return (root, query, builder) -> status == null ? null :

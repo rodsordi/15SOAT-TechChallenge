@@ -4,7 +4,7 @@ import br.com.fiap.garage.application.v1.dto.WorkOrderDto;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.application.v1.dto.factory.EstimateDtoFactory.Request.createEstimateDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.EstimateDtoFactory.Request.create_EstimateDto_Request;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
@@ -15,13 +15,13 @@ public final class WorkOrderDtoFactory {
 
         private final WorkOrderDto.Request.RequestBuilder builder;
 
-        public static Request createWorkOrderDto_Request() {
+        public static Request create_WorkOrderDto_Request() {
             return new Request(WorkOrderDto.Request.builder());
         }
 
         public WorkOrderDto.Request withAllFields() {
             var result = builder
-                    .estimate(createEstimateDto_Request().withAllFields())
+                    .estimate(create_EstimateDto_Request().withAllFields())
                     .build();
 
             assertThatObject(result).hasNoEmptyFields();
@@ -30,13 +30,13 @@ public final class WorkOrderDtoFactory {
 
         public WorkOrderDto.Request valid() {
             return builder
-                    .estimate(createEstimateDto_Request().valid())
+                    .estimate(create_EstimateDto_Request().valid())
                     .build();
         }
 
         public WorkOrderDto.Request initiatedEmpty() {
             return builder
-                    .estimate(createEstimateDto_Request().initiatedEmpty())
+                    .estimate(create_EstimateDto_Request().initiatedEmpty())
                     .build();
         }
     }

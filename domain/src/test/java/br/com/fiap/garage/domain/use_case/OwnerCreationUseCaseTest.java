@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.createOwner;
+import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
 import static java.util.UUID.fromString;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +49,7 @@ class OwnerCreationUseCaseTest {
             @Test
             void test1() {
                 //Given
-                var owner = createOwner()
+                var owner = create_Owner()
                         .withAllFields();
                 //When
                 var actual = ownerCreationUseCase.create(owner);

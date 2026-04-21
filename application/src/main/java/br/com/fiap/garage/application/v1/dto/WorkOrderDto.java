@@ -38,7 +38,7 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".WorkOrder.Request")
+    @Schema(name = ".WorkOrder.Response")
     public static class Response implements WorkOrderDef.Response {
         private UUID id;
         private WorkOrderStatus status;

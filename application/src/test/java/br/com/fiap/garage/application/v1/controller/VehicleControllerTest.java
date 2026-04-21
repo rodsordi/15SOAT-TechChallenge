@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.Request.createVehicleDto_Request;
-import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.createVehicle;
+import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.Request.create_VehicleDto_Request;
+import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
@@ -78,7 +78,7 @@ class VehicleControllerTest {
             @Test
             void test1() throws Exception {
                 //Given
-                var requestBody = createVehicleDto_Request()
+                var requestBody = create_VehicleDto_Request()
                         .withAllFields();
                 //When
                 mockMvc.perform(post("/v1/vehicles")
@@ -107,7 +107,7 @@ class VehicleControllerTest {
                 when(vehicleSearchUseCase.findById(any()))
                         .thenAnswer(invocationOnMock -> {
                             UUID vehicleId = invocationOnMock.getArgument(0);
-                            var vehicle = createVehicle().withAllFields();
+                            var vehicle = create_Vehicle().withAllFields();
                             setField(vehicle, "id", vehicleId);
                             return vehicle;
                         });
@@ -142,9 +142,9 @@ class VehicleControllerTest {
                 when(vehicleSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
                             var vehicles = List.of(
-                                    createVehicle().withAllFields(),
-                                    createVehicle().withAllFields(),
-                                    createVehicle().withAllFields());
+                                    create_Vehicle().withAllFields(),
+                                    create_Vehicle().withAllFields(),
+                                    create_Vehicle().withAllFields());
                             return new PageImpl<>(vehicles);
                         });
             }

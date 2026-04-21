@@ -11,7 +11,7 @@ public class EmployeeCreationUseCase {
 
     private final EmployeeRepository repository;
 
-    public Employee create(Employee owner) {
-        return repository.save(owner);
+    public Employee create(Employee employee) {
+        return repository.save(employee);
     }
 }

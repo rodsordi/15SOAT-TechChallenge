@@ -14,7 +14,7 @@ public final class EmployeeDtoFactory {
 
         private final EmployeeDto.Request.RequestBuilder builder;
 
-        public static Request createEmployeeDto_Request() {
+        public static Request create_EmployeeDto_Request() {
             return new Request(EmployeeDto.Request.builder());
         }
 

@@ -14,7 +14,7 @@ public final class OwnerDtoFactory {
 
         private final OwnerDto.Request.RequestBuilder builder;
 
-        public static Request createOwnerDto_Request() {
+        public static Request create_OwnerDto_Request() {
             return new Request(OwnerDto.Request.builder());
         }
 

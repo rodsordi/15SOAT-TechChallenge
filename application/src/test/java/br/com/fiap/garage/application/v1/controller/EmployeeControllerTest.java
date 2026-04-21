@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.Request.createEmployeeDto_Request;
-import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.createEmployee;
+import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.Request.create_EmployeeDto_Request;
+import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
@@ -78,7 +78,7 @@ class EmployeeControllerTest {
             @Test
             void test1() throws Exception {
                 //Given
-                var requestBody = createEmployeeDto_Request()
+                var requestBody = create_EmployeeDto_Request()
                         .withAllFields();
                 //When
                 mockMvc.perform(post("/v1/employees")
@@ -107,7 +107,7 @@ class EmployeeControllerTest {
                 when(employeeSearchUseCase.findById(any()))
                         .thenAnswer(invocationOnMock -> {
                             UUID employeeId = invocationOnMock.getArgument(0);
-                            var employee = createEmployee().withAllFields();
+                            var employee = create_Employee().withAllFields();
                             setField(employee, "id", employeeId);
                             return employee;
                         });
@@ -142,9 +142,9 @@ class EmployeeControllerTest {
                 when(employeeSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
                             var employees = List.of(
-                                    createEmployee().withAllFields(),
-                                    createEmployee().withAllFields(),
-                                    createEmployee().withAllFields());
+                                    create_Employee().withAllFields(),
+                                    create_Employee().withAllFields(),
+                                    create_Employee().withAllFields());
                             return new PageImpl<>(employees);
                         });
             }

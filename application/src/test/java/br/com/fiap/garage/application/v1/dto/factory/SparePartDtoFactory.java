@@ -16,7 +16,7 @@ public final class SparePartDtoFactory {
 
         private final SparePartDto.Request.RequestBuilder builder;
 
-        public static Request createSparePartDto_Request() {
+        public static Request create_SparePartDto_Request() {
             return new Request(SparePartDto.Request.builder());
         }
 

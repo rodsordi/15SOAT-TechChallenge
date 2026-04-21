@@ -38,7 +38,7 @@ public final class OwnerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Owner.Request")
+    @Schema(name = ".Owner.Response")
     public static class Response implements OwnerDef.Response {
         private UUID id;
         private String name;

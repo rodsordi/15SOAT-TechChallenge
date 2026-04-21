@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.createEmployee;
+import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -41,7 +41,7 @@ class EmployeeSearchUseCaseTest {
             @BeforeEach
             void beforeEach() {
                 when(repository.findById(any()))
-                        .thenReturn(Optional.of(createEmployee()
+                        .thenReturn(Optional.of(create_Employee()
                                 .withAllFields()));
             }
 
@@ -70,7 +70,7 @@ class EmployeeSearchUseCaseTest {
             @BeforeEach
             void beforeEach() {
                 when(repository.findAll(any(), any()))
-                        .thenReturn(new PageImpl<>(List.of(createEmployee()
+                        .thenReturn(new PageImpl<>(List.of(create_Employee()
                                 .withAllFields())));
             }
 

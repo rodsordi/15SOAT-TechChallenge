@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.Request.createOwnerDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.Request.create_OwnerDto_Request;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles("int_test")
@@ -30,7 +30,7 @@ public class OwnerCreationUseCase extends BaseIntegrationTest {
             @Test
             void test1() {
                 //Given
-                var requestBody = createOwnerDto_Request()
+                var requestBody = create_OwnerDto_Request()
                         .withAllFields();
 
                 //When

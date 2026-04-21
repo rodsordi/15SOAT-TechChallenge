@@ -16,7 +16,7 @@ public final class ShopSupplyDtoFactory {
 
         private final ShopSupplyDto.Request.RequestBuilder builder;
 
-        public static Request createShopSupplyDto_Request() {
+        public static Request create_ShopSupplyDto_Request() {
             return new Request(ShopSupplyDto.Request.builder());
         }
 

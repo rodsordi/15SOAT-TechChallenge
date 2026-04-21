@@ -1,5 +1,6 @@
 package br.com.fiap.garage.domain.entity;
 
+import br.com.fiap.commons.entity.AuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,7 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @MappedSuperclass
-public class Inventory implements Serializable {
+public class Inventory extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue

@@ -4,8 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.Request.createWorkOrderDto_Request;
+import static br.com.fiap.garage.application.v1.dto.assertions.WorkOrderDtoAssertions.Representation.assertThat_WorkOrderDto_Representation;
+import static br.com.fiap.garage.application.v1.dto.assertions.WorkOrderDtoAssertions.Response.assertThat_WorkOrderDto_Response;
+import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.Request.create_WorkOrderDto_Request;
 import static br.com.fiap.garage.domain.entity.assertions.WorkOrderAssertions.assertThat_WorkOrder;
+import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
 import static org.mapstruct.factory.Mappers.getMapper;
 
 class WorkOrderDtoMapperTest {
@@ -24,7 +27,7 @@ class WorkOrderDtoMapperTest {
             @Test
             void test1() {
                 //Given
-                var source = createWorkOrderDto_Request()
+                var source = create_WorkOrderDto_Request()
                         .withAllFields();
                 //When
                 var actual = MAPPER.convert(source);
@@ -35,4 +38,49 @@ class WorkOrderDtoMapperTest {
         }
     }
 
+    @DisplayName("When converting WorkOrder to WorkOrderDto.Response")
+    @Nested
+    class Convert2 {
+
+        @DisplayName("Then should execute successfully")
+        @Nested
+        class Success {
+
+            @DisplayName("Given a WorkOrder with all fields")
+            @Test
+            void test1() {
+                //Given
+                var source = create_WorkOrder()
+                        .withAllFields();
+                //When
+                var actual = MAPPER.convert(source);
+                //Then
+                assertThat_WorkOrderDto_Response(actual)
+                        .wasConvertedFrom_WorkOrder();
+            }
+        }
+    }
+
+    @DisplayName("When converting WorkOrder to WorkOrderDto.Representation")
+    @Nested
+    class ConvertToRepresentation {
+
+        @DisplayName("Then should execute successfully")
+        @Nested
+        class Success {
+
+            @DisplayName("Given a WorkOrder with all fields")
+            @Test
+            void test1() {
+                //Given
+                var source = create_WorkOrder()
+                        .withAllFields();
+                //When
+                var actual = MAPPER.convertToRepresentation(source);
+                //Then
+                assertThat_WorkOrderDto_Representation(actual)
+                        .wasConvertedFrom_WorkOrder();
+            }
+        }
+    }
 }

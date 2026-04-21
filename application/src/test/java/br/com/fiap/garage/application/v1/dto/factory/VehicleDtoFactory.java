@@ -14,7 +14,7 @@ public final class VehicleDtoFactory {
 
         private final VehicleDto.Request.RequestBuilder builder;
 
-        public static Request createVehicleDto_Request() {
+        public static Request create_VehicleDto_Request() {
             return new Request(VehicleDto.Request.builder());
         }
 

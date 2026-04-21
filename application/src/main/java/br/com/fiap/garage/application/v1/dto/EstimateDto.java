@@ -27,7 +27,7 @@ public final class EstimateDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Estimate.Request")
+    @Schema(name = ".Estimate.Response")
     public static class Response implements EstimateDef.Response {
         private UUID id;
         private BigDecimal amount;

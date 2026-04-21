@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.Request.createWorkOrderDto_Request;
-import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.createWorkOrder;
+import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.Request.create_WorkOrderDto_Request;
+import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
@@ -78,7 +78,7 @@ class WorkOrderControllerTest {
             @Test
             void test1() throws Exception {
                 //Given
-                var requestBody = createWorkOrderDto_Request()
+                var requestBody = create_WorkOrderDto_Request()
                         .withAllFields();
                 //When
                 mockMvc.perform(post("/v1/work-orders")
@@ -107,7 +107,7 @@ class WorkOrderControllerTest {
                 when(workOrderSearchUseCase.findById(any()))
                         .thenAnswer(invocationOnMock -> {
                             UUID workOrderId = invocationOnMock.getArgument(0);
-                            var workOrder = createWorkOrder().withAllFields();
+                            var workOrder = create_WorkOrder().withAllFields();
                             setField(workOrder, "id", workOrderId);
                             return workOrder;
                         });
@@ -142,9 +142,9 @@ class WorkOrderControllerTest {
                 when(workOrderSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
                             var workOrders = List.of(
-                                    createWorkOrder().withAllFields(),
-                                    createWorkOrder().withAllFields(),
-                                    createWorkOrder().withAllFields());
+                                    create_WorkOrder().withAllFields(),
+                                    create_WorkOrder().withAllFields(),
+                                    create_WorkOrder().withAllFields());
                             return new PageImpl<>(workOrders);
                         });
             }

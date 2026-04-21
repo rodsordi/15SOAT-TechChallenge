@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
@@ -18,7 +17,7 @@ public final class EstimateDtoFactory {
 
         private final EstimateDto.Request.RequestBuilder builder;
 
-        public static Request createEstimateDto_Request() {
+        public static Request create_EstimateDto_Request() {
             return new Request(EstimateDto.Request.builder());
         }
 

@@ -15,7 +15,7 @@ public final class EstimateFactory {
 
     private final Estimate.EstimateBuilder<?, ?> builder;
 
-    public static EstimateFactory createEstimate() {
+    public static EstimateFactory create_Estimate() {
         return new EstimateFactory(Estimate.builder());
     }
 

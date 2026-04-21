@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.createWorkOrder;
+import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
 import static java.util.UUID.fromString;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +49,7 @@ class WorkOrderCreationUseCaseTest {
             @Test
             void test1() {
                 //Given
-                var workOrder = createWorkOrder()
+                var workOrder = create_WorkOrder()
                         .withAllFields();
                 //When
                 var actual = workOrderCreationUseCase.create(workOrder);

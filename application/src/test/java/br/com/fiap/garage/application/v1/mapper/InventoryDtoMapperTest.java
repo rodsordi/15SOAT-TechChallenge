@@ -4,58 +4,47 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.Request.createShopSupplyDto_Request;
-import static br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory.Request.createSparePartDto_Request;
-import static br.com.fiap.garage.domain.entity.assertions.InventoryAssertions.ShopSupplyAssertions.assertThat_ShopSupply;
-import static br.com.fiap.garage.domain.entity.assertions.InventoryAssertions.SparePartAssertions.assertThat_SparePart;
+import static br.com.fiap.garage.application.v1.dto.assertions.InventoryDtoAssertions.Representation.assertThat_InventoryDto_Representation;
+import static br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory.create_ShopSupply;
+import static br.com.fiap.garage.domain.entity.factory.SparePartFactory.create_SparePart;
 import static org.mapstruct.factory.Mappers.getMapper;
 
 class InventoryDtoMapperTest {
 
     private static final InventoryDtoMapper MAPPER = getMapper(InventoryDtoMapper.class);
 
-    @DisplayName("When converting ShopSupplyDto.Request to ShopSupply")
+    @DisplayName("When converting Inventory to InventoryDto.Representation")
     @Nested
-    class Convert1 {
+    class ConvertToRepresentation {
 
         @DisplayName("Then should execute successfully")
         @Nested
         class Success {
 
-            @DisplayName("Given a ShopSupplyDto.Request with all fields")
+            @DisplayName("Given a SparePart with all fields")
             @Test
             void test1() {
                 //Given
-                var source = createShopSupplyDto_Request()
+                var source = create_SparePart()
                         .withAllFields();
                 //When
-                var actual = MAPPER.convert(source);
+                var actual = MAPPER.convertToRepresentation(source);
                 //Then
-                assertThat_ShopSupply(actual)
-                        .wasConvertedFrom_ShopSupplyDto_Request();
+                assertThat_InventoryDto_Representation(actual)
+                        .wasConvertedFrom_SparePart();
             }
-        }
-    }
 
-    @DisplayName("When converting SparePartDto.Request to SparePart")
-    @Nested
-    class Convert2 {
-
-        @DisplayName("Then should execute successfully")
-        @Nested
-        class Success {
-
-            @DisplayName("Given a SparePartDto.Request with all fields")
+            @DisplayName("Given a ShopSupply with all fields")
             @Test
-            void test1() {
+            void test2() {
                 //Given
-                var source = createSparePartDto_Request()
+                var source = create_ShopSupply()
                         .withAllFields();
                 //When
-                var actual = MAPPER.convert(source);
+                var actual = MAPPER.convertToRepresentation(source);
                 //Then
-                assertThat_SparePart(actual)
-                        .wasConvertedFrom_SparePartDto_Request();
+                assertThat_InventoryDto_Representation(actual)
+                        .wasConvertedFrom_ShopSupply();
             }
         }
     }

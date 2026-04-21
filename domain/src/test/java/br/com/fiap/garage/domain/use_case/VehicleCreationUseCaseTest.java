@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.createVehicle;
+import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static java.util.UUID.fromString;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +49,7 @@ class VehicleCreationUseCaseTest {
             @Test
             void test1() {
                 //Given
-                var vehicle = createVehicle()
+                var vehicle = create_Vehicle()
                         .withAllFields();
                 //When
                 var actual = vehicleCreationUseCase.create(vehicle);

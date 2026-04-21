@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
@@ -14,17 +15,19 @@ public final class ShopSupplyFactory {
 
     private final ShopSupply.ShopSupplyBuilder<?, ?> builder;
 
-    public static ShopSupplyFactory createShopSupply() {
+    public static ShopSupplyFactory create_ShopSupply() {
         return new ShopSupplyFactory(ShopSupply.builder());
     }
 
     public ShopSupply withAllFields() {
         var result = builder
                 // Self
-                .id(fromString("4f9e8d2a-1c5b-4a32-9d8e-7f6a5b4c3d2e"))
+                .id(fromString("d341007b-7d1f-406e-aabf-37db3ddbdb8e"))
                 .name("Synthetic Oil 5W-30")
                 .price(new BigDecimal("45.90"))
-                .quantityInStock(150)
+                .quantityInStock(111)
+                .createdAt(newDateTime("13/12/2027 23:59:59"))
+                .updatedAt(newDateTime("14/12/2027 23:59:59"))
                 .build();
 
         // And

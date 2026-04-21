@@ -37,7 +37,7 @@ public final class EmployeeDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Employee.Request")
+    @Schema(name = ".Employee.Response")
     public static class Response implements EmployeeDef.Response {
         private UUID id;
         private String name;
