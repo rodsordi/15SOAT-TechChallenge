@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.filter;
 
-import br.com.fiap.commons.domain.filter.AuditableFilter;
+import br.com.fiap.commons.filter.AuditableFilter;
 import br.com.fiap.garage.domain.entity.Vehicle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.criteria.CriteriaBuilder;

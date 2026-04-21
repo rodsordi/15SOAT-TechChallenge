@@ -1,0 +1,49 @@
+package br.com.fiap.garage.domain.entity.assertions;
+
+import br.com.fiap.garage.domain.entity.WorkOrder;
+import br.com.fiap.garage.domain.entity.factory.WorkOrderFactory;
+import lombok.RequiredArgsConstructor;
+
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.assertions.EstimateAssertions.assertThat_Estimate;
+import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.RECEIVED;
+import static lombok.AccessLevel.PRIVATE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.spy;
+
+@RequiredArgsConstructor(access = PRIVATE)
+public final class WorkOrderAssertions {
+
+    private final WorkOrder actual;
+
+    public static WorkOrderAssertions assertThat_WorkOrder(WorkOrder actual) {
+        assertThat(actual).isNotNull();
+        return new WorkOrderAssertions(spy(actual));
+    }
+
+    /**
+     * @see WorkOrderFactory
+     * .withAllFields()
+     */
+    public void wasConvertedFrom_WorkOrderDto_Request() {
+        // Self
+        assertThat(actual.getId())
+                .isNull();
+        assertThat(actual.getStatus())
+                .isEqualTo(RECEIVED);
+
+        // Composition
+        assertThat_Estimate(actual.getEstimate())
+                .wasConvertedFrom_EstimateDto_Request();
+
+        // Inheritance (AuditableEntity)
+        assertThat(actual.getCreatedAt())
+                .isNull();
+        assertThat(actual.getUpdatedAt())
+                .isNull();
+
+        // And
+        assertThatObject(actual)
+                .hasAllGetMethodsVerifiedOnceAtLeast();
+    }
+}

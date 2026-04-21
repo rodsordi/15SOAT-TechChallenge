@@ -1,32 +1,56 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import br.com.fiap.garage.application.v1.def.ShopSupplyDef;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
 
 @NoArgsConstructor(access = PRIVATE)
 public final class ShopSupplyDto {
 
-    @Id
-    @GeneratedValue
-    @Column(comment = "Id do insumo. Owner: postgres")
-    private UUID id;
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".ShopSupply.Request")
+    public static class Request implements ShopSupplyDef.Request {
+        private String name;
+        private BigDecimal price;
+        private Integer quantityInStock;
+    }
 
-    @Column(nullable = false, length = 55, comment = "ShopSupplies name. Owner: self")
-    private String name;
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".ShopSupply.Request")
+    public static class Response implements ShopSupplyDef.Response {
+        private UUID id;
+        private String name;
+        private BigDecimal price;
+        private Integer quantityInStock;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+    }
 
-    @Column(nullable = false, comment = "ShopSupplies price. Owner: self")
-    private BigDecimal price;
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @EqualsAndHashCode(callSuper = true)
+    @Schema(name = ".ShopSupply.Representation")
+    public static class Representation extends RepresentationModel<ShopSupplyDto.Representation> implements ShopSupplyDef.Representation {
+        private UUID id;
+        private String name;
+        private BigDecimal price;
+        private Integer quantityInStock;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+    }
 }

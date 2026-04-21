@@ -1,0 +1,3 @@
+
+cat domain/src/main/java/br/com/fiap/garage/domain/entity/enums/*
+cat application/src/main/java/br/com/fiap/garage/application/v1/dto/*

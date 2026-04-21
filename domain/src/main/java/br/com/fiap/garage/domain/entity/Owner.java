@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.entity;
 
-import br.com.fiap.commons.domain.entity.AuditableEntity;
+import br.com.fiap.commons.entity.AuditableEntity;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

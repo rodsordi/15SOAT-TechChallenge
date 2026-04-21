@@ -18,6 +18,8 @@ public interface SparePartDef {
         String getName();
 
         BigDecimal getPrice();
+
+        Integer getQuantityInStock();
     }
 
     interface Detailed extends Represented {

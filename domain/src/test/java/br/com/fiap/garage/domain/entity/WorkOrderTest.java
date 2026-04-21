@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
+import br.com.fiap.commons.exception.BusinessException;
 import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
-import br.com.fiap.commons.domain.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.*;
 import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.createWorkOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 class WorkOrderTest {
 
@@ -30,9 +31,9 @@ class WorkOrderTest {
             void test1() {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(RECEIVED)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", RECEIVED);
+
                 //When
                 workOrder.diagnose();
                 //Then
@@ -57,9 +58,8 @@ class WorkOrderTest {
             void test1(WorkOrderStatus status, String mensagemEsperada) {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(status)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", status);
                 //When
                 var atual = assertThrows(BusinessException.class,
                         () -> workOrder.diagnose());
@@ -83,9 +83,8 @@ class WorkOrderTest {
             void test1() {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(DIAGNOSING)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", DIAGNOSING);
                 //When
                 workOrder.waitForApproval();
                 //Then
@@ -110,9 +109,8 @@ class WorkOrderTest {
             void test1(WorkOrderStatus status, String mensagemEsperada) {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(status)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", status);
                 //When
                 var atual = assertThrows(BusinessException.class,
                         () -> workOrder.waitForApproval());
@@ -136,9 +134,8 @@ class WorkOrderTest {
             void test1() {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(WAITING_FOR_APPROVAL)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", WAITING_FOR_APPROVAL);
                 //When
                 workOrder.execute();
                 //Then
@@ -163,9 +160,8 @@ class WorkOrderTest {
             void test1(WorkOrderStatus status, String mensagemEsperada) {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(status)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", status);
                 //When
                 var atual = assertThrows(BusinessException.class,
                         () -> workOrder.execute());
@@ -189,9 +185,8 @@ class WorkOrderTest {
             void test1() {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(EXECUTING)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", EXECUTING);
                 //When
                 workOrder.finish();
                 //Then
@@ -216,9 +211,8 @@ class WorkOrderTest {
             void test1(WorkOrderStatus status, String mensagemEsperada) {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(status)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", status);
                 //When
                 var atual = assertThrows(BusinessException.class,
                         () -> workOrder.finish());
@@ -242,9 +236,8 @@ class WorkOrderTest {
             void test1() {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(FINISHED)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", FINISHED);
                 //When
                 workOrder.release();
                 //Then
@@ -269,9 +262,8 @@ class WorkOrderTest {
             void test1(WorkOrderStatus status, String mensagemEsperada) {
                 //Given
                 workOrder = createWorkOrder()
-                        .withAllFields()
-                        .status(status)
-                        .build();
+                        .withAllFields();
+                setField(workOrder, "status", status);
                 //When
                 var atual = assertThrows(BusinessException.class,
                         () -> workOrder.release());

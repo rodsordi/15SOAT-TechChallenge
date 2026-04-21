@@ -1,6 +1,9 @@
 package br.com.fiap.garage.application.v1.dto;
 
+import br.com.fiap.garage.application.v1.controller.WorkOrderController;
 import br.com.fiap.garage.application.v1.def.WorkOrderDef;
+import br.com.fiap.garage.application.v1.mapper.WorkOrderDtoMapper;
+import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -10,9 +13,13 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
+import static org.mapstruct.factory.Mappers.getMapper;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @NoArgsConstructor(access = PRIVATE)
 public final class WorkOrderDto {
+
+    private static final WorkOrderDtoMapper MAPPER = getMapper(WorkOrderDtoMapper.class);
 
     @Getter(onMethod_ = @Override)
     @Builder
@@ -21,6 +28,10 @@ public final class WorkOrderDto {
     @Schema(name = ".WorkOrder.Request")
     public static class Request implements WorkOrderDef.Request {
         private EstimateDto.Request estimate;
+
+        public WorkOrder buildWorkOrder() {
+            return MAPPER.convert(this);
+        }
     }
 
     @Getter(onMethod_ = @Override)
@@ -34,6 +45,10 @@ public final class WorkOrderDto {
         private EstimateDto.Response estimate;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+
+        public static WorkOrderDto.Response buildWorkOrderDtoResponse(WorkOrder workOrder) {
+            return MAPPER.convert(workOrder);
+        }
     }
 
     @Getter(onMethod_ = @Override)
@@ -47,5 +62,13 @@ public final class WorkOrderDto {
         private WorkOrderStatus status;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+
+        public static WorkOrderDto.Representation buildWorkOrderDtoRepresentation(WorkOrder workOrder) {
+            var representation = MAPPER.convertToRepresentation(workOrder);
+            representation.add(linkTo(WorkOrderController.class)
+                    .slash(representation.getId())
+                    .withSelfRel());
+            return representation;
+        }
     }
 }

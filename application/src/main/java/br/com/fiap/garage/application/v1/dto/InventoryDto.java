@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -20,7 +21,9 @@ public final class InventoryDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".Inventory.Request")
     public static class Request implements InventoryDef.Request {
-        private Set<SparePartDto.Request> spareParts;
+        private String name;
+        private BigDecimal price;
+        private Integer quantityInStock;
     }
 
     @Getter(onMethod_ = @Override)
@@ -30,7 +33,9 @@ public final class InventoryDto {
     @Schema(name = ".Inventory.Request")
     public static class Response implements InventoryDef.Response {
         private UUID id;
-        private Set<SparePartDto.Response> spareParts;
+        private String name;
+        private BigDecimal price;
+        private Integer quantityInStock;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
@@ -43,6 +48,9 @@ public final class InventoryDto {
     @Schema(name = ".Inventory.Representation")
     public static class Representation extends RepresentationModel<Representation> implements InventoryDef.Representation {
         private UUID id;
+        private String name;
+        private BigDecimal price;
+        private Integer quantityInStock;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }

@@ -52,20 +52,20 @@ public abstract class AuditableEntity implements Serializable {
 ## Example: Expected Output Style
 
 ```java
-package br.com.bit55.chargeback.domain.entity.credit.assertions;
+package br.com.fiap.chargeback.domain.entity.credit.assertions;
 
-import br.com.bit55.chargeback.domain.entity.credit.CreditAuthorizationSingleMessage;
-import br.com.bit55.chargeback.domain.entity.credit.CreditClearingSingleMessage;
-import br.com.bit55.chargeback.domain.entity.credit.CreditTransaction;
-import br.com.bit55.chargeback.domain.entity.credit.factory.CreditTransactionFactory;
-import br.com.bit55.commons.util.DateUtil;
+import br.com.fiap.chargeback.domain.entity.credit.CreditAuthorizationSingleMessage;
+import br.com.fiap.chargeback.domain.entity.credit.CreditClearingSingleMessage;
+import br.com.fiap.chargeback.domain.entity.credit.CreditTransaction;
+import br.com.fiap.chargeback.domain.entity.credit.factory.CreditTransactionFactory;
+import br.com.fiap.commons.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
-import static br.com.bit55.chargeback.domain.entity.credit.assertions.AuthorizationAssertions.assertThatAuthorization;
-import static br.com.bit55.commons.util.DateUtil.newDateTime;
-import static br.com.bit55.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.chargeback.domain.entity.credit.assertions.AuthorizationAssertions.assertThatAuthorization;
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;

@@ -3,6 +3,7 @@ package br.com.fiap.garage.application.v1.def;
 import br.com.fiap.commons.def.AuditableDef;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,6 +15,10 @@ import java.util.UUID;
 public interface InventoryDef {
 
     interface Represented extends Serializable {
+
+        String getName();
+        BigDecimal getPrice();
+        Integer getQuantityInStock();
     }
 
     interface Detailed extends Represented {
@@ -31,12 +36,10 @@ public interface InventoryDef {
 
     interface Request extends Detailed {
 
-        <T extends SparePartDef.Request> Set<T> getSpareParts();
     }
 
     interface Response extends Detailed, DetailedPersisted {
 
-        <T extends SparePartDef.Response> Set<T> getSpareParts();
     }
 
     interface Representation extends Represented, RepresentedPersisted {

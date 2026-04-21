@@ -23,6 +23,7 @@ public final class SparePartDto {
     public static class Request implements SparePartDef.Request {
         private String name;
         private BigDecimal price;
+        private Integer quantityInStock;
     }
 
     @Getter(onMethod_ = @Override)
@@ -34,6 +35,7 @@ public final class SparePartDto {
         private UUID id;
         private String name;
         private BigDecimal price;
+        private Integer quantityInStock;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
@@ -48,6 +50,7 @@ public final class SparePartDto {
         private UUID id;
         private String name;
         private BigDecimal price;
+        private Integer quantityInStock;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }

@@ -1,9 +1,10 @@
 package br.com.fiap.garage.domain.entity;
 
-import br.com.fiap.commons.domain.entity.AuditableEntity;
+import br.com.fiap.commons.entity.AuditableEntity;
 import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class WorkOrder extends AuditableEntity implements Serializable {
     @Column(comment = "WorkOrder id. Owner: postgres")
     private UUID id;
 
+    @Builder.Default
     @Enumerated(STRING)
     @Column(comment = "WorkOrder status. Owner: self")
     private WorkOrderStatus status = RECEIVED;

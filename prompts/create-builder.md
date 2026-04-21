@@ -52,20 +52,20 @@ public abstract class AuditableEntity implements Serializable {
 ## Example: Expected Output Style
 
 ```java
-package br.com.bit55.chargeback.domain.entity.credit.factory;
+package br.com.fiap.chargeback.domain.entity.credit.factory;
 
-import br.com.bit55.chargeback.domain.entity.credit.CreditAuthorization;
-import br.com.bit55.chargeback.domain.entity.credit.CreditTransaction;
+import br.com.fiap.chargeback.domain.entity.credit.CreditAuthorization;
+import br.com.fiap.chargeback.domain.entity.credit.CreditTransaction;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static br.com.bit55.chargeback.domain.entity.credit.factory.CreditAuthorizationFactory.createCreditAuthorization;
-import static br.com.bit55.chargeback.domain.entity.credit.factory.CreditAuthorizationSingleMessageFactory.createCreditAuthorizationSingleMessage;
-import static br.com.bit55.commons.util.DateUtil.newDateTime;
-import static br.com.bit55.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationFactory.createCreditAuthorization;
+import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationSingleMessageFactory.createCreditAuthorizationSingleMessage;
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
