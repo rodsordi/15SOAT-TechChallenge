@@ -1,10 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.entity.AuditableEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +11,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static jakarta.persistence.InheritanceType.JOINED;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
-@MappedSuperclass
+@Entity
+@Table(schema = "garage")
+@Inheritance(strategy = JOINED)
 public class Inventory extends AuditableEntity implements Serializable {
 
     @Id

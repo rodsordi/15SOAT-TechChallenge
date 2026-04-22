@@ -9,8 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-@Order(3)
+@Order(4)
 public interface ShopSupplyRepository extends CrudRepository<ShopSupply, UUID> {
 
-    Page<ShopSupply> findAll(Specification<ShopSupply> filter, Pageable pageable);
 }

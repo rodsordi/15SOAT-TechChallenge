@@ -9,8 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-@Order(3)
+@Order(4)
 public interface SparePartRepository extends CrudRepository<SparePart, UUID> {
 
-    Page<SparePart> findAll(Specification<SparePart> filter, Pageable pageable);
 }

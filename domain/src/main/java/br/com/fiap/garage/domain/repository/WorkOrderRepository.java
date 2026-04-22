@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-@Order(2)
+@Order(3)
 public interface WorkOrderRepository extends CrudRepository<WorkOrder, UUID> {
 
     Page<WorkOrder> findAll(Specification<WorkOrder> filter, Pageable pageable);
