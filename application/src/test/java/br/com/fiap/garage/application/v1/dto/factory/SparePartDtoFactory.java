@@ -11,14 +11,14 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class SparePartDtoFactory {
 
+    public static Request create_SparePartDto_Request() {
+        return new Request(SparePartDto.Request.builder());
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
         private final SparePartDto.Request.RequestBuilder builder;
-
-        public static Request create_SparePartDto_Request() {
-            return new Request(SparePartDto.Request.builder());
-        }
 
         public SparePartDto.Request withAllFields() {
             var result = builder

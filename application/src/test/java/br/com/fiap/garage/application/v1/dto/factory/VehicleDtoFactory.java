@@ -9,14 +9,14 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class VehicleDtoFactory {
 
+    public static Request create_VehicleDto_Request() {
+        return new Request(VehicleDto.Request.builder());
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
         private final VehicleDto.Request.RequestBuilder builder;
-
-        public static Request create_VehicleDto_Request() {
-            return new Request(VehicleDto.Request.builder());
-        }
 
         public VehicleDto.Request withAllFields() {
             var result = builder

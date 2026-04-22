@@ -12,14 +12,14 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class EstimateDtoFactory {
 
+    public static Request create_EstimateDto_Request() {
+        return new Request(EstimateDto.Request.builder());
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
         private final EstimateDto.Request.RequestBuilder builder;
-
-        public static Request create_EstimateDto_Request() {
-            return new Request(EstimateDto.Request.builder());
-        }
 
         public EstimateDto.Request withAllFields() {
             var result = builder

@@ -9,14 +9,14 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class EmployeeDtoFactory {
 
+    public static Request create_EmployeeDto_Request() {
+        return new Request(EmployeeDto.Request.builder());
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
         private final EmployeeDto.Request.RequestBuilder builder;
-
-        public static Request create_EmployeeDto_Request() {
-            return new Request(EmployeeDto.Request.builder());
-        }
 
         public EmployeeDto.Request withAllFields() {
             var result = builder

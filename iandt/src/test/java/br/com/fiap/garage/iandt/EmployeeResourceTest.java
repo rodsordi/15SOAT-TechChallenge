@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class EmployeeResourceTest extends GarageIntegrationTest {
+class EmployeeResourceTest extends GarageIntegrationTest {
+
+
 
     @DisplayName("When creating a new employee")
     @Nested
@@ -41,7 +44,7 @@ public class EmployeeResourceTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .contentType(JSON)
-                        .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30")
+                        .header("Authorization", authorization)
                         .body(json.writeValueAsString(requestBody))
                         .post("/v1/employees")
                         .then()

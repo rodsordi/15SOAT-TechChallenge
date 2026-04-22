@@ -11,14 +11,14 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class ShopSupplyDtoFactory {
 
+    public static Request create_ShopSupplyDto_Request() {
+        return new Request(ShopSupplyDto.Request.builder());
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
         private final ShopSupplyDto.Request.RequestBuilder builder;
-
-        public static Request create_ShopSupplyDto_Request() {
-            return new Request(ShopSupplyDto.Request.builder());
-        }
 
         public ShopSupplyDto.Request withAllFields() {
             var result = builder
