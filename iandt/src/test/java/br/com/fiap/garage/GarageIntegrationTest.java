@@ -1,4 +1,4 @@
-package br.com.fiap.garage.iandt;
+package br.com.fiap.garage;
 
 import br.com.fiap.commons.iandt.setup.LocalStackSetup;
 import br.com.fiap.commons.iandt.setup.PostgresSetup;
@@ -15,7 +15,7 @@ import java.util.List;
 import static java.lang.String.format;
 import static org.springframework.core.env.Profiles.of;
 
-public abstract class BaseIntegrationTest implements PostgresSetup, LocalStackSetup {
+public abstract class GarageIntegrationTest implements PostgresSetup, LocalStackSetup {
 
     @Autowired
     private Environment env;
