@@ -22,7 +22,7 @@ public final class EstimateFactory {
     public Estimate withAllFields() {
         var result = builder
                 // Self
-                .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
+                .id(1L)
                 .amount(new BigDecimal("1500.00"))
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))

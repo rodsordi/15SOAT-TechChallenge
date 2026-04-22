@@ -24,7 +24,6 @@ public interface EstimateDef {
 
     interface RepresentedPersisted extends AuditableDef {
 
-        UUID getId();
     }
 
     interface DetailedPersisted extends RepresentedPersisted {

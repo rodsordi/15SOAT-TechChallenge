@@ -30,8 +30,6 @@ public final class EstimateDtoAssertions {
          */
         public void wasConvertedFrom_Estimate() {
             // Self
-            assertThat(actual.getId())
-                    .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
             assertThat(actual.getAmount())
                     .isEqualTo(new BigDecimal("1500.00"));
 
@@ -63,8 +61,6 @@ public final class EstimateDtoAssertions {
          */
         public void wasConvertedFrom_Estimate() {
             // Self
-            assertThat(actual.getId())
-                    .hasToString("9f8792ea-cf8f-43d1-824f-9f7bc433e404");
             assertThat(actual.getAmount())
                     .isEqualTo(new BigDecimal("1.00"));
 

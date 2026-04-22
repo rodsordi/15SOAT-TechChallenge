@@ -29,7 +29,6 @@ public final class EstimateDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".Estimate.Response")
     public static class Response implements EstimateDef.Response {
-        private UUID id;
         private BigDecimal amount;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -42,7 +41,6 @@ public final class EstimateDto {
     @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Estimate.Representation")
     public static class Representation extends RepresentationModel<Representation> implements EstimateDef.Representation {
-        private UUID id;
         private BigDecimal amount;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;

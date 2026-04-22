@@ -41,6 +41,7 @@ public class EmployeeResourceTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .contentType(JSON)
+                        .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30")
                         .body(json.writeValueAsString(requestBody))
                         .post("/v1/employees")
                         .then()

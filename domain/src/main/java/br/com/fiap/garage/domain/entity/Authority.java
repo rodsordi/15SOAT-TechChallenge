@@ -6,9 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
+import org.springframework.security.core.GrantedAuthority;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -19,13 +17,14 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
 @Table(schema = "garage")
-public class Estimate extends AuditableEntity implements Serializable {
+public class Authority extends AuditableEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(comment = "Estimate id. Owner: postgres")
+    @Column(comment = "Authorization id. Owner: postgres")
     private Long id;
 
-    @Column(nullable = false, comment = "Estimate amount. Owner: self")
-    private BigDecimal amount;
+    @Getter(onMethod_ = @Override)
+    @Column(nullable = false, length = 20, comment = "Authorization name. Owner: self")
+    private String authority;
 }
