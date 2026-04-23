@@ -21,6 +21,7 @@ import static io.restassured.http.ContentType.JSON;
 import static java.lang.String.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.core.env.Profiles.of;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 public abstract class GarageIntegrationTest implements PostgresSetup, LocalStackSetup {
 
@@ -55,6 +56,9 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
     private void authenticate() {
         var requestBody = create_EmployeeDto_Request()
                 .withAllFields();
+        setField(requestBody, "username", "admin@garage.com");
+        setField(requestBody, "email", "admin@garage.com");
+
         var response = given()
                 .log().all()
                 .contentType(JSON)

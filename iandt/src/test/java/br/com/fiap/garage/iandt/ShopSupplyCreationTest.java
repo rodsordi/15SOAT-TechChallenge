@@ -13,7 +13,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.create_ShopSupplyDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -21,7 +20,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class ShopSupplyResourceTest extends GarageIntegrationTest {
+public class ShopSupplyCreationTest extends GarageIntegrationTest {
 
     @DisplayName("When creating a new shopSupply")
     @Nested
@@ -51,46 +50,6 @@ public class ShopSupplyResourceTest extends GarageIntegrationTest {
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(201);
-            }
-        }
-    }
-
-    @DisplayName("When finding an shopSupply by id")
-    @Nested
-    class FindById {
-
-        @DisplayName("Then should execute successfully")
-        @Nested
-        class Success {
-
-            @DisplayName("Given a valid shopSupply id, in scenario with saved shopSupply")
-            @Test
-            void test1() {
-                //Scenario
-                var scenarioResponse = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_ShopSupplyDto_Request().withAllFields()))
-                        .post("/v1/shop-supplies")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
-                //Given
-                var shopSupplyId = scenarioResponse.jsonPath().getString("id");
-                //When
-                var response = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .get(format("/v1/shop-supplies/{0}", shopSupplyId))
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
-                //Then
-                assertThat(response.statusCode())
-                        .isEqualTo(200);
             }
         }
     }

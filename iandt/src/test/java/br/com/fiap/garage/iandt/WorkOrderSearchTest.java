@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.create_OwnerDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.create_WorkOrderDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -21,41 +21,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class OwnerResourceTest extends GarageIntegrationTest {
+public class WorkOrderSearchTest extends GarageIntegrationTest {
 
-    @DisplayName("When creating a new owner")
-    @Nested
-    class Create {
-
-        @DisplayName("Then should execute successfully")
-        @Nested
-        class Success {
-
-            @DisplayName("Given an owner with all fields")
-            @Test
-            void test1() {
-                //Given
-                var requestBody = create_OwnerDto_Request()
-                        .withAllFields();
-                //When
-                var response = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/owners")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
-                //Then
-                assertThat(response.statusCode())
-                        .isEqualTo(201);
-            }
-        }
-    }
-
-    @DisplayName("When finding an owner by id")
+    @DisplayName("When finding an workOrder by id")
     @Nested
     class FindById {
 
@@ -63,7 +31,7 @@ public class OwnerResourceTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a valid owner id, in scenario with saved owner")
+            @DisplayName("Given a valid workOrder id, in scenario with saved workOrder")
             @Test
             void test1() {
                 //Scenario
@@ -71,19 +39,19 @@ public class OwnerResourceTest extends GarageIntegrationTest {
                         .log().all()
                         .header("Authorization", authorization)
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_OwnerDto_Request().withAllFields()))
-                        .post("/v1/owners")
+                        .body(json.writeValueAsString(create_WorkOrderDto_Request().withAllFields()))
+                        .post("/v1/work-orders")
                         .then()
                         .log().all()
                         .extract()
                         .response();
                 //Given
-                var ownerId = scenarioResponse.jsonPath().getString("id");
+                var workOrderId = scenarioResponse.jsonPath().getString("id");
                 //When
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get(format("/v1/owners/{0}", ownerId))
+                        .get(format("/v1/work-orders/{0}", workOrderId))
                         .then()
                         .log().all()
                         .extract()
@@ -95,7 +63,7 @@ public class OwnerResourceTest extends GarageIntegrationTest {
         }
     }
 
-    @DisplayName("When finding all owners")
+    @DisplayName("When finding all workOrders")
     @Nested
     class FindAll {
 
@@ -103,7 +71,7 @@ public class OwnerResourceTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given no query params, in scenario with saved owner")
+            @DisplayName("Given no query params, in scenario with saved workOrder")
             @Test
             void test1() {
                 //Scenario
@@ -111,8 +79,8 @@ public class OwnerResourceTest extends GarageIntegrationTest {
                         .log().all()
                         .header("Authorization", authorization)
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_OwnerDto_Request().withAllFields()))
-                        .post("/v1/owners")
+                        .body(json.writeValueAsString(create_WorkOrderDto_Request().withAllFields()))
+                        .post("/v1/work-orders")
                         .then()
                         .log().all()
                         .extract()
@@ -121,7 +89,7 @@ public class OwnerResourceTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get("/v1/owners")
+                        .get("/v1/work-orders")
                         .then()
                         .log().all()
                         .extract()

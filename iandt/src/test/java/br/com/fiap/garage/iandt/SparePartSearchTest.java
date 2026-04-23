@@ -21,39 +21,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class SparePartResourceTest extends GarageIntegrationTest {
-
-    @DisplayName("When creating a new sparePart")
-    @Nested
-    class Create {
-
-        @DisplayName("Then should execute successfully")
-        @Nested
-        class Success {
-
-            @DisplayName("Given an sparePart with all fields")
-            @Test
-            void test1() {
-                //Given
-                var requestBody = create_SparePartDto_Request()
-                        .withAllFields();
-                //When
-                var response = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/spare-parts")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
-                //Then
-                assertThat(response.statusCode())
-                        .isEqualTo(201);
-            }
-        }
-    }
+public class SparePartSearchTest extends GarageIntegrationTest {
 
     @DisplayName("When finding an sparePart by id")
     @Nested

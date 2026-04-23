@@ -10,9 +10,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory.create_SparePartDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.create_OwnerDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -20,42 +21,36 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class InventoryResourceTest extends GarageIntegrationTest {
+public class OwnerCreationTest extends GarageIntegrationTest {
 
-    @DisplayName("When finding all inventorys")
+    @DisplayName("When creating a new owner")
     @Nested
-    class FindAll {
+    class Create {
 
         @DisplayName("Then should execute successfully")
         @Nested
         class Success {
 
-            @DisplayName("Given no query params, in scenario with saved inventory")
+            @DisplayName("Given an owner with all fields")
             @Test
             void test1() {
-                //Scenario
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_SparePartDto_Request().withAllFields()))
-                        .post("/v1/spare-parts")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                //Given
+                var requestBody = create_OwnerDto_Request()
+                        .withAllFields();
                 //When
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get("/v1/inventories")
+                        .contentType(JSON)
+                        .body(json.writeValueAsString(requestBody))
+                        .post("/v1/owners")
                         .then()
                         .log().all()
                         .extract()
                         .response();
                 //Then
                 assertThat(response.statusCode())
-                        .isEqualTo(200);
+                        .isEqualTo(201);
             }
         }
     }
