@@ -3,6 +3,8 @@ package br.com.fiap.garage.domain.entity.factory;
 import br.com.fiap.garage.domain.entity.Vehicle;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Year;
+
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static java.util.UUID.fromString;
@@ -24,6 +26,7 @@ public final class VehicleFactory {
                 .make("Toyota")
                 .model("Corolla")
                 .licensePlate("ABC-1234")
+                .manufactureYear(Year.parse("2024"))
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
                 .updatedAt(newDateTime("21/04/2026 15:30:00"))
@@ -49,6 +52,7 @@ public final class VehicleFactory {
                 .make("Honda")
                 .model("Civic")
                 .licensePlate("XYZ-9876")
+                .manufactureYear(Year.parse("2023"))
                 .build();
     }
 

@@ -3,6 +3,7 @@ package br.com.fiap.garage.application.v1.def;
 import br.com.fiap.commons.def.AuditableDef;
 
 import java.io.Serializable;
+import java.time.Year;
 import java.util.UUID;
 
 /**
@@ -17,6 +18,7 @@ public interface VehicleDef {
         String getMake();
         String getModel();
         String getLicensePlate();
+        Year getManufactureYear();
     }
 
     interface Detailed extends Represented {

@@ -3,6 +3,8 @@ package br.com.fiap.garage.application.v1.dto.assertions;
 import br.com.fiap.garage.application.v1.dto.VehicleDto;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Year;
+
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static lombok.AccessLevel.PRIVATE;
@@ -36,6 +38,8 @@ public final class VehicleDtoAssertions {
                     .isEqualTo("Corolla");
             assertThat(actual.getLicensePlate())
                     .isEqualTo("ABC-1234");
+            assertThat(actual.getManufactureYear())
+                    .isEqualTo(Year.parse("2024"));
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
@@ -73,6 +77,8 @@ public final class VehicleDtoAssertions {
                     .isEqualTo("Corolla");
             assertThat(actual.getLicensePlate())
                     .isEqualTo("ABC-1234");
+            assertThat(actual.getManufactureYear())
+                    .isEqualTo(Year.parse("2024"));
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())

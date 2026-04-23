@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -24,28 +26,41 @@ public class GsonConfig {
 		return new GsonBuilder()
 				.setPrettyPrinting()
 				.registerTypeAdapterFactory(new EmptyListToNullFactory())
-				.registerTypeAdapter(LocalDate.class, LocalDateConfig.jsonSerializerLocalDate())
-				.registerTypeAdapter(LocalDate.class, LocalDateConfig.jsonDeserializerLocalDate())
-				.registerTypeAdapter(LocalDateTime.class, LocalDateTimeConfig.jsonSerializerLocalDateTime())
-				.registerTypeAdapter(LocalDateTime.class, LocalDateTimeConfig.jsonDeserializerLocalDateTime())
+				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().serialize())
+				.registerTypeAdapter(LocalDate.class, new LocalDateAdapter().deserialize())
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().serialize())
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().deserialize())
+				.registerTypeAdapter(YearMonth.class, new YearMonthAdapter().serialize())
+				.registerTypeAdapter(YearMonth.class, new YearMonthAdapter().deserialize())
+				.registerTypeAdapter(Year.class, new YearAdapter().serialize())
+				.registerTypeAdapter(Year.class, new YearAdapter().deserialize())
 				.create();
 	}
 
+	interface GsonRegistrable<T> {
+
+		JsonSerializer<T> serialize();
+
+		JsonDeserializer<T> deserialize();
+	}
+
 	@NoArgsConstructor(access = PRIVATE)
-	static class LocalDateConfig {
+	static class LocalDateAdapter implements GsonRegistrable<LocalDate> {
 		private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-		static JsonSerializer<LocalDate> jsonSerializerLocalDate() {
+		@Override
+		public JsonSerializer<LocalDate> serialize() {
 			return (src, typeOfSrc, context) -> new JsonPrimitive(src.format(df));
 		}
 
-		static JsonDeserializer<LocalDate> jsonDeserializerLocalDate() {
-			return (json, type, jsonDeserializationContext) -> LocalDate.parse(json.getAsJsonPrimitive().getAsString(), df);
+		@Override
+		public JsonDeserializer<LocalDate> deserialize() {
+			return (json, type, context) -> LocalDate.parse(json.getAsJsonPrimitive().getAsString(), df);
 		}
 	}
 
 	@NoArgsConstructor(access = PRIVATE)
-	static class LocalDateTimeConfig {
+	static class LocalDateTimeAdapter implements GsonRegistrable<LocalDateTime> {
 		private static final DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
 		private static final DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss" +
@@ -57,12 +72,44 @@ public class GsonConfig {
 				"[.SSSS]" +
 				"[.SSS]");
 
-		static JsonSerializer<LocalDateTime> jsonSerializerLocalDateTime() {
+		@Override
+		public JsonSerializer<LocalDateTime> serialize() {
 			return (src, typeOfSrc, context) -> new JsonPrimitive(src.format(dtf1));
 		}
 
-		static JsonDeserializer<LocalDateTime> jsonDeserializerLocalDateTime() {
-			return (json, type, jsonDeserializationContext) -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), dtf2);
+		@Override
+		public JsonDeserializer<LocalDateTime> deserialize() {
+			return (json, type, context) -> LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), dtf2);
+		}
+	}
+
+	@NoArgsConstructor(access = PRIVATE)
+	static class YearMonthAdapter implements GsonRegistrable<YearMonth> {
+		private static final DateTimeFormatter ymf = DateTimeFormatter.ofPattern("yyyy-MM");
+
+		@Override
+		public JsonSerializer<YearMonth> serialize() {
+			return (src, typeOfSrc, context) -> new JsonPrimitive(src.format(ymf));
+		}
+
+		@Override
+		public JsonDeserializer<YearMonth> deserialize() {
+			return (json, type, context) -> YearMonth.parse(json.getAsJsonPrimitive().getAsString(), ymf);
+		}
+	}
+
+	@NoArgsConstructor(access = PRIVATE)
+	static class YearAdapter implements GsonRegistrable<Year> {
+		private static final DateTimeFormatter yf = DateTimeFormatter.ofPattern("yyyy");
+
+		@Override
+		public JsonSerializer<Year> serialize() {
+			return (src, typeOfSrc, context) -> new JsonPrimitive(src.format(yf));
+		}
+
+		@Override
+		public JsonDeserializer<Year> deserialize() {
+			return (json, type, context) -> Year.parse(json.getAsJsonPrimitive().getAsString(), yf);
 		}
 	}
 

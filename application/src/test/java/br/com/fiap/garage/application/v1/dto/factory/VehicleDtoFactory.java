@@ -3,6 +3,8 @@ package br.com.fiap.garage.application.v1.dto.factory;
 import br.com.fiap.garage.application.v1.dto.VehicleDto;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Year;
+
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -23,6 +25,7 @@ public final class VehicleDtoFactory {
                     .make("Toyota")
                     .model("Corolla")
                     .licensePlate("ABC-1234")
+                    .manufactureYear(Year.parse("2026"))
                     .build();
 
             // And
@@ -36,6 +39,7 @@ public final class VehicleDtoFactory {
                     .make("Honda")
                     .model("Civic")
                     .licensePlate("XYZ-9876")
+                    .manufactureYear(Year.parse("2027"))
                     .build();
         }
 

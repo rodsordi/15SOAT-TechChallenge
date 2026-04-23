@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.time.Year;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -33,4 +34,7 @@ public class Vehicle extends AuditableEntity implements Serializable {
 
     @Column(nullable = false, length = 10, comment = "Vehicle license plate. Owner: self")
     private String licensePlate;
+
+    @Column(nullable = false, length = 10, comment = "Vehicle manufacture year. Owner: self")
+    private Year manufactureYear;
 }

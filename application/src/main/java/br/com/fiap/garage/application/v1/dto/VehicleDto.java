@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -29,6 +30,7 @@ public final class VehicleDto {
         private String make;
         private String model;
         private String licensePlate;
+        private Year manufactureYear;
 
         public Vehicle buildVehicle() {
             return MAPPER.convert(this);
@@ -45,6 +47,7 @@ public final class VehicleDto {
         private String make;
         private String model;
         private String licensePlate;
+        private Year manufactureYear;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -64,6 +67,7 @@ public final class VehicleDto {
         private String make;
         private String model;
         private String licensePlate;
+        private Year manufactureYear;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

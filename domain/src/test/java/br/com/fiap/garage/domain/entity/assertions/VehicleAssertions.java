@@ -3,6 +3,8 @@ package br.com.fiap.garage.domain.entity.assertions;
 import br.com.fiap.garage.domain.entity.Vehicle;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Year;
+
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static lombok.AccessLevel.PRIVATE;
@@ -33,6 +35,8 @@ public final class VehicleAssertions {
                 .isEqualTo("Corolla");
         assertThat(actual.getLicensePlate())
                 .isEqualTo("ABC-1234");
+        assertThat(actual.getManufactureYear())
+                .isEqualTo(Year.parse("2026"));
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

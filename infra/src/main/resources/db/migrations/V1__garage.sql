@@ -118,6 +118,7 @@ CREATE TABLE garage.vehicle (
                                 make VARCHAR(55) NOT NULL,
                                 model VARCHAR(55) NOT NULL,
                                 license_plate VARCHAR(10) NOT NULL,
+                                manufacture_year INTEGER NOT NULL,
                                 created_at TIMESTAMP NOT NULL,
                                 updated_at TIMESTAMP
 );
