@@ -10,7 +10,7 @@ import java.util.UUID;
  * | Representation | Represented | RepresentedPersisted |
  * | Detailed       | Detailed    | DetailedPersisted    |
  */
-public interface OwnerDef {
+public interface CustomerDef {
 
     interface Represented extends Serializable {
 

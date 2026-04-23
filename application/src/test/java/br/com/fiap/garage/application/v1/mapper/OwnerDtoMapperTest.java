@@ -4,18 +4,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.assertions.OwnerDtoAssertions.Representation.assertThat_OwnerDto_Representation;
-import static br.com.fiap.garage.application.v1.dto.assertions.OwnerDtoAssertions.Response.assertThat_OwnerDto_Response;
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.create_OwnerDto_Request;
-import static br.com.fiap.garage.domain.entity.assertions.OwnerAssertions.assertThat_Owner;
-import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
+import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.Representation.assertThat_CustomerDto_Representation;
+import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.Response.assertThat_CustomerDto_Response;
+import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
+import static br.com.fiap.garage.domain.entity.assertions.CustomerAssertions.assertThat_Customer;
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-class OwnerDtoMapperTest {
+class CustomerDtoMapperTest {
 
-    private static final OwnerDtoMapper MAPPER = getMapper(OwnerDtoMapper.class);
+    private static final CustomerDtoMapper MAPPER = getMapper(CustomerDtoMapper.class);
 
-    @DisplayName("When converting OwnerDto.Request to Owner")
+    @DisplayName("When converting CustomerDto.Request to Customer")
     @Nested
     class Convert1 {
 
@@ -23,22 +23,22 @@ class OwnerDtoMapperTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a OwnerDto.Request with all fields")
+            @DisplayName("Given a CustomerDto.Request with all fields")
             @Test
             void test1() {
                 //Given
-                var source = create_OwnerDto_Request()
+                var source = create_CustomerDto_Request()
                         .withAllFields();
                 //When
                 var actual = MAPPER.convert(source);
                 //Then
-                assertThat_Owner(actual)
-                        .wasConvertedFrom_OwnerDto_Request();
+                assertThat_Customer(actual)
+                        .wasConvertedFrom_CustomerDto_Request();
             }
         }
     }
 
-    @DisplayName("When converting Owner to OwnerDto.Response")
+    @DisplayName("When converting Customer to CustomerDto.Response")
     @Nested
     class Convert2 {
 
@@ -46,22 +46,22 @@ class OwnerDtoMapperTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a Owner with all fields")
+            @DisplayName("Given a Customer with all fields")
             @Test
             void test1() {
                 //Given
-                var source = create_Owner()
+                var source = create_Customer()
                         .withAllFields();
                 //When
                 var actual = MAPPER.convert(source);
                 //Then
-                assertThat_OwnerDto_Response(actual)
-                        .wasConvertedFrom_Owner();
+                assertThat_CustomerDto_Response(actual)
+                        .wasConvertedFrom_Customer();
             }
         }
     }
 
-    @DisplayName("When converting Owner to OwnerDto.Representation")
+    @DisplayName("When converting Customer to CustomerDto.Representation")
     @Nested
     class ConvertToRepresentation {
 
@@ -69,17 +69,17 @@ class OwnerDtoMapperTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a Owner with all fields")
+            @DisplayName("Given a Customer with all fields")
             @Test
             void test1() {
                 //Given
-                var source = create_Owner()
+                var source = create_Customer()
                         .withAllFields();
                 //When
                 var actual = MAPPER.convertToRepresentation(source);
                 //Then
-                assertThat_OwnerDto_Representation(actual)
-                        .wasConvertedFrom_Owner();
+                assertThat_CustomerDto_Representation(actual)
+                        .wasConvertedFrom_Customer();
             }
         }
     }

@@ -29,16 +29,16 @@ public class WorkOrder extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "WorkOrder id. Owner: postgres")
+    @Column(comment = "WorkOrder id. Customer: postgres")
     private UUID id;
 
     @Builder.Default
     @Enumerated(STRING)
-    @Column(comment = "WorkOrder status. Owner: self")
+    @Column(comment = "WorkOrder status. Customer: self")
     private WorkOrderStatus status = RECEIVED;
 
     @ManyToOne(cascade = {MERGE, PERSIST}) //VO
-    @JoinColumn(updatable = false, comment = "Estimate id. Owner: postgres")
+    @JoinColumn(updatable = false, comment = "Estimate id. Customer: postgres")
     @Valid
     private Estimate estimate;
 

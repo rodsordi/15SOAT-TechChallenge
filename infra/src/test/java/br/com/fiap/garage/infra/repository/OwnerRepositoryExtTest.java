@@ -1,8 +1,8 @@
 package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.commons.config.JpaConfig;
-import br.com.fiap.garage.domain.entity.Owner;
-import br.com.fiap.garage.domain.filter.OwnerFilter;
+import br.com.fiap.garage.domain.entity.Customer;
+import br.com.fiap.garage.domain.filter.CustomerFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,22 +12,22 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("test")
 @DataJpaTest
 @ContextConfiguration(classes = JpaConfig.class)
-class OwnerRepositoryExtTest {
+class CustomerRepositoryExtTest {
 
     @Autowired
-    private OwnerRepositoryExt repository;
+    private CustomerRepositoryExt repository;
 
     @Autowired
     private TestEntityManager em;
 
-    @DisplayName("When finding all owners")
+    @DisplayName("When finding all customers")
     @Nested
     class FindAll {
 
@@ -39,20 +39,20 @@ class OwnerRepositoryExtTest {
             @Test
             void test1() {
                 //Scenario
-                var owner = create_Owner().withAllFieldsExceptDB();
-                owner.getAuthorities()
+                var customer = create_Customer().withAllFieldsExceptDB();
+                customer.getAuthorities()
                         .forEach(authority -> em.persist(authority));
-                setField(owner, "name", "John da Silva");
-                repository.save(owner);
+                setField(customer, "name", "John da Silva");
+                repository.save(customer);
                 em.flush();
                 //Given
-                var filter = new OwnerFilter();
+                var filter = new CustomerFilter();
                 //When
                 var actual = repository.findAll(filter, filter.buildPageRequest());
                 //Then
                 assertThat(actual)
                         .hasSize(1)
-                        .extracting(Owner::getName)
+                        .extracting(Customer::getName)
                         .containsExactly("John da Silva");
             }
         }

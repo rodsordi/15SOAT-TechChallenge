@@ -1,24 +1,24 @@
 package br.com.fiap.garage.application.v1.dto.factory;
 
-import br.com.fiap.garage.application.v1.dto.OwnerDto;
+import br.com.fiap.garage.application.v1.dto.CustomerDto;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class OwnerDtoFactory {
+public final class CustomerDtoFactory {
 
-    public static Request create_OwnerDto_Request() {
-        return new Request(OwnerDto.Request.builder());
+    public static Request create_CustomerDto_Request() {
+        return new Request(CustomerDto.Request.builder());
     }
 
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
-        private final OwnerDto.Request.RequestBuilder builder;
+        private final CustomerDto.Request.RequestBuilder builder;
 
-        public OwnerDto.Request withAllFields() {
+        public CustomerDto.Request withAllFields() {
             var result = builder
                     // Self
                     .username("john.doe@example.com")
@@ -33,14 +33,14 @@ public final class OwnerDtoFactory {
             return result;
         }
 
-        public OwnerDto.Request valid() {
+        public CustomerDto.Request valid() {
             return builder
                     .name("Jane Doe")
                     .email("jane.doe@example.com")
                     .build();
         }
 
-        public OwnerDto.Request initiatedEmpty() {
+        public CustomerDto.Request initiatedEmpty() {
             return builder.build();
         }
     }

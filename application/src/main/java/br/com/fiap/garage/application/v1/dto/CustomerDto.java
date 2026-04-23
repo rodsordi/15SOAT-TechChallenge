@@ -1,9 +1,9 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.OwnerController;
-import br.com.fiap.garage.application.v1.def.OwnerDef;
-import br.com.fiap.garage.application.v1.mapper.OwnerDtoMapper;
-import br.com.fiap.garage.domain.entity.Owner;
+import br.com.fiap.garage.application.v1.controller.CustomerController;
+import br.com.fiap.garage.application.v1.def.CustomerDef;
+import br.com.fiap.garage.application.v1.mapper.CustomerDtoMapper;
+import br.com.fiap.garage.domain.entity.Customer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -16,22 +16,22 @@ import static org.mapstruct.factory.Mappers.getMapper;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @NoArgsConstructor(access = PRIVATE)
-public final class OwnerDto {
+public final class CustomerDto {
 
-    public static final OwnerDtoMapper MAPPER = getMapper(OwnerDtoMapper.class);
+    public static final CustomerDtoMapper MAPPER = getMapper(CustomerDtoMapper.class);
 
     @Getter(onMethod_ = @Override)
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Owner.Request")
-    public static class Request implements OwnerDef.Request {
+    @Schema(name = ".Customer.Request")
+    public static class Request implements CustomerDef.Request {
         private String username;
         private String password;
         private String name;
         private String email;
 
-        public Owner buildOwner() {
+        public Customer buildCustomer() {
             return MAPPER.convert(this);
         }
     }
@@ -40,8 +40,8 @@ public final class OwnerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Owner.Response")
-    public static class Response implements OwnerDef.Response {
+    @Schema(name = ".Customer.Response")
+    public static class Response implements CustomerDef.Response {
         private UUID id;
         private String username;
         private String name;
@@ -49,8 +49,8 @@ public final class OwnerDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static Response buildOwnerDtoResponse(Owner owner) {
-            return MAPPER.convert(owner);
+        public static Response buildCustomerDtoResponse(Customer customer) {
+            return MAPPER.convert(customer);
         }
     }
 
@@ -59,8 +59,8 @@ public final class OwnerDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Owner.Representation")
-    public static class Representation extends RepresentationModel<Representation> implements OwnerDef.Representation {
+    @Schema(name = ".Customer.Representation")
+    public static class Representation extends RepresentationModel<Representation> implements CustomerDef.Representation {
         private UUID id;
         private String username;
         private String name;
@@ -68,9 +68,9 @@ public final class OwnerDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static Representation buildOwnerDtoRepresentation(Owner owner) {
-            var representation = MAPPER.convertToRepresentation(owner);
-            representation.add(linkTo(OwnerController.class)
+        public static Representation buildCustomerDtoRepresentation(Customer customer) {
+            var representation = MAPPER.convertToRepresentation(customer);
+            representation.add(linkTo(CustomerController.class)
                     .slash(representation.getId())
                     .withSelfRel());
             return representation;

@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.entity.factory;
 
-import br.com.fiap.garage.domain.entity.Owner;
+import br.com.fiap.garage.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
@@ -10,15 +10,15 @@ import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class OwnerFactory {
+public final class CustomerFactory {
 
-    private final Owner.OwnerBuilder<?, ?> builder;
+    private final Customer.CustomerBuilder<?, ?> builder;
 
-    public static OwnerFactory create_Owner() {
-        return new OwnerFactory(Owner.builder());
+    public static CustomerFactory create_Customer() {
+        return new CustomerFactory(Customer.builder());
     }
 
-    public Owner withAllFields() {
+    public Customer withAllFields() {
         var result = builder
                 // Self
                 .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
@@ -38,7 +38,7 @@ public final class OwnerFactory {
         return result;
     }
 
-    public Owner withAllFieldsExceptDB() {
+    public Customer withAllFieldsExceptDB() {
         withAllFields();
         return builder
                 .id(null)
@@ -49,14 +49,14 @@ public final class OwnerFactory {
                 .build();
     }
 
-    public Owner valid() {
+    public Customer valid() {
         return builder
                 .name("Jane Smith")
                 .email("jane.smith@fiap.com.br")
                 .build();
     }
 
-    public Owner initiatedEmpty() {
+    public Customer initiatedEmpty() {
         return builder.build();
     }
 }

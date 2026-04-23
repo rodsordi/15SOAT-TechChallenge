@@ -11,10 +11,10 @@ CREATE TABLE garage.authority (
                                   updated_at TIMESTAMP
 );
 
-COMMENT ON COLUMN garage.authority.id IS 'Authorization id. Owner: postgres';
-COMMENT ON COLUMN garage.authority.authority IS 'Authorization name. Owner: self';
-COMMENT ON COLUMN garage.authority.created_at IS 'Register created at. Owner: postgres';
-COMMENT ON COLUMN garage.authority.updated_at IS 'Register updated at. Owner: postgres';
+COMMENT ON COLUMN garage.authority.id IS 'Authorization id. Customer: postgres';
+COMMENT ON COLUMN garage.authority.authority IS 'Authorization name. Customer: self';
+COMMENT ON COLUMN garage.authority.created_at IS 'Register created at. Customer: postgres';
+COMMENT ON COLUMN garage.authority.updated_at IS 'Register updated at. Customer: postgres';
 
 ---
 --- Table: user (Base table for JOINED inheritance)
@@ -29,13 +29,13 @@ CREATE TABLE garage.users (
                                updated_at TIMESTAMP
 );
 
-COMMENT ON COLUMN garage.users.id IS 'User id. Owner: postgres';
-COMMENT ON COLUMN garage.users.username IS 'User e-mail. Owner: self';
-COMMENT ON COLUMN garage.users.password IS 'User password. Owner: self';
-COMMENT ON COLUMN garage.users.name IS 'User name. Owner: self';
-COMMENT ON COLUMN garage.users.email IS 'User e-mail. Owner: self';
-COMMENT ON COLUMN garage.users.created_at IS 'Register created at. Owner: postgres';
-COMMENT ON COLUMN garage.users.updated_at IS 'Register updated at. Owner: postgres';
+COMMENT ON COLUMN garage.users.id IS 'User id. Customer: postgres';
+COMMENT ON COLUMN garage.users.username IS 'User e-mail. Customer: self';
+COMMENT ON COLUMN garage.users.password IS 'User password. Customer: self';
+COMMENT ON COLUMN garage.users.name IS 'User name. Customer: self';
+COMMENT ON COLUMN garage.users.email IS 'User e-mail. Customer: self';
+COMMENT ON COLUMN garage.users.created_at IS 'Register created at. Customer: postgres';
+COMMENT ON COLUMN garage.users.updated_at IS 'Register updated at. Customer: postgres';
 
 ---
 --- Table: employee (JOINED subclass of user)
@@ -45,9 +45,9 @@ CREATE TABLE garage.employee (
 );
 
 ---
---- Table: owner (JOINED subclass of user)
+--- Table: customer (JOINED subclass of user)
 ---
-CREATE TABLE garage.owner (
+CREATE TABLE garage.customer (
                               id UUID PRIMARY KEY REFERENCES garage.users(id)
 );
 
@@ -72,12 +72,12 @@ CREATE TABLE garage.inventory (
                                   updated_at TIMESTAMP
 );
 
-COMMENT ON COLUMN garage.inventory.id IS 'Material id. Owner: postgres';
-COMMENT ON COLUMN garage.inventory.name IS 'Inventory name. Owner: self';
-COMMENT ON COLUMN garage.inventory.price IS 'Inventory price. Owner: self';
-COMMENT ON COLUMN garage.inventory.quantity_in_stock IS 'Inventory quantity in stock. Owner: self';
-COMMENT ON COLUMN garage.inventory.created_at IS 'Register created at. Owner: postgres';
-COMMENT ON COLUMN garage.inventory.updated_at IS 'Register updated at. Owner: postgres';
+COMMENT ON COLUMN garage.inventory.id IS 'Material id. Customer: postgres';
+COMMENT ON COLUMN garage.inventory.name IS 'Inventory name. Customer: self';
+COMMENT ON COLUMN garage.inventory.price IS 'Inventory price. Customer: self';
+COMMENT ON COLUMN garage.inventory.quantity_in_stock IS 'Inventory quantity in stock. Customer: self';
+COMMENT ON COLUMN garage.inventory.created_at IS 'Register created at. Customer: postgres';
+COMMENT ON COLUMN garage.inventory.updated_at IS 'Register updated at. Customer: postgres';
 
 ---
 --- Table: shop_supply (JOINED subclass of inventory)
@@ -103,10 +103,10 @@ CREATE TABLE garage.estimate (
                                  updated_at TIMESTAMP
 );
 
-COMMENT ON COLUMN garage.estimate.id IS 'Estimate id. Owner: postgres';
-COMMENT ON COLUMN garage.estimate.amount IS 'Estimate amount. Owner: self';
-COMMENT ON COLUMN garage.estimate.created_at IS 'Register created at. Owner: postgres';
-COMMENT ON COLUMN garage.estimate.updated_at IS 'Register updated at. Owner: postgres';
+COMMENT ON COLUMN garage.estimate.id IS 'Estimate id. Customer: postgres';
+COMMENT ON COLUMN garage.estimate.amount IS 'Estimate amount. Customer: self';
+COMMENT ON COLUMN garage.estimate.created_at IS 'Register created at. Customer: postgres';
+COMMENT ON COLUMN garage.estimate.updated_at IS 'Register updated at. Customer: postgres';
 
 ---
 --- Table: vehicle
@@ -120,12 +120,12 @@ CREATE TABLE garage.vehicle (
                                 updated_at TIMESTAMP
 );
 
-COMMENT ON COLUMN garage.vehicle.id IS 'Vehicle id. Owner: postgres';
-COMMENT ON COLUMN garage.vehicle.make IS 'Vehicle make. Owner: self';
-COMMENT ON COLUMN garage.vehicle.model IS 'Vehicle model. Owner: self';
-COMMENT ON COLUMN garage.vehicle.license_plate IS 'Vehicle license plate. Owner: self';
-COMMENT ON COLUMN garage.vehicle.created_at IS 'Register created at. Owner: postgres';
-COMMENT ON COLUMN garage.vehicle.updated_at IS 'Register updated at. Owner: postgres';
+COMMENT ON COLUMN garage.vehicle.id IS 'Vehicle id. Customer: postgres';
+COMMENT ON COLUMN garage.vehicle.make IS 'Vehicle make. Customer: self';
+COMMENT ON COLUMN garage.vehicle.model IS 'Vehicle model. Customer: self';
+COMMENT ON COLUMN garage.vehicle.license_plate IS 'Vehicle license plate. Customer: self';
+COMMENT ON COLUMN garage.vehicle.created_at IS 'Register created at. Customer: postgres';
+COMMENT ON COLUMN garage.vehicle.updated_at IS 'Register updated at. Customer: postgres';
 
 ---
 --- Table: work_order
@@ -138,8 +138,8 @@ CREATE TABLE garage.work_order (
                                    updated_at TIMESTAMP
 );
 
-COMMENT ON COLUMN garage.work_order.id IS 'WorkOrder id. Owner: postgres';
-COMMENT ON COLUMN garage.work_order.status IS 'WorkOrder status. Owner: self';
-COMMENT ON COLUMN garage.work_order.estimate_id IS 'Estimate id. Owner: postgres';
-COMMENT ON COLUMN garage.work_order.created_at IS 'Register created at. Owner: postgres';
-COMMENT ON COLUMN garage.work_order.updated_at IS 'Register updated at. Owner: postgres';
+COMMENT ON COLUMN garage.work_order.id IS 'WorkOrder id. Customer: postgres';
+COMMENT ON COLUMN garage.work_order.status IS 'WorkOrder status. Customer: self';
+COMMENT ON COLUMN garage.work_order.estimate_id IS 'Estimate id. Customer: postgres';
+COMMENT ON COLUMN garage.work_order.created_at IS 'Register created at. Customer: postgres';
+COMMENT ON COLUMN garage.work_order.updated_at IS 'Register updated at. Customer: postgres';

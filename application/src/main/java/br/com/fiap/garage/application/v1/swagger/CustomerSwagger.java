@@ -2,7 +2,7 @@ package br.com.fiap.garage.application.v1.swagger;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Owner (v1)", description = "Owner resource.")
-public interface OwnerSwagger {
+@Tag(name = "Customer (v1)", description = "Customer resource.")
+public interface CustomerSwagger {
 
 }

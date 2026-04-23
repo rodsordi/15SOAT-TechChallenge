@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.filter;
 
 import br.com.fiap.commons.filter.AuditableFilter;
-import br.com.fiap.garage.domain.entity.Owner;
+import br.com.fiap.garage.domain.entity.Customer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -18,26 +18,26 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @Getter
 @Setter
 @ParameterObject
-public class OwnerFilter extends AuditableFilter<Owner> implements Specification<Owner> {
+public class CustomerFilter extends AuditableFilter<Customer> implements Specification<Customer> {
 
-    @Schema(example = "John", description = "Owner name.")
+    @Schema(example = "John", description = "Customer name.")
     private String name;
 
-    private Specification<Owner> nameEqual() {
+    private Specification<Customer> nameEqual() {
         return (root, query, builder) -> isEmpty(name) ? null :
                 builder.equal(root.get("name"), name);
     }
 
-    @Schema(example = "user@email.com", description = "Owner e-mail.")
+    @Schema(example = "user@email.com", description = "Customer e-mail.")
     private String email;
 
-    private Specification<Owner> emailEqual() {
+    private Specification<Customer> emailEqual() {
         return (root, query, builder) -> isEmpty(email) ? null :
                 builder.equal(root.get("email"), email);
     }
 
     @Override
-    public @Nullable Predicate toPredicate(Root<Owner> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public @Nullable Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         return super.buildSpecification()
                 .and(nameEqual())
                 .and(emailEqual())

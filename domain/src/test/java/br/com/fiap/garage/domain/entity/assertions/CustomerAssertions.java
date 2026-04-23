@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.entity.assertions;
 
-import br.com.fiap.garage.domain.entity.Owner;
+import br.com.fiap.garage.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
@@ -9,20 +9,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class OwnerAssertions {
+public final class CustomerAssertions {
 
-    private final Owner actual;
+    private final Customer actual;
 
-    public static OwnerAssertions assertThat_Owner(Owner actual) {
+    public static CustomerAssertions assertThat_Customer(Customer actual) {
         assertThat(actual).isNotNull();
-        return new OwnerAssertions(spy(actual));
+        return new CustomerAssertions(spy(actual));
     }
 
     /**
-     * @see OwnerFactory
+     * @see CustomerFactory
      * .withAllFields()
      */
-    public void wasConvertedFrom_OwnerDto_Request() {
+    public void wasConvertedFrom_CustomerDto_Request() {
         // Self
         assertThat(actual.getId())
                 .isNull();

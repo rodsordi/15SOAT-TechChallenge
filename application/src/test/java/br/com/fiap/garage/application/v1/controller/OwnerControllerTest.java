@@ -1,9 +1,9 @@
 package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.commons.config.RestControllerTestConfig;
-import br.com.fiap.garage.domain.entity.Owner;
-import br.com.fiap.garage.domain.use_case.OwnerCreationUseCase;
-import br.com.fiap.garage.domain.use_case.OwnerSearchUseCase;
+import br.com.fiap.garage.domain.entity.Customer;
+import br.com.fiap.garage.domain.use_case.CustomerCreationUseCase;
+import br.com.fiap.garage.domain.use_case.CustomerSearchUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.create_OwnerDto_Request;
-import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
+import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
@@ -39,10 +39,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = OwnerController.class)
+@SpringBootTest(classes = CustomerController.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = RestControllerTestConfig.class)
-class OwnerControllerTest {
+class CustomerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,12 +51,12 @@ class OwnerControllerTest {
     private Gson gson;
 
     @MockitoBean
-    private OwnerCreationUseCase ownerCreationUseCase;
+    private CustomerCreationUseCase customerCreationUseCase;
 
     @MockitoBean
-    private OwnerSearchUseCase ownerSearchUseCase;
+    private CustomerSearchUseCase customerSearchUseCase;
 
-    @DisplayName("When creating Owner")
+    @DisplayName("When creating Customer")
     @Nested
     class Create {
 
@@ -66,22 +66,22 @@ class OwnerControllerTest {
 
             @BeforeEach
             void beforeEach() {
-                when(ownerCreationUseCase.create(any()))
+                when(customerCreationUseCase.create(any()))
                         .thenAnswer(invocationOnMock -> {
-                            Owner owner = invocationOnMock.getArgument(0);
-                            setField(owner, "id", fromString("7a403fc9-3c96-408c-984f-1fea2729b59f"));
-                            return owner;
+                            Customer customer = invocationOnMock.getArgument(0);
+                            setField(customer, "id", fromString("7a403fc9-3c96-408c-984f-1fea2729b59f"));
+                            return customer;
                         });
             }
 
-            @DisplayName("Given a owner with all fields")
+            @DisplayName("Given a customer with all fields")
             @Test
             void test1() throws Exception {
                 //Given
-                var requestBody = create_OwnerDto_Request()
+                var requestBody = create_CustomerDto_Request()
                         .withAllFields();
                 //When
-                mockMvc.perform(post("/v1/owners")
+                mockMvc.perform(post("/v1/customers")
                                 .contentType(APPLICATION_JSON)
                                 .accept(APPLICATION_JSON)
                                 .characterEncoding(UTF_8.name())
@@ -94,7 +94,7 @@ class OwnerControllerTest {
         }
     }
 
-    @DisplayName("When finding owner by id")
+    @DisplayName("When finding customer by id")
     @Nested
     class FindById {
 
@@ -104,22 +104,22 @@ class OwnerControllerTest {
 
             @BeforeEach
             void beforeEach() {
-                when(ownerSearchUseCase.findById(any()))
+                when(customerSearchUseCase.findById(any()))
                         .thenAnswer(invocationOnMock -> {
-                            UUID ownerId = invocationOnMock.getArgument(0);
-                            var owner = create_Owner().withAllFields();
-                            setField(owner, "id", ownerId);
-                            return owner;
+                            UUID customerId = invocationOnMock.getArgument(0);
+                            var customer = create_Customer().withAllFields();
+                            setField(customer, "id", customerId);
+                            return customer;
                         });
             }
 
-            @DisplayName("Given a valid ownerId")
+            @DisplayName("Given a valid customerId")
             @Test
             void test1() throws Exception {
                 //Given
-                var ownerId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
+                var customerId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
                 //When
-                mockMvc.perform(get(format("/v1/owners/{0}", ownerId)))
+                mockMvc.perform(get(format("/v1/customers/{0}", customerId)))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())
@@ -129,7 +129,7 @@ class OwnerControllerTest {
         }
     }
 
-    @DisplayName("When finding all owners")
+    @DisplayName("When finding all customers")
     @Nested
     class FindAll {
 
@@ -139,13 +139,13 @@ class OwnerControllerTest {
 
             @BeforeEach
             void beforeEach() {
-                when(ownerSearchUseCase.findAll(any()))
+                when(customerSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
-                            var owners = List.of(
-                                    create_Owner().withAllFields(),
-                                    create_Owner().withAllFields(),
-                                    create_Owner().withAllFields());
-                            return new PageImpl<>(owners);
+                            var customers = List.of(
+                                    create_Customer().withAllFields(),
+                                    create_Customer().withAllFields(),
+                                    create_Customer().withAllFields());
+                            return new PageImpl<>(customers);
                         });
             }
 
@@ -153,7 +153,7 @@ class OwnerControllerTest {
             @Test
             void test1() throws Exception {
                 //When
-                mockMvc.perform(get("/v1/owners"))
+                mockMvc.perform(get("/v1/customers"))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())

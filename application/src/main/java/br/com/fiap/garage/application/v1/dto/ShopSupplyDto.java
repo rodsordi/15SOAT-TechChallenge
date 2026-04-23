@@ -48,8 +48,8 @@ public final class ShopSupplyDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static ShopSupplyDto.Response buildShopSupplyDtoResponse(ShopSupply owner) {
-            return MAPPER.convert(owner);
+        public static ShopSupplyDto.Response buildShopSupplyDtoResponse(ShopSupply customer) {
+            return MAPPER.convert(customer);
         }
     }
 }

@@ -49,8 +49,8 @@ public final class EmployeeDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         
-        public static EmployeeDto.Response buildEmployeeDtoResponse(Employee owner) {
-            return MAPPER.convert(owner);
+        public static EmployeeDto.Response buildEmployeeDtoResponse(Employee customer) {
+            return MAPPER.convert(customer);
         }
     }
 
@@ -68,8 +68,8 @@ public final class EmployeeDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static EmployeeDto.Representation buildEmployeeDtoRepresentation(Employee owner) {
-            var representation = MAPPER.convertToRepresentation(owner);
+        public static EmployeeDto.Representation buildEmployeeDtoRepresentation(Employee customer) {
+            var representation = MAPPER.convertToRepresentation(customer);
             representation.add(linkTo(EmployeeController.class)
                     .slash(representation.getId())
                     .withSelfRel());

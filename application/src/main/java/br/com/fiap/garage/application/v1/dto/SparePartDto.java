@@ -49,8 +49,8 @@ public final class SparePartDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static SparePartDto.Response buildSparePartDtoResponse(SparePart owner) {
-            return MAPPER.convert(owner);
+        public static SparePartDto.Response buildSparePartDtoResponse(SparePart customer) {
+            return MAPPER.convert(customer);
         }
     }
 }

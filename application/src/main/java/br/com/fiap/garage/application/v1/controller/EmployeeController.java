@@ -22,9 +22,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = "/v1/employees")
 public class EmployeeController implements EmployeeSwagger {
 
-    private final EmployeeCreationUseCase ownerCreationUseCase;
+    private final EmployeeCreationUseCase customerCreationUseCase;
 
-    private final EmployeeSearchUseCase ownerSearchUseCase;
+    private final EmployeeSearchUseCase customerSearchUseCase;
 
     @PostMapping(
             consumes = APPLICATION_JSON_VALUE,
@@ -34,24 +34,24 @@ public class EmployeeController implements EmployeeSwagger {
             @Valid
             @RequestBody
             EmployeeDto.Request requestBody) {
-        var owner = requestBody.buildEmployee();
-        var createdEmployee = ownerCreationUseCase.create(owner);
+        var customer = requestBody.buildEmployee();
+        var createdEmployee = customerCreationUseCase.create(customer);
         return buildEmployeeDtoResponse(createdEmployee);
     }
 
-    @GetMapping(path = "/{ownerId}",
+    @GetMapping(path = "/{customerId}",
             produces = APPLICATION_JSON_VALUE)
     public EmployeeDto.Response findById(
-            @PathVariable("ownerId")
-            UUID ownerId) {
-        var foundEmployee = ownerSearchUseCase.findById(ownerId);
+            @PathVariable("customerId")
+            UUID customerId) {
+        var foundEmployee = customerSearchUseCase.findById(customerId);
         return buildEmployeeDtoResponse(foundEmployee);
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public Page<EmployeeDto.Representation> findAll(
             EmployeeFilter filter) {
-        var foundEmployees = ownerSearchUseCase.findAll(filter);
+        var foundEmployees = customerSearchUseCase.findAll(filter);
         var responseBody = foundEmployees.stream()
                 .map(EmployeeDto.Representation::buildEmployeeDtoRepresentation)
                 .toList();

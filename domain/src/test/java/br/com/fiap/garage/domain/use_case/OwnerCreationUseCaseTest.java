@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.use_case;
 
-import br.com.fiap.garage.domain.entity.Owner;
-import br.com.fiap.garage.domain.repository.OwnerRepository;
+import br.com.fiap.garage.domain.entity.Customer;
+import br.com.fiap.garage.domain.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static java.util.UUID.fromString;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,18 +20,18 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ExtendWith(MockitoExtension.class)
-class OwnerCreationUseCaseTest {
+class CustomerCreationUseCaseTest {
 
     @InjectMocks
-    private OwnerCreationUseCase ownerCreationUseCase;
+    private CustomerCreationUseCase customerCreationUseCase;
 
     @Mock
-    private OwnerRepository repository;
+    private CustomerRepository repository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @DisplayName("When creating Owner")
+    @DisplayName("When creating Customer")
     @Nested
     class Create {
 
@@ -43,22 +43,22 @@ class OwnerCreationUseCaseTest {
             void beforeEach() {
                 when(repository.save(any()))
                         .thenAnswer(invocationOnMock -> {
-                            Owner owner = invocationOnMock.getArgument(0);
-                            setField(owner, "id", fromString("c0a1f176-d3e6-4910-8fba-9a6c31bc5577"));
-                            return owner;
+                            Customer customer = invocationOnMock.getArgument(0);
+                            setField(customer, "id", fromString("c0a1f176-d3e6-4910-8fba-9a6c31bc5577"));
+                            return customer;
                         });
                 when(passwordEncoder.encode(any()))
                         .thenAnswer(invocation -> invocation.getArgument(0));
             }
 
-            @DisplayName("Given a Owner with all fields")
+            @DisplayName("Given a Customer with all fields")
             @Test
             void test1() {
                 //Given
-                var owner = create_Owner()
+                var customer = create_Customer()
                         .withAllFields();
                 //When
-                var actual = ownerCreationUseCase.create(owner);
+                var actual = customerCreationUseCase.create(customer);
                 //Then
                 assertThat(actual.getId())
                         .hasToString("c0a1f176-d3e6-4910-8fba-9a6c31bc5577");

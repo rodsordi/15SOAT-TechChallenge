@@ -23,9 +23,9 @@ public class Estimate extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(comment = "Estimate id. Owner: postgres")
+    @Column(comment = "Estimate id. Customer: postgres")
     private Long id;
 
-    @Column(nullable = false, comment = "Estimate amount. Owner: self")
+    @Column(nullable = false, comment = "Estimate amount. Customer: self")
     private BigDecimal amount;
 }

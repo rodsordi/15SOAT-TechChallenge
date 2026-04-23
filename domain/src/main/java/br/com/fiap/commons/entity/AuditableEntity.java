@@ -25,10 +25,10 @@ import static lombok.AccessLevel.PROTECTED;
 public abstract class AuditableEntity implements Serializable {
 
     @CreatedDate
-    @Column(nullable = false, comment = "Register created at. Owner: postgres")
+    @Column(nullable = false, comment = "Register created at. Customer: postgres")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(comment = "Register updated at. Owner: postgres")
+    @Column(comment = "Register updated at. Customer: postgres")
     private LocalDateTime updatedAt;
 }

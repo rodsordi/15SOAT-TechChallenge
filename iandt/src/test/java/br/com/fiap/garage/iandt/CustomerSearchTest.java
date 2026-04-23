@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.create_OwnerDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -21,9 +21,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class OwnerSearchTest extends GarageIntegrationTest {
+public class CustomerSearchTest extends GarageIntegrationTest {
 
-    @DisplayName("When finding an owner by id")
+    @DisplayName("When finding an customer by id")
     @Nested
     class FindById {
 
@@ -31,7 +31,7 @@ public class OwnerSearchTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a valid owner id, in scenario with saved owner")
+            @DisplayName("Given a valid customer id, in scenario with saved customer")
             @Test
             void test1() {
                 //Scenario
@@ -39,19 +39,19 @@ public class OwnerSearchTest extends GarageIntegrationTest {
                         .log().all()
                         .header("Authorization", authorization)
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_OwnerDto_Request().withAllFields()))
-                        .post("/v1/owners")
+                        .body(json.writeValueAsString(create_CustomerDto_Request().withAllFields()))
+                        .post("/v1/customers")
                         .then()
                         .log().all()
                         .extract()
                         .response();
                 //Given
-                var ownerId = scenarioResponse.jsonPath().getString("id");
+                var customerId = scenarioResponse.jsonPath().getString("id");
                 //When
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get(format("/v1/owners/{0}", ownerId))
+                        .get(format("/v1/customers/{0}", customerId))
                         .then()
                         .log().all()
                         .extract()
@@ -63,7 +63,7 @@ public class OwnerSearchTest extends GarageIntegrationTest {
         }
     }
 
-    @DisplayName("When finding all owners")
+    @DisplayName("When finding all customers")
     @Nested
     class FindAll {
 
@@ -71,7 +71,7 @@ public class OwnerSearchTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given no query params, in scenario with saved owner")
+            @DisplayName("Given no query params, in scenario with saved customer")
             @Test
             void test1() {
                 //Scenario
@@ -79,8 +79,8 @@ public class OwnerSearchTest extends GarageIntegrationTest {
                         .log().all()
                         .header("Authorization", authorization)
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_OwnerDto_Request().withAllFields()))
-                        .post("/v1/owners")
+                        .body(json.writeValueAsString(create_CustomerDto_Request().withAllFields()))
+                        .post("/v1/customers")
                         .then()
                         .log().all()
                         .extract()
@@ -89,7 +89,7 @@ public class OwnerSearchTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get("/v1/owners")
+                        .get("/v1/customers")
                         .then()
                         .log().all()
                         .extract()

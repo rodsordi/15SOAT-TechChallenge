@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.OwnerDtoFactory.create_OwnerDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -21,9 +21,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class OwnerCreationTest extends GarageIntegrationTest {
+public class CustomerCreationTest extends GarageIntegrationTest {
 
-    @DisplayName("When creating a new owner")
+    @DisplayName("When creating a new customer")
     @Nested
     class Create {
 
@@ -31,11 +31,11 @@ public class OwnerCreationTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given an owner with all fields")
+            @DisplayName("Given an customer with all fields")
             @Test
             void test1() {
                 //Given
-                var requestBody = create_OwnerDto_Request()
+                var requestBody = create_CustomerDto_Request()
                         .withAllFields();
                 //When
                 var response = given()
@@ -43,7 +43,7 @@ public class OwnerCreationTest extends GarageIntegrationTest {
                         .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(requestBody))
-                        .post("/v1/owners")
+                        .post("/v1/customers")
                         .then()
                         .log().all()
                         .extract()

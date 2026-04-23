@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.repository;
 
-import br.com.fiap.garage.domain.entity.Owner;
+import br.com.fiap.garage.domain.entity.Customer;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 
 @Order(1)
-public interface OwnerRepository extends CrudRepository<Owner, UUID> {
+public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 
-    Page<Owner> findAll(Specification<Owner> filter, Pageable pageable);
+    Page<Customer> findAll(Specification<Customer> filter, Pageable pageable);
 }
