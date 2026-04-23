@@ -21,7 +21,9 @@ public final class OwnerDtoFactory {
         public OwnerDto.Request withAllFields() {
             var result = builder
                     // Self
+                    .username("john.doe@example.com")
                     .name("John Doe")
+                    .password("1234asdl")
                     .email("john.doe@example.com")
                     .build();
 

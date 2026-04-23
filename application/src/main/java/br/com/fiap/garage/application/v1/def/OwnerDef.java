@@ -14,6 +14,7 @@ public interface OwnerDef {
 
     interface Represented extends Serializable {
 
+        String getUsername();
         String getName();
         String getEmail();
     }
@@ -33,6 +34,7 @@ public interface OwnerDef {
 
     interface Request extends Detailed {
 
+        String getPassword();
     }
 
     interface Response extends Detailed, DetailedPersisted {

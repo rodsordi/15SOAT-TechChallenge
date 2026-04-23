@@ -26,6 +26,8 @@ public final class OwnerDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".Owner.Request")
     public static class Request implements OwnerDef.Request {
+        private String username;
+        private String password;
         private String name;
         private String email;
 
@@ -41,6 +43,7 @@ public final class OwnerDto {
     @Schema(name = ".Owner.Response")
     public static class Response implements OwnerDef.Response {
         private UUID id;
+        private String username;
         private String name;
         private String email;
         private LocalDateTime createdAt;
@@ -59,6 +62,7 @@ public final class OwnerDto {
     @Schema(name = ".Owner.Representation")
     public static class Representation extends RepresentationModel<Representation> implements OwnerDef.Representation {
         private UUID id;
+        private String username;
         private String name;
         private String email;
         private LocalDateTime createdAt;

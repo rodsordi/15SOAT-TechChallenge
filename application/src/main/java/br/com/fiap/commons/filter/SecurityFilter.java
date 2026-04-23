@@ -1,7 +1,7 @@
 package br.com.fiap.commons.filter;
 
+import br.com.fiap.commons.security.LoginService;
 import br.com.fiap.commons.security.TokenService;
-import br.com.fiap.garage.domain.service.LoginService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             try {
                 var username = tokenService.validateTokenAndGetUsername(token);
-                UserDetails user = loginService.login(username);
+                UserDetails user = loginService.loadUserByUsername(username);
 
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);

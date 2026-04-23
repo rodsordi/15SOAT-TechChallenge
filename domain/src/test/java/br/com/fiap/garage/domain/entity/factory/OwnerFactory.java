@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.factory.AuthorityFactory.create_Authority;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -21,8 +22,12 @@ public final class OwnerFactory {
         var result = builder
                 // Self
                 .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
+                .username("jack.doe@company.com")
+                .password("4321abcd")
                 .name("John Doe")
                 .email("john.doe@fiap.com.br")
+                // Composition
+                .authority(create_Authority().withAllFields())
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
                 .updatedAt(newDateTime("21/04/2026 15:30:00"))
@@ -37,6 +42,8 @@ public final class OwnerFactory {
         withAllFields();
         return builder
                 .id(null)
+                .clearAuthorities()
+                .authority(create_Authority().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)
                 .build();

@@ -10,8 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.Request.create_VehicleDto_Request;
-import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.Request.create_VehicleDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -41,6 +40,7 @@ public class VehicleResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(requestBody))
                         .post("/v1/vehicles")
@@ -69,6 +69,7 @@ public class VehicleResourceTest extends GarageIntegrationTest {
                 //Scenario
                 var scenarioResponse = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(create_VehicleDto_Request().withAllFields()))
                         .post("/v1/vehicles")
@@ -81,6 +82,7 @@ public class VehicleResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get(format("/v1/vehicles/{0}", vehicleId))
                         .then()
                         .log().all()
@@ -107,6 +109,7 @@ public class VehicleResourceTest extends GarageIntegrationTest {
                 //Scenario
                 given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(create_VehicleDto_Request().withAllFields()))
                         .post("/v1/vehicles")
@@ -117,6 +120,7 @@ public class VehicleResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get("/v1/vehicles")
                         .then()
                         .log().all()

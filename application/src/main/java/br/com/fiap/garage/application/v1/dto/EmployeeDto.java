@@ -26,7 +26,10 @@ public final class EmployeeDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".Employee.Request")
     public static class Request implements EmployeeDef.Request {
+        private String username;
+        private String password;
         private String name;
+        private String email;
 
         public Employee buildEmployee() {
             return MAPPER.convert(this);
@@ -40,7 +43,9 @@ public final class EmployeeDto {
     @Schema(name = ".Employee.Response")
     public static class Response implements EmployeeDef.Response {
         private UUID id;
+        private String username;
         private String name;
+        private String email;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         
@@ -57,7 +62,9 @@ public final class EmployeeDto {
     @Schema(name = ".Employee.Representation")
     public static class Representation extends RepresentationModel<Representation> implements EmployeeDef.Representation {
         private UUID id;
+        private String username;
         private String name;
+        private String email;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

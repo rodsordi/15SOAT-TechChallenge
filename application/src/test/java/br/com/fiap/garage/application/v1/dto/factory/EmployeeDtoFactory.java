@@ -20,7 +20,10 @@ public final class EmployeeDtoFactory {
 
         public EmployeeDto.Request withAllFields() {
             var result = builder
+                    .username("john.doe@garage.com")
+                    .password("1a2s3d4f")
                     .name("John")
+                    .email("john.doe@garage.com")
                     .build();
 
             assertThatObject(result).hasNoEmptyFields();

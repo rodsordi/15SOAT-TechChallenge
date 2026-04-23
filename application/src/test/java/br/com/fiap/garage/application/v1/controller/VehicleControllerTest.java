@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.Request.create_VehicleDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;

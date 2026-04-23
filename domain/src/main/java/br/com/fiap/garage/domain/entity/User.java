@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Set;
 import java.util.UUID;
 
-import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.InheritanceType.JOINED;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -22,7 +22,7 @@ import static lombok.AccessLevel.PROTECTED;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
-@Table(schema = "garage")
+@Table(schema = "garage", name = "users")
 @Inheritance(strategy = JOINED)
 public class User extends AuditableEntity implements UserDetails {
 
@@ -31,25 +31,29 @@ public class User extends AuditableEntity implements UserDetails {
     @Column(comment = "User id. Owner: postgres")
     private UUID id;
 
-    @Column(nullable = false, unique = true, comment = "Owner e-mail. Owner: self")
-    private String email;
+    @Getter(onMethod_ = @Override)
+    @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")
+    private String username;
 
     @Getter(onMethod_ = @Override)
-    @Column(nullable = false, length = 20, comment = "User password. Owner: self")
+    @Column(nullable = false, comment = "User password. Owner: self")
     private String password;
 
+    @Column(nullable = false, length = 55, comment = "User name. Owner: self")
+    private String name;
+
+    @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")
+    private String email;
+
     @Singular(value = "authority", ignoreNullCollections = true)
-    @OneToMany(cascade = ALL, orphanRemoval = true)
-    @JoinColumn(name = "authority_id", updatable = false, nullable = false, comment = "Authority id.")
+    @ManyToMany(fetch = EAGER)
+    @JoinTable(schema = "garage", name = "users_authority",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id"))
     @OrderBy("createdAt desc")
     private Set<Authority> authorities;
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         password = passwordEncoder.encode(password);
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
     }
 }

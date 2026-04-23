@@ -10,8 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.Request.create_ShopSupplyDto_Request;
-import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.Request.create_ShopSupplyDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.create_ShopSupplyDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -41,6 +40,7 @@ public class ShopSupplyResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(requestBody))
                         .post("/v1/shop-supplies")
@@ -69,6 +69,7 @@ public class ShopSupplyResourceTest extends GarageIntegrationTest {
                 //Scenario
                 var scenarioResponse = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(create_ShopSupplyDto_Request().withAllFields()))
                         .post("/v1/shop-supplies")
@@ -81,6 +82,7 @@ public class ShopSupplyResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get(format("/v1/shop-supplies/{0}", shopSupplyId))
                         .then()
                         .log().all()

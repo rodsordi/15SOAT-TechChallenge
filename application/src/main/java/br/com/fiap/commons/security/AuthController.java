@@ -15,20 +15,22 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = "/auth")
 public class AuthController implements AuthSwagger {
 
+    private final LoginService loginService;
+
     private final TokenService tokenService;
 
     @PostMapping(path = "/login",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<LoginResponseDTO> login(
+    public ResponseEntity<LoginResponseDto> login(
             @RequestBody
-            LoginRequestDTO data) {
-        var userDetails = tokenService.loadUserByUsername("");
+            LoginRequestDto data) {
+        var userDetails = loginService.loadUserByUsername(data.username);
         var token = tokenService.generateToken(userDetails.getUsername());
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
-    record LoginRequestDTO(String username, String password) {}
+    record LoginRequestDto(String username, String password) {}
 
-    record LoginResponseDTO(String token) {}
+    record LoginResponseDto(String token) {}
 }

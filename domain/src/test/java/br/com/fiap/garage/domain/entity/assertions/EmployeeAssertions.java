@@ -27,8 +27,16 @@ public final class EmployeeAssertions {
         // Self
         assertThat(actual.getId())
                 .isNull();
+        assertThat(actual.getUsername())
+                .isEqualTo("john.doe@garage.com");
+        assertThat(actual.getPassword())
+                .isEqualTo("1a2s3d4f");
         assertThat(actual.getName())
                 .isEqualTo("John");
+        assertThat(actual.getEmail())
+                .isEqualTo("john.doe@garage.com");
+        assertThat(actual.getAuthorities())
+                .isNullOrEmpty();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

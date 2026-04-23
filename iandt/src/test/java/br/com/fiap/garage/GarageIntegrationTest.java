@@ -15,6 +15,7 @@ import tools.jackson.databind.json.JsonMapper;
 import java.text.MessageFormat;
 import java.util.List;
 
+import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.lang.String.format;
@@ -52,34 +53,24 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
     }
 
     private void authenticate() {
-        var employee = EmployeeDtoFactory.create_EmployeeDto_Request()
+        var requestBody = create_EmployeeDto_Request()
                 .withAllFields();
-
         var response = given()
                 .log().all()
                 .contentType(JSON)
-                .body("""
-                        {
-                            "username": "admin",
-                            "password": "admin"
-                        }
-                        """)
+                .body(json.writeValueAsString(requestBody))
                 .post("/v1/employees")
                 .then()
                 .log().all()
                 .extract()
                 .response();
-        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.statusCode())
+                .isEqualTo(201);
 
         response = given()
                 .log().all()
                 .contentType(JSON)
-                .body("""
-                        {
-                            "username": "admin",
-                            "password": "admin"
-                        }
-                        """)
+                .body(response.body().asPrettyString())
                 .post("/auth/login")
                 .then()
                 .log().all()

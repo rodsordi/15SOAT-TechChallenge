@@ -1,20 +1,18 @@
 package br.com.fiap.commons.security;
 
-import br.com.fiap.garage.domain.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@RequiredArgsConstructor
 @Service
-public class TokenService implements UserDetailsService {
-    
-    
+public class TokenService {
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -41,13 +39,5 @@ public class TokenService implements UserDetailsService {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return User.builder()
-                .username("rodrigo")
-                .password("abc123")
-                .build();
     }
 }

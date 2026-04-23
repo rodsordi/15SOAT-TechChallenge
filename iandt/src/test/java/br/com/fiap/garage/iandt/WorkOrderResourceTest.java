@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.Request.create_WorkOrderDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.create_WorkOrderDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -40,6 +40,7 @@ public class WorkOrderResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(requestBody))
                         .post("/v1/work-orders")
@@ -68,6 +69,7 @@ public class WorkOrderResourceTest extends GarageIntegrationTest {
                 //Scenario
                 var scenarioResponse = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(create_WorkOrderDto_Request().withAllFields()))
                         .post("/v1/work-orders")
@@ -80,6 +82,7 @@ public class WorkOrderResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get(format("/v1/work-orders/{0}", workOrderId))
                         .then()
                         .log().all()
@@ -106,6 +109,7 @@ public class WorkOrderResourceTest extends GarageIntegrationTest {
                 //Scenario
                 given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(create_WorkOrderDto_Request().withAllFields()))
                         .post("/v1/work-orders")
@@ -116,6 +120,7 @@ public class WorkOrderResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get("/v1/work-orders")
                         .then()
                         .log().all()

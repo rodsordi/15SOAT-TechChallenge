@@ -30,6 +30,8 @@ public final class OwnerDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
+            assertThat(actual.getUsername())
+                    .isEqualTo("jack.doe@company.com");
             assertThat(actual.getName())
                     .isEqualTo("John Doe");
             assertThat(actual.getEmail())
@@ -65,6 +67,8 @@ public final class OwnerDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
+            assertThat(actual.getUsername())
+                    .isEqualTo("jack.doe@company.com");
             assertThat(actual.getName())
                     .isEqualTo("John Doe");
             assertThat(actual.getEmail())

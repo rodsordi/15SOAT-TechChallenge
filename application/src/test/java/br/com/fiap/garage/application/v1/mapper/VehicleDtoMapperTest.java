@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static br.com.fiap.garage.application.v1.dto.assertions.VehicleDtoAssertions.Representation.assertThat_VehicleDto_Representation;
 import static br.com.fiap.garage.application.v1.dto.assertions.VehicleDtoAssertions.Response.assertThat_VehicleDto_Response;
-import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.Request.create_VehicleDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static br.com.fiap.garage.domain.entity.assertions.VehicleAssertions.assertThat_Vehicle;
 import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static org.mapstruct.factory.Mappers.getMapper;

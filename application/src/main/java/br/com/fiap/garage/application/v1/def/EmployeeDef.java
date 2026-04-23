@@ -14,7 +14,9 @@ public interface EmployeeDef {
 
     interface Represented extends Serializable {
 
+        String getUsername();
         String getName();
+        String getEmail();
     }
 
     interface Detailed extends Represented {
@@ -32,6 +34,7 @@ public interface EmployeeDef {
 
     interface Request extends Detailed {
 
+        String getPassword();
     }
 
     interface Response extends Detailed, DetailedPersisted {

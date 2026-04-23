@@ -20,6 +20,4 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(schema = "garage")
 public class Owner extends User implements Serializable {
 
-    @Column(nullable = false, length = 55, comment = "Owner name. Owner: self")
-    private String name;
 }

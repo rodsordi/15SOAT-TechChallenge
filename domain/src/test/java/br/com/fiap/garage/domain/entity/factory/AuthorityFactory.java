@@ -1,33 +1,27 @@
 package br.com.fiap.garage.domain.entity.factory;
 
-import br.com.fiap.garage.domain.entity.Employee;
+import br.com.fiap.garage.domain.entity.Authority;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.domain.entity.factory.AuthorityFactory.create_Authority;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class EmployeeFactory {
+public final class AuthorityFactory {
 
-    private final Employee.EmployeeBuilder<?, ?> builder;
+    private final Authority.AuthorityBuilder<?, ?> builder;
 
-    public static EmployeeFactory create_Employee() {
-        return new EmployeeFactory(Employee.builder());
+    public static AuthorityFactory create_Authority() {
+        return new AuthorityFactory(Authority.builder());
     }
 
-    public Employee withAllFields() {
+    public Authority withAllFields() {
         var result = builder
                 // Self
-                .id(fromString("a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"))
-                .username("john.doe@garage.com")
-                .password("abc123")
-                .name("John Doe")
-                .email("john.doe@garage.com")
-                // Composition
-                .authority(create_Authority().withAllFields())
+                .id(fromString("9f2c6680-d47f-4a91-9680-8d64b514e5f8"))
+                .authority("ROLE_ADMIN")
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
                 .updatedAt(newDateTime("21/04/2026 15:30:00"))
@@ -39,24 +33,22 @@ public final class EmployeeFactory {
         return result;
     }
 
-    public Employee withAllFieldsExceptDB() {
+    public Authority withAllFieldsExceptDB() {
         withAllFields();
         return builder
                 .id(null)
-                .clearAuthorities()
-                .authority(create_Authority().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)
                 .build();
     }
 
-    public Employee valid() {
+    public Authority valid() {
         return builder
-                .name("Jane Smith")
+                .authority("ROLE_USER")
                 .build();
     }
 
-    public Employee initiatedEmpty() {
+    public Authority initiatedEmpty() {
         return builder.build();
     }
 }

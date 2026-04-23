@@ -40,6 +40,8 @@ class EmployeeRepositoryExtTest {
             void test1() {
                 //Scenario
                 var employee = create_Employee().withAllFieldsExceptDB();
+                employee.getAuthorities()
+                        .forEach(authority -> em.persist(authority));
                 setField(employee, "name", "John da Silva");
                 repository.save(employee);
                 em.flush();

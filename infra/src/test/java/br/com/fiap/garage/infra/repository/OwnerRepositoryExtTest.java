@@ -40,6 +40,8 @@ class OwnerRepositoryExtTest {
             void test1() {
                 //Scenario
                 var owner = create_Owner().withAllFieldsExceptDB();
+                owner.getAuthorities()
+                        .forEach(authority -> em.persist(authority));
                 setField(owner, "name", "John da Silva");
                 repository.save(owner);
                 em.flush();

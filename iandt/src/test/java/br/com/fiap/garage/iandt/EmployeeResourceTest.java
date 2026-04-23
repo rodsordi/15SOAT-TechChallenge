@@ -2,7 +2,6 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,20 +10,19 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.Request.create_EmployeeDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("int_test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
 class EmployeeResourceTest extends GarageIntegrationTest {
-
-
 
     @DisplayName("When creating a new employee")
     @Nested
@@ -40,11 +38,12 @@ class EmployeeResourceTest extends GarageIntegrationTest {
                 //Given
                 var requestBody = create_EmployeeDto_Request()
                         .withAllFields();
+                setField(requestBody, "username", "email.employee@garage.com");
+                setField(requestBody, "email", "email.employee@garage.com");
                 //When
                 var response = given()
                         .log().all()
                         .contentType(JSON)
-                        .header("Authorization", authorization)
                         .body(json.writeValueAsString(requestBody))
                         .post("/v1/employees")
                         .then()
@@ -70,10 +69,14 @@ class EmployeeResourceTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
+                var requestBody = create_EmployeeDto_Request()
+                        .withAllFields();
+                setField(requestBody, "username", "email.employee@garage.com");
+                setField(requestBody, "email", "email.employee@garage.com");
                 var scenarioResponse = given()
                         .log().all()
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_EmployeeDto_Request().withAllFields()))
+                        .body(json.writeValueAsString(requestBody))
                         .post("/v1/employees")
                         .then()
                         .log().all()
@@ -84,6 +87,7 @@ class EmployeeResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get(format("/v1/employees/{0}", employeeId))
                         .then()
                         .log().all()
@@ -108,10 +112,14 @@ class EmployeeResourceTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
+                var requestBody = create_EmployeeDto_Request()
+                        .withAllFields();
+                setField(requestBody, "username", "email.employee@garage.com");
+                setField(requestBody, "email", "email.employee@garage.com");
                 given()
                         .log().all()
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_EmployeeDto_Request().withAllFields()))
+                        .body(json.writeValueAsString(requestBody))
                         .post("/v1/employees")
                         .then()
                         .log().all()
@@ -120,6 +128,7 @@ class EmployeeResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get("/v1/employees")
                         .then()
                         .log().all()

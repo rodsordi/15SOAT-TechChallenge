@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory.Request.create_SparePartDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory.create_SparePartDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -36,6 +36,7 @@ public class InventoryResourceTest extends GarageIntegrationTest {
                 //Scenario
                 given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .contentType(JSON)
                         .body(json.writeValueAsString(create_SparePartDto_Request().withAllFields()))
                         .post("/v1/spare-parts")
@@ -46,6 +47,7 @@ public class InventoryResourceTest extends GarageIntegrationTest {
                 //When
                 var response = given()
                         .log().all()
+                        .header("Authorization", authorization)
                         .get("/v1/inventories")
                         .then()
                         .log().all()

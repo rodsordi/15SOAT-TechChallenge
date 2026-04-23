@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import java.util.UUID;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -20,9 +21,9 @@ import static lombok.AccessLevel.PROTECTED;
 public class Authority extends AuditableEntity implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue
     @Column(comment = "Authorization id. Owner: postgres")
-    private Long id;
+    private UUID id;
 
     @Getter(onMethod_ = @Override)
     @Column(nullable = false, length = 20, comment = "Authorization name. Owner: self")

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static br.com.fiap.garage.domain.entity.factory.OwnerFactory.create_Owner;
 import static java.util.UUID.fromString;
@@ -27,6 +28,9 @@ class OwnerCreationUseCaseTest {
     @Mock
     private OwnerRepository repository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @DisplayName("When creating Owner")
     @Nested
     class Create {
@@ -43,6 +47,8 @@ class OwnerCreationUseCaseTest {
                             setField(owner, "id", fromString("c0a1f176-d3e6-4910-8fba-9a6c31bc5577"));
                             return owner;
                         });
+                when(passwordEncoder.encode(any()))
+                        .thenAnswer(invocation -> invocation.getArgument(0));
             }
 
             @DisplayName("Given a Owner with all fields")

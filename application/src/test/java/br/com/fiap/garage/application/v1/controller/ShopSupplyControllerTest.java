@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.Request.create_ShopSupplyDto_Request;
+import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.create_ShopSupplyDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory.create_ShopSupply;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
