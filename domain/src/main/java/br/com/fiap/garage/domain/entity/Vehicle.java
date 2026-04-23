@@ -22,15 +22,15 @@ public class Vehicle extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Vehicle id. Customer: postgres")
+    @Column(comment = "Vehicle id. Owner: postgres")
     private UUID id;
 
-    @Column(nullable = false, length = 55, comment = "Vehicle make. Customer: self")
+    @Column(nullable = false, length = 55, comment = "Vehicle make. Owner: self")
     private String make;
 
-    @Column(nullable = false, length = 55, comment = "Vehicle model. Customer: self")
+    @Column(nullable = false, length = 55, comment = "Vehicle model. Owner: self")
     private String model;
 
-    @Column(nullable = false, length = 10, comment = "Vehicle license plate. Customer: self")
+    @Column(nullable = false, length = 10, comment = "Vehicle license plate. Owner: self")
     private String licensePlate;
 }

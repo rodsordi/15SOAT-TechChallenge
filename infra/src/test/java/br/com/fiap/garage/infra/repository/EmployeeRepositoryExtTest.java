@@ -57,4 +57,36 @@ class EmployeeRepositoryExtTest {
             }
         }
     }
+
+    @DisplayName("When finding employee by cpf")
+    @Nested
+    class FindByCpf {
+
+        @DisplayName("Then should execute successfully")
+        @Nested
+        class Success {
+
+            @DisplayName("Given a valid cpf, in scenario with register")
+            @Test
+            void test1() {
+                //Scenario
+                var employee = create_Employee().withAllFieldsExceptDB();
+                employee.getAuthorities()
+                        .forEach(authority -> em.persist(authority));
+                setField(employee, "cpf", "12345678910");
+                repository.save(employee);
+                em.flush();
+                //Given
+                var cpf = "12345678910";
+                //When
+                var actual = repository.findByCpf(cpf);
+                //Then
+                assertThat(actual)
+                        .isPresent()
+                        .get()
+                        .extracting(Employee::getCpf)
+                        .isEqualTo("12345678910");
+            }
+        }
+    }
 }

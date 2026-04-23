@@ -25,15 +25,15 @@ public class Inventory extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Material id. Customer: postgres")
+    @Column(comment = "Material id. Owner: postgres")
     private UUID id;
 
-    @Column(nullable = false, length = 55, comment = "Inventory name. Customer: self")
+    @Column(nullable = false, length = 55, comment = "Inventory name. Owner: self")
     private String name;
 
-    @Column(nullable = false, comment = "Inventory price. Customer: self")
+    @Column(nullable = false, comment = "Inventory price. Owner: self")
     private BigDecimal price;
 
-    @Column(nullable = false, comment = "Inventory quantity in stock. Customer: self")
+    @Column(nullable = false, comment = "Inventory quantity in stock. Owner: self")
     private Integer quantityInStock;
 }

@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
 import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
@@ -104,6 +106,42 @@ class EmployeeSearchTest extends GarageIntegrationTest {
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(200);
+            }
+
+            @DisplayName("Given a valid cpf query param, in scenario with saved employee")
+            @Test
+            void test2() {
+                //Scenario
+                var savedEmployee = create_EmployeeDto_Request()
+                        .withAllFields();
+                setField(savedEmployee, "cpf", "123.456.789-10");
+                given()
+                        .log().all()
+                        .header("Authorization", authorization)
+                        .contentType(JSON)
+                        .body(json.writeValueAsString(savedEmployee))
+                        .post("/v1/employees")
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response();
+                //When
+                var response = given()
+                        .log().all()
+                        .header("Authorization", authorization)
+                        .param("cpf", "12345678910")
+                        .get("/v1/employees")
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response();
+                //Then
+                Assertions.assertThat(response.statusCode())
+                        .isEqualTo(200);
+                Assertions.assertThat(response.body().jsonPath().getList("content"))
+                        .hasSize(1);
+                Assertions.assertThat(response.body().jsonPath().getString("content.[0].cpf"))
+                        .isEqualTo("123.456.789-10");
             }
         }
     }

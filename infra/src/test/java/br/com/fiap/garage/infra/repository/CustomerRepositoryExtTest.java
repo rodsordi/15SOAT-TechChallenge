@@ -2,6 +2,7 @@ package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.commons.config.JpaConfig;
 import br.com.fiap.garage.domain.entity.Customer;
+import br.com.fiap.garage.domain.entity.Customer;
 import br.com.fiap.garage.domain.filter.CustomerFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,6 +13,7 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
@@ -54,6 +56,38 @@ class CustomerRepositoryExtTest {
                         .hasSize(1)
                         .extracting(Customer::getName)
                         .containsExactly("John da Silva");
+            }
+        }
+    }
+
+    @DisplayName("When finding customer by cpf")
+    @Nested
+    class FindByCpf {
+
+        @DisplayName("Then should execute successfully")
+        @Nested
+        class Success {
+
+            @DisplayName("Given a valid cpf, in scenario with register")
+            @Test
+            void test1() {
+                //Scenario
+                var customer = create_Customer().withAllFieldsExceptDB();
+                customer.getAuthorities()
+                        .forEach(authority -> em.persist(authority));
+                setField(customer, "document", "00123456000199");
+                repository.save(customer);
+                em.flush();
+                //Given
+                var document = "00123456000199";
+                //When
+                var actual = repository.findByDocument(document);
+                //Then
+                assertThat(actual)
+                        .isPresent()
+                        .get()
+                        .extracting(Customer::getDocument)
+                        .isEqualTo("00123456000199");
             }
         }
     }

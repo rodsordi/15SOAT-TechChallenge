@@ -23,7 +23,7 @@ public final class InventoryAssertions {
     }
 
     /**
-     * @see InventoryFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.InventoryDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_ShopSupplyDto_Request() {

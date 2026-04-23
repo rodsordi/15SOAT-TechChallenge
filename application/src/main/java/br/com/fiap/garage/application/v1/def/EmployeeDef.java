@@ -17,6 +17,7 @@ public interface EmployeeDef {
         String getUsername();
         String getName();
         String getEmail();
+        String getCpf();
     }
 
     interface Detailed extends Represented {

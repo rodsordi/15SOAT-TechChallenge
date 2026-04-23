@@ -14,8 +14,9 @@ import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.c
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("int_test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -97,6 +98,42 @@ public class CustomerSearchTest extends GarageIntegrationTest {
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(200);
+            }
+
+            @DisplayName("Given a valid document query param, in scenario with saved customer")
+            @Test
+            void test2() {
+                //Scenario
+                var savedCustomer = create_CustomerDto_Request()
+                        .withAllFields();
+                setField(savedCustomer, "document", "00.123.456/0001-90");
+                given()
+                        .log().all()
+                        .header("Authorization", authorization)
+                        .contentType(JSON)
+                        .body(json.writeValueAsString(savedCustomer))
+                        .post("/v1/customers")
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response();
+                //When
+                var response = given()
+                        .log().all()
+                        .header("Authorization", authorization)
+                        .param("document", "00123456000190")
+                        .get("/v1/customers")
+                        .then()
+                        .log().all()
+                        .extract()
+                        .response();
+                //Then
+                assertThat(response.statusCode())
+                        .isEqualTo(200);
+                assertThat(response.body().jsonPath().getList("content"))
+                        .hasSize(1);
+                assertThat(response.body().jsonPath().getString("content.[0].document"))
+                        .isEqualTo("00.123.456/0001-90");
             }
         }
     }

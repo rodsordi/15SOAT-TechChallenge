@@ -1,7 +1,6 @@
 package br.com.fiap.garage.domain.entity.assertions;
 
 import br.com.fiap.garage.domain.entity.WorkOrder;
-import br.com.fiap.garage.domain.entity.factory.WorkOrderFactory;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
@@ -22,7 +21,7 @@ public final class WorkOrderAssertions {
     }
 
     /**
-     * @see WorkOrderFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_WorkOrderDto_Request() {

@@ -25,6 +25,7 @@ public final class CustomerDtoFactory {
                     .name("John Doe")
                     .password("1234asdl")
                     .email("john.doe@example.com")
+                    .document("00.123.456/0001-90")
                     .build();
 
             // And

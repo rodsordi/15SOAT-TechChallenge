@@ -17,6 +17,7 @@ public interface CustomerDef {
         String getUsername();
         String getName();
         String getEmail();
+        String getDocument();
     }
 
     interface Detailed extends Represented {

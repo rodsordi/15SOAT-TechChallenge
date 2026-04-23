@@ -20,7 +20,7 @@ public final class VehicleAssertions {
     }
 
     /**
-     * @see VehicleFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_VehicleDto_Request() {

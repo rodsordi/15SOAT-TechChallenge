@@ -22,7 +22,7 @@ public final class EstimateAssertions {
     }
 
     /**
-     * @see EstimateFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.EstimateDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_EstimateDto_Request() {

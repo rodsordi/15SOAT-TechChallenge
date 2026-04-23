@@ -3,7 +3,6 @@ package br.com.fiap.garage.domain.entity.assertions;
 import br.com.fiap.garage.domain.entity.Employee;
 import lombok.RequiredArgsConstructor;
 
-import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +19,7 @@ public final class EmployeeAssertions {
     }
 
     /**
-     * @see EmployeeFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_EmployeeDto_Request() {
@@ -35,6 +34,8 @@ public final class EmployeeAssertions {
                 .isEqualTo("John");
         assertThat(actual.getEmail())
                 .isEqualTo("john.doe@garage.com");
+        assertThat(actual.getCpf())
+                .isEqualTo("12345678900");
         assertThat(actual.getAuthorities())
                 .isNullOrEmpty();
 

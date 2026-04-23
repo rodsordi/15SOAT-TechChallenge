@@ -20,6 +20,14 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @ParameterObject
 public class EmployeeFilter extends AuditableFilter<Employee> implements Specification<Employee> {
 
+    @Schema(example = "123.456.789-10", description = "Employee cpf.")
+    private String cpf;
+
+    private Specification<Employee> cpfEqual() {
+        return (root, query, builder) -> isEmpty(cpf) ? null :
+                builder.equal(root.get("cpf"), cpf);
+    }
+
     @Schema(example = "John", description = "Employee name.")
     private String name;
 
@@ -39,6 +47,7 @@ public class EmployeeFilter extends AuditableFilter<Employee> implements Specifi
     @Override
     public @Nullable Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         return super.buildSpecification()
+                .and(cpfEqual())
                 .and(nameEqual())
                 .and(emailEqual())
                 .toPredicate(root, query, criteriaBuilder);

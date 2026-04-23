@@ -30,6 +30,7 @@ public final class CustomerDto {
         private String password;
         private String name;
         private String email;
+        private String document;
 
         public Customer buildCustomer() {
             return MAPPER.convert(this);
@@ -46,6 +47,7 @@ public final class CustomerDto {
         private String username;
         private String name;
         private String email;
+        private String document;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -65,6 +67,7 @@ public final class CustomerDto {
         private String username;
         private String name;
         private String email;
+        private String document;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

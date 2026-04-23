@@ -20,6 +20,14 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @ParameterObject
 public class CustomerFilter extends AuditableFilter<Customer> implements Specification<Customer> {
 
+    @Schema(example = "00123456000190", description = "Customer document.")
+    private String document;
+
+    private Specification<Customer> documentEqual() {
+        return (root, query, builder) -> isEmpty(document) ? null :
+                builder.equal(root.get("document"), document);
+    }
+
     @Schema(example = "John", description = "Customer name.")
     private String name;
 
@@ -39,6 +47,7 @@ public class CustomerFilter extends AuditableFilter<Customer> implements Specifi
     @Override
     public @Nullable Predicate toPredicate(Root<Customer> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         return super.buildSpecification()
+                .and(documentEqual())
                 .and(nameEqual())
                 .and(emailEqual())
                 .toPredicate(root, query, criteriaBuilder);

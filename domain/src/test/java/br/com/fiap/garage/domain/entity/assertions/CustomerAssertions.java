@@ -19,7 +19,7 @@ public final class CustomerAssertions {
     }
 
     /**
-     * @see CustomerFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_CustomerDto_Request() {
@@ -34,6 +34,8 @@ public final class CustomerAssertions {
                 .isEqualTo("John Doe");
         assertThat(actual.getEmail())
                 .isEqualTo("john.doe@example.com");
+        assertThat(actual.getDocument())
+                .isEqualTo("00123456000190");
         assertThat(actual.getAuthorities())
                 .isNullOrEmpty();
 

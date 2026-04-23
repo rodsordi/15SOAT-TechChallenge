@@ -30,6 +30,7 @@ public final class EmployeeDto {
         private String password;
         private String name;
         private String email;
+        private String cpf;
 
         public Employee buildEmployee() {
             return MAPPER.convert(this);
@@ -46,6 +47,7 @@ public final class EmployeeDto {
         private String username;
         private String name;
         private String email;
+        private String cpf;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         
@@ -65,6 +67,7 @@ public final class EmployeeDto {
         private String username;
         private String name;
         private String email;
+        private String cpf;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

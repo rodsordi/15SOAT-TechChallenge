@@ -7,10 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Order(1)
 public interface CustomerRepository extends CrudRepository<Customer, UUID> {
 
     Page<Customer> findAll(Specification<Customer> filter, Pageable pageable);
+
+    Optional<Customer> findByDocument(String document);
 }

@@ -28,21 +28,21 @@ public class User extends AuditableEntity implements UserDetails {
 
     @Id
     @GeneratedValue
-    @Column(comment = "User id. Customer: postgres")
+    @Column(comment = "User id. Owner: postgres")
     private UUID id;
 
     @Getter(onMethod_ = @Override)
-    @Column(nullable = false, unique = true, comment = "User e-mail. Customer: self")
+    @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")
     private String username;
 
     @Getter(onMethod_ = @Override)
-    @Column(nullable = false, comment = "User password. Customer: self")
+    @Column(nullable = false, comment = "User password. Owner: self")
     private String password;
 
-    @Column(nullable = false, length = 55, comment = "User name. Customer: self")
+    @Column(nullable = false, length = 55, comment = "User name. Owner: self")
     private String name;
 
-    @Column(nullable = false, unique = true, comment = "User e-mail. Customer: self")
+    @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")
     private String email;
 
     @Singular(value = "authority", ignoreNullCollections = true)

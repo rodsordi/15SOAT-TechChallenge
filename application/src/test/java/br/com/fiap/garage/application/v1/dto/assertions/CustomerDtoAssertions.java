@@ -36,6 +36,8 @@ public final class CustomerDtoAssertions {
                     .isEqualTo("John Doe");
             assertThat(actual.getEmail())
                     .isEqualTo("john.doe@fiap.com.br");
+            assertThat(actual.getDocument())
+                    .isEqualTo("00.123.456/0001-99");
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
@@ -73,6 +75,8 @@ public final class CustomerDtoAssertions {
                     .isEqualTo("John Doe");
             assertThat(actual.getEmail())
                     .isEqualTo("john.doe@fiap.com.br");
+            assertThat(actual.getDocument())
+                    .isEqualTo("00.123.456/0001-99");
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())

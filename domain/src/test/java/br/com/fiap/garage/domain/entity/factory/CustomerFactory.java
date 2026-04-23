@@ -20,12 +20,14 @@ public final class CustomerFactory {
 
     public Customer withAllFields() {
         var result = builder
-                // Self
+                // Inheritance (User)
                 .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
                 .username("jack.doe@company.com")
                 .password("4321abcd")
                 .name("John Doe")
                 .email("john.doe@fiap.com.br")
+                // Self
+                .document("00123456000199")
                 // Composition
                 .authority(create_Authority().withAllFields())
                 // Inheritance (AuditableEntity)

@@ -1,5 +1,6 @@
 package br.com.fiap.garage.domain.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -19,4 +20,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(schema = "garage")
 public class Customer extends User implements Serializable {
 
+    @Column(nullable = false, length = 14, comment = "Customer document. Owner: self")
+    private String document;
 }

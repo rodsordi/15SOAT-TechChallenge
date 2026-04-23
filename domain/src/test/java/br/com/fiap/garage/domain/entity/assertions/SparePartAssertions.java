@@ -21,7 +21,7 @@ public final class SparePartAssertions {
     }
 
     /**
-     * @see InventoryFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_SparePartDto_Request() {

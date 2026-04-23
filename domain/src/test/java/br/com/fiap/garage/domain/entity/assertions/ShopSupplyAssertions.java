@@ -21,7 +21,7 @@ public final class ShopSupplyAssertions {
     }
 
     /**
-     * @see InventoryFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_ShopSupplyDto_Request() {
