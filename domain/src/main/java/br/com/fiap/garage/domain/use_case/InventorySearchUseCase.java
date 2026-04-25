@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.use_case;
 
 import br.com.fiap.commons.exception.NotFoundException;
-import br.com.fiap.garage.domain.entity.Inventory;
+import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import br.com.fiap.garage.domain.filter.InventoryFilter;
 import br.com.fiap.garage.domain.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +14,10 @@ public class InventorySearchUseCase {
 
     private final InventoryRepository inventoryRepository;
 
-    public Page<Inventory> findAll(InventoryFilter filter) {
+    public Page<InventoryMaterial> findAll(InventoryFilter filter) {
         var foundInventories = inventoryRepository.findAll(filter, filter.buildPageRequest());
         if (foundInventories.isEmpty())
-            throw new NotFoundException(Inventory.class);
+            throw new NotFoundException(InventoryMaterial.class);
         return foundInventories;
     }
 }

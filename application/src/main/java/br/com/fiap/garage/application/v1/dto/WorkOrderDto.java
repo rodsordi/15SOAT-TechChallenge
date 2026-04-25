@@ -4,7 +4,7 @@ import br.com.fiap.garage.application.v1.controller.WorkOrderController;
 import br.com.fiap.garage.application.v1.def.WorkOrderDef;
 import br.com.fiap.garage.application.v1.mapper.WorkOrderDtoMapper;
 import br.com.fiap.garage.domain.entity.WorkOrder;
-import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
+import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;

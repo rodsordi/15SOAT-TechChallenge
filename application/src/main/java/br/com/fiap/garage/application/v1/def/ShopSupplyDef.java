@@ -16,8 +16,9 @@ public interface ShopSupplyDef {
     interface Represented extends Serializable {
 
         String getName();
-        BigDecimal getPrice();
+        BigDecimal getAmount();
         Integer getQuantityInStock();
+        Integer getReservedQuantity();
     }
 
     interface Detailed extends Represented {

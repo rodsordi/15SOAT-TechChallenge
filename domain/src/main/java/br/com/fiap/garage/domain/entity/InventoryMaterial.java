@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.UUID;
 
-import static jakarta.persistence.InheritanceType.JOINED;
+import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -20,20 +19,22 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
 @Table(schema = "garage")
-@Inheritance(strategy = JOINED)
-public class Inventory extends AuditableEntity implements Serializable {
+public class InventoryMaterial extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Material id. Owner: postgres")
+    @Column(comment = "Inventory id. Owner: db")
     private UUID id;
-
-    @Column(nullable = false, length = 55, comment = "Inventory name. Owner: self")
-    private String name;
-
-    @Column(nullable = false, comment = "Inventory price. Owner: self")
-    private BigDecimal price;
 
     @Column(nullable = false, comment = "Inventory quantity in stock. Owner: self")
     private Integer quantityInStock;
+
+    @Column(nullable = false, comment = "Inventory reserved quantity. Owner: self")
+    private Integer reservedQuantity;
+
+    // Value Object
+    @OneToOne(cascade = ALL, orphanRemoval = true)
+    @JoinColumn(name = "id")
+    @MapsId
+    private Material material;
 }

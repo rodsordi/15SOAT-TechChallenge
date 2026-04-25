@@ -27,8 +27,9 @@ public final class ShopSupplyDto {
     @Schema(name = ".ShopSupply.Request")
     public static class Request implements ShopSupplyDef.Request {
         private String name;
-        private BigDecimal price;
+        private BigDecimal amount;
         private Integer quantityInStock;
+        private Integer reservedQuantity;
 
         public ShopSupply buildShopSupply() {
             return MAPPER.convert(this);
@@ -43,8 +44,9 @@ public final class ShopSupplyDto {
     public static class Response implements ShopSupplyDef.Response {
         private UUID id;
         private String name;
-        private BigDecimal price;
+        private BigDecimal amount;
         private Integer quantityInStock;
+        private Integer reservedQuantity;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

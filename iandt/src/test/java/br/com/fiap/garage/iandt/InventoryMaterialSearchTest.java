@@ -20,7 +20,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = GarageApplication.class)
 @Testcontainers
-public class InventorySearchTest extends GarageIntegrationTest {
+public class InventoryMaterialSearchTest extends GarageIntegrationTest {
 
     @DisplayName("When finding all inventorys")
     @Nested

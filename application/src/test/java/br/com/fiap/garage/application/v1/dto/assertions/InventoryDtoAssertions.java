@@ -1,6 +1,6 @@
 package br.com.fiap.garage.application.v1.dto.assertions;
 
-import br.com.fiap.garage.application.v1.dto.InventoryDto;
+import br.com.fiap.garage.application.v1.dto.InventoryMaterialDto;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -14,15 +14,15 @@ import static org.mockito.Mockito.spy;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class InventoryDtoAssertions {
 
+    public static Representation assertThat_InventoryDto_Representation(InventoryMaterialDto.Representation actual) {
+        assertThat(actual).isNotNull();
+        return new Representation(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Representation {
 
-        private final InventoryDto.Representation actual;
-
-        public static Representation assertThat_InventoryDto_Representation(InventoryDto.Representation actual) {
-            assertThat(actual).isNotNull();
-            return new Representation(spy(actual));
-        }
+        private final InventoryMaterialDto.Representation actual;
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.SparePartFactory
@@ -34,7 +34,7 @@ public final class InventoryDtoAssertions {
                     .hasToString("4f9e8d2a-1c5b-4a32-9d8e-7f6a5b4c3d2e");
             assertThat(actual.getName())
                     .isEqualTo("Engine");
-            assertThat(actual.getPrice())
+            assertThat(actual.getAmount())
                     .isEqualTo(new BigDecimal("10000.99"));
             assertThat(actual.getQuantityInStock())
                     .isEqualTo(1);
@@ -62,7 +62,7 @@ public final class InventoryDtoAssertions {
                     .hasToString("d341007b-7d1f-406e-aabf-37db3ddbdb8e");
             assertThat(actual.getName())
                     .isEqualTo("Synthetic Oil 5W-30");
-            assertThat(actual.getPrice())
+            assertThat(actual.getAmount())
                     .isEqualTo(new BigDecimal("45.90"));
             assertThat(actual.getQuantityInStock())
                     .isEqualTo(111);

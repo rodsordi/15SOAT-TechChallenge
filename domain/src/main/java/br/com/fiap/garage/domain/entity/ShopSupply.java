@@ -17,6 +17,6 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(schema = "garage")
-public class ShopSupply extends Inventory implements Serializable {
+public class ShopSupply extends Material implements Serializable {
 
 }

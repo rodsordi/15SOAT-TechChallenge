@@ -1,6 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.entity.AuditableEntity;
+import br.com.fiap.commons.validation.LicensePlate;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Vehicle extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Vehicle id. Owner: postgres")
+    @Column(comment = "Vehicle id. Owner: db")
     private UUID id;
 
     @Column(nullable = false, length = 55, comment = "Vehicle make. Owner: self")
@@ -32,6 +33,7 @@ public class Vehicle extends AuditableEntity implements Serializable {
     @Column(nullable = false, length = 55, comment = "Vehicle model. Owner: self")
     private String model;
 
+    @LicensePlate
     @Column(nullable = false, length = 10, comment = "Vehicle license plate. Owner: self")
     private String licensePlate;
 

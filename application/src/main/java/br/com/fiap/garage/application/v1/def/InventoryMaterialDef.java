@@ -4,7 +4,6 @@ import br.com.fiap.commons.def.AuditableDef;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -12,13 +11,14 @@ import java.util.UUID;
  * | Representation | Represented | RepresentedPersisted |
  * | Detailed       | Detailed    | DetailedPersisted    |
  */
-public interface InventoryDef {
+public interface InventoryMaterialDef {
 
     interface Represented extends Serializable {
 
         String getName();
-        BigDecimal getPrice();
+        BigDecimal getAmount();
         Integer getQuantityInStock();
+        Integer getReservedQuantity();
     }
 
     interface Detailed extends Represented {
@@ -36,10 +36,12 @@ public interface InventoryDef {
 
     interface Request extends Detailed {
 
+        <T extends MaterialDef.Request> T getMaterial();
     }
 
     interface Response extends Detailed, DetailedPersisted {
 
+        <T extends MaterialDef.Response> T getMaterial();
     }
 
     interface Representation extends Represented, RepresentedPersisted {

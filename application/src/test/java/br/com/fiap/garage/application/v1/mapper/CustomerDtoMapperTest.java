@@ -4,8 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.Representation.assertThat_CustomerDto_Representation;
-import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.Response.assertThat_CustomerDto_Response;
+import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.assertThat_CustomerDto_Representation;
+import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.assertThat_CustomerDto_Response;
 import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static br.com.fiap.garage.domain.entity.assertions.CustomerAssertions.assertThat_Customer;
 import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;

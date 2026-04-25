@@ -1,9 +1,9 @@
 package br.com.fiap.garage.application.v1.dto;
 
 import br.com.fiap.garage.application.v1.controller.InventoryController;
-import br.com.fiap.garage.application.v1.def.InventoryDef;
+import br.com.fiap.garage.application.v1.def.InventoryMaterialDef;
 import br.com.fiap.garage.application.v1.mapper.InventoryDtoMapper;
-import br.com.fiap.garage.domain.entity.Inventory;
+import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
@@ -17,7 +17,7 @@ import static org.mapstruct.factory.Mappers.getMapper;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @NoArgsConstructor(access = PRIVATE)
-public final class InventoryDto {
+public final class InventoryMaterialDto {
 
     private static final InventoryDtoMapper MAPPER = getMapper(InventoryDtoMapper.class);
 
@@ -27,16 +27,17 @@ public final class InventoryDto {
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Inventory.Representation")
-    public static class Representation extends RepresentationModel<Representation> implements InventoryDef.Representation {
+    public static class Representation extends RepresentationModel<Representation> implements InventoryMaterialDef.Representation {
         private UUID id;
         private String name;
-        private BigDecimal price;
+        private BigDecimal amount;
         private Integer quantityInStock;
+        private Integer reservedQuantity;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static InventoryDto.Representation buildInventoryDtoRepresentation(Inventory inventory) {
-            var representation = MAPPER.convertToRepresentation(inventory);
+        public static InventoryMaterialDto.Representation buildInventoryDtoRepresentation(InventoryMaterial inventoryMaterial) {
+            var representation = MAPPER.convertToRepresentation(inventoryMaterial);
             representation.add(linkTo(InventoryController.class)
                     .slash(representation.getId())
                     .withSelfRel());

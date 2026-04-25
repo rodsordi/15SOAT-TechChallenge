@@ -1,15 +1,15 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.exception.BusinessException;
-import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
+import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.*;
 import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.util.ReflectionTestUtils.setField;

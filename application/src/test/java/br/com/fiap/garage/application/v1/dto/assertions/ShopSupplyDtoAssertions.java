@@ -14,15 +14,15 @@ import static org.mockito.Mockito.spy;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class ShopSupplyDtoAssertions {
 
+    public static Response assertThat_ShopSupplyDto_Response(ShopSupplyDto.Response actual) {
+        assertThat(actual).isNotNull();
+        return new Response(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Response {
 
         private final ShopSupplyDto.Response actual;
-
-        public static Response assertThat_ShopSupplyDto_Response(ShopSupplyDto.Response actual) {
-            assertThat(actual).isNotNull();
-            return new Response(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory
@@ -34,7 +34,7 @@ public final class ShopSupplyDtoAssertions {
                     .hasToString("d341007b-7d1f-406e-aabf-37db3ddbdb8e");
             assertThat(actual.getName())
                     .isEqualTo("Synthetic Oil 5W-30");
-            assertThat(actual.getPrice())
+            assertThat(actual.getAmount())
                     .isEqualTo(new BigDecimal("45.90"));
             assertThat(actual.getQuantityInStock())
                     .isEqualTo(111);

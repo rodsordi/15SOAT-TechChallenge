@@ -12,15 +12,15 @@ import static org.mockito.Mockito.spy;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class EmployeeDtoAssertions {
 
+    public static Response assertThat_EmployeeDto_Response(EmployeeDto.Response actual) {
+        assertThat(actual).isNotNull();
+        return new Response(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Response {
         
         private final EmployeeDto.Response actual;
-
-        public static Response assertThat_EmployeeDto_Response(EmployeeDto.Response actual) {
-            assertThat(actual).isNotNull();
-            return new Response(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.EmployeeFactory
@@ -52,15 +52,15 @@ public final class EmployeeDtoAssertions {
         }
     }
 
+    public static Representation assertThat_EmployeeDto_Representation(EmployeeDto.Representation actual) {
+        assertThat(actual).isNotNull();
+        return new Representation(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Representation {
 
         private final EmployeeDto.Representation actual;
-
-        public static Representation assertThat_EmployeeDto_Representation(EmployeeDto.Representation actual) {
-            assertThat(actual).isNotNull();
-            return new Representation(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.EmployeeFactory

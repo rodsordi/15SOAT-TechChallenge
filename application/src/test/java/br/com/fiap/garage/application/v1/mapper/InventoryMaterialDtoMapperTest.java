@@ -4,12 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.assertions.InventoryDtoAssertions.Representation.assertThat_InventoryDto_Representation;
+import static br.com.fiap.garage.application.v1.dto.assertions.InventoryDtoAssertions.assertThat_InventoryDto_Representation;
 import static br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory.create_ShopSupply;
 import static br.com.fiap.garage.domain.entity.factory.SparePartFactory.create_SparePart;
 import static org.mapstruct.factory.Mappers.getMapper;
 
-class InventoryDtoMapperTest {
+class InventoryMaterialDtoMapperTest {
 
     private static final InventoryDtoMapper MAPPER = getMapper(InventoryDtoMapper.class);
 

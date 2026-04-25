@@ -1,7 +1,7 @@
 package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.commons.config.JpaConfig;
-import br.com.fiap.garage.domain.entity.Inventory;
+import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import br.com.fiap.garage.domain.filter.InventoryFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +19,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 @ActiveProfiles("test")
 @DataJpaTest
 @ContextConfiguration(classes = JpaConfig.class)
-class InventoryRepositoryExtTest {
+class InventoryMaterialRepositoryExtTest {
 
     @Autowired
     private InventoryRepositoryExt repository;
@@ -49,7 +49,7 @@ class InventoryRepositoryExtTest {
                 //Then
                 assertThat(actual)
                         .hasSize(1)
-                        .extracting(Inventory::getName)
+                        .extracting(InventoryMaterial::getName)
                         .containsExactly("Engine");
             }
         }

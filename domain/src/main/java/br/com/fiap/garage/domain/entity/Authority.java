@@ -22,7 +22,7 @@ public class Authority extends AuditableEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Authorization id. Owner: postgres")
+    @Column(comment = "Authorization id. Owner: db")
     private UUID id;
 
     @Getter(onMethod_ = @Override)

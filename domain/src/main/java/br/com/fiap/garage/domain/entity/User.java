@@ -28,7 +28,7 @@ public class User extends AuditableEntity implements UserDetails {
 
     @Id
     @GeneratedValue
-    @Column(comment = "User id. Owner: postgres")
+    @Column(comment = "User id. Owner: db")
     private UUID id;
 
     @Getter(onMethod_ = @Override)
@@ -45,6 +45,7 @@ public class User extends AuditableEntity implements UserDetails {
     @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")
     private String email;
 
+    // Aggregate
     @Singular(value = "authority", ignoreNullCollections = true)
     @ManyToMany(fetch = EAGER)
     @JoinTable(schema = "garage", name = "users_authority",

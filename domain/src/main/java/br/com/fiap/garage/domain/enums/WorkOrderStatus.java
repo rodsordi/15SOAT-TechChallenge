@@ -1,4 +1,4 @@
-package br.com.fiap.garage.domain.entity.enums;
+package br.com.fiap.garage.domain.enums;
 
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.entity.work_order.WorkOrderState;

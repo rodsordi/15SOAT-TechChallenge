@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = InventoryController.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = RestControllerTestConfig.class)
-class InventoryControllerTest {
+class InventoryMaterialControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

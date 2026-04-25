@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 
@@ -20,6 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Table(schema = "garage")
 public class Employee extends User implements Serializable {
 
+    @CPF
     @Column(nullable = false, length = 11, comment = "Customer document. Owner: self")
     private String cpf;
 }

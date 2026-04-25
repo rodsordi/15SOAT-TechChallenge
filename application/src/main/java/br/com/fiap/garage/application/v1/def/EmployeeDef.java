@@ -1,6 +1,7 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public interface EmployeeDef {
         String getUsername();
         String getName();
         String getEmail();
+        @CPF
         String getCpf();
     }
 

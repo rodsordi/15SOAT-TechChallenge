@@ -24,8 +24,9 @@ public final class SparePartFactory {
                 // Self
                 .id(fromString("4f9e8d2a-1c5b-4a32-9d8e-7f6a5b4c3d2e"))
                 .name("Engine")
-                .price(new BigDecimal("10000.99"))
+                .amount(new BigDecimal("10000.99"))
                 .quantityInStock(1)
+                .reservedQuantity(0)
                 .createdAt(newDateTime("13/12/2026 23:59:59"))
                 .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
@@ -46,7 +47,7 @@ public final class SparePartFactory {
     public SparePart valid() {
         return builder
                 .name("Brake Pad Set")
-                .price(new BigDecimal("120.00"))
+                .amount(new BigDecimal("120.00"))
                 .quantityInStock(20)
                 .build();
     }

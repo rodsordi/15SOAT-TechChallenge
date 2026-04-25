@@ -17,6 +17,6 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(schema = "garage")
-public class SparePart extends Inventory implements Serializable {
+public class SparePart extends Material implements Serializable {
 
 }

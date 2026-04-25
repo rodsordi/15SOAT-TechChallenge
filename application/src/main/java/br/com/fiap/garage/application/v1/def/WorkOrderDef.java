@@ -1,7 +1,7 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
-import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
+import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 
 import java.io.Serializable;
 import java.util.UUID;

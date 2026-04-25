@@ -14,15 +14,15 @@ import static org.mockito.Mockito.spy;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class VehicleDtoAssertions {
 
+    public static Response assertThat_VehicleDto_Response(VehicleDto.Response actual) {
+        assertThat(actual).isNotNull();
+        return new Response(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Response {
         
         private final VehicleDto.Response actual;
-
-        public static Response assertThat_VehicleDto_Response(VehicleDto.Response actual) {
-            assertThat(actual).isNotNull();
-            return new Response(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.VehicleFactory
@@ -53,15 +53,15 @@ public final class VehicleDtoAssertions {
         }
     }
 
+    public static Representation assertThat_VehicleDto_Representation(VehicleDto.Representation actual) {
+        assertThat(actual).isNotNull();
+        return new Representation(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Representation {
 
         private final VehicleDto.Representation actual;
-
-        public static Representation assertThat_VehicleDto_Representation(VehicleDto.Representation actual) {
-            assertThat(actual).isNotNull();
-            return new Representation(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.VehicleFactory

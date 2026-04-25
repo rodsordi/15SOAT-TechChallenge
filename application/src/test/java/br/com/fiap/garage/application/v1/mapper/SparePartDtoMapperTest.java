@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.assertions.SparePartDtoAssertions.Response.assertThat_SparePartDto_Response;
+import static br.com.fiap.garage.application.v1.dto.assertions.SparePartDtoAssertions.assertThat_SparePartDto_Response;
 import static br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory.create_SparePartDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.SparePartFactory.create_SparePart;
 import static org.mapstruct.factory.Mappers.getMapper;

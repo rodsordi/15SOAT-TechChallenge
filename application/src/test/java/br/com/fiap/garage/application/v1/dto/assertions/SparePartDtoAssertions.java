@@ -14,15 +14,15 @@ import static org.mockito.Mockito.spy;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class SparePartDtoAssertions {
 
+    public static Response assertThat_SparePartDto_Response(SparePartDto.Response actual) {
+        assertThat(actual).isNotNull();
+        return new Response(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Response {
 
         private final SparePartDto.Response actual;
-
-        public static Response assertThat_SparePartDto_Response(SparePartDto.Response actual) {
-            assertThat(actual).isNotNull();
-            return new Response(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.SparePartFactory
@@ -34,7 +34,7 @@ public final class SparePartDtoAssertions {
                     .hasToString("4f9e8d2a-1c5b-4a32-9d8e-7f6a5b4c3d2e");
             assertThat(actual.getName())
                     .isEqualTo("Engine");
-            assertThat(actual.getPrice())
+            assertThat(actual.getAmount())
                     .isEqualTo(new BigDecimal("10000.99"));
             assertThat(actual.getQuantityInStock())
                     .isEqualTo(1);

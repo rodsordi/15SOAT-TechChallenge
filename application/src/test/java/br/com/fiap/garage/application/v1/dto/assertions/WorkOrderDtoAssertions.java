@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.application.v1.dto.assertions.EstimateDtoAssertions.Response.assertThat_EstimateDto_Response;
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.RECEIVED;
+import static br.com.fiap.garage.application.v1.dto.assertions.EstimateDtoAssertions.assertThat_EstimateDto_Response;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -14,15 +14,15 @@ import static org.mockito.Mockito.spy;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class WorkOrderDtoAssertions {
 
+    public static Response assertThat_WorkOrderDto_Response(WorkOrderDto.Response actual) {
+        assertThat(actual).isNotNull();
+        return new Response(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Response {
         
         private final WorkOrderDto.Response actual;
-
-        public static Response assertThat_WorkOrderDto_Response(WorkOrderDto.Response actual) {
-            assertThat(actual).isNotNull();
-            return new Response(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.WorkOrderFactory
@@ -49,15 +49,15 @@ public final class WorkOrderDtoAssertions {
         }
     }
 
+    public static Representation assertThat_WorkOrderDto_Representation(WorkOrderDto.Representation actual) {
+        assertThat(actual).isNotNull();
+        return new Representation(spy(actual));
+    }
+
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Representation {
 
         private final WorkOrderDto.Representation actual;
-
-        public static Representation assertThat_WorkOrderDto_Representation(WorkOrderDto.Representation actual) {
-            assertThat(actual).isNotNull();
-            return new Representation(spy(actual));
-        }
 
         /**
          * @see br.com.fiap.garage.domain.entity.factory.WorkOrderFactory

@@ -24,7 +24,7 @@ public final class ShopSupplyFactory {
                 // Self
                 .id(fromString("d341007b-7d1f-406e-aabf-37db3ddbdb8e"))
                 .name("Synthetic Oil 5W-30")
-                .price(new BigDecimal("45.90"))
+                .amount(new BigDecimal("45.90"))
                 .quantityInStock(111)
                 .createdAt(newDateTime("13/12/2027 23:59:59"))
                 .updatedAt(newDateTime("14/12/2027 23:59:59"))
@@ -46,7 +46,7 @@ public final class ShopSupplyFactory {
     public ShopSupply valid() {
         return builder
                 .name("Brake Pad Set")
-                .price(new BigDecimal("120.00"))
+                .amount(new BigDecimal("120.00"))
                 .quantityInStock(20)
                 .build();
     }

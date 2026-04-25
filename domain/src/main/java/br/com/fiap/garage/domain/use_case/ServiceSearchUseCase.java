@@ -1,0 +1,26 @@
+package br.com.fiap.garage.domain.use_case;
+
+import br.com.fiap.commons.exception.NotFoundException;
+import br.com.fiap.garage.domain.entity.Service;
+import br.com.fiap.garage.domain.filter.ServiceFilter;
+import br.com.fiap.garage.domain.repository.ServiceRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+
+import java.util.UUID;
+
+@org.springframework.stereotype.Service
+@RequiredArgsConstructor
+public class ServiceSearchUseCase {
+
+    private final ServiceRepository repository;
+
+    public Service findById(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Service.class, "id", id));
+    }
+
+    public Page<Service> findAll(ServiceFilter filter) {
+        return repository.findAll(filter, filter.buildPageRequest());
+    }
+}

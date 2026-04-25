@@ -23,7 +23,7 @@ public final class ShopSupplyDtoFactory {
         public ShopSupplyDto.Request withAllFields() {
             var result = builder
                     .name("Synthetic Oil 5W-30")
-                    .price(new BigDecimal("85.50"))
+                    .amount(new BigDecimal("85.50"))
                     .quantityInStock(6)
                     .build();
 
@@ -36,7 +36,7 @@ public final class ShopSupplyDtoFactory {
         public ShopSupplyDto.Request valid() {
             return builder
                     .name("Brake Cleaner")
-                    .price(new BigDecimal("12.90"))
+                    .amount(new BigDecimal("12.90"))
                     .quantityInStock(7)
                     .build();
         }

@@ -3,10 +3,14 @@ package br.com.fiap.garage.domain.entity.factory;
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import lombok.RequiredArgsConstructor;
 
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.RECEIVED;
-import static br.com.fiap.garage.domain.entity.factory.EstimateFactory.create_Estimate;
+import java.math.BigDecimal;
+
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
+import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
+import static br.com.fiap.garage.domain.entity.factory.EstimatedServiceFactory.create_EstimatedService;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -24,8 +28,11 @@ public final class WorkOrderFactory {
                 // Self
                 .id(fromString("e48ad20c-69dd-4382-b567-0e02b2c3d480"))
                 .status(RECEIVED)
+                .totalAmount(new BigDecimal("999.99"))
                 // Composition
-                .estimate(create_Estimate().withAllFields())
+                .employee(create_Employee().withAllFields())
+                .customer(create_Customer().withAllFields())
+                .estimatedService(create_EstimatedService().withAllFields())
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
                 .updatedAt(newDateTime("21/04/2026 15:30:00"))
@@ -41,7 +48,7 @@ public final class WorkOrderFactory {
         withAllFields();
         return builder
                 .id(null)
-                .estimate(create_Estimate().withAllFieldsExceptDB())
+                .estimatedService(create_EstimatedService().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)
                 .build();
@@ -50,13 +57,13 @@ public final class WorkOrderFactory {
     public WorkOrder valid() {
         return builder
                 .status(RECEIVED)
-                .estimate(create_Estimate().valid())
+                .estimatedService(create_EstimatedService().valid())
                 .build();
     }
 
     public WorkOrder initiatedEmpty() {
         return builder
-                .estimate(create_Estimate().initiatedEmpty())
+                .estimatedService(create_EstimatedService().initiatedEmpty())
                 .build();
     }
 }

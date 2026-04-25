@@ -3,9 +3,13 @@ package br.com.fiap.garage.domain.entity.assertions;
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.assertions.CustomerAssertions.assertThat_Customer;
+import static br.com.fiap.garage.domain.entity.assertions.EmployeeAssertions.assertThat_Employee;
 import static br.com.fiap.garage.domain.entity.assertions.EstimateAssertions.assertThat_Estimate;
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.RECEIVED;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -30,8 +34,14 @@ public final class WorkOrderAssertions {
                 .isNull();
         assertThat(actual.getStatus())
                 .isEqualTo(RECEIVED);
+        assertThat(actual.getTotalAmount())
+                .isEqualByComparingTo(new BigDecimal("999.99"));
 
         // Composition
+        assertThat_Employee(actual.getEmployee())
+                .wasConvertedFrom_EmployeeDto_Request();
+        assertThat_Customer(actual.getCustomer())
+                .wasConvertedFrom_CustomerDto_Request();
         assertThat_Estimate(actual.getEstimate())
                 .wasConvertedFrom_EstimateDto_Request();
 

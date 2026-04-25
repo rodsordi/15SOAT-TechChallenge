@@ -30,7 +30,7 @@ public final class ShopSupplyAssertions {
                 .isNull();
         assertThat(actual.getName())
                 .isEqualTo("Synthetic Oil 5W-30");
-        assertThat(actual.getPrice())
+        assertThat(actual.getAmount())
                 .isEqualTo(new BigDecimal("85.50"));
         assertThat(actual.getQuantityInStock())
                 .isEqualTo(6);

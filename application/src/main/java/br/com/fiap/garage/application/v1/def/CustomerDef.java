@@ -1,6 +1,7 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import br.com.fiap.commons.validation.CpfOrCnpj;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public interface CustomerDef {
         String getUsername();
         String getName();
         String getEmail();
+        @CpfOrCnpj
         String getDocument();
     }
 

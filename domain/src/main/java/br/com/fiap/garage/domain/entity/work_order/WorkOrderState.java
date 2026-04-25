@@ -1,11 +1,11 @@
 package br.com.fiap.garage.domain.entity.work_order;
 
 import br.com.fiap.garage.domain.entity.WorkOrder;
-import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
+import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 import br.com.fiap.commons.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.*;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.*;
 import static java.lang.String.format;
 import static lombok.AccessLevel.PROTECTED;
 

@@ -12,7 +12,7 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.FINISHED;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.FINISHED;
 import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.setField;

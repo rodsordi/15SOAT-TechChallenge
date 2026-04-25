@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static br.com.fiap.garage.application.v1.dto.assertions.ShopSupplyDtoAssertions.Response.assertThat_ShopSupplyDto_Response;
+import static br.com.fiap.garage.application.v1.dto.assertions.ShopSupplyDtoAssertions.assertThat_ShopSupplyDto_Response;
 import static br.com.fiap.garage.application.v1.dto.factory.ShopSupplyDtoFactory.create_ShopSupplyDto_Request;
 import static br.com.fiap.garage.domain.entity.assertions.ShopSupplyAssertions.assertThat_ShopSupply;
 import static br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory.create_ShopSupply;

@@ -40,11 +40,11 @@ import static lombok.AccessLevel.PROTECTED;
 public abstract class AuditableEntity implements Serializable {
 
     @CreatedDate
-    @Column(nullable = false, comment = "Register created at. Owner: postgres")
+    @Column(nullable = false, comment = "Register created at. Owner: db")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(comment = "Register updated at. Owner: postgres")
+    @Column(comment = "Register updated at. Owner: db")
     private LocalDateTime updatedAt;
 }
 ```
@@ -62,8 +62,8 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationFactory.createCreditAuthorization;
-import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationSingleMessageFactory.createCreditAuthorizationSingleMessage;
+import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationFactory.create_CreditAuthorization;
+import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationSingleMessageFactory.create_CreditAuthorizationSingleMessage;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static java.util.UUID.fromString;
@@ -74,7 +74,7 @@ public final class CreditTransactionFactory {
 
     private final CreditTransaction.CreditTransactionBuilder<?, ?> builder;
 
-    public static CreditTransactionFactory createCreditTransaction() {
+    public static CreditTransactionFactory create_CreditTransaction() {
         return new CreditTransactionFactory(CreditTransaction.builder());
     }
 
@@ -92,8 +92,8 @@ public final class CreditTransactionFactory {
                 .authorizationSummaryCount("1")
                 .message("Message-123")
                 // Composition
-                .authorizations(new HashSet<>(Set.of(createCreditAuthorization().withAllFields())))
-                .authorizationSingleMessage(createCreditAuthorizationSingleMessage().withAllFields())
+                .authorizations(new HashSet<>(Set.of(create_CreditAuthorization().withAllFields())))
+                .authorizationSingleMessage(create_CreditAuthorizationSingleMessage().withAllFields())
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("30/12/2024 23:59:59"))
                 .updatedAt(newDateTime("31/12/2024 23:59:59"))
@@ -108,8 +108,8 @@ public final class CreditTransactionFactory {
         withAllFields();
         return builder
                 .transactionId(null)
-                .authorizations(new HashSet<>(Set.of(createCreditAuthorization().withAllFieldsExceptDB())))
-                .authorizationSingleMessage(createCreditAuthorizationSingleMessage().withAllFieldsExceptId())
+                .authorizations(new HashSet<>(Set.of(create_CreditAuthorization().withAllFieldsExceptDB())))
+                .authorizationSingleMessage(create_CreditAuthorizationSingleMessage().withAllFieldsExceptId())
                 .build();
     }
 
@@ -120,15 +120,66 @@ public final class CreditTransactionFactory {
                 .amount(new BigDecimal("50.00"))
                 .dateTime(newDateTime("31/12/2025 23:59:59"))
                 .isSingleMessage(false)
-                .authorizations(new HashSet<>(Set.of(createCreditAuthorization().withAllFields())))
+                .authorizations(new HashSet<>(Set.of(create_CreditAuthorization().withAllFields())))
                 .build();
     }
 
     public CreditTransaction initiatedEmpty() {
         return builder
                 .authorizations(new HashSet<>(Set.of(CreditAuthorization.builder().build())))
-                .authorizationSingleMessage(createCreditAuthorizationSingleMessage().initiatedEmpty())
+                .authorizationSingleMessage(create_CreditAuthorizationSingleMessage().initiatedEmpty())
                 .build();
+    }
+}
+```
+
+```java
+package br.com.fiap.garage.application.v1.dto.factory;
+
+import br.com.fiap.garage.application.v1.dto.CustomerDto;
+import lombok.RequiredArgsConstructor;
+
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static lombok.AccessLevel.PRIVATE;
+
+@RequiredArgsConstructor(access = PRIVATE)
+public final class CustomerDtoFactory {
+
+    public static Request create_CustomerDto_Request() {
+        return new Request(CustomerDto.Request.builder());
+    }
+
+    @RequiredArgsConstructor(access = PRIVATE)
+    public static final class Request {
+
+        private final CustomerDto.Request.RequestBuilder builder;
+
+        public CustomerDto.Request withAllFields() {
+            var result = builder
+                    // Self
+                    .username("john.doe@example.com")
+                    .name("John Doe")
+                    .password("1234asdl")
+                    .email("john.doe@example.com")
+                    .document("00.123.456/0001-90")
+                    .build();
+
+            // And
+            assertThatObject(result)
+                    .hasNoEmptyFields();
+            return result;
+        }
+
+        public CustomerDto.Request valid() {
+            return builder
+                    .name("Jane Doe")
+                    .email("jane.doe@example.com")
+                    .build();
+        }
+
+        public CustomerDto.Request initiatedEmpty() {
+            return builder.build();
+        }
     }
 }
 ```

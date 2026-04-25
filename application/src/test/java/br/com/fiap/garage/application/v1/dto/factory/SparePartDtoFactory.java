@@ -23,7 +23,7 @@ public final class SparePartDtoFactory {
         public SparePartDto.Request withAllFields() {
             var result = builder
                     .name("Brake Pad")
-                    .price(new BigDecimal("120.50"))
+                    .amount(new BigDecimal("120.50"))
                     .quantityInStock(10)
                     .build();
 
@@ -36,7 +36,7 @@ public final class SparePartDtoFactory {
         public SparePartDto.Request valid() {
             return builder
                     .name("Ignition")
-                    .price(new BigDecimal("45.00"))
+                    .amount(new BigDecimal("45.00"))
                     .quantityInStock(12)
                     .build();
         }

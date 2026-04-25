@@ -3,4 +3,4 @@ Obs: Do create blocks with table first and just after their comments and then do
 
 cat domain\src\main\java\br\com\fiap\commons\entity\*
 cat domain\src\main\java\br\com\fiap\garage\domain\entity\*
-cat domain\src\main\java\br\com\fiap\garage\domain\entity\enums\*
+cat domain\src\main\java\br\com\fiap\garage\domain\enums\*

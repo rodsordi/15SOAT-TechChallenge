@@ -1,10 +1,10 @@
 package br.com.fiap.garage.domain.entity.work_order.state;
 
 import br.com.fiap.garage.domain.entity.WorkOrder;
-import br.com.fiap.garage.domain.entity.enums.WorkOrderStatus;
+import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 import br.com.fiap.garage.domain.entity.work_order.WorkOrderState;
 
-import static br.com.fiap.garage.domain.entity.enums.WorkOrderStatus.WAITING_FOR_APPROVAL;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.WAITING_FOR_APPROVAL;
 
 public class DiagnosingState extends WorkOrderState {
 

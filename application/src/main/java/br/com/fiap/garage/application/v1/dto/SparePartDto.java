@@ -28,8 +28,9 @@ public final class SparePartDto {
     @Schema(name = ".SparePart.Request")
     public static class Request implements SparePartDef.Request {
         private String name;
-        private BigDecimal price;
+        private BigDecimal amount;
         private Integer quantityInStock;
+        private Integer reservedQuantity;
 
         public SparePart buildSparePart() {
             return MAPPER.convert(this);
@@ -44,8 +45,9 @@ public final class SparePartDto {
     public static class Response implements SparePartDef.Response {
         private UUID id;
         private String name;
-        private BigDecimal price;
+        private BigDecimal amount;
         private Integer quantityInStock;
+        private Integer reservedQuantity;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

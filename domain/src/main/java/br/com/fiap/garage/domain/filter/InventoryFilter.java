@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.filter;
 
 import br.com.fiap.commons.filter.AuditableFilter;
-import br.com.fiap.garage.domain.entity.Inventory;
+import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -20,37 +20,38 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @Getter
 @Setter
 @ParameterObject
-public class InventoryFilter extends AuditableFilter<Inventory> implements Specification<Inventory> {
+public class InventoryFilter extends AuditableFilter<InventoryMaterial> implements Specification<InventoryMaterial> {
 
     @Schema(example = "Tire", description = "Inventory name.")
     private String name;
 
-    private Specification<Inventory> nameEqual() {
+    private Specification<InventoryMaterial> nameEqual() {
         return (root, query, builder) -> isEmpty(name) ? null :
                 builder.equal(root.get("name"), name);
     }
 
-    @Schema(example = "1.99", description = "Inventory price (from).")
-    private BigDecimal priceFrom;
+    @Schema(example = "1.99", description = "Inventory amount (from).")
+    private BigDecimal amountFrom;
 
-    private Specification<Inventory> priceFrom() {
-        return (root, query, builder) -> priceFrom == null ? null :
-                builder.greaterThanOrEqualTo(root.get("price"), priceFrom);
+    private Specification<InventoryMaterial> amountFrom() {
+        return (root, query, builder) -> amountFrom == null ? null :
+                builder.greaterThanOrEqualTo(root.get("amount"), amountFrom);
     }
 
-    @Schema(example = "9.99", description = "Inventory price (to).")
-    private BigDecimal priceTo;
+    @Schema(example = "9.99", description = "Inventory amount (to).")
+    private BigDecimal amountTo;
 
-    private Specification<Inventory> priceTo() {
-        return (root, query, builder) -> priceTo == null ? null :
-                builder.lessThanOrEqualTo(root.get("price"), priceTo);
+    private Specification<InventoryMaterial> amountTo() {
+        return (root, query, builder) -> amountTo == null ? null :
+                builder.lessThanOrEqualTo(root.get("amount"), amountTo);
     }
 
     @Override
-    public @Nullable Predicate toPredicate(Root<Inventory> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+    public @Nullable Predicate toPredicate(Root<InventoryMaterial> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         return super.buildSpecification()
                 .and(nameEqual())
-                .and(priceFrom())
+                .and(amountFrom())
+                .and(amountTo())
                 .toPredicate(root, query, criteriaBuilder);
     }
 }

@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
-class InventorySearchUseCaseTest {
+class InventoryMaterialSearchUseCaseTest {
 
     @InjectMocks
     private InventorySearchUseCase inventorySearchUseCase;

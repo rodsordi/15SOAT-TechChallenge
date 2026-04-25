@@ -30,7 +30,7 @@ public final class SparePartAssertions {
                 .isNull();
         assertThat(actual.getName())
                 .isEqualTo("Brake Pad");
-        assertThat(actual.getPrice())
+        assertThat(actual.getAmount())
                 .isEqualTo(new BigDecimal("120.50"));
         assertThat(actual.getQuantityInStock())
                 .isEqualTo(10);
