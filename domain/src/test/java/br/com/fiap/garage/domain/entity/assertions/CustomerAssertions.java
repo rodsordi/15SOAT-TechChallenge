@@ -35,7 +35,39 @@ public final class CustomerAssertions {
         assertThat(actual.getEmail())
                 .isEqualTo("john.doe@example.com");
         assertThat(actual.getDocument())
-                .isEqualTo("00123456000190");
+                .isEqualTo("27614623000100");
+        assertThat(actual.getAuthorities())
+                .isNullOrEmpty();
+
+        // Inheritance (AuditableEntity)
+        assertThat(actual.getCreatedAt())
+                .isNull();
+        assertThat(actual.getUpdatedAt())
+                .isNull();
+
+        // And
+        assertThatObject(actual)
+                .hasAllGetMethodsVerifiedOnceAtLeast();
+    }
+
+    /**
+     * @see br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory
+     * .withAllFields()
+     */
+    public void wasConvertedFrom_WorkOrderDto_Request() {
+        // Self
+        assertThat(actual.getId())
+                .hasToString("5b3b7f42-0a9f-4093-82af-a7db99131e7c");
+        assertThat(actual.getUsername())
+                .isNull();
+        assertThat(actual.getPassword())
+                .isNull();
+        assertThat(actual.getName())
+                .isNull();
+        assertThat(actual.getEmail())
+                .isNull();
+        assertThat(actual.getDocument())
+                .isNull();
         assertThat(actual.getAuthorities())
                 .isNullOrEmpty();
 

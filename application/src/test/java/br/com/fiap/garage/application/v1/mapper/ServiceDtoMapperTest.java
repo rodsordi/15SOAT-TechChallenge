@@ -59,12 +59,12 @@ class ServiceDtoMapperTest {
                 //Given
                 var source = create_ServiceDto_Request()
                         .withAllFields();
-                setField(source, "estimatedMaterials", null);
+                setField(source, "materialsIds", null);
                 //When
                 var actual = mapper.convert(source);
                 //Then
-                assertThat(actual.getEstimatedMaterials())
-                        .isNull();
+                assertThat(actual.getMaterials())
+                        .isNullOrEmpty();
             }
         }
     }
@@ -106,7 +106,7 @@ class ServiceDtoMapperTest {
             void test3() {
                 //Given
                 var service = Service.builder()
-                        .estimatedMaterial(null)
+                        .materials(null)
                         .build();
                 //When
                 var actual = mapper.convert(service);
@@ -132,12 +132,12 @@ class ServiceDtoMapperTest {
             void test5() {
                 //Given
                 var service = create_Service().withAllFields();
-                setField(service, "estimatedMaterials", null);
+                setField(service, "materials", null);
                 //When
                 var actual = mapper.convert(service);
                 //Then
-                assertThat(actual.getEstimatedMaterials())
-                        .isNull();
+                assertThat(actual.getMaterials())
+                        .isNullOrEmpty();
             }
         }
     }
@@ -167,7 +167,7 @@ class ServiceDtoMapperTest {
             void test2() {
                 //Given
                 var service = Service.builder()
-                        .estimatedMaterial(null)
+                        .material(null)
                         .build();
                 //When
                 var actual = mapper.convertToRepresentation(service);

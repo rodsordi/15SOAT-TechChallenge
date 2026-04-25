@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.factory.MaterialFactory.create_Material;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -26,9 +27,10 @@ public final class EstimatedMaterialFactory {
                 .name("Ceramic Brake Pads")
                 .description("High-performance front ceramic brake pads")
                 .amount(new BigDecimal("150.00"))
+                .material(create_Material().withAllFields())
                 // Inheritance (AuditableEntity)
-                .createdAt(newDateTime("30/12/2024 23:59:59"))
-                .updatedAt(newDateTime("31/12/2024 23:59:59"))
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
 
         // And
@@ -41,6 +43,7 @@ public final class EstimatedMaterialFactory {
         withAllFields();
         return builder
                 .id(null)
+                .material(create_Material().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)
                 .build();

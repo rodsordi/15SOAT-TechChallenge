@@ -2,7 +2,6 @@ package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.commons.config.JpaConfig;
 import br.com.fiap.garage.domain.entity.Customer;
-import br.com.fiap.garage.domain.entity.Customer;
 import br.com.fiap.garage.domain.filter.CustomerFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,7 +12,6 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
@@ -45,7 +43,7 @@ class CustomerRepositoryExtTest {
                 customer.getAuthorities()
                         .forEach(authority -> em.persist(authority));
                 setField(customer, "name", "John da Silva");
-                repository.save(customer);
+                em.merge(customer);
                 em.flush();
                 //Given
                 var filter = new CustomerFilter();
@@ -75,11 +73,11 @@ class CustomerRepositoryExtTest {
                 var customer = create_Customer().withAllFieldsExceptDB();
                 customer.getAuthorities()
                         .forEach(authority -> em.persist(authority));
-                setField(customer, "document", "00123456000199");
+                setField(customer, "document", "86855874000146");
                 repository.save(customer);
                 em.flush();
                 //Given
-                var document = "00123456000199";
+                var document = "86855874000146";
                 //When
                 var actual = repository.findByDocument(document);
                 //Then
@@ -87,7 +85,7 @@ class CustomerRepositoryExtTest {
                         .isPresent()
                         .get()
                         .extracting(Customer::getDocument)
-                        .isEqualTo("00123456000199");
+                        .isEqualTo("86855874000146");
             }
         }
     }

@@ -5,12 +5,14 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.InheritanceType.JOINED;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -36,4 +38,9 @@ public class EstimatedMaterial extends AuditableEntity implements Serializable {
 
     @Column(nullable = false, comment = "Estimated Material amount. Owner: self")
     private BigDecimal amount;
+
+    // Aggregate
+    @ManyToOne(cascade = {MERGE, PERSIST})
+    @JoinColumn(updatable = false, comment = "Material id. Owner: db")
+    private Material material;
 }

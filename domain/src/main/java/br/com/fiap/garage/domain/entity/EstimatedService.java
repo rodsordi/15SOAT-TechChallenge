@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.*;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true, exclude = "id")
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(schema = "garage")
 public class EstimatedService extends AuditableEntity implements Serializable {
@@ -41,6 +41,11 @@ public class EstimatedService extends AuditableEntity implements Serializable {
 
     @Column(comment = "Estimated Service finished at. Owner: self")
     private LocalDateTime finishedAt;
+
+    // Aggregate
+    @ManyToOne(cascade = {MERGE, PERSIST})
+    @JoinColumn(updatable = false, comment = "Service id. Owner: db")
+    private Service service;
 
     // Value Object
     @Singular(value = "estimatedMaterial", ignoreNullCollections = true)

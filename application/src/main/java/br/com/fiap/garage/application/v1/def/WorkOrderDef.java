@@ -4,6 +4,8 @@ import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -25,6 +27,8 @@ public interface WorkOrderDef {
         UUID getId();
 
         WorkOrderStatus getStatus();
+
+        BigDecimal getTotalAmount();
     }
 
     interface DetailedPersisted extends RepresentedPersisted {
@@ -33,15 +37,37 @@ public interface WorkOrderDef {
 
     interface Request extends Detailed {
 
-        <T extends EstimateDef.Request> T getEstimate();
+        // Aggregation
+        UUID getCustomerId();
+
+        // Aggregation
+        UUID getEmployeeId();
+
+        // Aggregation
+        Set<UUID> getServicesIds();
     }
 
     interface Response extends Detailed, DetailedPersisted {
 
-        <T extends EstimateDef.Response> T getEstimate();
+        // Aggregation
+        <T extends CustomerDef.Response> T getCustomer();
+
+        // Aggregation
+        <T extends EmployeeDef.Response> T getEmployee();
+
+        // Aggregation
+        <T extends EstimatedServiceDef.Response> Set<T> getEstimatedServices();
     }
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        // Aggregation
+        <T extends CustomerDef.Representation> T getCustomer();
+
+        // Aggregation
+        <T extends EmployeeDef.Representation> T getEmployee();
+
+        // Aggregation
+        <T extends EstimatedServiceDef.Representation> Set<T> getEstimatedServices();
     }
 }

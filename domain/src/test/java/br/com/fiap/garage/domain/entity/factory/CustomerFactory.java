@@ -27,12 +27,12 @@ public final class CustomerFactory {
                 .name("John Doe")
                 .email("john.doe@fiap.com.br")
                 // Self
-                .document("00123456000199")
+                .document("27351626000107")
                 // Composition
                 .authority(create_Authority().withAllFields())
                 // Inheritance (AuditableEntity)
-                .createdAt(newDateTime("21/04/2026 10:00:00"))
-                .updatedAt(newDateTime("21/04/2026 15:30:00"))
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
         // And
         assertThatObject(result)

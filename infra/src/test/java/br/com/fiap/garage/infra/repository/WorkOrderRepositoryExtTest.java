@@ -42,7 +42,7 @@ class WorkOrderRepositoryExtTest {
                 //Scenario
                 var workOrder = create_WorkOrder().withAllFieldsExceptDB();
                 setField(workOrder, "status", FINISHED);
-                repository.save(workOrder);
+                em.merge(workOrder);
                 em.flush();
                 //Given
                 var filter = new WorkOrderFilter();

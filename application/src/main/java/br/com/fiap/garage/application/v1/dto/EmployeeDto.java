@@ -51,8 +51,8 @@ public final class EmployeeDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         
-        public static EmployeeDto.Response buildEmployeeDtoResponse(Employee customer) {
-            return MAPPER.convert(customer);
+        public static EmployeeDto.Response buildEmployeeDtoResponse(Employee employee) {
+            return MAPPER.convert(employee);
         }
     }
 
@@ -71,6 +71,7 @@ public final class EmployeeDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        // Entity/Aggregate
         public static EmployeeDto.Representation buildEmployeeDtoRepresentation(Employee customer) {
             var representation = MAPPER.convertToRepresentation(customer);
             representation.add(linkTo(EmployeeController.class)

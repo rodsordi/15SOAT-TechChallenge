@@ -30,12 +30,12 @@ public final class WorkOrderFactory {
                 .status(RECEIVED)
                 .totalAmount(new BigDecimal("999.99"))
                 // Composition
-                .employee(create_Employee().withAllFields())
                 .customer(create_Customer().withAllFields())
+                .employee(create_Employee().withAllFields())
                 .estimatedService(create_EstimatedService().withAllFields())
                 // Inheritance (AuditableEntity)
-                .createdAt(newDateTime("21/04/2026 10:00:00"))
-                .updatedAt(newDateTime("21/04/2026 15:30:00"))
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
 
         // And
@@ -48,6 +48,9 @@ public final class WorkOrderFactory {
         withAllFields();
         return builder
                 .id(null)
+                .customer(create_Customer().withAllFieldsExceptDB())
+                .employee(create_Employee().withAllFieldsExceptDB())
+                .clearEstimatedServices()
                 .estimatedService(create_EstimatedService().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)

@@ -31,7 +31,8 @@ public final class ServiceDto {
         private String name;
         private String description;
         private BigDecimal amount;
-        private Set<String> inventoryMaterials;
+        @Singular(value = "materialId", ignoreNullCollections = true)
+        private Set<UUID> materialsIds;
 
         public Service buildService() {
             return MAPPER.convert(this);
@@ -48,12 +49,13 @@ public final class ServiceDto {
         private String name;
         private String description;
         private BigDecimal amount;
-        private Set<String> inventoryMaterials;
+        @Singular(value = "material", ignoreNullCollections = true)
+        private Set<MaterialDto.Response> materials;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
-        public static ServiceDto.Response buildServiceDtoResponse(Service customer) {
-            return MAPPER.convert(customer);
+        public static ServiceDto.Response buildServiceDtoResponse(Service service) {
+            return MAPPER.convert(service);
         }
     }
 
@@ -71,6 +73,7 @@ public final class ServiceDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        // Entity/Aggregate
         public static ServiceDto.Representation buildServiceDtoRepresentation(Service customer) {
             var representation = MAPPER.convertToRepresentation(customer);
             representation.add(linkTo(ServiceController.class)

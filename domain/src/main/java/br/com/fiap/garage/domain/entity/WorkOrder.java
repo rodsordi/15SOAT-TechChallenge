@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false, exclude = "id")
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(schema = "garage")
 public class WorkOrder extends AuditableEntity implements Serializable {
@@ -41,12 +41,12 @@ public class WorkOrder extends AuditableEntity implements Serializable {
     // Aggregate
     @ManyToOne(cascade = {MERGE, PERSIST})
     @JoinColumn(updatable = false, comment = "Customer id. Owner: db")
-    private Employee employee;
+    private Customer customer;
 
     // Aggregate
     @ManyToOne(cascade = {MERGE, PERSIST})
     @JoinColumn(updatable = false, comment = "Customer id. Owner: db")
-    private Customer customer;
+    private Employee employee;
 
     // Value Object
     @Singular(value = "estimatedService", ignoreNullCollections = true)

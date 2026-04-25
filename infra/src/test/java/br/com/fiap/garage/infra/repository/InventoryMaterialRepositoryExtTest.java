@@ -1,8 +1,7 @@
 package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.commons.config.JpaConfig;
-import br.com.fiap.garage.domain.entity.InventoryMaterial;
-import br.com.fiap.garage.domain.filter.InventoryFilter;
+import br.com.fiap.garage.domain.filter.InventoryMaterialFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,9 +11,8 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static br.com.fiap.garage.domain.entity.factory.SparePartFactory.create_SparePart;
+import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -22,7 +20,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 class InventoryMaterialRepositoryExtTest {
 
     @Autowired
-    private InventoryRepositoryExt repository;
+    private InventoryMaterialRepositoryExt repository;
 
     @Autowired
     private TestEntityManager em;
@@ -39,18 +37,16 @@ class InventoryMaterialRepositoryExtTest {
             @Test
             void test1() {
                 //Scenario
-                var employee = create_SparePart().withAllFieldsExceptDB();
-                repository.save(employee);
+                var inventoryMaterial = create_InventoryMaterial().withAllFieldsExceptDB();
+                em.merge(inventoryMaterial);
                 em.flush();
                 //Given
-                var filter = new InventoryFilter();
+                var filter = new InventoryMaterialFilter();
                 //When
                 var actual = repository.findAll(filter, filter.buildPageRequest());
                 //Then
                 assertThat(actual)
-                        .hasSize(1)
-                        .extracting(InventoryMaterial::getName)
-                        .containsExactly("Engine");
+                        .hasSize(1);
             }
         }
     }

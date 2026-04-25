@@ -71,6 +71,7 @@ public final class VehicleDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        // Entity/Agragate
         public static VehicleDto.Representation buildVehicleDtoRepresentation(Vehicle vehicle) {
             var representation = MAPPER.convertToRepresentation(vehicle);
             representation.add(linkTo(VehicleController.class)

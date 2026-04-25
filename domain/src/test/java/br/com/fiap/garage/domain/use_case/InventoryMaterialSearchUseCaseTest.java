@@ -1,7 +1,7 @@
 package br.com.fiap.garage.domain.use_case;
 
-import br.com.fiap.garage.domain.filter.InventoryFilter;
-import br.com.fiap.garage.domain.repository.InventoryRepository;
+import br.com.fiap.garage.domain.filter.InventoryMaterialFilter;
+import br.com.fiap.garage.domain.repository.InventoryMaterialRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,8 +14,7 @@ import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
-import static br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory.create_ShopSupply;
-import static br.com.fiap.garage.domain.entity.factory.SparePartFactory.create_SparePart;
+import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
@@ -24,10 +23,10 @@ import static org.mockito.Mockito.lenient;
 class InventoryMaterialSearchUseCaseTest {
 
     @InjectMocks
-    private InventorySearchUseCase inventorySearchUseCase;
+    private InventoryMaterialSearchUseCase inventoryMaterialSearchUseCase;
 
     @Mock
-    private InventoryRepository inventoryRepository;
+    private InventoryMaterialRepository inventoryMaterialRepository;
 
     @DisplayName("When finding all Inventories")
     @Nested
@@ -40,10 +39,10 @@ class InventoryMaterialSearchUseCaseTest {
             @BeforeEach
             void beforeEach() {
                 lenient()
-                        .when(inventoryRepository.findAll(any(), any()))
+                        .when(inventoryMaterialRepository.findAll(any(), any()))
                         .thenReturn(new PageImpl<>(List.of(
-                                create_SparePart().withAllFields(),
-                                create_ShopSupply().withAllFields()
+                                create_InventoryMaterial().withAllFields(),
+                                create_InventoryMaterial().withAllFields()
                         )));
             }
 
@@ -51,9 +50,9 @@ class InventoryMaterialSearchUseCaseTest {
             @Test
             void test1() {
                 //Given
-                var inventoryFilter = new InventoryFilter();
+                var inventoryFilter = new InventoryMaterialFilter();
                 //When
-                var actual = inventorySearchUseCase.findAll(inventoryFilter);
+                var actual = inventoryMaterialSearchUseCase.findAll(inventoryFilter);
                 //Then
                 assertThat(actual)
                         .isNotNull();

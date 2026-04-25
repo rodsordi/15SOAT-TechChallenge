@@ -37,7 +37,7 @@ public final class VehicleDtoAssertions {
             assertThat(actual.getModel())
                     .isEqualTo("Corolla");
             assertThat(actual.getLicensePlate())
-                    .isEqualTo("ABC-1234");
+                    .isEqualTo("ABC1234");
             assertThat(actual.getManufactureYear())
                     .isEqualTo(Year.parse("2024"));
 
@@ -76,7 +76,7 @@ public final class VehicleDtoAssertions {
             assertThat(actual.getModel())
                     .isEqualTo("Corolla");
             assertThat(actual.getLicensePlate())
-                    .isEqualTo("ABC-1234");
+                    .isEqualTo("ABC1234");
             assertThat(actual.getManufactureYear())
                     .isEqualTo(Year.parse("2024"));
 

@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -27,7 +29,10 @@ public final class WorkOrderDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".WorkOrder.Request")
     public static class Request implements WorkOrderDef.Request {
-        private EstimateDto.Request estimate;
+        private UUID customerId;
+        private UUID employeeId;
+        @Singular(value = "serviceId", ignoreNullCollections = true)
+        private Set<UUID> servicesIds;
 
         public WorkOrder buildWorkOrder() {
             return MAPPER.convert(this);
@@ -42,7 +47,11 @@ public final class WorkOrderDto {
     public static class Response implements WorkOrderDef.Response {
         private UUID id;
         private WorkOrderStatus status;
-        private EstimateDto.Response estimate;
+        private BigDecimal totalAmount;
+        private CustomerDto.Response customer;
+        private EmployeeDto.Response employee;
+        @Singular(value = "service", ignoreNullCollections = true)
+        private Set<EstimatedServiceDto.Response> estimatedServices;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -60,9 +69,15 @@ public final class WorkOrderDto {
     public static class Representation extends RepresentationModel<Representation> implements WorkOrderDef.Representation {
         private UUID id;
         private WorkOrderStatus status;
+        private BigDecimal totalAmount;
+        private CustomerDto.Representation customer;
+        private EmployeeDto.Representation employee;
+        @Singular(value = "service", ignoreNullCollections = true)
+        private Set<EstimatedServiceDto.Representation> estimatedServices;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        // Entity
         public static WorkOrderDto.Representation buildWorkOrderDtoRepresentation(WorkOrder workOrder) {
             var representation = MAPPER.convertToRepresentation(workOrder);
             representation.add(linkTo(WorkOrderController.class)

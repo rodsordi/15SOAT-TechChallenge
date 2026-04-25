@@ -27,12 +27,12 @@ public final class EmployeeFactory {
                 .name("John Doe")
                 .email("john.doe@garage.com")
                 // Self
-                .cpf("12345678910")
+                .cpf("17902652075")
                 // Composition
                 .authority(create_Authority().withAllFields())
                 // Inheritance (AuditableEntity)
-                .createdAt(newDateTime("21/04/2026 10:00:00"))
-                .updatedAt(newDateTime("21/04/2026 15:30:00"))
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
 
         // Validation check

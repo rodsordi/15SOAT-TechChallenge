@@ -11,6 +11,7 @@ import java.util.Set;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.EstimatedMaterialFactory.create_EstimatedMaterial;
+import static br.com.fiap.garage.domain.entity.factory.ServiceFactory.create_Service;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -32,10 +33,11 @@ public final class EstimatedServiceFactory {
                 .amount(new BigDecimal("4500.00"))
                 .finishedAt(newDateTime("31/12/2025 18:00:00"))
                 // Composition
-                .estimatedMaterials(new HashSet<>(Set.of(create_EstimatedMaterial().withAllFields())))
+                .service(create_Service().withAllFields())
+                .estimatedMaterial(create_EstimatedMaterial().withAllFields())
                 // Inheritance (AuditableEntity)
-                .createdAt(newDateTime("30/12/2024 23:59:59"))
-                .updatedAt(newDateTime("31/12/2024 23:59:59"))
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
 
         // And
@@ -48,6 +50,8 @@ public final class EstimatedServiceFactory {
         withAllFields();
         return builder
                 .id(null)
+                .service(null)
+                .clearEstimatedMaterials()
                 .estimatedMaterials(new HashSet<>(Set.of(create_EstimatedMaterial().withAllFieldsExceptDB())))
                 .build();
     }
@@ -62,6 +66,7 @@ public final class EstimatedServiceFactory {
 
     public EstimatedService initiatedEmpty() {
         return builder
+                .service(create_Service().initiatedEmpty())
                 .estimatedMaterials(new HashSet<>(Set.of(EstimatedMaterial.builder().build())))
                 .build();
     }

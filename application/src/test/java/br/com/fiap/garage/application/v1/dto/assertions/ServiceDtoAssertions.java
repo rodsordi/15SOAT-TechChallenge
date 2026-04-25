@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
-import static br.com.fiap.garage.application.v1.dto.assertions.EstimateDtoAssertions.assertThat_EstimateDto_Response;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.application.v1.dto.assertions.MaterialDtoAssertions.assertThat_MaterialDto_Response;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -32,23 +32,29 @@ public final class ServiceDtoAssertions {
         public void wasConvertedFrom_Service() {
             // Self
             assertThat(actual.getId())
-                    .hasToString("9f8792ea-cf8f-43d1-824f-9f7bc433e404");
+                    .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
             assertThat(actual.getName())
-                    .isEqualTo("Standard Maintenance");
+                    .isEqualTo("Complete Engine Overhaul");
             assertThat(actual.getDescription())
-                    .isEqualTo("General engine check and oil change");
+                    .isEqualTo("Comprehensive engine inspection, repair, and parts replacement");
             assertThat(actual.getAmount())
-                    .isEqualTo(new BigDecimal("250.00"));
+                    .isEqualTo(new BigDecimal("3500.00"));
 
             // Composition
-            assertThat(actual.getEstimatedMaterials())
-                    .contains("");
+            assertThat(actual.getMaterials())
+                    .hasSize(1);
+            var material = actual.getMaterials()
+                    .stream()
+                    .findFirst()
+                    .orElseThrow();
+            assertThat_MaterialDto_Response(material)
+                    .wasConvertedFrom_Material();
 
             // Inheritance (AuditableTable / AuditableEntity)
             assertThat(actual.getCreatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 10:00:00"));
+                    .isEqualTo(newDateTime("13/12/2026 23:59:59"));
             assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 15:30:00"));
+                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
 
             // And
             assertThatObject(actual)
@@ -83,13 +89,13 @@ public final class ServiceDtoAssertions {
 
             // Inheritance (AuditableTable / AuditableEntity)
             assertThat(actual.getCreatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 10:00:00"));
+                    .isEqualTo(newDateTime("13/12/2026 23:59:59"));
             assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 15:30:00"));
+                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
 
             // HATEOAS
             assertThat(actual.getLinks())
-                    .isNotEmpty();
+                    .isNullOrEmpty();
 
             // And
             assertThatObject(actual)

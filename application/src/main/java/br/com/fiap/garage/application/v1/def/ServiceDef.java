@@ -1,6 +1,7 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import br.com.fiap.garage.application.v1.dto.MaterialDto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -36,12 +37,12 @@ public interface ServiceDef {
 
     interface Request extends Detailed {
 
-        Set<String> getInventoryMaterials();
+        Set<UUID> getMaterialsIds();
     }
 
     interface Response extends Detailed, DetailedPersisted {
 
-        Set<String> getInventoryMaterials();
+        <T extends MaterialDto.Response> Set<T> getMaterials();
     }
 
     interface Representation extends Represented, RepresentedPersisted {

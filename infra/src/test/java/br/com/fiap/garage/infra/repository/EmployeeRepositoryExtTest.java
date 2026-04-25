@@ -43,7 +43,7 @@ class EmployeeRepositoryExtTest {
                 employee.getAuthorities()
                         .forEach(authority -> em.persist(authority));
                 setField(employee, "name", "John da Silva");
-                repository.save(employee);
+                em.merge(employee);
                 em.flush();
                 //Given
                 var filter = new EmployeeFilter();
@@ -73,11 +73,11 @@ class EmployeeRepositoryExtTest {
                 var employee = create_Employee().withAllFieldsExceptDB();
                 employee.getAuthorities()
                         .forEach(authority -> em.persist(authority));
-                setField(employee, "cpf", "12345678910");
+                setField(employee, "cpf", "03739169060");
                 repository.save(employee);
                 em.flush();
                 //Given
-                var cpf = "12345678910";
+                var cpf = "03739169060";
                 //When
                 var actual = repository.findByCpf(cpf);
                 //Then
@@ -85,7 +85,7 @@ class EmployeeRepositoryExtTest {
                         .isPresent()
                         .get()
                         .extracting(Employee::getCpf)
-                        .isEqualTo("12345678910");
+                        .isEqualTo("03739169060");
             }
         }
     }

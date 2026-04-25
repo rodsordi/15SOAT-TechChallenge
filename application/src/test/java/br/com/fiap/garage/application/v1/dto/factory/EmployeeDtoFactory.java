@@ -24,7 +24,7 @@ public final class EmployeeDtoFactory {
                     .password("1a2s3d4f")
                     .name("John")
                     .email("john.doe@garage.com")
-                    .cpf("123.456.789-00")
+                    .cpf("690.059.750-59")
                     .build();
 
             assertThatObject(result).hasNoEmptyFields();

@@ -1,8 +1,8 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.InventoryController;
+import br.com.fiap.garage.application.v1.controller.InventoryMaterialController;
 import br.com.fiap.garage.application.v1.def.InventoryMaterialDef;
-import br.com.fiap.garage.application.v1.mapper.InventoryDtoMapper;
+import br.com.fiap.garage.application.v1.mapper.InventoryMaterialDtoMapper;
 import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -19,26 +19,57 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @NoArgsConstructor(access = PRIVATE)
 public final class InventoryMaterialDto {
 
-    private static final InventoryDtoMapper MAPPER = getMapper(InventoryDtoMapper.class);
+    private static final InventoryMaterialDtoMapper MAPPER = getMapper(InventoryMaterialDtoMapper.class);
 
     @Getter(onMethod_ = @Override)
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Inventory.Representation")
-    public static class Representation extends RepresentationModel<Representation> implements InventoryMaterialDef.Representation {
-        private UUID id;
-        private String name;
-        private BigDecimal amount;
+    @Schema(name = ".InventoryMaterial.Request")
+    public static class Request implements InventoryMaterialDef.Request {
         private Integer quantityInStock;
         private Integer reservedQuantity;
+        private MaterialDto.Request material;
+
+        public InventoryMaterial buildInventoryMaterial() {
+            return MAPPER.convert(this);
+        }
+    }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".InventoryMaterial.Response")
+    public static class Response implements InventoryMaterialDef.Response {
+        private UUID id;
+        private Integer quantityInStock;
+        private Integer reservedQuantity;
+        private MaterialDto.Response material;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        public static InventoryMaterialDto.Response buildInventoryMaterialDtoResponse(InventoryMaterial inventory) {
+            return MAPPER.convert(inventory);
+        }
+    }
+    
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @EqualsAndHashCode(callSuper = true)
+    @Schema(name = ".InventoryMaterial.Representation")
+    public static class Representation extends RepresentationModel<Representation> implements InventoryMaterialDef.Representation {
+        private UUID id;
+        private MaterialDto.Representation material;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+
+        // Entity
         public static InventoryMaterialDto.Representation buildInventoryDtoRepresentation(InventoryMaterial inventoryMaterial) {
             var representation = MAPPER.convertToRepresentation(inventoryMaterial);
-            representation.add(linkTo(InventoryController.class)
+            representation.add(linkTo(InventoryMaterialController.class)
                     .slash(representation.getId())
                     .withSelfRel());
             return representation;

@@ -41,7 +41,7 @@ class VehicleRepositoryExtTest {
                 //Scenario
                 var vehicle = create_Vehicle().withAllFieldsExceptDB();
                 setField(vehicle, "make", "BMW");
-                repository.save(vehicle);
+                em.merge(vehicle);
                 em.flush();
                 //Given
                 var filter = new VehicleFilter();

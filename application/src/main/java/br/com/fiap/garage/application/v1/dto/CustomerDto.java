@@ -71,6 +71,7 @@ public final class CustomerDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
+        // Entity/Aggregate
         public static Representation buildCustomerDtoRepresentation(Customer customer) {
             var representation = MAPPER.convertToRepresentation(customer);
             representation.add(linkTo(CustomerController.class)

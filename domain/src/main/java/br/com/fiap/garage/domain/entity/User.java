@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Set;
 import java.util.UUID;
 
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.InheritanceType.JOINED;
 import static lombok.AccessLevel.PROTECTED;
@@ -20,7 +22,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false, exclude = "id")
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(schema = "garage", name = "users")
 @Inheritance(strategy = JOINED)
@@ -47,7 +49,7 @@ public class User extends AuditableEntity implements UserDetails {
 
     // Aggregate
     @Singular(value = "authority", ignoreNullCollections = true)
-    @ManyToMany(fetch = EAGER)
+    @ManyToMany(cascade = {MERGE, PERSIST}, fetch = EAGER)
     @JoinTable(schema = "garage", name = "users_authority",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id"))

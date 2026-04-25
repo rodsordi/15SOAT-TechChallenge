@@ -4,10 +4,9 @@ import br.com.fiap.garage.application.v1.dto.ServiceDto;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.UUID;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.application.v1.dto.factory.EstimateDtoFactory.create_EstimateDto_Request;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
@@ -29,7 +28,9 @@ public final class ServiceDtoFactory {
                     .description("Complete engine oil and filter change")
                     .amount(new BigDecimal("150.00"))
                     // Composition
-                    .estimatedMaterials(Set.of(create_EstimateDto_Request().withAllFields()))
+                    .materialId(UUID.fromString("4d36346e-9eec-47e5-b267-69e1c6219b28"))
+                    .materialId(UUID.fromString("f19a4875-b483-4486-adf6-fe581f1aa953"))
+                    .materialId(UUID.fromString("058c9925-253a-464d-adc4-55e6e6d89647"))
                     .build();
 
             // And

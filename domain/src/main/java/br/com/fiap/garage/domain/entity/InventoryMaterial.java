@@ -16,7 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false, exclude = "id")
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(schema = "garage")
 public class InventoryMaterial extends AuditableEntity implements Serializable {

@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.application.v1.dto.factory.SparePartDtoFactory.create_SparePartDto_Request;
+import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -22,7 +22,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Testcontainers
 public class InventoryMaterialSearchTest extends GarageIntegrationTest {
 
-    @DisplayName("When finding all inventorys")
+    @DisplayName("When finding all inventory materials")
     @Nested
     class FindAll {
 
@@ -30,7 +30,7 @@ public class InventoryMaterialSearchTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given no query params, in scenario with saved inventory")
+            @DisplayName("Given no query params, in scenario with saved inventory materials")
             @Test
             void test1() {
                 //Scenario
@@ -38,8 +38,8 @@ public class InventoryMaterialSearchTest extends GarageIntegrationTest {
                         .log().all()
                         .header("Authorization", authorization)
                         .contentType(JSON)
-                        .body(json.writeValueAsString(create_SparePartDto_Request().withAllFields()))
-                        .post("/v1/spare-parts")
+                        .body(json.writeValueAsString(create_InventoryMaterial().withAllFields()))
+                        .post("/v1/inventory-materials")
                         .then()
                         .log().all()
                         .extract()
@@ -48,7 +48,7 @@ public class InventoryMaterialSearchTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get("/v1/inventories")
+                        .get("/v1/inventory-materials")
                         .then()
                         .log().all()
                         .extract()

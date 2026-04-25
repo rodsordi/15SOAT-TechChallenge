@@ -1,7 +1,8 @@
 package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.commons.config.RestControllerTestConfig;
-import br.com.fiap.garage.domain.use_case.InventorySearchUseCase;
+import br.com.fiap.garage.domain.use_case.InventoryMaterialCreationUseCase;
+import br.com.fiap.garage.domain.use_case.InventoryMaterialSearchUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static br.com.fiap.garage.domain.entity.factory.ShopSupplyFactory.create_ShopSupply;
-import static br.com.fiap.garage.domain.entity.factory.SparePartFactory.create_SparePart;
+import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = InventoryController.class)
+@SpringBootTest(classes = InventoryMaterialController.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = RestControllerTestConfig.class)
 class InventoryMaterialControllerTest {
@@ -41,9 +41,12 @@ class InventoryMaterialControllerTest {
     private Gson gson;
 
     @MockitoBean
-    private InventorySearchUseCase inventorySearchUseCase;
+    private InventoryMaterialSearchUseCase inventoryMaterialSearchUseCase;
 
-    @DisplayName("When finding all inventorys")
+    @MockitoBean
+    private InventoryMaterialCreationUseCase inventoryMaterialCreationUseCase;
+
+    @DisplayName("When finding all inventory materials")
     @Nested
     class FindAll {
 
@@ -53,12 +56,13 @@ class InventoryMaterialControllerTest {
 
             @BeforeEach
             void beforeEach() {
-                when(inventorySearchUseCase.findAll(any()))
+                when(inventoryMaterialSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
-                            var inventorys = List.of(
-                                    create_SparePart().withAllFields(),
-                                    create_ShopSupply().withAllFields());
-                            return new PageImpl<>(inventorys);
+                            var inventoryMaterials = List.of(
+                                    create_InventoryMaterial().withAllFields(),
+                                    create_InventoryMaterial().withAllFields(),
+                                    create_InventoryMaterial().withAllFields());
+                            return new PageImpl<>(inventoryMaterials);
                         });
             }
 
@@ -66,11 +70,11 @@ class InventoryMaterialControllerTest {
             @Test
             void test1() throws Exception {
                 //When
-                mockMvc.perform(get("/v1/inventories"))
+                mockMvc.perform(get("/v1/inventory-materials"))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.content.[*].id", hasSize(2)))
+                        .andExpect(jsonPath("$.content.[*].id", hasSize(3)))
                 ;
             }
         }

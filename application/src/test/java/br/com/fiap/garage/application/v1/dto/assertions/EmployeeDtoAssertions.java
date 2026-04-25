@@ -37,14 +37,14 @@ public final class EmployeeDtoAssertions {
             assertThat(actual.getEmail())
                     .isEqualTo("john.doe@garage.com");
             assertThat(actual.getCpf())
-                    .isEqualTo("123.456.789-10");
+                    .isEqualTo("179.026.520-75");
 
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 10:00:00"));
+                    .isEqualTo(newDateTime("13/12/2026 23:59:59"));
             assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 15:30:00"));
+                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
 
             // And
             assertThatObject(actual)
@@ -77,13 +77,13 @@ public final class EmployeeDtoAssertions {
             assertThat(actual.getEmail())
                     .isEqualTo("john.doe@garage.com");
             assertThat(actual.getCpf())
-                    .isEqualTo("123.456.789-10");
+                    .isEqualTo("179.026.520-75");
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 10:00:00"));
+                    .isEqualTo(newDateTime("13/12/2026 23:59:59"));
             assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 15:30:00"));
+                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
             assertThat(actual.getLinks())
                     .isNullOrEmpty();
 

@@ -25,7 +25,7 @@ public final class VehicleFactory {
                 .id(fromString("9f8792ea-cf8f-43d1-824f-9f7bc433e404"))
                 .make("Toyota")
                 .model("Corolla")
-                .licensePlate("ABC-1234")
+                .licensePlate("ABC1234")
                 .manufactureYear(Year.parse("2024"))
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
