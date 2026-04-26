@@ -1,6 +1,11 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
@@ -15,9 +20,23 @@ public interface EmployeeDef {
 
     interface Represented extends Serializable {
 
+        @Schema(example = "jack.doe", description = "Employee username.")
+        @Size(max = 255)
         String getUsername();
+
+        @Schema(example = "Jack Doe", description = "Employee password.")
+        @NotBlank
+        @Size(max = 255)
         String getName();
+
+        @Schema(example = "jack.doe@email.com", description = "Employee e-mail.")
+        @NotBlank
+        @Size(max = 255)
         String getEmail();
+
+        @Schema(example = "214.454.220-18", description = "Employee cpf.")
+        @NotBlank
+        @Size(min = 11, max = 14)
         @CPF
         String getCpf();
     }
@@ -28,6 +47,8 @@ public interface EmployeeDef {
 
     interface RepresentedPersisted extends AuditableDef {
 
+        @Schema(example = "a0949107-8b0e-4e28-b541-ecc34bb35b1d", description = "Employee id.")
+        @NotNull
         UUID getId();
     }
 
@@ -37,6 +58,9 @@ public interface EmployeeDef {
 
     interface Request extends Detailed {
 
+        @Schema(example = "ComplexPassword@2026", description = "Employee id.")
+        @NotBlank
+        @Size(max = 60)
         String getPassword();
     }
 

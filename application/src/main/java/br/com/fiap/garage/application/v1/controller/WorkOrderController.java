@@ -35,7 +35,7 @@ public class WorkOrderController implements WorkOrderSwagger {
             @RequestBody
             WorkOrderDto.Request requestBody) {
         var workOrder = requestBody.buildWorkOrder();
-        var createdWorkOrder = workOrderCreationUseCase.create(workOrder);
+        var createdWorkOrder = workOrderCreationUseCase.create(workOrder, requestBody.getServicesIds());
         return buildWorkOrderDtoResponse(createdWorkOrder);
     }
 

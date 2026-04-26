@@ -56,7 +56,7 @@ public final class InventoryMaterialAssertions {
         assertThat(actual.getQuantityInStock())
                 .isEqualTo(100);
         assertThat(actual.getReservedQuantity())
-                .isEqualTo(15);
+                .isEqualTo(0);
         assertThat_Material(actual.getMaterial())
                 .wasConvertedFrom_MaterialDto_Request();
 

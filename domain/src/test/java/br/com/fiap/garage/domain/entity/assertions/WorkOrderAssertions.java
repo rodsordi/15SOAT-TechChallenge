@@ -4,7 +4,6 @@ import br.com.fiap.garage.domain.entity.WorkOrder;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.domain.entity.assertions.CustomerAssertions.assertThat_Customer;
 import static br.com.fiap.garage.domain.entity.assertions.EmployeeAssertions.assertThat_Employee;
 import static br.com.fiap.garage.domain.entity.assertions.EstimatedServiceAssertions.assertThat_EstimatedService;
 import static br.com.fiap.garage.domain.entity.assertions.VehicleAssertions.assertThat_Vehicle;
@@ -42,14 +41,7 @@ public final class WorkOrderAssertions {
         assertThat_Employee(actual.getEmployee())
                 .wasConvertedFrom_WorkOrderDto_Request();
         assertThat(actual.getEstimatedServices())
-                .hasSize(3);
-        var estimatedService = actual.getEstimatedServices()
-                .stream()
-                .filter(e -> e.getService().getId().toString().equals("0913e18b-84bd-4619-ad0a-c77600960346"))
-                .findFirst()
-                .orElseThrow();
-        assertThat_EstimatedService(estimatedService)
-                .wasConvertedFrom_WorkOrderDto_Request();
+                .isNullOrEmpty();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

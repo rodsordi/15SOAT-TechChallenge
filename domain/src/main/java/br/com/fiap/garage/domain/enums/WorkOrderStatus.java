@@ -3,11 +3,22 @@ package br.com.fiap.garage.domain.enums;
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.entity.work_order.WorkOrderState;
 import br.com.fiap.garage.domain.entity.work_order.state.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.function.Function;
 
+@Schema(example = "DIAGNOSING",
+        description = """
+                Work Order status. Owner: self
+                * RECEIVED: Work order received by employee.
+                * DIAGNOSING: Work order being diagnosed by employee.
+                * WAITING_FOR_APPROVAL: Waiting the customer work order approval.
+                * EXECUTING: Work order being executed by employee.
+                * FINISHED: Work order finished.
+                * RELEASED: Vehicle released to the customer.
+                """)
 @Getter
 @RequiredArgsConstructor
 public enum WorkOrderStatus {

@@ -2,6 +2,7 @@ package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.entity.AuditableEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +30,9 @@ public class InventoryMaterial extends AuditableEntity implements Serializable {
     @Column(nullable = false, comment = "Inventory quantity in stock. Owner: self")
     private Integer quantityInStock;
 
+    @Builder.Default
     @Column(nullable = false, comment = "Inventory reserved quantity. Owner: self")
-    private Integer reservedQuantity;
+    private Integer reservedQuantity = 0;
 
     // Value Object
     @OneToOne(cascade = ALL, orphanRemoval = true)

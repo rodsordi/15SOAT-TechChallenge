@@ -33,7 +33,7 @@ public final class EstimatedMaterialAssertions {
                 .isEqualTo("Synthetic Oil 5W30");
         assertThat(actual.getDescription())
                 .isEqualTo("High-performance synthetic motor oil");
-        assertThat(actual.getAmount())
+        assertThat(actual.getCost())
                 .isEqualTo(new BigDecimal("85.50"));
 
         // Inheritance (AuditableEntity)

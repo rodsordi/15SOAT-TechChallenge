@@ -30,7 +30,7 @@ public final class ServiceDto {
     public static class Request implements ServiceDef.Request {
         private String name;
         private String description;
-        private BigDecimal amount;
+        private BigDecimal cost;
         @Singular(value = "materialId", ignoreNullCollections = true)
         private Set<UUID> materialsIds;
 
@@ -48,7 +48,7 @@ public final class ServiceDto {
         private UUID id;
         private String name;
         private String description;
-        private BigDecimal amount;
+        private BigDecimal cost;
         @Singular(value = "material", ignoreNullCollections = true)
         private Set<MaterialDto.Response> materials;
         private LocalDateTime createdAt;
@@ -63,13 +63,13 @@ public final class ServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Service.Representation")
     public static class Representation extends RepresentationModel<ServiceDto.Representation> implements ServiceDef.Representation {
         private UUID id;
         private String name;
         private String description;
-        private BigDecimal amount;
+        private BigDecimal cost;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

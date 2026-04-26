@@ -35,8 +35,6 @@ public final class InventoryMaterialDtoAssertions {
             // Self
             assertThat(actual.getQuantityInStock())
                     .isEqualTo(100);
-            assertThat(actual.getReservedQuantity())
-                    .isEqualTo(15);
 
             // Composition
             assertThat_MaterialDto_Request(actual.getMaterial())
@@ -109,6 +107,10 @@ public final class InventoryMaterialDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
+            assertThat(actual.getQuantityInStock())
+                    .isEqualTo(100);
+            assertThat(actual.getReservedQuantity())
+                    .isEqualTo(15);
 
             // Composition
             assertThat_MaterialDto_Representation(actual.getMaterial())

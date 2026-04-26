@@ -1,11 +1,11 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.entity.AuditableEntity;
+import br.com.fiap.garage.domain.enums.MaterialType;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.InheritanceType.JOINED;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -30,17 +31,16 @@ public class EstimatedMaterial extends AuditableEntity implements Serializable {
     @Column(comment = "Estimated Material id. Owner: db")
     private UUID id;
 
+    @Enumerated(STRING)
+    @Column(nullable = false, length = 55, comment = "Estimated Material type. Owner: self")
+    private MaterialType type;
+
     @Column(nullable = false, length = 55, comment = "Estimated Material name. Owner: self")
     private String name;
 
     @Column(comment = "Estimated Material description. Owner: self")
     private String description;
 
-    @Column(nullable = false, comment = "Estimated Material amount. Owner: self")
-    private BigDecimal amount;
-
-    // Aggregate
-    @ManyToOne(cascade = {MERGE, PERSIST})
-    @JoinColumn(updatable = false, comment = "Material id. Owner: db")
-    private Material material;
+    @Column(nullable = false, comment = "Estimated Material cost. Owner: self")
+    private BigDecimal cost;
 }

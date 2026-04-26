@@ -28,7 +28,6 @@ public final class InventoryMaterialDto {
     @Schema(name = ".InventoryMaterial.Request")
     public static class Request implements InventoryMaterialDef.Request {
         private Integer quantityInStock;
-        private Integer reservedQuantity;
         private MaterialDto.Request material;
 
         public InventoryMaterial buildInventoryMaterial() {
@@ -58,10 +57,12 @@ public final class InventoryMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".InventoryMaterial.Representation")
     public static class Representation extends RepresentationModel<Representation> implements InventoryMaterialDef.Representation {
         private UUID id;
+        private Integer quantityInStock;
+        private Integer reservedQuantity;
         private MaterialDto.Representation material;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;

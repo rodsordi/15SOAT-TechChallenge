@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static jakarta.persistence.CascadeType.*;
@@ -27,15 +28,15 @@ public class WorkOrder extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "WorkOrder id. Owner: db")
+    @Column(comment = "Work Order id. Owner: db")
     private UUID id;
 
     @Builder.Default
     @Enumerated(STRING)
-    @Column(comment = "WorkOrder status. Owner: self")
+    @Column(comment = "Work Order status. Owner: self")
     private WorkOrderStatus status = RECEIVED;
 
-    @Column(nullable = false, comment = "Estimate total amount. Owner: self")
+    @Column(nullable = false, comment = "Work Order total amount estimation. Owner: self")
     private BigDecimal totalAmount;
 
     // Aggregate
@@ -45,7 +46,7 @@ public class WorkOrder extends AuditableEntity implements Serializable {
 
     // Aggregate
     @ManyToOne(cascade = {MERGE, PERSIST})
-    @JoinColumn(updatable = false, comment = "Customer id. Owner: db")
+    @JoinColumn(updatable = false, comment = "Employee id. Owner: db")
     private Employee employee;
 
     // Value Object
@@ -55,6 +56,14 @@ public class WorkOrder extends AuditableEntity implements Serializable {
     @OrderBy("createdAt desc")
     @Valid
     private Set<EstimatedService> estimatedServices;
+
+    public void updateReferences(Vehicle vehicle, Employee employee, Set<Service> services) {
+        this.vehicle = vehicle;
+        this.employee = employee;
+        this.estimatedServices = services.stream()
+                .map(Service::buildEstimatedService)
+                .collect(Collectors.toSet());
+    }
 
     public void diagnose() {
         status = status.getState()

@@ -65,7 +65,7 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Customer.Representation")
     public static class Representation extends RepresentationModel<Representation> implements CustomerDef.Representation {
         private UUID id;
@@ -92,7 +92,7 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Customer.ResumedRepresentation")
     public static class ResumedRepresentation extends RepresentationModel<ResumedRepresentation> implements CustomerDef.ResumedRepresentation {
         private UUID id;

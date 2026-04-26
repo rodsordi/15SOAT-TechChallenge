@@ -66,7 +66,7 @@ class WorkOrderControllerTest {
 
             @BeforeEach
             void beforeEach() {
-                when(workOrderCreationUseCase.create(any()))
+                when(workOrderCreationUseCase.create(any(), any()))
                         .thenAnswer(invocationOnMock -> {
                             WorkOrder workOrder = invocationOnMock.getArgument(0);
                             setField(workOrder, "id", fromString("7a403fc9-3c96-408c-984f-1fea2729b59f"));

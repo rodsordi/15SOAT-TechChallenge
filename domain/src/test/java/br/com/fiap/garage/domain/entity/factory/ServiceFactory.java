@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static br.com.fiap.garage.domain.entity.factory.MaterialFactory.create_Material;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
@@ -27,7 +26,7 @@ public final class ServiceFactory {
                 .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
                 .name("Complete Engine Overhaul")
                 .description("Comprehensive engine inspection, repair, and parts replacement")
-                .amount(new BigDecimal("3500.00"))
+                .cost(new BigDecimal("3500.00"))
                 // Composition
                 .material(create_Material().withAllFields())
                 // Inheritance (AuditableEntity)
@@ -51,7 +50,7 @@ public final class ServiceFactory {
         return builder
                 .name("Complete Engine Overhaul")
                 .description("Comprehensive engine inspection, repair, and parts replacement")
-                .amount(new BigDecimal("3500.00"))
+                .cost(new BigDecimal("3500.00"))
                 .material(create_Material().withAllFields())
                 .build();
     }

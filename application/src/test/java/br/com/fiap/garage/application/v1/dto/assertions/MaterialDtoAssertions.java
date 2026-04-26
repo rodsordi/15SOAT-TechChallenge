@@ -40,7 +40,7 @@ public final class MaterialDtoAssertions {
                     .isEqualTo("Synthetic Engine Oil");
             assertThat(actual.getDescription())
                     .isEqualTo("High-performance 5W-30 synthetic oil");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("45.50"));
 
             // And
@@ -75,7 +75,7 @@ public final class MaterialDtoAssertions {
                     .isEqualTo("Engine Oil");
             assertThat(actual.getDescription())
                     .isEqualTo("Synthetic 5W-30 motor oil");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualByComparingTo(new BigDecimal("150.00"));
 
             // Inheritance (AuditableEntity)
@@ -114,7 +114,7 @@ public final class MaterialDtoAssertions {
                     .isEqualTo(SHOP_SUPPLY);
             assertThat(actual.getName())
                     .isEqualTo("Engine Oil");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualByComparingTo(new BigDecimal("150.00"));
 
             // Inheritance (AuditableEntity)

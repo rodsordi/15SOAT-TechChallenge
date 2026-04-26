@@ -24,9 +24,8 @@ public final class EstimatedServiceDto {
         private UUID id;
         private String name;
         private String description;
-        private BigDecimal amount;
+        private BigDecimal cost;
         private LocalDateTime finishedAt;
-        private UUID serviceId;
         @Singular("estimatedMaterial")
         private Set<EstimatedMaterialDto.Response> estimatedMaterials;
         private LocalDateTime createdAt;
@@ -37,12 +36,12 @@ public final class EstimatedServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".EstimatedService.Representation")
     public static class Representation extends RepresentationModel<EstimatedServiceDto.Representation> implements EstimatedServiceDef.Representation {
         private UUID id;
         private String name;
-        private BigDecimal amount;
+        private BigDecimal cost;
         private LocalDateTime finishedAt;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;

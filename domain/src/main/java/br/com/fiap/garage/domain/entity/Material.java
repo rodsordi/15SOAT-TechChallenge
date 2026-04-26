@@ -25,19 +25,19 @@ public class Material extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Inventory id. Owner: db")
+    @Column(comment = "Material id. Owner: db")
     private UUID id;
-
-    @Column(nullable = false, length = 55, comment = "Material name. Owner: self")
-    private String name;
 
     @Enumerated(STRING)
     @Column(nullable = false, length = 55, comment = "Material type. Owner: self")
     private MaterialType type;
 
+    @Column(nullable = false, comment = "Material name. Owner: self")
+    private String name;
+
     @Column(comment = "Material description. Owner: self")
     private String description;
 
-    @Column(nullable = false, comment = "Material amount. Owner: self")
-    private BigDecimal amount;
+    @Column(nullable = false, comment = "Material cost. Owner: self")
+    private BigDecimal cost;
 }

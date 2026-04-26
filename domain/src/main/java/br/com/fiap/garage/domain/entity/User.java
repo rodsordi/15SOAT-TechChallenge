@@ -34,14 +34,14 @@ public class User extends AuditableEntity implements UserDetails {
     private UUID id;
 
     @Getter(onMethod_ = @Override)
-    @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")
+    @Column(nullable = false, unique = true, comment = "Username. Owner: self")
     private String username;
 
     @Getter(onMethod_ = @Override)
-    @Column(nullable = false, comment = "User password. Owner: self")
+    @Column(nullable = false, length = 60, comment = "User password. Owner: self")
     private String password;
 
-    @Column(nullable = false, length = 55, comment = "User name. Owner: self")
+    @Column(nullable = false, comment = "User name. Owner: self")
     private String name;
 
     @Column(nullable = false, unique = true, comment = "User e-mail. Owner: self")

@@ -30,17 +30,17 @@ public class Vehicle extends AuditableEntity implements Serializable {
     @Column(comment = "Vehicle id. Owner: db")
     private UUID id;
 
-    @Column(nullable = false, length = 55, comment = "Vehicle make. Owner: self")
+    @Column(nullable = false, length = 100, comment = "Vehicle make. Owner: self")
     private String make;
 
-    @Column(nullable = false, length = 55, comment = "Vehicle model. Owner: self")
+    @Column(nullable = false, length = 100, comment = "Vehicle model. Owner: self")
     private String model;
 
     @LicensePlate
     @Column(nullable = false, length = 10, comment = "Vehicle license plate. Owner: self")
     private String licensePlate;
 
-    @Column(nullable = false, length = 10, comment = "Vehicle manufacture year. Owner: self")
+    @Column(nullable = false, comment = "Vehicle manufacture year. Owner: self")
     private Year manufactureYear;
 
     // Aggregate (bi-directional)

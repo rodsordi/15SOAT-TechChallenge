@@ -16,12 +16,12 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true, exclude = "id")
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(schema = "garage")
 public class Employee extends User implements Serializable {
 
     @CPF
-    @Column(nullable = false, length = 11, comment = "Customer document. Owner: self")
+    @Column(nullable = false, length = 11, comment = "Employee cpf. Owner: self")
     private String cpf;
 }

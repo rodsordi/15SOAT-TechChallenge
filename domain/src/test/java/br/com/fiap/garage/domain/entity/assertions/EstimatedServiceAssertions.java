@@ -35,7 +35,7 @@ public final class EstimatedServiceAssertions {
                 .isEqualTo("Engine Maintenance");
         assertThat(actual.getDescription())
                 .isEqualTo("Complete engine diagnostic and oil change");
-        assertThat(actual.getAmount())
+        assertThat(actual.getCost())
                 .isEqualTo(new BigDecimal("500.00"));
         assertThat(actual.getFinishedAt())
                 .isEqualTo(newDateTime("25/04/2026 14:00:00"));
@@ -67,14 +67,12 @@ public final class EstimatedServiceAssertions {
                 .isNull();
         assertThat(actual.getDescription())
                 .isNull();
-        assertThat(actual.getAmount())
+        assertThat(actual.getCost())
                 .isNull();
         assertThat(actual.getFinishedAt())
                 .isNull();
 
         // Composition
-        assertThat_Service(actual.getService())
-                .wasConvertedFrom_WorkOrderDto();
         assertThat(actual.getEstimatedMaterials())
                 .isNullOrEmpty();
 

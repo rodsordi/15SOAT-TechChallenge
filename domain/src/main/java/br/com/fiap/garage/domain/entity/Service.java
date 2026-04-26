@@ -1,6 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.entity.AuditableEntity;
+import br.com.fiap.garage.domain.mapper.ServiceMapper;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 import static jakarta.persistence.FetchType.EAGER;
 import static lombok.AccessLevel.PROTECTED;
+import static org.mapstruct.factory.Mappers.getMapper;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
@@ -23,6 +25,8 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Table(schema = "garage")
 public class Service extends AuditableEntity implements Serializable {
+
+    private static final ServiceMapper MAPPER = getMapper(ServiceMapper.class);
 
     @Id
     @GeneratedValue
@@ -35,8 +39,8 @@ public class Service extends AuditableEntity implements Serializable {
     @Column(comment = "Service description. Owner: self")
     private String description;
 
-    @Column(nullable = false, comment = "Service amount. Owner: self")
-    private BigDecimal amount;
+    @Column(nullable = false, comment = "Service cost. Owner: self")
+    private BigDecimal cost;
 
     @Singular(value = "material", ignoreNullCollections = true)
     @ManyToMany(fetch = EAGER)
@@ -45,4 +49,8 @@ public class Service extends AuditableEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "inventory_material_id"))
     @OrderBy("createdAt desc")
     private Set<Material> materials;
+
+    public EstimatedService buildEstimatedService() {
+        return MAPPER.convert(this);
+    }
 }

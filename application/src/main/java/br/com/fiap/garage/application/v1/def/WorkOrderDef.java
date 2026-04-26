@@ -2,6 +2,10 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.domain.enums.WorkOrderStatus;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -24,10 +28,15 @@ public interface WorkOrderDef {
 
     interface RepresentedPersisted extends AuditableDef {
 
+        @Schema(example = "819d14e1-ad48-4e60-8192-b15ad37f66a5", description = "Work Order id. Owner: db")
+        @NotNull
         UUID getId();
 
+        @NotNull
         WorkOrderStatus getStatus();
 
+        @Schema(example = "99.99", description = "Work Order total amount estimation. Owner: self")
+        @NotNull
         BigDecimal getTotalAmount();
     }
 
@@ -38,12 +47,19 @@ public interface WorkOrderDef {
     interface Request extends Detailed {
 
         // Aggregation
+        @Schema(example = "721c3c29-3a9d-4c6e-8750-4bf16db0040b", description = "Vehicle id. Owner: db")
+        @NotNull
         UUID getVehicleId();
 
         // Aggregation
+        @Schema(example = "53978ee4-c4dd-4ddc-bcc5-75b408d71138", description = "Employee id. Owner: db")
+        @NotNull
         UUID getEmployeeId();
 
         // Aggregation
+        @ArraySchema(arraySchema = @Schema(description = "Services ids",
+                example = "[57975909-7dcc-4cc3-ae4b-5b8823dc8e54, 3441475a-0884-42d5-b872-f91fb9174ffd]"))
+        @NotEmpty
         Set<UUID> getServicesIds();
     }
 

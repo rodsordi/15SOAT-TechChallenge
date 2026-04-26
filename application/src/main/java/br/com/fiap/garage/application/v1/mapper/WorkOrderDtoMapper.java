@@ -18,7 +18,6 @@ public interface WorkOrderDtoMapper extends CpfMap, DocumentMap {
 
     @Mapping(target = "vehicle", source = "vehicleId")
     @Mapping(target = "employee", source = "employeeId")
-    @Mapping(target = "estimatedServices", source = "servicesIds")
     WorkOrder convert(WorkOrderDto.Request source);
 
     @Mapping(target = "vehicle.customer.document", source = "vehicle.customer.document", qualifiedByName = "formattedDocument")
@@ -29,10 +28,8 @@ public interface WorkOrderDtoMapper extends CpfMap, DocumentMap {
     @Mapping(target = "employee.cpf", source = "employee.cpf", qualifiedByName = "formattedCpf")
     WorkOrderDto.Representation convertToRepresentation(WorkOrder source);
 
-    @Mapping(target = "serviceId", source = "service.id")
     EstimatedServiceDto.Response convert(EstimatedService source);
 
-    @Mapping(target = "materialId", source = "material.id")
     EstimatedMaterialDto.Response convert(EstimatedMaterial source);
 
     default Vehicle mapVehicle(UUID vehicleId) {
@@ -48,16 +45,6 @@ public interface WorkOrderDtoMapper extends CpfMap, DocumentMap {
             return null;
         return Employee.builder()
                 .id(employeeId)
-                .build();
-    }
-
-    default EstimatedService mapEstimatedService(UUID serviceId) {
-        if (serviceId == null)
-            return null;
-        return EstimatedService.builder()
-                .service(Service.builder()
-                        .id(serviceId)
-                        .build())
                 .build();
     }
 }

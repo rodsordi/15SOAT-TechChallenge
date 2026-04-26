@@ -64,7 +64,7 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".WorkOrder.Representation")
     public static class Representation extends RepresentationModel<Representation> implements WorkOrderDef.Representation {
         private UUID id;

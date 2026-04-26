@@ -29,7 +29,7 @@ public final class MaterialDto {
         private MaterialType type;
         private String name;
         private String description;
-        private BigDecimal amount;
+        private BigDecimal cost;
 
         public Material buildMaterial() {
             return MAPPER.convert(this);
@@ -46,7 +46,7 @@ public final class MaterialDto {
         private MaterialType type;
         private String name;
         private String description;
-        private BigDecimal amount;
+        private BigDecimal cost;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -59,13 +59,13 @@ public final class MaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Material.Representation")
     public static class Representation extends RepresentationModel<MaterialDto.Representation> implements MaterialDef.Representation {
         private UUID id;
         private MaterialType type;
         private String name;
-        private BigDecimal amount;
+        private BigDecimal cost;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
         

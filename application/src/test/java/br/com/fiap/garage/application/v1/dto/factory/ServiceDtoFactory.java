@@ -26,7 +26,7 @@ public final class ServiceDtoFactory {
                     // Self
                     .name("Oil Change")
                     .description("Complete engine oil and filter change")
-                    .amount(new BigDecimal("150.00"))
+                    .cost(new BigDecimal("150.00"))
                     // Composition
                     .materialId(UUID.fromString("4d36346e-9eec-47e5-b267-69e1c6219b28"))
                     .materialId(UUID.fromString("f19a4875-b483-4486-adf6-fe581f1aa953"))
@@ -43,7 +43,7 @@ public final class ServiceDtoFactory {
             return builder
                     .name("Oil Change")
                     .description("Complete engine oil and filter change")
-                    .amount(new BigDecimal("150.00"))
+                    .cost(new BigDecimal("150.00"))
                     .build();
         }
 

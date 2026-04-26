@@ -2,6 +2,10 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.dto.MaterialDto;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,9 +21,18 @@ public interface ServiceDef {
 
     interface Represented extends Serializable {
 
+        @Schema(example = "Oil Change", description = "Service name. Owner: self")
+        @NotBlank
+        @Size(max = 255)
         String getName();
+
+        @Schema(example = "Oil Changing for car maintenance", description = "Service description. Owner: self")
+        @Size(max = 255)
         String getDescription();
-        BigDecimal getAmount();
+
+        @Schema(example = "19.99", description = "Service cost. Owner: self")
+        @NotNull
+        BigDecimal getCost();
     }
 
     interface Detailed extends Represented {
@@ -28,6 +41,8 @@ public interface ServiceDef {
 
     interface RepresentedPersisted extends AuditableDef {
 
+        @Schema(example = "1723546e-37e4-4692-863c-9d00be8aae1b", description = "Service id. Owner: db")
+        @NotNull
         UUID getId();
     }
 

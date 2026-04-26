@@ -28,7 +28,6 @@ public final class InventoryMaterialDtoFactory {
             var result = builder
                     // Self
                     .quantityInStock(100)
-                    .reservedQuantity(15)
                     // Composition
                     .material(create_MaterialDto_Request().withAllFields())
                     .build();
@@ -42,7 +41,6 @@ public final class InventoryMaterialDtoFactory {
         public InventoryMaterialDto.Request valid() {
             return builder
                     .quantityInStock(50)
-                    .reservedQuantity(5)
                     .material(create_MaterialDto_Request().valid())
                     .build();
         }

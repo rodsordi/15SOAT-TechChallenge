@@ -61,7 +61,7 @@ public final class VehicleDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Vehicle.Representation")
     public static class Representation extends RepresentationModel<Representation> implements VehicleDef.Representation {
         private UUID id;

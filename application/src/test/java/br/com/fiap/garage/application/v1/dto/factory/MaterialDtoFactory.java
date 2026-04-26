@@ -31,7 +31,7 @@ public final class MaterialDtoFactory {
                     .type(SHOP_SUPPLY)
                     .name("Synthetic Engine Oil")
                     .description("Oil 5W-30")
-                    .amount(new BigDecimal("85.50"))
+                    .cost(new BigDecimal("85.50"))
                     .build();
 
             // And
@@ -45,7 +45,7 @@ public final class MaterialDtoFactory {
                     .type(SHOP_SUPPLY)
                     .name("Synthetic Engine Oil")
                     .description("Oil 5W-30")
-                    .amount(new BigDecimal("85.50"))
+                    .cost(new BigDecimal("85.50"))
                     .build();
         }
 
@@ -71,7 +71,7 @@ public final class MaterialDtoFactory {
                     .type(MaterialType.values()[0])
                     .name("Synthetic Engine Oil")
                     .description("High-performance 5W-30 synthetic oil")
-                    .amount(new BigDecimal("45.50"))
+                    .cost(new BigDecimal("45.50"))
                     // Auditable
                     .createdAt(newDateTime("30/12/2024 23:59:59"))
                     .updatedAt(newDateTime("31/12/2024 23:59:59"))
@@ -87,7 +87,7 @@ public final class MaterialDtoFactory {
             return builder
                     .id(fromString("123e4567-e89b-12d3-a456-426614174000"))
                     .name("Standard Brake Pad")
-                    .amount(new BigDecimal("120.00"))
+                    .cost(new BigDecimal("120.00"))
                     .build();
         }
 
@@ -112,7 +112,7 @@ public final class MaterialDtoFactory {
                     .id(fromString("4f5f9b7c-bd7c-4f5f-a747-0b1f63aac409"))
                     .type(MaterialType.values()[0])
                     .name("Synthetic Engine Oil")
-                    .amount(new BigDecimal("45.50"))
+                    .cost(new BigDecimal("45.50"))
                     // Auditable
                     .createdAt(newDateTime("30/12/2024 23:59:59"))
                     .updatedAt(newDateTime("31/12/2024 23:59:59"))
@@ -128,7 +128,7 @@ public final class MaterialDtoFactory {
             return builder
                     .id(fromString("123e4567-e89b-12d3-a456-426614174000"))
                     .name("Standard Brake Pad")
-                    .amount(new BigDecimal("120.00"))
+                    .cost(new BigDecimal("120.00"))
                     .build();
         }
 

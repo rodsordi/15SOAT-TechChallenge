@@ -73,7 +73,7 @@ class ServiceCreationTest extends GarageIntegrationTest {
                 .header("Authorization", authorization)
                 .contentType(JSON)
                 .body(json.writeValueAsString(requestBody))
-                .post("/v1/inventory-materials")
+                .post("/v1/services")
                 .then()
                 .log().all()
                 .extract()

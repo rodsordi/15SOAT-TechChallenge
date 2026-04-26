@@ -1,12 +1,14 @@
 package br.com.fiap.garage.application.v1.dto.assertions;
 
 import br.com.fiap.garage.application.v1.dto.EstimatedMaterialDto;
+import br.com.fiap.garage.domain.enums.MaterialType;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -32,14 +34,14 @@ public final class EstimatedMaterialDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
+            assertThat(actual.getType())
+                    .isEqualTo(SHOP_SUPPLY);
             assertThat(actual.getName())
                     .isEqualTo("Ceramic Brake Pads");
             assertThat(actual.getDescription())
                     .isEqualTo("High-performance front ceramic brake pads");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("150.00"));
-            assertThat(actual.getMaterialId())
-                    .hasToString("73ffaed5-ebc3-4c28-901d-b0240c30b639");
 
             // Inheritance (AuditableEntity)
             assertThat(actual.getCreatedAt())
@@ -71,9 +73,11 @@ public final class EstimatedMaterialDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
+            assertThat(actual.getType())
+                    .isEqualTo(SHOP_SUPPLY);
             assertThat(actual.getName())
                     .isEqualTo("Galvanized Steel Pipe");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("150.75"));
 
             // Inheritance (AuditableEntity)

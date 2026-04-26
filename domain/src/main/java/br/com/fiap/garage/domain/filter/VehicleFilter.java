@@ -28,7 +28,7 @@ public class VehicleFilter extends AuditableFilter<Vehicle> implements Specifica
                 builder.equal(root.get("make"), make);
     }
 
-    @Schema(example = "John", description = "Vehicle model.")
+    @Schema(example = "Gol", description = "Vehicle model.")
     private String model;
 
     private Specification<Vehicle> modelEqual() {

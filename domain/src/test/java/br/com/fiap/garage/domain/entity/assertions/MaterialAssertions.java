@@ -34,7 +34,7 @@ public final class MaterialAssertions {
                 .isEqualTo(SHOP_SUPPLY);
         assertThat(actual.getDescription())
                 .isEqualTo("Synthetic 5W-30 motor oil");
-        assertThat(actual.getAmount())
+        assertThat(actual.getCost())
                 .isEqualTo(new BigDecimal("150.00"));
 
         // Inheritance (AuditableEntity)
@@ -62,7 +62,7 @@ public final class MaterialAssertions {
                 .isEqualTo("Synthetic Engine Oil");
         assertThat(actual.getDescription())
                 .isEqualTo("Oil 5W-30");
-        assertThat(actual.getAmount())
+        assertThat(actual.getCost())
                 .isEqualByComparingTo(new BigDecimal("85.50"));
 
         // Inheritance (AuditableEntity)

@@ -28,7 +28,7 @@ public final class MaterialFactory {
                 .type(SHOP_SUPPLY)
                 .name("Engine Oil")
                 .description("Synthetic 5W-30 motor oil")
-                .amount(new BigDecimal("150.00"))
+                .cost(new BigDecimal("150.00"))
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("13/12/2026 23:59:59"))
                 .updatedAt(newDateTime("14/12/2026 23:59:59"))
@@ -53,7 +53,7 @@ public final class MaterialFactory {
         return builder
                 .name("Brake Pad")
                 .type(SPARE_PART)
-                .amount(new BigDecimal("85.50"))
+                .cost(new BigDecimal("85.50"))
                 .build();
     }
 

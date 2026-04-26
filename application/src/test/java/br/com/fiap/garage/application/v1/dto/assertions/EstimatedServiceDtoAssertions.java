@@ -37,12 +37,10 @@ public final class EstimatedServiceDtoAssertions {
                     .isEqualTo("Engine Overhaul");
             assertThat(actual.getDescription())
                     .isEqualTo("Complete disassembly and rebuilding of the engine block.");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("4500.00"));
             assertThat(actual.getFinishedAt())
                     .isEqualTo(newDateTime("31/12/2025 18:00:00"));
-            assertThat(actual.getServiceId())
-                    .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
 
             // Composition
             assertThat(actual.getEstimatedMaterials())
@@ -82,7 +80,7 @@ public final class EstimatedServiceDtoAssertions {
                     .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
             assertThat(actual.getName())
                     .isEqualTo("Engine Overhaul");
-            assertThat(actual.getAmount())
+            assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("4500.00"));
             assertThat(actual.getFinishedAt())
                     .isEqualTo(newDateTime("31/12/2025 18:00:00"));

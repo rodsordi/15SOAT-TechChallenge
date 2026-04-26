@@ -27,25 +27,20 @@ public class EstimatedService extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(comment = "Service id. Owner: db")
+    @Column(comment = "Estimated Service id. Owner: db")
     private UUID id;
 
-    @Column(nullable = false, comment = "Service name. Owner: self")
+    @Column(nullable = false, comment = "Estimated Service name. Owner: self")
     private String name;
 
-    @Column(comment = "Service description. Owner: self")
+    @Column(comment = "Estimated Service description. Owner: self")
     private String description;
 
-    @Column(nullable = false, comment = "Service amount. Owner: self")
-    private BigDecimal amount;
+    @Column(nullable = false, comment = "Estimated Service cost. Owner: self")
+    private BigDecimal cost;
 
     @Column(comment = "Estimated Service finished at. Owner: self")
     private LocalDateTime finishedAt;
-
-    // Aggregate
-    @ManyToOne(cascade = {MERGE, PERSIST})
-    @JoinColumn(updatable = false, comment = "Service id. Owner: db")
-    private Service service;
 
     // Value Object
     @Singular(value = "estimatedMaterial", ignoreNullCollections = true)

@@ -2,6 +2,10 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.commons.validation.CpfOrCnpj;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -16,12 +20,24 @@ public interface CustomerDef {
 
     interface Represented extends Serializable {
 
+        @Schema(example = "john.doe", description = "Customer username.")
+        @NotBlank
+        @Size(max = 255)
         String getUsername();
 
+        @Schema(example = "John Doe", description = "Customer password.")
+        @NotBlank
+        @Size(max = 255)
         String getName();
 
+        @Schema(example = "john.doe@email.com", description = "Customer e-mail.")
+        @NotBlank
+        @Size(max = 255)
         String getEmail();
 
+        @Schema(example = "77.790.794/0001-69", description = "Customer document (CPF/CNPJ).")
+        @NotBlank
+        @Size(min = 11, max = 18)
         @CpfOrCnpj
         String getDocument();
     }
@@ -32,6 +48,8 @@ public interface CustomerDef {
 
     interface RepresentedPersisted extends AuditableDef {
 
+        @Schema(example = "36c9df52-01eb-4ffd-a0c1-1494440aedef", description = "Customer id.")
+        @NotNull
         UUID getId();
     }
 
@@ -41,6 +59,9 @@ public interface CustomerDef {
 
     interface Request extends Detailed {
 
+        @Schema(example = "ComplexPassword@2026", description = "Customer id.")
+        @NotBlank
+        @Size(max = 60)
         String getPassword();
 
         <T extends VehicleDef.Request> Set<T> getVehicles();

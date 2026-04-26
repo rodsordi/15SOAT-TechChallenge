@@ -30,10 +30,9 @@ public final class EstimatedServiceFactory {
                 .id(fromString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409"))
                 .name("Engine Overhaul")
                 .description("Complete disassembly and rebuilding of the engine block.")
-                .amount(new BigDecimal("4500.00"))
+                .cost(new BigDecimal("4500.00"))
                 .finishedAt(newDateTime("31/12/2025 18:00:00"))
                 // Composition
-                .service(create_Service().withAllFields())
                 .estimatedMaterial(create_EstimatedMaterial().withAllFields())
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("13/12/2026 23:59:59"))
@@ -50,7 +49,6 @@ public final class EstimatedServiceFactory {
         withAllFields();
         return builder
                 .id(null)
-                .service(null)
                 .clearEstimatedMaterials()
                 .estimatedMaterials(new HashSet<>(Set.of(create_EstimatedMaterial().withAllFieldsExceptDB())))
                 .build();
@@ -59,14 +57,13 @@ public final class EstimatedServiceFactory {
     public EstimatedService valid() {
         return builder
                 .name("Engine Overhaul")
-                .amount(new BigDecimal("4500.00"))
+                .cost(new BigDecimal("4500.00"))
                 .estimatedMaterials(new HashSet<>(Set.of(create_EstimatedMaterial().valid())))
                 .build();
     }
 
     public EstimatedService initiatedEmpty() {
         return builder
-                .service(create_Service().initiatedEmpty())
                 .estimatedMaterials(new HashSet<>(Set.of(EstimatedMaterial.builder().build())))
                 .build();
     }

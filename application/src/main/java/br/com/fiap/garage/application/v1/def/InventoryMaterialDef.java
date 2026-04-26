@@ -1,6 +1,8 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -14,17 +16,24 @@ public interface InventoryMaterialDef {
 
     interface Represented extends Serializable {
 
+        @Schema(example = "100", description = "Inventory quantity in stock. Owner: self")
+        @NotNull
+        Integer getQuantityInStock();
     }
 
     interface Detailed extends Represented {
 
-        Integer getQuantityInStock();
-        Integer getReservedQuantity();
     }
 
     interface RepresentedPersisted extends AuditableDef {
 
+        @Schema(example = "4ee13743-56d1-4e66-8ef0-cf2c8c45d847", description = "Inventory id. Owner: db")
+        @NotNull
         UUID getId();
+
+        @Schema(example = "1", description = "Inventory reserved quantity. Owner: self")
+        @NotNull
+        Integer getReservedQuantity();
     }
 
     interface DetailedPersisted extends RepresentedPersisted {

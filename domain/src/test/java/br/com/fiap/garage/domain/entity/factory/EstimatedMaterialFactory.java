@@ -1,6 +1,7 @@
 package br.com.fiap.garage.domain.entity.factory;
 
 import br.com.fiap.garage.domain.entity.EstimatedMaterial;
+import br.com.fiap.garage.domain.enums.MaterialType;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.MaterialFactory.create_Material;
+import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -24,10 +26,10 @@ public final class EstimatedMaterialFactory {
         var result = builder
                 // Self
                 .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
+                .type(SHOP_SUPPLY)
                 .name("Ceramic Brake Pads")
                 .description("High-performance front ceramic brake pads")
-                .amount(new BigDecimal("150.00"))
-                .material(create_Material().withAllFields())
+                .cost(new BigDecimal("150.00"))
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("13/12/2026 23:59:59"))
                 .updatedAt(newDateTime("14/12/2026 23:59:59"))
@@ -43,7 +45,6 @@ public final class EstimatedMaterialFactory {
         withAllFields();
         return builder
                 .id(null)
-                .material(create_Material().withAllFieldsExceptDB())
                 .createdAt(null)
                 .updatedAt(null)
                 .build();
@@ -51,8 +52,9 @@ public final class EstimatedMaterialFactory {
 
     public EstimatedMaterial valid() {
         return builder
+                .type(SHOP_SUPPLY)
                 .name("Synthetic Motor Oil")
-                .amount(new BigDecimal("45.50"))
+                .cost(new BigDecimal("45.50"))
                 .build();
     }
 
