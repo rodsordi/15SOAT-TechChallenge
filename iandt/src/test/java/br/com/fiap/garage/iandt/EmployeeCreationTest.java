@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import br.com.fiap.garage.application.v1.dto.EmployeeDto;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -47,7 +48,7 @@ class EmployeeCreationTest extends GarageIntegrationTest {
         }
     }
 
-    public static Response createEmployee(JsonMapper json, Object requestBody) {
+    public static Response createEmployee(JsonMapper json, EmployeeDto.Request requestBody) {
         return given()
                 .log().all()
                 .contentType(JSON)

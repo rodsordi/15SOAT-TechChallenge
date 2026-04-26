@@ -38,7 +38,7 @@ public final class VehicleDtoFactory {
             return builder
                     .make("Honda")
                     .model("Civic")
-                    .licensePlate("XYZ-9876")
+                    .licensePlate("XYZ9876")
                     .manufactureYear(Year.parse("2027"))
                     .build();
         }

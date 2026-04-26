@@ -28,7 +28,7 @@ public final class MaterialDtoFactory {
         public MaterialDto.Request withAllFields() {
             var result = builder
                     // Self
-                    .type(SHOP_SUPPLY) // Falls back to first available enum constant
+                    .type(SHOP_SUPPLY)
                     .name("Synthetic Engine Oil")
                     .description("Oil 5W-30")
                     .amount(new BigDecimal("85.50"))
@@ -42,8 +42,10 @@ public final class MaterialDtoFactory {
 
         public MaterialDto.Request valid() {
             return builder
-                    .name("Standard Brake Pad")
-                    .amount(new BigDecimal("120.00"))
+                    .type(SHOP_SUPPLY)
+                    .name("Synthetic Engine Oil")
+                    .description("Oil 5W-30")
+                    .amount(new BigDecimal("85.50"))
                     .build();
         }
 

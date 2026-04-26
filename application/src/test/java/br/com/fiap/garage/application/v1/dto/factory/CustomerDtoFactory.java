@@ -39,8 +39,11 @@ public final class CustomerDtoFactory {
 
         public CustomerDto.Request valid() {
             return builder
-                    .name("Jane Doe")
-                    .email("jane.doe@example.com")
+                    .username("john.doe@example.com")
+                    .name("John Doe")
+                    .password("1234asdl")
+                    .email("john.doe@example.com")
+                    .document("27.614.623/0001-00")
                     .build();
         }
 

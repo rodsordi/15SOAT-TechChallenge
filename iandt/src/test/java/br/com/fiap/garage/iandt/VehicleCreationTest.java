@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import br.com.fiap.garage.application.v1.dto.VehicleDto;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,9 +13,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import tools.jackson.databind.json.JsonMapper;
 
+import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
+import static br.com.fiap.garage.iandt.CustomerCreationTest.createCustomer;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static java.text.MessageFormat.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -47,13 +51,16 @@ public class VehicleCreationTest extends GarageIntegrationTest {
         }
     }
 
-    public static Response createVehicle(String authorization, JsonMapper json, Object requestBody) {
+    public static Response createVehicle(String authorization, JsonMapper json, VehicleDto.Request requestBody) {
+        var scenarioRequestBody = create_CustomerDto_Request().valid();
+        var scenarioResponse = createCustomer(authorization, json, scenarioRequestBody);
+        var customerId = scenarioResponse.body().jsonPath().getString("id");
         return given()
                 .log().all()
                 .header("Authorization", authorization)
                 .contentType(JSON)
                 .body(json.writeValueAsString(requestBody))
-                .post("/v1/vehicles")
+                .post(format("/v1/customers/{0}/vehicles", customerId))
                 .then()
                 .log().all()
                 .extract()

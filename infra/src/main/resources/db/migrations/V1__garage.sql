@@ -150,8 +150,10 @@ CREATE TABLE garage.vehicle (
                                 model VARCHAR(55) NOT NULL,
                                 license_plate VARCHAR(10) NOT NULL,
                                 manufacture_year INTEGER NOT NULL,
+                                customer_id UUID NOT NULL,
                                 created_at TIMESTAMP NOT NULL,
-                                updated_at TIMESTAMP
+                                updated_at TIMESTAMP,
+                                CONSTRAINT fk_sim_customer FOREIGN KEY (customer_id) REFERENCES garage.customer(id)
 );
 
 COMMENT ON COLUMN garage.vehicle.id IS 'Vehicle id. Owner: db';
@@ -169,18 +171,18 @@ CREATE TABLE garage.work_order (
                                    id UUID PRIMARY KEY,
                                    status VARCHAR(50),
                                    total_amount NUMERIC NOT NULL,
-                                   customer_id UUID,
+                                   vehicle_id UUID,
                                    employee_id UUID,
                                    created_at TIMESTAMP NOT NULL,
                                    updated_at TIMESTAMP,
-                                   CONSTRAINT fk_work_order_customer FOREIGN KEY (customer_id) REFERENCES garage.customer(id),
+                                   CONSTRAINT fk_work_order_vehicle FOREIGN KEY (vehicle_id) REFERENCES garage.vehicle(id),
                                    CONSTRAINT fk_work_order_employee FOREIGN KEY (employee_id) REFERENCES garage.employee(id)
 );
 
 COMMENT ON COLUMN garage.work_order.id IS 'WorkOrder id. Owner: db';
 COMMENT ON COLUMN garage.work_order.status IS 'WorkOrder status. Owner: self';
 COMMENT ON COLUMN garage.work_order.total_amount IS 'Estimate total amount. Owner: self';
-COMMENT ON COLUMN garage.work_order.customer_id IS 'Customer id. Owner: db';
+COMMENT ON COLUMN garage.work_order.vehicle_id IS 'Vehicle id. Owner: db';
 COMMENT ON COLUMN garage.work_order.employee_id IS 'Customer id. Owner: db'; -- Preserved from your Java class comment overlap
 COMMENT ON COLUMN garage.work_order.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.work_order.updated_at IS 'Register updated at. Owner: db';

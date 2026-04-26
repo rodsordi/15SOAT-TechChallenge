@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
+import static br.com.fiap.garage.application.v1.dto.factory.InventoryMaterialDtoFactory.create_InventoryMaterialDto_Request;
 import static br.com.fiap.garage.iandt.InventoryMaterialCreationTest.createInventoryMaterial;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -34,7 +34,7 @@ public class InventoryMaterialSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                var scenarioRequestBody = create_InventoryMaterial().withAllFields();
+                var scenarioRequestBody = create_InventoryMaterialDto_Request().withAllFields();
                 createInventoryMaterial(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()

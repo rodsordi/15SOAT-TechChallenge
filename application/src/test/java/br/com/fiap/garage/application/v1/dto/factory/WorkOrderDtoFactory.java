@@ -35,8 +35,11 @@ public final class WorkOrderDtoFactory {
 
         public WorkOrderDto.Request valid() {
             return builder
-                    .vehicleId(UUID.fromString("5f5830a5-7a1b-47ed-ab52-ff95f7a6edf4"))
-                    .employeeId(UUID.fromString("56cc9b86-3bdf-477c-b150-06f44ce549c3"))
+                    .vehicleId(UUID.fromString("5b3b7f42-0a9f-4093-82af-a7db99131e7c"))
+                    .employeeId(UUID.fromString("22e9c194-562a-4029-9bc1-ed37e0a80966"))
+                    .serviceId(UUID.fromString("0913e18b-84bd-4619-ad0a-c77600960346"))
+                    .serviceId(UUID.fromString("f8b0855c-7fd5-4f50-b762-73e947328339"))
+                    .serviceId(UUID.fromString("95919c3c-f8c3-4324-bddf-196198a273a5"))
                     .build();
         }
 

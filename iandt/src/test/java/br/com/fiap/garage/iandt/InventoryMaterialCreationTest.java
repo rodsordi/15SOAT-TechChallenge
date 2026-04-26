@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import br.com.fiap.garage.application.v1.dto.InventoryMaterialDto;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -47,7 +48,7 @@ public class InventoryMaterialCreationTest extends GarageIntegrationTest {
         }
     }
 
-    public static Response createInventoryMaterial(String authorization, JsonMapper json, Object requestBody) {
+    public static Response createInventoryMaterial(String authorization, JsonMapper json, InventoryMaterialDto.Request requestBody) {
         return given()
                 .log().all()
                 .header("Authorization", authorization)

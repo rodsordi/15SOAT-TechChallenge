@@ -33,7 +33,11 @@ public final class EmployeeDtoFactory {
 
         public EmployeeDto.Request valid() {
             return builder
-                    .name("John")
+                    .username("jack.doe@garage.com")
+                    .password("1a2s3d4f")
+                    .name("Jack")
+                    .email("jack.doe@garage.com")
+                    .cpf("939.043.210-30")
                     .build();
         }
 
