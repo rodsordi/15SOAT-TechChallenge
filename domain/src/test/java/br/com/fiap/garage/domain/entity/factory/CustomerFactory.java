@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.AuthorityFactory.create_Authority;
+import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -29,6 +30,7 @@ public final class CustomerFactory {
                 // Self
                 .document("27351626000107")
                 // Composition
+                .vehicle(create_Vehicle().withAllFields())
                 .authority(create_Authority().withAllFields())
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("13/12/2026 23:59:59"))
@@ -44,6 +46,8 @@ public final class CustomerFactory {
         withAllFields();
         return builder
                 .id(null)
+                .clearVehicles()
+                .vehicle(create_Vehicle().withAllFieldsExceptDB())
                 .clearAuthorities()
                 .authority(create_Authority().withAllFieldsExceptDB())
                 .createdAt(null)

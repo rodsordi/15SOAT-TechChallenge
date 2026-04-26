@@ -10,6 +10,7 @@ import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
 import static br.com.fiap.garage.domain.entity.factory.EstimatedServiceFactory.create_EstimatedService;
+import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
@@ -30,7 +31,7 @@ public final class WorkOrderFactory {
                 .status(RECEIVED)
                 .totalAmount(new BigDecimal("999.99"))
                 // Composition
-                .customer(create_Customer().withAllFields())
+                .vehicle(create_Vehicle().withAllFields())
                 .employee(create_Employee().withAllFields())
                 .estimatedService(create_EstimatedService().withAllFields())
                 // Inheritance (AuditableEntity)
@@ -48,7 +49,7 @@ public final class WorkOrderFactory {
         withAllFields();
         return builder
                 .id(null)
-                .customer(create_Customer().withAllFieldsExceptDB())
+                .vehicle(create_Vehicle().withAllFieldsExceptDB())
                 .employee(create_Employee().withAllFieldsExceptDB())
                 .clearEstimatedServices()
                 .estimatedService(create_EstimatedService().withAllFieldsExceptDB())

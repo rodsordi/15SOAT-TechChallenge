@@ -63,7 +63,7 @@ public final class ServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".Service.Representation")
     public static class Representation extends RepresentationModel<ServiceDto.Representation> implements ServiceDef.Representation {
         private UUID id;

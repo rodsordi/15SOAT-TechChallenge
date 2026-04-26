@@ -37,7 +37,7 @@ public final class EstimatedServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".EstimatedService.Representation")
     public static class Representation extends RepresentationModel<EstimatedServiceDto.Representation> implements EstimatedServiceDef.Representation {
         private UUID id;

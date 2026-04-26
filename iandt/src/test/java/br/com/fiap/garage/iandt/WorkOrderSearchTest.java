@@ -11,8 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.create_WorkOrderDto_Request;
+import static br.com.fiap.garage.iandt.WorkOrderCreationTest.createWorkOrder;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -35,16 +35,8 @@ public class WorkOrderSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                var scenarioResponse = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_WorkOrderDto_Request().withAllFields()))
-                        .post("/v1/work-orders")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_WorkOrderDto_Request().withAllFields();
+                var scenarioResponse = createWorkOrder(authorization, json, scenarioRequestBody);
                 //Given
                 var workOrderId = scenarioResponse.jsonPath().getString("id");
                 //When
@@ -75,16 +67,8 @@ public class WorkOrderSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_WorkOrderDto_Request().withAllFields()))
-                        .post("/v1/work-orders")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_WorkOrderDto_Request().withAllFields();
+                createWorkOrder(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()

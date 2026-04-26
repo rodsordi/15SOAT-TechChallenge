@@ -29,7 +29,7 @@ public final class WorkOrderDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".WorkOrder.Request")
     public static class Request implements WorkOrderDef.Request {
-        private UUID customerId;
+        private UUID vehicleId;
         private UUID employeeId;
         @Singular(value = "serviceId", ignoreNullCollections = true)
         private Set<UUID> servicesIds;
@@ -48,7 +48,7 @@ public final class WorkOrderDto {
         private UUID id;
         private WorkOrderStatus status;
         private BigDecimal totalAmount;
-        private CustomerDto.Response customer;
+        private VehicleDto.Response vehicle;
         private EmployeeDto.Response employee;
         @Singular(value = "service", ignoreNullCollections = true)
         private Set<EstimatedServiceDto.Response> estimatedServices;
@@ -64,13 +64,13 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".WorkOrder.Representation")
     public static class Representation extends RepresentationModel<Representation> implements WorkOrderDef.Representation {
         private UUID id;
         private WorkOrderStatus status;
         private BigDecimal totalAmount;
-        private CustomerDto.Representation customer;
+        private VehicleDto.Representation vehicle;
         private EmployeeDto.Representation employee;
         @Singular(value = "service", ignoreNullCollections = true)
         private Set<EstimatedServiceDto.Representation> estimatedServices;

@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
+import static br.com.fiap.garage.iandt.CustomerCreationTest.createCustomer;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
@@ -32,20 +33,12 @@ public class CustomerSearchTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a valid customer id, in scenario with saved customer")
+            @DisplayName("Given a valid customer id, in scenario with registered customer")
             @Test
             void test1() {
                 //Scenario
-                var scenarioResponse = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_CustomerDto_Request().withAllFields()))
-                        .post("/v1/customers")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var registeredCustomer = create_CustomerDto_Request().withAllFields();
+                var scenarioResponse = createCustomer(authorization, json, registeredCustomer);
                 //Given
                 var customerId = scenarioResponse.jsonPath().getString("id");
                 //When
@@ -72,20 +65,12 @@ public class CustomerSearchTest extends GarageIntegrationTest {
         @Nested
         class Success {
 
-            @DisplayName("Given no query params, in scenario with saved customer")
+            @DisplayName("Given no query params, in scenario with registered customer")
             @Test
             void test1() {
                 //Scenario
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_CustomerDto_Request().withAllFields()))
-                        .post("/v1/customers")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_CustomerDto_Request().withAllFields();
+                createCustomer(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()
@@ -100,28 +85,18 @@ public class CustomerSearchTest extends GarageIntegrationTest {
                         .isEqualTo(200);
             }
 
-            @DisplayName("Given a valid document query param, in scenario with saved customer")
+            @DisplayName("Given a valid document query param, in scenario with registered customer")
             @Test
             void test2() {
                 //Scenario
-                var savedCustomer = create_CustomerDto_Request()
-                        .withAllFields();
-                setField(savedCustomer, "document", "00.123.456/0001-90");
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(savedCustomer))
-                        .post("/v1/customers")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_CustomerDto_Request().withAllFields();
+                setField(scenarioRequestBody, "document", "54.662.770/0001-29");
+                createCustomer(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .param("document", "00123456000190")
+                        .param("document", "54662770000129")
                         .get("/v1/customers")
                         .then()
                         .log().all()
@@ -133,7 +108,7 @@ public class CustomerSearchTest extends GarageIntegrationTest {
                 assertThat(response.body().jsonPath().getList("content"))
                         .hasSize(1);
                 assertThat(response.body().jsonPath().getString("content.[0].document"))
-                        .isEqualTo("00.123.456/0001-90");
+                        .isEqualTo("54.662.770/0001-29");
             }
         }
     }

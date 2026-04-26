@@ -38,7 +38,7 @@ public interface WorkOrderDef {
     interface Request extends Detailed {
 
         // Aggregation
-        UUID getCustomerId();
+        UUID getVehicleId();
 
         // Aggregation
         UUID getEmployeeId();
@@ -50,7 +50,7 @@ public interface WorkOrderDef {
     interface Response extends Detailed, DetailedPersisted {
 
         // Aggregation
-        <T extends CustomerDef.Response> T getCustomer();
+        <T extends VehicleDef.Response> T getVehicle();
 
         // Aggregation
         <T extends EmployeeDef.Response> T getEmployee();
@@ -62,7 +62,7 @@ public interface WorkOrderDef {
     interface Representation extends Represented, RepresentedPersisted {
 
         // Aggregation
-        <T extends CustomerDef.Representation> T getCustomer();
+        <T extends VehicleDef.Representation> T getVehicle();
 
         // Aggregation
         <T extends EmployeeDef.Representation> T getEmployee();

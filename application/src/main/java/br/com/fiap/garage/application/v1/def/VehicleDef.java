@@ -40,9 +40,11 @@ public interface VehicleDef {
 
     interface Response extends Detailed, DetailedPersisted {
 
+        <T extends CustomerDef.ResumedRepresentation> T getCustomer();
     }
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        <T extends CustomerDef.ResumedRepresentation> T getCustomer();
     }
 }

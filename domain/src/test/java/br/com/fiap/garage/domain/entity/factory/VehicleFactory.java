@@ -27,6 +27,8 @@ public final class VehicleFactory {
                 .model("Corolla")
                 .licensePlate("ABC1234")
                 .manufactureYear(Year.parse("2024"))
+                // Composition
+                .customer(null)
                 // Inheritance (AuditableEntity)
                 .createdAt(newDateTime("21/04/2026 10:00:00"))
                 .updatedAt(newDateTime("21/04/2026 15:30:00"))
@@ -34,7 +36,7 @@ public final class VehicleFactory {
 
         // And
         assertThatObject(result)
-                .hasNoEmptyFields();
+                .hasNoEmptyFields("customer");
         return result;
     }
 

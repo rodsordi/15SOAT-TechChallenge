@@ -7,12 +7,12 @@ import java.math.BigDecimal;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.assertThat_CustomerDto_Representation;
-import static br.com.fiap.garage.application.v1.dto.assertions.CustomerDtoAssertions.assertThat_CustomerDto_Response;
 import static br.com.fiap.garage.application.v1.dto.assertions.EmployeeDtoAssertions.assertThat_EmployeeDto_Representation;
 import static br.com.fiap.garage.application.v1.dto.assertions.EmployeeDtoAssertions.assertThat_EmployeeDto_Response;
 import static br.com.fiap.garage.application.v1.dto.assertions.EstimatedServiceDtoAssertions.assertThat_EstimatedServiceDto_Representation;
 import static br.com.fiap.garage.application.v1.dto.assertions.EstimatedServiceDtoAssertions.assertThat_EstimatedServiceDto_Response;
+import static br.com.fiap.garage.application.v1.dto.assertions.VehicleDtoAssertions.assertThat_VehicleDto_Representation;
+import static br.com.fiap.garage.application.v1.dto.assertions.VehicleDtoAssertions.assertThat_VehicleDto_Response;
 import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,8 +45,8 @@ public final class WorkOrderDtoAssertions {
                     .isEqualByComparingTo(new BigDecimal("999.99"));
 
             // Composition
-            assertThat_CustomerDto_Response(actual.getCustomer())
-                    .wasConvertedFrom_Customer();
+            assertThat_VehicleDto_Response(actual.getVehicle())
+                    .wasConvertedFrom_Vehicle();
             assertThat_EmployeeDto_Response(actual.getEmployee())
                     .wasConvertedFrom_Employee();
             assertThat_EstimatedServiceDto_Response(actual.getEstimatedServices().stream().findFirst().orElseThrow())
@@ -90,8 +90,8 @@ public final class WorkOrderDtoAssertions {
             // Composition
             assertThat_EmployeeDto_Representation(actual.getEmployee())
                     .wasConvertedFrom_Employee();
-            assertThat_CustomerDto_Representation(actual.getCustomer())
-                    .wasConvertedFrom_Customer();
+            assertThat_VehicleDto_Representation(actual.getVehicle())
+                    .wasConvertedFrom_Vehicle();
             assertThat_EstimatedServiceDto_Representation(actual.getEstimatedServices().stream().findFirst().orElseThrow())
                     .wasConvertedFrom_EstimatedService();
 

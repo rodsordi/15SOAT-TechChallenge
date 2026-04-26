@@ -58,7 +58,7 @@ public final class InventoryMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".InventoryMaterial.Representation")
     public static class Representation extends RepresentationModel<Representation> implements InventoryMaterialDef.Representation {
         private UUID id;

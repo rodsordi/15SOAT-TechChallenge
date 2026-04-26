@@ -4,6 +4,7 @@ import br.com.fiap.garage.domain.entity.Customer;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.assertions.VehicleAssertions.assertThat_Vehicle;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -36,6 +37,10 @@ public final class CustomerAssertions {
                 .isEqualTo("john.doe@example.com");
         assertThat(actual.getDocument())
                 .isEqualTo("27614623000100");
+
+        // Composition
+        assertThat_Vehicle(actual.getVehicles().stream().findFirst().orElseThrow())
+                .wasConvertedFrom_VehicleDto_Request();
         assertThat(actual.getAuthorities())
                 .isNullOrEmpty();
 

@@ -60,7 +60,7 @@ public final class EmployeeDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".Employee.Representation")
     public static class Representation extends RepresentationModel<Representation> implements EmployeeDef.Representation {
         private UUID id;

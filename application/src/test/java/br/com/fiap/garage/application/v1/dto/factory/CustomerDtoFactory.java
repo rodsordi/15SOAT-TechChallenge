@@ -4,6 +4,7 @@ import br.com.fiap.garage.application.v1.dto.CustomerDto;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
@@ -26,6 +27,8 @@ public final class CustomerDtoFactory {
                     .password("1234asdl")
                     .email("john.doe@example.com")
                     .document("27.614.623/0001-00")
+                    // Composition
+                    .vehicle(create_VehicleDto_Request().withAllFields())
                     .build();
 
             // And

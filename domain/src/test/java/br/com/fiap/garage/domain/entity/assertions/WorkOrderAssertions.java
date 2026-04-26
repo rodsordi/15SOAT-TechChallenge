@@ -7,6 +7,7 @@ import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.assertions.CustomerAssertions.assertThat_Customer;
 import static br.com.fiap.garage.domain.entity.assertions.EmployeeAssertions.assertThat_Employee;
 import static br.com.fiap.garage.domain.entity.assertions.EstimatedServiceAssertions.assertThat_EstimatedService;
+import static br.com.fiap.garage.domain.entity.assertions.VehicleAssertions.assertThat_Vehicle;
 import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,9 +37,9 @@ public final class WorkOrderAssertions {
                 .isNull();
 
         // Composition
-        assertThat_Employee(actual.getEmployee())
+        assertThat_Vehicle(actual.getVehicle())
                 .wasConvertedFrom_WorkOrderDto_Request();
-        assertThat_Customer(actual.getCustomer())
+        assertThat_Employee(actual.getEmployee())
                 .wasConvertedFrom_WorkOrderDto_Request();
         assertThat(actual.getEstimatedServices())
                 .hasSize(3);

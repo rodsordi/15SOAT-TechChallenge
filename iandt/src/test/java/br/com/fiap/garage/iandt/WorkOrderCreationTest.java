@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import tools.jackson.databind.json.JsonMapper;
 
 import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.create_WorkOrderDto_Request;
 import static io.restassured.RestAssured.given;
@@ -37,20 +39,24 @@ public class WorkOrderCreationTest extends GarageIntegrationTest {
                 var requestBody = create_WorkOrderDto_Request()
                         .withAllFields();
                 //When
-                var response = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/work-orders")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var response = createWorkOrder(authorization, json, requestBody);
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(201);
             }
         }
+    }
+
+    public static Response createWorkOrder(String authorization, JsonMapper json, Object requestBody) {
+        return given()
+                .log().all()
+                .header("Authorization", authorization)
+                .contentType(JSON)
+                .body(json.writeValueAsString(requestBody))
+                .post("/v1/work-orders")
+                .then()
+                .log().all()
+                .extract()
+                .response();
     }
 }

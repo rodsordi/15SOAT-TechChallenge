@@ -16,16 +16,16 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 @Mapper(nullValuePropertyMappingStrategy = IGNORE)
 public interface WorkOrderDtoMapper extends CpfMap, DocumentMap {
 
-    @Mapping(target = "customer", source = "customerId")
+    @Mapping(target = "vehicle", source = "vehicleId")
     @Mapping(target = "employee", source = "employeeId")
     @Mapping(target = "estimatedServices", source = "servicesIds")
     WorkOrder convert(WorkOrderDto.Request source);
 
-    @Mapping(target = "customer.document", source = "customer.document", qualifiedByName = "formattedDocument")
+    @Mapping(target = "vehicle.customer.document", source = "vehicle.customer.document", qualifiedByName = "formattedDocument")
     @Mapping(target = "employee.cpf", source = "employee.cpf", qualifiedByName = "formattedCpf")
     WorkOrderDto.Response convert(WorkOrder source);
 
-    @Mapping(target = "customer.document", source = "customer.document", qualifiedByName = "formattedDocument")
+    @Mapping(target = "vehicle.customer.document", source = "vehicle.customer.document", qualifiedByName = "formattedDocument")
     @Mapping(target = "employee.cpf", source = "employee.cpf", qualifiedByName = "formattedCpf")
     WorkOrderDto.Representation convertToRepresentation(WorkOrder source);
 
@@ -35,11 +35,11 @@ public interface WorkOrderDtoMapper extends CpfMap, DocumentMap {
     @Mapping(target = "materialId", source = "material.id")
     EstimatedMaterialDto.Response convert(EstimatedMaterial source);
 
-    default Customer mapCustomer(UUID customerId) {
-        if (customerId == null)
+    default Vehicle mapVehicle(UUID vehicleId) {
+        if (vehicleId == null)
             return null;
-        return Customer.builder()
-                .id(customerId)
+        return Vehicle.builder()
+                .id(vehicleId)
                 .build();
     }
 

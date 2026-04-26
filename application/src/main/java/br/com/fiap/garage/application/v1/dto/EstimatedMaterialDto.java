@@ -33,7 +33,7 @@ public final class EstimatedMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".EstimatedMaterial.Representation")
     public static class Representation extends RepresentationModel<EstimatedMaterialDto.Representation> implements EstimatedMaterialDef.Representation {
         private UUID id;

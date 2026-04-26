@@ -11,8 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
+import static br.com.fiap.garage.iandt.VehicleCreationTest.createVehicle;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -35,16 +35,8 @@ public class VehicleSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                var scenarioResponse = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_VehicleDto_Request().withAllFields()))
-                        .post("/v1/vehicles")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_VehicleDto_Request().withAllFields();
+                var scenarioResponse = createVehicle(authorization, json, scenarioRequestBody);
                 //Given
                 var vehicleId = scenarioResponse.jsonPath().getString("id");
                 //When
@@ -75,16 +67,8 @@ public class VehicleSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_VehicleDto_Request().withAllFields()))
-                        .post("/v1/vehicles")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_VehicleDto_Request().withAllFields();
+                createVehicle(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()

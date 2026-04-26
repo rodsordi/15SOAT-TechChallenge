@@ -48,6 +48,7 @@ public final class VehicleDto {
         private String model;
         private String licensePlate;
         private Year manufactureYear;
+        private CustomerDto.ResumedRepresentation customer;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -60,7 +61,7 @@ public final class VehicleDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".Vehicle.Representation")
     public static class Representation extends RepresentationModel<Representation> implements VehicleDef.Representation {
         private UUID id;
@@ -68,6 +69,7 @@ public final class VehicleDto {
         private String model;
         private String licensePlate;
         private Year manufactureYear;
+        private CustomerDto.ResumedRepresentation customer;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 

@@ -1,7 +1,6 @@
 package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.commons.config.RestControllerTestConfig;
-import br.com.fiap.garage.domain.entity.Vehicle;
 import br.com.fiap.garage.domain.use_case.VehicleCreationUseCase;
 import br.com.fiap.garage.domain.use_case.VehicleSearchUseCase;
 import com.google.gson.Gson;
@@ -21,19 +20,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
-import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.text.MessageFormat.format;
-import static java.util.UUID.fromString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,44 +49,6 @@ class VehicleControllerTest {
 
     @MockitoBean
     private VehicleSearchUseCase vehicleSearchUseCase;
-
-    @DisplayName("When creating Vehicle")
-    @Nested
-    class Create {
-
-        @DisplayName("Then should execute successfully")
-        @Nested
-        class Success {
-
-            @BeforeEach
-            void beforeEach() {
-                when(vehicleCreationUseCase.create(any()))
-                        .thenAnswer(invocationOnMock -> {
-                            Vehicle vehicle = invocationOnMock.getArgument(0);
-                            setField(vehicle, "id", fromString("7a403fc9-3c96-408c-984f-1fea2729b59f"));
-                            return vehicle;
-                        });
-            }
-
-            @DisplayName("Given a vehicle with all fields")
-            @Test
-            void test1() throws Exception {
-                //Given
-                var requestBody = create_VehicleDto_Request()
-                        .withAllFields();
-                //When
-                mockMvc.perform(post("/v1/vehicles")
-                                .contentType(APPLICATION_JSON)
-                                .accept(APPLICATION_JSON)
-                                .characterEncoding(UTF_8.name())
-                                .content(gson.toJson(requestBody)))
-                        //Then
-                        .andDo(print())
-                        .andExpect(status().isCreated())
-                        .andExpect(jsonPath("$.id", is("7a403fc9-3c96-408c-984f-1fea2729b59f")));
-            }
-        }
-    }
 
     @DisplayName("When finding vehicle by id")
     @Nested

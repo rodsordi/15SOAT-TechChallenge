@@ -6,12 +6,15 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.time.Year;
 import java.util.UUID;
 
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -39,4 +42,10 @@ public class Vehicle extends AuditableEntity implements Serializable {
 
     @Column(nullable = false, length = 10, comment = "Vehicle manufacture year. Owner: self")
     private Year manufactureYear;
+
+    // Aggregate (bi-directional)
+    @Setter
+    @ManyToOne(cascade = {MERGE, PERSIST})
+    @JoinColumn(name = "customer_id", updatable = false, comment = "Customer id. Owner: db")
+    private Customer customer;
 }

@@ -12,9 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
-import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
+import static br.com.fiap.garage.iandt.EmployeeCreationTest.createEmployee;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -38,19 +37,8 @@ class EmployeeSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                var requestBody = create_EmployeeDto_Request()
-                        .withAllFields();
-                setField(requestBody, "username", "email.employee@garage.com");
-                setField(requestBody, "email", "email.employee@garage.com");
-                var scenarioResponse = given()
-                        .log().all()
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/employees")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_EmployeeDto_Request().withAllFields();
+                var scenarioResponse = createEmployee(json, scenarioRequestBody);
                 //Given
                 var employeeId = scenarioResponse.jsonPath().getString("id");
                 //When
@@ -81,19 +69,8 @@ class EmployeeSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                var requestBody = create_EmployeeDto_Request()
-                        .withAllFields();
-                setField(requestBody, "username", "email.employee@garage.com");
-                setField(requestBody, "email", "email.employee@garage.com");
-                given()
-                        .log().all()
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/employees")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_EmployeeDto_Request().withAllFields();
+                createEmployee(json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()
@@ -112,24 +89,14 @@ class EmployeeSearchTest extends GarageIntegrationTest {
             @Test
             void test2() {
                 //Scenario
-                var savedEmployee = create_EmployeeDto_Request()
-                        .withAllFields();
-                setField(savedEmployee, "cpf", "123.456.789-10");
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(savedEmployee))
-                        .post("/v1/employees")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_EmployeeDto_Request().withAllFields();
+                setField(scenarioRequestBody, "cpf", "904.434.710-10");
+                createEmployee(json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .param("cpf", "12345678910")
+                        .param("cpf", "90443471010")
                         .get("/v1/employees")
                         .then()
                         .log().all()
@@ -141,7 +108,7 @@ class EmployeeSearchTest extends GarageIntegrationTest {
                 Assertions.assertThat(response.body().jsonPath().getList("content"))
                         .hasSize(1);
                 Assertions.assertThat(response.body().jsonPath().getString("content.[0].cpf"))
-                        .isEqualTo("123.456.789-10");
+                        .isEqualTo("904.434.710-10");
             }
         }
     }

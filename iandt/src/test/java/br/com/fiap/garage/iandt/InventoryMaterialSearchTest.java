@@ -11,8 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
+import static br.com.fiap.garage.iandt.InventoryMaterialCreationTest.createInventoryMaterial;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -34,16 +34,8 @@ public class InventoryMaterialSearchTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(create_InventoryMaterial().withAllFields()))
-                        .post("/v1/inventory-materials")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var scenarioRequestBody = create_InventoryMaterial().withAllFields();
+                createInventoryMaterial(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()

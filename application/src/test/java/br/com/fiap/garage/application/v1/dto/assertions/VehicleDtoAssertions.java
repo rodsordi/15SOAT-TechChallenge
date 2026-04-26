@@ -21,7 +21,7 @@ public final class VehicleDtoAssertions {
 
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Response {
-        
+
         private final VehicleDto.Response actual;
 
         /**
@@ -40,6 +40,10 @@ public final class VehicleDtoAssertions {
                     .isEqualTo("ABC1234");
             assertThat(actual.getManufactureYear())
                     .isEqualTo(Year.parse("2024"));
+
+            // Composition
+            assertThat(actual.getCustomer())
+                    .isNull();
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
@@ -79,6 +83,10 @@ public final class VehicleDtoAssertions {
                     .isEqualTo("ABC1234");
             assertThat(actual.getManufactureYear())
                     .isEqualTo(Year.parse("2024"));
+
+            // Composition
+            assertThat(actual.getCustomer())
+                    .isNull();
 
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())

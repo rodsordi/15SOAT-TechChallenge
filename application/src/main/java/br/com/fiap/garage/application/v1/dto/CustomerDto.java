@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -31,6 +32,8 @@ public final class CustomerDto {
         private String name;
         private String email;
         private String document;
+        @Singular(value = "vehicle", ignoreNullCollections = true)
+        private Set<VehicleDto.Request> vehicles;
 
         public Customer buildCustomer() {
             return MAPPER.convert(this);
@@ -48,6 +51,8 @@ public final class CustomerDto {
         private String name;
         private String email;
         private String document;
+        @Singular(value = "vehicle", ignoreNullCollections = true)
+        private Set<VehicleDto.Response> vehicles;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -60,7 +65,7 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
     @Schema(name = ".Customer.Representation")
     public static class Representation extends RepresentationModel<Representation> implements CustomerDef.Representation {
         private UUID id;
@@ -68,6 +73,8 @@ public final class CustomerDto {
         private String name;
         private String email;
         private String document;
+        @Singular(value = "vehicle", ignoreNullCollections = true)
+        private Set<VehicleDto.Representation> vehicles;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -79,5 +86,21 @@ public final class CustomerDto {
                     .withSelfRel());
             return representation;
         }
+    }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @EqualsAndHashCode(callSuper = true, exclude = "id")
+    @Schema(name = ".Customer.ResumedRepresentation")
+    public static class ResumedRepresentation extends RepresentationModel<ResumedRepresentation> implements CustomerDef.ResumedRepresentation {
+        private UUID id;
+        private String username;
+        private String name;
+        private String email;
+        private String document;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 }

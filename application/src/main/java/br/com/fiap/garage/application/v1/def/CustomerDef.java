@@ -4,6 +4,7 @@ import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.commons.validation.CpfOrCnpj;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -16,8 +17,11 @@ public interface CustomerDef {
     interface Represented extends Serializable {
 
         String getUsername();
+
         String getName();
+
         String getEmail();
+
         @CpfOrCnpj
         String getDocument();
     }
@@ -38,13 +42,21 @@ public interface CustomerDef {
     interface Request extends Detailed {
 
         String getPassword();
+
+        <T extends VehicleDef.Request> Set<T> getVehicles();
     }
 
     interface Response extends Detailed, DetailedPersisted {
 
+        <T extends VehicleDef.Response> Set<T> getVehicles();
     }
 
     interface Representation extends Represented, RepresentedPersisted {
+
+        <T extends VehicleDef.Representation> Set<T> getVehicles();
+    }
+
+    interface ResumedRepresentation extends Represented, RepresentedPersisted {
 
     }
 }

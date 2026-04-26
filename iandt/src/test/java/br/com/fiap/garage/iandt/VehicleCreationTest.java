@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,11 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import tools.jackson.databind.json.JsonMapper;
 
 import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles("int_test")
@@ -37,20 +39,24 @@ public class VehicleCreationTest extends GarageIntegrationTest {
                 var requestBody = create_VehicleDto_Request()
                         .withAllFields();
                 //When
-                var response = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/vehicles")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var response = createVehicle(authorization, json, requestBody);
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(201);
             }
         }
+    }
+
+    public static Response createVehicle(String authorization, JsonMapper json, Object requestBody) {
+        return given()
+                .log().all()
+                .header("Authorization", authorization)
+                .contentType(JSON)
+                .body(json.writeValueAsString(requestBody))
+                .post("/v1/vehicles")
+                .then()
+                .log().all()
+                .extract()
+                .response();
     }
 }

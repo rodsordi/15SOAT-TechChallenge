@@ -40,8 +40,8 @@ public class WorkOrder extends AuditableEntity implements Serializable {
 
     // Aggregate
     @ManyToOne(cascade = {MERGE, PERSIST})
-    @JoinColumn(updatable = false, comment = "Customer id. Owner: db")
-    private Customer customer;
+    @JoinColumn(updatable = false, comment = "Vehicle id. Owner: db")
+    private Vehicle vehicle;
 
     // Aggregate
     @ManyToOne(cascade = {MERGE, PERSIST})

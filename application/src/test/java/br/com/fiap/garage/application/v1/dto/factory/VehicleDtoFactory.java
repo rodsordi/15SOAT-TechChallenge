@@ -24,7 +24,7 @@ public final class VehicleDtoFactory {
             var result = builder
                     .make("Toyota")
                     .model("Corolla")
-                    .licensePlate("ABC-1234")
+                    .licensePlate("ABC1234")
                     .manufactureYear(Year.parse("2026"))
                     .build();
 

@@ -2,6 +2,7 @@ package br.com.fiap.garage.iandt;
 
 import br.com.fiap.garage.GarageIntegrationTest;
 import br.com.fiap.garage.application.GarageApplication;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,12 +10,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.Set;
 import java.util.UUID;
 
+import static br.com.fiap.garage.application.v1.dto.factory.InventoryMaterialDtoFactory.create_InventoryMaterialDto_Request;
 import static br.com.fiap.garage.application.v1.dto.factory.ServiceDtoFactory.create_ServiceDto_Request;
-import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -39,10 +41,11 @@ class ServiceCreationTest extends GarageIntegrationTest {
             @Test
             void test1() {
                 //Scenario
-                var materialId = createInventoryMaterial();
+                var registeredInventoryMaterial = create_InventoryMaterialDto_Request().withAllFields();
+                var scenarioResponse = createInventoryMaterial(authorization, json, registeredInventoryMaterial);
+                var materialId = UUID.fromString(scenarioResponse.body().jsonPath().getString("id"));
                 //Given
-                var requestBody = create_ServiceDto_Request()
-                        .valid();
+                var requestBody = create_ServiceDto_Request().valid();
                 setField(requestBody, "materialsIds", Set.of(materialId));
                 //When
                 var response = given()
@@ -62,31 +65,16 @@ class ServiceCreationTest extends GarageIntegrationTest {
         }
     }
 
-    private UUID createInventoryMaterial() {
-        //Scenario
-        given()
+    public static Response createInventoryMaterial(String authorization, JsonMapper json, Object requestBody) {
+        return given()
                 .log().all()
                 .header("Authorization", authorization)
                 .contentType(JSON)
-                .body(json.writeValueAsString(create_InventoryMaterial().withAllFields()))
+                .body(json.writeValueAsString(requestBody))
                 .post("/v1/inventory-materials")
                 .then()
                 .log().all()
                 .extract()
                 .response();
-        //When
-        var response = given()
-                .log().all()
-                .header("Authorization", authorization)
-                .get("/v1/inventory-materials")
-                .then()
-                .log().all()
-                .extract()
-                .response();
-        //Then
-        assertThat(response.statusCode())
-                .isEqualTo(200);
-        var id = response.body().jsonPath().getString("content.id");
-        return UUID.fromString(id);
     }
 }
