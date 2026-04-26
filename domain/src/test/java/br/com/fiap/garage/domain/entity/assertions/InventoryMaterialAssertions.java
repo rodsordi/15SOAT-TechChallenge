@@ -34,13 +34,19 @@ public final class InventoryMaterialAssertions {
         assertThat_Material(actual.getMaterial())
                 .isEqualTo_Material();
 
+        // Inheritance (AuditableEntity)
+        assertThat(actual.getCreatedAt())
+                .isNull();
+        assertThat(actual.getUpdatedAt())
+                .isNull();
+
         // And
         assertThatObject(actual)
                 .hasAllGetMethodsVerifiedOnceAtLeast();
     }
 
     /**
-     * @see br.com.fiap.garage.application.v1.dto.factory.InventoryDtoFactory
+     * @see br.com.fiap.garage.application.v1.dto.factory.InventoryMaterialDtoFactory
      * .withAllFields()
      */
     public void wasConvertedFrom_InventoryMaterialDto_Request() {
@@ -48,11 +54,17 @@ public final class InventoryMaterialAssertions {
         assertThat(actual.getId())
                 .isNull();
         assertThat(actual.getQuantityInStock())
-                .isEqualTo(6);
+                .isEqualTo(100);
         assertThat(actual.getReservedQuantity())
-                .isEqualTo(2);
+                .isEqualTo(15);
         assertThat_Material(actual.getMaterial())
                 .wasConvertedFrom_MaterialDto_Request();
+
+        // Inheritance (AuditableEntity)
+        assertThat(actual.getCreatedAt())
+                .isNull();
+        assertThat(actual.getUpdatedAt())
+                .isNull();
 
         // And
         assertThatObject(actual)

@@ -58,6 +58,7 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
                 .withAllFields();
         setField(requestBody, "username", "admin@garage.com");
         setField(requestBody, "email", "admin@garage.com");
+        setField(requestBody, "password", "abcd1234");
 
         var response = given()
                 .log().all()
@@ -74,7 +75,12 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
         response = given()
                 .log().all()
                 .contentType(JSON)
-                .body(response.body().asPrettyString())
+                .body("""
+                        {
+                          "username": "admin@garage.com",
+                          "password": "abcd1234"
+                        }
+                        """)
                 .post("/auth/login")
                 .then()
                 .log().all()
