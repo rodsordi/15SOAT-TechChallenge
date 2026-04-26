@@ -1,6 +1,14 @@
+# Prompt
 Use the following java classes with hibernate, to create an SQL script in postgres database table structure:
 Obs: Do create blocks with table first and just after their comments and then do it again for the other tables.
 
+## Types
+  - java.time.Year: INTEGER 
+
+## Query entities
+
+````sh
 cat domain\src\main\java\br\com\fiap\commons\entity\*
 cat domain\src\main\java\br\com\fiap\garage\domain\entity\*
 cat domain\src\main\java\br\com\fiap\garage\domain\enums\*
+````

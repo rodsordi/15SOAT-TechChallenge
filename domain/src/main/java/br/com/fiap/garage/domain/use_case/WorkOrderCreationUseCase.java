@@ -30,6 +30,9 @@ public class WorkOrderCreationUseCase {
         var foundVehicle = findVehicle(workOrder);
         var foundServices = findServices(servicesIds);
         workOrder.updateReferences(foundVehicle, foundEmployee, foundServices);
+
+        workOrder.calculateTotalAmount();
+
         return workOrderRepository.save(workOrder);
     }
 

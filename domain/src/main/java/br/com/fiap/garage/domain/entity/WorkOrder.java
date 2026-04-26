@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,12 +17,13 @@ import java.util.stream.Collectors;
 import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.STRING;
+import static java.math.BigDecimal.ZERO;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
 @Table(schema = "garage")
 public class WorkOrder extends AuditableEntity implements Serializable {
@@ -60,9 +62,26 @@ public class WorkOrder extends AuditableEntity implements Serializable {
     public void updateReferences(Vehicle vehicle, Employee employee, Set<Service> services) {
         this.vehicle = vehicle;
         this.employee = employee;
-        this.estimatedServices = services.stream()
+        estimatedServices = services.stream()
                 .map(Service::buildEstimatedService)
                 .collect(Collectors.toSet());
+    }
+
+    public void calculateTotalAmount() {
+        var serviceTotalAmount = estimatedServices.stream()
+                .map(EstimatedService::getCost)
+                .reduce(ZERO, BigDecimal::add);
+
+        var estimatedMaterials = estimatedServices.stream()
+                .map(EstimatedService::getEstimatedMaterials)
+                .flatMap(Collection::stream)
+                .toList();
+
+        var materialTotalAmount = estimatedMaterials.stream()
+                .map(EstimatedMaterial::getCost)
+                .reduce(ZERO, BigDecimal::add);
+
+        totalAmount = serviceTotalAmount.add(materialTotalAmount);
     }
 
     public void diagnose() {

@@ -13,6 +13,8 @@ import org.springframework.data.repository.CrudRepository;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
@@ -44,7 +46,12 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
         RestAssured.baseURI = format("http://localhost:%s/api", port);
 
         if (env.acceptsProfiles(of("int_test"))) {
-            repositories.forEach(repository -> {
+            var reversedRepositories = new ArrayList<>(repositories);
+            Collections.reverse(reversedRepositories);
+
+            reversedRepositories.forEach(crudRepository -> System.out.println(crudRepository.getClass().getSimpleName()));
+
+            reversedRepositories.forEach(repository -> {
                 System.out.println(repository.getClass().getGenericInterfaces()[0]);
                 repository.deleteAll();
             });

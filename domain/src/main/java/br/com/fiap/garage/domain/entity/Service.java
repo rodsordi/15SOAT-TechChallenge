@@ -21,7 +21,7 @@ import static org.mapstruct.factory.Mappers.getMapper;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
 @Table(schema = "garage")
 public class Service extends AuditableEntity implements Serializable {
@@ -52,5 +52,9 @@ public class Service extends AuditableEntity implements Serializable {
 
     public EstimatedService buildEstimatedService() {
         return MAPPER.convert(this);
+    }
+
+    public void updateReferences(Set<Material> materials) {
+        this.materials = materials;
     }
 }

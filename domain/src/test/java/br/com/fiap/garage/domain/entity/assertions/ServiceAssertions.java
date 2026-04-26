@@ -70,13 +70,7 @@ public final class ServiceAssertions {
 
         // Composition (Many-to-Many)
         assertThat(actual.getMaterials())
-                .isNotEmpty()
-                .hasSize(3)
-                .extracting(material -> material.getId().toString())
-                .contains(
-                        "4d36346e-9eec-47e5-b267-69e1c6219b28",
-                        "f19a4875-b483-4486-adf6-fe581f1aa953",
-                        "058c9925-253a-464d-adc4-55e6e6d89647");
+                .isNullOrEmpty();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

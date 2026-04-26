@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
 @Table(schema = "garage")
 public class Vehicle extends AuditableEntity implements Serializable {
@@ -46,6 +46,6 @@ public class Vehicle extends AuditableEntity implements Serializable {
     // Aggregate (bi-directional)
     @Setter
     @ManyToOne(cascade = {MERGE, PERSIST})
-    @JoinColumn(name = "customer_id", updatable = false, comment = "Customer id. Owner: db")
+    @JoinColumn(updatable = false, comment = "Customer id. Owner: db")
     private Customer customer;
 }

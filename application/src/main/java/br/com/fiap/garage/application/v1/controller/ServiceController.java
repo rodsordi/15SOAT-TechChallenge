@@ -35,7 +35,7 @@ public class ServiceController implements ServiceSwagger {
             @RequestBody
             ServiceDto.Request requestBody) {
         var service = requestBody.buildService();
-        var createdService = serviceCreationUseCase.create(service);
+        var createdService = serviceCreationUseCase.create(service, requestBody.getMaterialsIds());
         return buildServiceDtoResponse(createdService);
     }
 
