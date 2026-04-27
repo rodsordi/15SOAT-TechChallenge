@@ -49,7 +49,7 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
             var reversedRepositories = new ArrayList<>(repositories);
             Collections.reverse(reversedRepositories);
 
-            reversedRepositories.forEach(crudRepository -> System.out.println(crudRepository.getClass().getSimpleName()));
+            reversedRepositories.forEach(repository -> System.out.println(repository.getClass().getGenericInterfaces()[0]));
 
             reversedRepositories.forEach(repository -> {
                 System.out.println(repository.getClass().getGenericInterfaces()[0]);
