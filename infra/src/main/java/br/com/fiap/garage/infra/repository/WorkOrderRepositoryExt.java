@@ -2,12 +2,10 @@ package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.garage.domain.repository.WorkOrderRepository;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
-@Repository
 @Primary
-@Order(5)
+@Repository
 public interface WorkOrderRepositoryExt extends WorkOrderRepository {
     
 }

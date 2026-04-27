@@ -2,8 +2,6 @@ package br.com.fiap.garage;
 
 import br.com.fiap.commons.iandt.setup.LocalStackSetup;
 import br.com.fiap.commons.iandt.setup.PostgresSetup;
-import br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory;
-import br.com.fiap.garage.domain.entity.factory.EmployeeFactory;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,6 @@ import org.springframework.data.repository.CrudRepository;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
@@ -46,15 +42,14 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
         RestAssured.baseURI = format("http://localhost:%s/api", port);
 
         if (env.acceptsProfiles(of("int_test"))) {
-            var reversedRepositories = new ArrayList<>(repositories);
-            Collections.reverse(reversedRepositories);
+            for (var i = repositories.size() - 1; i >= 0; i--)
+                System.out.println("Repository: " + repositories.get(i).getClass().getGenericInterfaces()[0]);
 
-            reversedRepositories.forEach(repository -> System.out.println(repository.getClass().getGenericInterfaces()[0]));
-
-            reversedRepositories.forEach(repository -> {
-                System.out.println(repository.getClass().getGenericInterfaces()[0]);
+            for (var i = repositories.size() - 1; i >= 0; i--) {
+                var repository = repositories.get(i);
+                System.out.println("Deleting all: " + repository.getClass().getGenericInterfaces()[0]);
                 repository.deleteAll();
-            });
+            }
         }
 
         authenticate();
