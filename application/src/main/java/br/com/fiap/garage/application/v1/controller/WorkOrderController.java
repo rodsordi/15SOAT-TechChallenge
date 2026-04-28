@@ -5,6 +5,7 @@ import br.com.fiap.garage.application.v1.swagger.WorkOrderSwagger;
 import br.com.fiap.garage.domain.filter.WorkOrderFilter;
 import br.com.fiap.garage.domain.use_case.WorkOrderCreationUseCase;
 import br.com.fiap.garage.domain.use_case.WorkOrderSearchUseCase;
+import br.com.fiap.garage.domain.use_case.WorkOrderUpdateUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 import static br.com.fiap.garage.application.v1.dto.WorkOrderDto.Response.buildWorkOrderDtoResponse;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
@@ -25,6 +27,8 @@ public class WorkOrderController implements WorkOrderSwagger {
     private final WorkOrderCreationUseCase workOrderCreationUseCase;
 
     private final WorkOrderSearchUseCase workOrderSearchUseCase;
+
+    private final WorkOrderUpdateUseCase workOrderUpdateUseCase;
 
     @PostMapping(
             consumes = APPLICATION_JSON_VALUE,
@@ -56,5 +60,18 @@ public class WorkOrderController implements WorkOrderSwagger {
                 .map(WorkOrderDto.Representation::buildWorkOrderDtoRepresentation)
                 .toList();
         return new PageImpl<>(responseBody, filter.buildPageRequest(), responseBody.size());
+    }
+
+    @PatchMapping(path = "/{workOrderId}",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    @ResponseStatus(NO_CONTENT)
+    public void update(
+            @PathVariable("workOrderId")
+            UUID workOrderId,
+            @RequestBody
+            @Valid
+            WorkOrderDto.UpdateRequest requestBody) {
+        workOrderUpdateUseCase.update(workOrderId, requestBody.getStatus());
     }
 }

@@ -1,6 +1,5 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.WorkOrderController;
 import br.com.fiap.garage.application.v1.def.WorkOrderDef;
 import br.com.fiap.garage.application.v1.mapper.WorkOrderDtoMapper;
 import br.com.fiap.garage.domain.entity.WorkOrder;
@@ -43,13 +42,24 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".WorkOrder.UpdateRequest")
+    public static class UpdateRequest implements WorkOrderDef.UpdateRequest {
+        private WorkOrderStatus status;
+        private UUID employeeId;
+        private Set<UUID> servicesIds;
+    }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".WorkOrder.Response")
     public static class Response implements WorkOrderDef.Response {
         private UUID id;
         private WorkOrderStatus status;
         private BigDecimal totalAmount;
-        private VehicleDto.Response vehicle;
-        private EmployeeDto.Response employee;
+        private VehicleDto.Representation vehicle;
+        private EmployeeDto.Representation employee;
         @Singular(value = "service", ignoreNullCollections = true)
         private Set<EstimatedServiceDto.Response> estimatedServices;
         private LocalDateTime createdAt;
@@ -70,20 +80,17 @@ public final class WorkOrderDto {
         private UUID id;
         private WorkOrderStatus status;
         private BigDecimal totalAmount;
-        private VehicleDto.Representation vehicle;
-        private EmployeeDto.Representation employee;
-        @Singular(value = "service", ignoreNullCollections = true)
-        private Set<EstimatedServiceDto.Representation> estimatedServices;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity
-        public static WorkOrderDto.Representation buildWorkOrderDtoRepresentation(WorkOrder workOrder) {
-            var representation = MAPPER.convertToRepresentation(workOrder);
-            representation.add(linkTo(WorkOrderController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(getControllerClass())
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
+        }
+
+        public static WorkOrderDto.Representation buildWorkOrderDtoRepresentation(WorkOrder workOrder) {
+            return MAPPER.convertToRepresentation(workOrder);
         }
     }
 }

@@ -1,6 +1,5 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.InventoryMaterialController;
 import br.com.fiap.garage.application.v1.def.InventoryMaterialDef;
 import br.com.fiap.garage.application.v1.mapper.InventoryMaterialDtoMapper;
 import br.com.fiap.garage.domain.entity.InventoryMaterial;
@@ -8,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -65,15 +63,16 @@ public final class InventoryMaterialDto {
         private Integer reservedQuantity;
         private MaterialDto.Representation material;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity
-        public static InventoryMaterialDto.Representation buildInventoryDtoRepresentation(InventoryMaterial inventoryMaterial) {
-            var representation = MAPPER.convertToRepresentation(inventoryMaterial);
-            representation.add(linkTo(InventoryMaterialController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(getControllerClass())
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
+        }
+
+        public static InventoryMaterialDto.Representation buildInventoryDtoRepresentation(InventoryMaterial inventoryMaterial) {
+            return MAPPER.convertToRepresentation(inventoryMaterial);
         }
     }
 }

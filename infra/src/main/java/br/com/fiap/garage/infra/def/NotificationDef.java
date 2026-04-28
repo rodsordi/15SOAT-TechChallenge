@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 public interface NotificationDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
 
         @Schema(example = "3a49a18d-5482-4ee6-8d19-c786a6489008", description = "External Client id. Owner: client")
         @NotNull
@@ -25,14 +25,14 @@ public interface NotificationDef {
 
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "b9a16f67-e44e-4d55-90fa-0cc92b80049e", description = "Notification id. Owner: db")
         @NotNull
         UUID getId();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
     }
 

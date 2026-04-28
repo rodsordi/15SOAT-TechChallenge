@@ -94,7 +94,6 @@ public final class EmailDtoFactory {
                     .recipient("customer@example.com")
                     .subject("Service Update")
                     .createdAt(newDateTime("27/04/2026 10:00:00"))
-                    .updatedAt(newDateTime("27/04/2026 10:00:00"))
                     .build();
             // And
             assertThatObject(result)

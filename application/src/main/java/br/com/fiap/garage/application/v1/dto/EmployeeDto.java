@@ -1,6 +1,5 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.EmployeeController;
 import br.com.fiap.garage.application.v1.def.EmployeeDef;
 import br.com.fiap.garage.application.v1.mapper.EmployeeDtoMapper;
 import br.com.fiap.garage.domain.entity.Employee;
@@ -69,15 +68,16 @@ public final class EmployeeDto {
         private String email;
         private String cpf;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity/Aggregate
-        public static EmployeeDto.Representation buildEmployeeDtoRepresentation(Employee customer) {
-            var representation = MAPPER.convertToRepresentation(customer);
-            representation.add(linkTo(EmployeeController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(getControllerClass())
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
+        }
+
+        public static EmployeeDto.Representation buildEmployeeDtoRepresentation(Employee customer) {
+            return MAPPER.convertToRepresentation(customer);
         }
     }
 }

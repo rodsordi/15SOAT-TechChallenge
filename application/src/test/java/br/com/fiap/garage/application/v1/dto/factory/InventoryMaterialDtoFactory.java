@@ -115,7 +115,6 @@ public final class InventoryMaterialDtoFactory {
                     .material(create_MaterialDto_Representation().withAllFields())
                     // Auditable
                     .createdAt(newDateTime("30/12/2024 23:59:59"))
-                    .updatedAt(newDateTime("31/12/2024 23:59:59"))
                     .build();
 
             // And

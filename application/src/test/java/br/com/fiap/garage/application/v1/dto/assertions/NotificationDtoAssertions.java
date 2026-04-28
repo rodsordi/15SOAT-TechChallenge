@@ -79,12 +79,10 @@ public final class NotificationDtoAssertions {
             // Inheritance (AuditableTable context)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("15/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("16/12/2026 23:59:59"));
 
             // HATEOAS
             assertThat(actual.getLinks())
-                    .isNullOrEmpty();
+                    .hasToString("</v1/notifications/d515e9fb-7c82-4e7b-9991-797988ccfa64>;rel=\"self\"");
 
             // And
             assertThatObject(actual)

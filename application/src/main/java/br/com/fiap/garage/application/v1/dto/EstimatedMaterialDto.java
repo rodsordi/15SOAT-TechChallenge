@@ -31,18 +31,4 @@ public final class EstimatedMaterialDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
-
-    @Getter(onMethod_ = @Override)
-    @Builder
-    @NoArgsConstructor(access = PRIVATE)
-    @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".EstimatedMaterial.Representation")
-    public static class Representation implements EstimatedMaterialDef.Representation {
-        private UUID id;
-        private MaterialType type;
-        private String name;
-        private BigDecimal cost;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-    }
 }

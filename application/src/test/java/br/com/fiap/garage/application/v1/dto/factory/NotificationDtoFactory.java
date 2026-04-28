@@ -101,7 +101,6 @@ public final class NotificationDtoFactory {
                     .email(create_EmailDto_Representation().withAllFields())
                     // Inheritance (AuditableEntity context)
                     .createdAt(newDateTime("27/04/2026 10:00:00"))
-                    .updatedAt(newDateTime("27/04/2026 11:30:00"))
                     .build();
             // And
             assertThatObject(result)

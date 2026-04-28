@@ -59,41 +59,4 @@ public final class EstimatedServiceDtoAssertions {
                     .hasAllGetMethodsVerifiedOnceAtLeast();
         }
     }
-
-    public static Representation assertThat_EstimatedServiceDto_Representation(EstimatedServiceDto.Representation actual) {
-        assertThat(actual).isNotNull();
-        return new Representation(spy(actual));
-    }
-
-    @RequiredArgsConstructor(access = PRIVATE)
-    public static final class Representation {
-
-        private final EstimatedServiceDto.Representation actual;
-
-        /**
-         * @see br.com.fiap.garage.domain.entity.factory.EstimatedServiceFactory
-         * .withAllFields()
-         */
-        public void wasConvertedFrom_EstimatedService() {
-            // Self
-            assertThat(actual.getId())
-                    .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
-            assertThat(actual.getName())
-                    .isEqualTo("Engine Overhaul");
-            assertThat(actual.getCost())
-                    .isEqualTo(new BigDecimal("4500.00"));
-            assertThat(actual.getFinishedAt())
-                    .isEqualTo(newDateTime("31/12/2025 18:00:00"));
-
-            // Inheritance (AuditableTable / AuditableEntity)
-            assertThat(actual.getCreatedAt())
-                    .isEqualTo(newDateTime("13/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
-
-            // And
-            assertThatObject(actual)
-                    .hasAllGetMethodsVerifiedOnceAtLeast();
-        }
-    }
 }

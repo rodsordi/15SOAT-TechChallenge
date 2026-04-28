@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public interface EmailDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
 
         String getRecipient();
 
@@ -23,12 +23,12 @@ public interface EmailDef {
         String getMessage();
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
 
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
         String getBcc();
     }

@@ -1,6 +1,5 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.CustomerController;
 import br.com.fiap.garage.application.v1.def.CustomerDef;
 import br.com.fiap.garage.application.v1.mapper.CustomerDtoMapper;
 import br.com.fiap.garage.domain.entity.Customer;
@@ -73,33 +72,17 @@ public final class CustomerDto {
         private String name;
         private String email;
         private String document;
-        @Singular(value = "vehicle", ignoreNullCollections = true)
-        private Set<VehicleDto.Representation> vehicles;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity/Aggregate
-        public static Representation buildCustomerDtoRepresentation(Customer customer) {
-            var representation = MAPPER.convertToRepresentation(customer);
-            representation.add(linkTo(CustomerController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(getControllerClass())
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
         }
-    }
 
-    @Getter(onMethod_ = @Override)
-    @Builder
-    @NoArgsConstructor(access = PRIVATE)
-    @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Customer.ResumedRepresentation")
-    public static class ResumedRepresentation implements CustomerDef.ResumedRepresentation {
-        private UUID id;
-        private String username;
-        private String name;
-        private String email;
-        private String document;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
+        public static Representation buildCustomerDtoRepresentation(Customer customer) {
+            return MAPPER.convertToRepresentation(customer);
+        }
     }
 }

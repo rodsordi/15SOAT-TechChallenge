@@ -51,6 +51,5 @@ public final class EmailDto {
         private String recipient;
         private String subject;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
     }
 }

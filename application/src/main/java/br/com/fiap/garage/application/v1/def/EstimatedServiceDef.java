@@ -21,7 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
  */
 public interface EstimatedServiceDef {
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "63d85e5d-64b7-44a4-931a-270493cc0eb7", description = "Estimated Service id. Owner: db")
         @NotNull
@@ -41,7 +41,7 @@ public interface EstimatedServiceDef {
         LocalDateTime getFinishedAt();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
         @Schema(example = "Estimated Service description. Owner: self", description = "Service description. Owner: self")
         @Size(max = 255)
@@ -51,9 +51,5 @@ public interface EstimatedServiceDef {
     interface Response extends DetailedPersisted {
 
         <T extends EstimatedMaterialDef.Response> Set<T> getEstimatedMaterials();
-    }
-
-    interface Representation extends RepresentedPersisted {
-
     }
 }

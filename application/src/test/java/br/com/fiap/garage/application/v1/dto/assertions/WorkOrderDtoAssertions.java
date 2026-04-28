@@ -8,11 +8,8 @@ import java.math.BigDecimal;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.application.v1.dto.assertions.EmployeeDtoAssertions.assertThat_EmployeeDto_Representation;
-import static br.com.fiap.garage.application.v1.dto.assertions.EmployeeDtoAssertions.assertThat_EmployeeDto_Response;
-import static br.com.fiap.garage.application.v1.dto.assertions.EstimatedServiceDtoAssertions.assertThat_EstimatedServiceDto_Representation;
 import static br.com.fiap.garage.application.v1.dto.assertions.EstimatedServiceDtoAssertions.assertThat_EstimatedServiceDto_Response;
 import static br.com.fiap.garage.application.v1.dto.assertions.VehicleDtoAssertions.assertThat_VehicleDto_Representation;
-import static br.com.fiap.garage.application.v1.dto.assertions.VehicleDtoAssertions.assertThat_VehicleDto_Response;
 import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,9 +42,9 @@ public final class WorkOrderDtoAssertions {
                     .isEqualByComparingTo(new BigDecimal("999.99"));
 
             // Composition
-            assertThat_VehicleDto_Response(actual.getVehicle())
+            assertThat_VehicleDto_Representation(actual.getVehicle())
                     .wasConvertedFrom_Vehicle();
-            assertThat_EmployeeDto_Response(actual.getEmployee())
+            assertThat_EmployeeDto_Representation(actual.getEmployee())
                     .wasConvertedFrom_Employee();
             assertThat_EstimatedServiceDto_Response(actual.getEstimatedServices().stream().findFirst().orElseThrow())
                     .wasConvertedFrom_EstimatedService();
@@ -87,21 +84,11 @@ public final class WorkOrderDtoAssertions {
             assertThat(actual.getTotalAmount())
                     .isEqualByComparingTo(new BigDecimal("999.99"));
 
-            // Composition
-            assertThat_EmployeeDto_Representation(actual.getEmployee())
-                    .wasConvertedFrom_Employee();
-            assertThat_VehicleDto_Representation(actual.getVehicle())
-                    .wasConvertedFrom_Vehicle();
-            assertThat_EstimatedServiceDto_Representation(actual.getEstimatedServices().stream().findFirst().orElseThrow())
-                    .wasConvertedFrom_EstimatedService();
-
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("13/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
             assertThat(actual.getLinks())
-                    .isNullOrEmpty();
+                    .hasToString("</v1/work-orders/e48ad20c-69dd-4382-b567-0e02b2c3d480>;rel=\"self\"");
 
             // And
             assertThatObject(actual)

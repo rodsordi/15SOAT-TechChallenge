@@ -1,13 +1,13 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import br.com.fiap.garage.application.v1.controller.EmployeeController;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public interface EmployeeDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
 
         @Schema(example = "jack.doe", description = "Employee username.")
         @Size(max = 255)
@@ -44,14 +44,14 @@ public interface EmployeeDef {
 
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "a0949107-8b0e-4e28-b541-ecc34bb35b1d", description = "Employee id.")
         @NotNull
         UUID getId();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
     }
 
@@ -69,5 +69,8 @@ public interface EmployeeDef {
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        default Class<?> getControllerClass() {
+            return EmployeeController.class;
+        }
     }
 }

@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 public interface MaterialDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
 
         @NotNull
         MaterialType getType();
@@ -40,14 +40,14 @@ public interface MaterialDef {
         String getDescription();
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "dec86af2-75f9-4568-92df-10969f1dedf2", description = "Material id. Owner: db")
         @NotNull
         UUID getId();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
     }
 

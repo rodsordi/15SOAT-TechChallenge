@@ -90,12 +90,10 @@ public final class ServiceDtoAssertions {
             // Inheritance (AuditableTable / AuditableEntity)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("13/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
 
             // HATEOAS
             assertThat(actual.getLinks())
-                    .isNullOrEmpty();
+                    .hasToString("</v1/services/f47ac10b-58cc-4372-a567-0e02b2c3d479>;rel=\"self\"");
 
             // And
             assertThatObject(actual)

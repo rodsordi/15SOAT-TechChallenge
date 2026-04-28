@@ -1,13 +1,13 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import br.com.fiap.garage.application.v1.controller.ServiceController;
 import br.com.fiap.garage.application.v1.dto.MaterialDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public interface ServiceDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
 
         @Schema(example = "Oil Change", description = "Service name. Owner: self")
         @NotBlank
@@ -39,14 +39,14 @@ public interface ServiceDef {
 
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "1723546e-37e4-4692-863c-9d00be8aae1b", description = "Service id. Owner: db")
         @NotNull
         UUID getId();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
     }
 
@@ -57,10 +57,13 @@ public interface ServiceDef {
 
     interface Response extends Detailed, DetailedPersisted {
 
-        <T extends MaterialDto.Response> Set<T> getMaterials();
+        <T extends MaterialDto.Representation> Set<T> getMaterials();
     }
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        default Class<?> getControllerClass() {
+            return ServiceController.class;
+        }
     }
 }

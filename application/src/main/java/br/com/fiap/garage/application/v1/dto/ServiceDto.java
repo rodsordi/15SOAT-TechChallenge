@@ -1,6 +1,5 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.ServiceController;
 import br.com.fiap.garage.application.v1.def.ServiceDef;
 import br.com.fiap.garage.application.v1.mapper.ServiceDtoMapper;
 import br.com.fiap.garage.domain.entity.Service;
@@ -71,15 +70,16 @@ public final class ServiceDto {
         private String description;
         private BigDecimal cost;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity/Aggregate
-        public static ServiceDto.Representation buildServiceDtoRepresentation(Service customer) {
-            var representation = MAPPER.convertToRepresentation(customer);
-            representation.add(linkTo(ServiceController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(getControllerClass())
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
+        }
+
+        public static ServiceDto.Representation buildServiceDtoRepresentation(Service customer) {
+            return MAPPER.convertToRepresentation(customer);
         }
     }
 }

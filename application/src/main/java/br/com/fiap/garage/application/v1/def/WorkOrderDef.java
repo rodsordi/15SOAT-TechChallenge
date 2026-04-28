@@ -1,13 +1,13 @@
 package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import br.com.fiap.garage.application.v1.controller.WorkOrderController;
 import br.com.fiap.garage.domain.enums.WorkOrderStatus;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
@@ -19,14 +19,14 @@ import java.util.UUID;
  */
 public interface WorkOrderDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
     }
 
     interface Detailed extends Represented {
 
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "819d14e1-ad48-4e60-8192-b15ad37f66a5", description = "Work Order id. Owner: db")
         @NotNull
@@ -40,7 +40,7 @@ public interface WorkOrderDef {
         BigDecimal getTotalAmount();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
     }
 
@@ -66,10 +66,10 @@ public interface WorkOrderDef {
     interface Response extends Detailed, DetailedPersisted {
 
         // Aggregation
-        <T extends VehicleDef.Response> T getVehicle();
+        <T extends VehicleDef.Representation> T getVehicle();
 
         // Aggregation
-        <T extends EmployeeDef.Response> T getEmployee();
+        <T extends EmployeeDef.Representation> T getEmployee();
 
         // Aggregation
         <T extends EstimatedServiceDef.Response> Set<T> getEstimatedServices();
@@ -77,13 +77,18 @@ public interface WorkOrderDef {
 
     interface Representation extends Represented, RepresentedPersisted {
 
-        // Aggregation
-        <T extends VehicleDef.Representation> T getVehicle();
+        default Class<?> getControllerClass() {
+            return WorkOrderController.class;
+        }
+    }
 
-        // Aggregation
-        <T extends EmployeeDef.Representation> T getEmployee();
 
-        // Aggregation
-        <T extends EstimatedServiceDef.Representation> Set<T> getEstimatedServices();
+    interface UpdateRequest {
+
+        WorkOrderStatus getStatus();
+
+        UUID getEmployeeId();
+
+        Set<UUID> getServicesIds();
     }
 }

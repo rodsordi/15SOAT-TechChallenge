@@ -1,6 +1,5 @@
 package br.com.fiap.garage.application.v1.dto;
 
-import br.com.fiap.garage.application.v1.controller.VehicleController;
 import br.com.fiap.garage.application.v1.def.VehicleDef;
 import br.com.fiap.garage.application.v1.mapper.VehicleDtoMapper;
 import br.com.fiap.garage.domain.entity.Vehicle;
@@ -48,7 +47,7 @@ public final class VehicleDto {
         private String model;
         private String licensePlate;
         private Year manufactureYear;
-        private CustomerDto.ResumedRepresentation customer;
+        private CustomerDto.Representation customer;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -69,17 +68,17 @@ public final class VehicleDto {
         private String model;
         private String licensePlate;
         private Year manufactureYear;
-        private CustomerDto.ResumedRepresentation customer;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity/Agragate
-        public static VehicleDto.Representation buildVehicleDtoRepresentation(Vehicle vehicle) {
-            var representation = MAPPER.convertToRepresentation(vehicle);
-            representation.add(linkTo(VehicleController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(getControllerClass())
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
+        }
+
+        public static VehicleDto.Representation buildVehicleDtoRepresentation(Vehicle vehicle) {
+            return MAPPER.convertToRepresentation(vehicle);
         }
     }
 }

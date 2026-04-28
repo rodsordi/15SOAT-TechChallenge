@@ -30,18 +30,4 @@ public final class EstimatedServiceDto {
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
-
-    @Getter(onMethod_ = @Override)
-    @Builder
-    @NoArgsConstructor(access = PRIVATE)
-    @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".EstimatedService.Representation")
-    public static class Representation implements EstimatedServiceDef.Representation {
-        private UUID id;
-        private String name;
-        private BigDecimal cost;
-        private LocalDateTime finishedAt;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
-    }
 }

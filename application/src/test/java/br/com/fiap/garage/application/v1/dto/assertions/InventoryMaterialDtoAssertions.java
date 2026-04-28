@@ -119,12 +119,10 @@ public final class InventoryMaterialDtoAssertions {
             // Inheritance (AuditableEntity)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("13/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
 
             // RepresentationModel
             assertThat(actual.getLinks())
-                    .isNullOrEmpty();
+                    .hasToString("</v1/inventory-materials/9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409>;rel=\"self\"");
 
             // And
             assertThatObject(actual)

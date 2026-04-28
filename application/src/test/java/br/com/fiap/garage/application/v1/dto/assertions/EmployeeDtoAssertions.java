@@ -82,10 +82,8 @@ public final class EmployeeDtoAssertions {
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("13/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("14/12/2026 23:59:59"));
             assertThat(actual.getLinks())
-                    .isNullOrEmpty();
+                    .hasToString("</v1/employees/a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d>;rel=\"self\"");
 
             // And
             assertThatObject(actual)

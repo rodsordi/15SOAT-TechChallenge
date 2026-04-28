@@ -4,6 +4,7 @@ import br.com.fiap.commons.config.RestControllerTestConfig;
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.use_case.WorkOrderCreationUseCase;
 import br.com.fiap.garage.domain.use_case.WorkOrderSearchUseCase;
+import br.com.fiap.garage.domain.use_case.WorkOrderUpdateUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -55,6 +56,9 @@ class WorkOrderControllerTest {
 
     @MockitoBean
     private WorkOrderSearchUseCase workOrderSearchUseCase;
+
+    @MockitoBean
+    private WorkOrderUpdateUseCase workOrderUpdateUseCase;
 
     @DisplayName("When creating WorkOrder")
     @Nested

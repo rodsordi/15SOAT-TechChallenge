@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
 import static org.mapstruct.factory.Mappers.getMapper;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @NoArgsConstructor(access = PRIVATE)
 public final class MaterialDto {
@@ -68,6 +69,5 @@ public final class MaterialDto {
         private String name;
         private BigDecimal cost;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
     }
 }

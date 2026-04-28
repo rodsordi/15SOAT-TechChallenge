@@ -65,15 +65,16 @@ public final class NotificationDto {
         private UUID externalId;
         private EmailDto.Representation email;
         private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
 
-        // Entity
-        public static NotificationDto.Representation buildNotificationDtoRepresentation(Notification workOrder) {
-            var representation = MAPPER.convertToRepresentation(workOrder);
-            representation.add(linkTo(NotificationController.class)
-                    .slash(representation.getId())
+        public UUID getId() {
+            add(linkTo(NotificationController.class)
+                    .slash(id)
                     .withSelfRel());
-            return representation;
+            return id;
+        }
+
+        public static NotificationDto.Representation buildNotificationDtoRepresentation(Notification workOrder) {
+            return MAPPER.convertToRepresentation(workOrder);
         }
     }
 }

@@ -84,17 +84,11 @@ public final class VehicleDtoAssertions {
             assertThat(actual.getManufactureYear())
                     .isEqualTo(Year.parse("2024"));
 
-            // Composition
-            assertThat(actual.getCustomer())
-                    .isNull();
-
             //Inheritance (AuditableTable)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("21/04/2026 10:00:00"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("21/04/2026 15:30:00"));
             assertThat(actual.getLinks())
-                    .isNullOrEmpty();
+                    .hasToString("</v1/vehicles/9f8792ea-cf8f-43d1-824f-9f7bc433e404>;rel=\"self\"");
 
             // And
             assertThatObject(actual)

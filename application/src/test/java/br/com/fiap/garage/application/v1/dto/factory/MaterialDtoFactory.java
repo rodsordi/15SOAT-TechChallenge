@@ -105,7 +105,6 @@ public final class MaterialDtoFactory {
                     .name("Synthetic Engine Oil")
                     .cost(new BigDecimal("45.50"))
                     .createdAt(newDateTime("30/12/2024 23:59:59"))
-                    .updatedAt(newDateTime("31/12/2024 23:59:59"))
                     .build();
             // And
             assertThatObject(result)

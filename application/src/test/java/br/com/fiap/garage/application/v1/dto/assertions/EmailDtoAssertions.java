@@ -73,8 +73,6 @@ public final class EmailDtoAssertions {
             // Inheritance (AuditableEntity context)
             assertThat(actual.getCreatedAt())
                     .isEqualTo(newDateTime("15/12/2026 23:59:59"));
-            assertThat(actual.getUpdatedAt())
-                    .isEqualTo(newDateTime("16/12/2026 23:59:59"));
 
             // And
             assertThatObject(actual)

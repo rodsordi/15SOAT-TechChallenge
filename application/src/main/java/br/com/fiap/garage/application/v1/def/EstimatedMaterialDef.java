@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public interface EstimatedMaterialDef {
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "ba6c3148-53ad-4fec-9e55-4bb17582b4b0", description = "Estimated Material id. Owner: db")
         @NotNull
@@ -36,7 +36,7 @@ public interface EstimatedMaterialDef {
         BigDecimal getCost();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
         @Schema(example = "Synthetic 0W-20", description = "Estimated Material description. Owner: self")
         @Size(max = 255)
@@ -44,10 +44,6 @@ public interface EstimatedMaterialDef {
     }
 
     interface Response extends DetailedPersisted {
-
-    }
-
-    interface Representation extends RepresentedPersisted {
 
     }
 }

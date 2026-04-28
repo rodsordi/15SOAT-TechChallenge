@@ -2,12 +2,12 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.commons.validation.CpfOrCnpj;
+import br.com.fiap.garage.application.v1.controller.CustomerController;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 public interface CustomerDef {
 
-    interface Represented extends Serializable {
+    interface Represented {
 
         @Schema(example = "john.doe", description = "Customer username.")
         @NotBlank
@@ -46,14 +46,14 @@ public interface CustomerDef {
 
     }
 
-    interface RepresentedPersisted extends AuditableDef {
+    interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
         @Schema(example = "36c9df52-01eb-4ffd-a0c1-1494440aedef", description = "Customer id.")
         @NotNull
         UUID getId();
     }
 
-    interface DetailedPersisted extends RepresentedPersisted {
+    interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
 
     }
 
@@ -69,15 +69,13 @@ public interface CustomerDef {
 
     interface Response extends Detailed, DetailedPersisted {
 
-        <T extends VehicleDef.Response> Set<T> getVehicles();
+        <T extends VehicleDef.Representation> Set<T> getVehicles();
     }
 
     interface Representation extends Represented, RepresentedPersisted {
 
-        <T extends VehicleDef.Representation> Set<T> getVehicles();
-    }
-
-    interface ResumedRepresentation extends Represented, RepresentedPersisted {
-
+        default Class<?> getControllerClass() {
+            return CustomerController.class;
+        }
     }
 }
