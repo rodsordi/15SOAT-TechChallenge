@@ -25,7 +25,7 @@ public final class EstimatedMaterialFactory {
     public EstimatedMaterial withAllFields() {
         var result = builder
                 // Self
-                .id(fromString("f47ac10b-58cc-4372-a567-0e02b2c3d479"))
+                .id(1L)
                 .type(SHOP_SUPPLY)
                 .name("Ceramic Brake Pads")
                 .description("High-performance front ceramic brake pads")

@@ -5,6 +5,7 @@ import br.com.fiap.garage.application.v1.swagger.CustomerSwagger;
 import br.com.fiap.garage.domain.filter.CustomerFilter;
 import br.com.fiap.garage.domain.use_case.CustomerCreationUseCase;
 import br.com.fiap.garage.domain.use_case.CustomerSearchUseCase;
+import br.com.fiap.garage.domain.use_case.CustomerUpdateUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,13 +27,15 @@ public class CustomerController implements CustomerSwagger {
 
     private final CustomerSearchUseCase customerSearchUseCase;
 
+    private final CustomerUpdateUseCase customerUpdateUseCase;
+
     @PostMapping(
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
     public CustomerDto.Response create(
-            @Valid
             @RequestBody
+            @Valid
             CustomerDto.Request requestBody) {
         var customer = requestBody.buildCustomer();
         var createdCustomer = customerCreationUseCase.create(customer);
@@ -56,5 +59,19 @@ public class CustomerController implements CustomerSwagger {
                 .map(CustomerDto.Representation::buildCustomerDtoRepresentation)
                 .toList();
         return new PageImpl<>(responseBody, filter.buildPageRequest(), responseBody.size());
+    }
+
+    @PatchMapping(path = "/{customerId}",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public CustomerDto.Response update(
+            @PathVariable("customerId")
+            UUID customerId,
+            @RequestBody
+            @Valid
+            CustomerDto.PatchRequest requestBody) {
+        var customer = requestBody.buildCustomer();
+        var updatedCustomer = customerUpdateUseCase.update(customerId, customer);
+        return buildCustomerDtoResponse(updatedCustomer);
     }
 }

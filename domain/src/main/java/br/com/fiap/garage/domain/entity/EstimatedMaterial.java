@@ -10,10 +10,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
-import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static jakarta.persistence.InheritanceType.JOINED;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -27,9 +26,9 @@ import static lombok.AccessLevel.PROTECTED;
 public class EstimatedMaterial extends AuditableEntity implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(comment = "Estimated Material id. Owner: db")
-    private UUID id;
+    private Long id;
 
     @Enumerated(STRING)
     @Column(nullable = false, length = 55, comment = "Estimated Material type. Owner: self")

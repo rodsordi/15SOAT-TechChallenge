@@ -1,6 +1,7 @@
 package br.com.fiap.garage.domain.entity;
 
 import br.com.fiap.commons.entity.AuditableEntity;
+import br.com.fiap.commons.exception.BusinessException;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 import static jakarta.persistence.CascadeType.ALL;
+import static java.lang.String.format;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -39,4 +41,55 @@ public class InventoryMaterial extends AuditableEntity implements Serializable {
     @JoinColumn(name = "id")
     @MapsId
     private Material material;
+
+    public void update(InventoryMaterial inventoryMaterial) {
+        if (inventoryMaterial == null)
+            return;
+
+        if (inventoryMaterial.quantityInStock != null)
+            this.quantityInStock = inventoryMaterial.quantityInStock;
+
+        if (inventoryMaterial.material != null)
+            update(inventoryMaterial.material);
+    }
+
+    private void update(Material material) {
+        if (material != null)
+            this.material.update(material);
+    }
+
+    public void addQuantityToStock(Integer quantityToBeAddedToStock) {
+        quantityInStock += quantityToBeAddedToStock;
+    }
+
+    public void reserveQuantity(int quantityToBeReserved) {
+        if (quantityToBeReserved <= 0)
+            throw new BusinessException("You are trying to reserve an empty or negative quantity.");
+
+        if (this.reservedQuantity + quantityToBeReserved > quantityInStock)
+            throw new BusinessException(format("Cannot reserve %s quantity of %s material, because there are only %s quantity in stock.",
+                    quantityToBeReserved,
+                    material.getName(),
+                    quantityInStock));
+
+        this.reservedQuantity += quantityToBeReserved;
+    }
+
+    public void concludeReservedQuantity(int reservedQuantityToBeConcluded) {
+        if (reservedQuantityToBeConcluded <= 0)
+            throw new BusinessException("You are trying to conclude an empty or negative reserved quantity.");
+
+        if (reservedQuantityToBeConcluded > this.reservedQuantity)
+            throw new BusinessException(format("You are trying to conclude %s quantity, that is bigger then the current reserved quantity: %s.",
+                    reservedQuantityToBeConcluded,
+                    this.reservedQuantity));
+
+        if (reservedQuantityToBeConcluded > this.quantityInStock)
+            throw new BusinessException(format("You are trying to conclude %s quantity, that is bigger then the current stock quantity: %s.",
+                    reservedQuantityToBeConcluded,
+                    this.quantityInStock));
+
+        this.reservedQuantity -= reservedQuantityToBeConcluded;
+        this.quantityInStock -= reservedQuantityToBeConcluded;
+    }
 }

@@ -80,4 +80,18 @@ public final class EmployeeDto {
             return MAPPER.convertToRepresentation(customer);
         }
     }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".Employee.UpdateRequest")
+    public static class PatchRequest implements EmployeeDef.PatchRequest {
+        private String name;
+        private String email;
+
+        public Employee buildEmployee() {
+            return MAPPER.convert(this);
+        }
+    }
 }

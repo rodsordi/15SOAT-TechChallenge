@@ -78,4 +78,15 @@ public interface CustomerDef {
             return CustomerController.class;
         }
     }
+
+    interface PatchRequest {
+
+        @Schema(example = "John Doe", description = "Customer password.")
+        @Size(max = 255)
+        String getName();
+
+        @Schema(example = "john.doe@email.com", description = "Customer e-mail.")
+        @Size(max = 255)
+        String getEmail();
+    }
 }

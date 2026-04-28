@@ -16,7 +16,7 @@ public class NotificationCreationUseCase {
     private String garageManagementEmailRecipient;
 
     public Notification create(Notification notification) {
-        notification.updateEmailBcc(garageManagementEmailRecipient);
+        notification.initEmailBcc(garageManagementEmailRecipient);
         return repository.save(notification);
     }
 }

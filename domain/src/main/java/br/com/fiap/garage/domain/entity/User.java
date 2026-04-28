@@ -56,6 +56,23 @@ public class User extends AuditableEntity implements UserDetails {
     @OrderBy("createdAt desc")
     private Set<Authority> authorities;
 
+    public void update(User user) {
+        if (user == null)
+            return;
+
+        if (user.name != null)
+            this.name = user.name;
+
+        if (user.email != null) {
+            this.email = user.email;
+            this.username = user.email;
+        }
+    }
+
+    public void updatePassword(String password, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
+
     public void encodePassword(PasswordEncoder passwordEncoder) {
         password = passwordEncoder.encode(password);
     }

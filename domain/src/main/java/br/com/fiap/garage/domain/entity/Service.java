@@ -50,11 +50,28 @@ public class Service extends AuditableEntity implements Serializable {
     @OrderBy("createdAt desc")
     private Set<Material> materials;
 
+    public void update(Service service) {
+        if (service == null)
+            return;
+
+        if (service.name != null)
+            this.name = service.name;
+
+        if (service.description != null)
+            this.description = service.description;
+
+        if (service.cost != null)
+            this.cost = service.cost;
+
+        if (service.materials != null)
+            this.materials = service.materials;
+    }
+
     public EstimatedService buildEstimatedService() {
         return MAPPER.convert(this);
     }
 
-    public void updateReferences(Set<Material> materials) {
+    public void updateMaterialsReference(Set<Material> materials) {
         this.materials = materials;
     }
 }

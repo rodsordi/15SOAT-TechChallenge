@@ -82,4 +82,21 @@ public final class ServiceDto {
             return MAPPER.convertToRepresentation(customer);
         }
     }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".Service.PutRequest")
+    public static class PutRequest implements ServiceDef.PutRequest {
+        private String name;
+        private String description;
+        private BigDecimal cost;
+        @Singular(value = "materialId", ignoreNullCollections = true)
+        private Set<UUID> materialsIds;
+
+        public Service buildService() {
+            return MAPPER.convert(this);
+        }
+    }
 }

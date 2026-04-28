@@ -40,4 +40,21 @@ public class Material extends AuditableEntity implements Serializable {
 
     @Column(nullable = false, comment = "Material cost. Owner: self")
     private BigDecimal cost;
+
+    public void update(Material material) {
+        if (material == null)
+            return;
+
+        if (material.type != null)
+            this.type = material.type;
+
+        if (material.name != null)
+            this.name = material.name;
+
+        if (material.description != null)
+            this.description = material.description;
+
+        if (material.cost != null)
+            this.cost = material.cost;
+    }
 }

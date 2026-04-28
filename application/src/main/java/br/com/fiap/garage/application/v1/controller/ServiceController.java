@@ -5,6 +5,7 @@ import br.com.fiap.garage.application.v1.swagger.ServiceSwagger;
 import br.com.fiap.garage.domain.filter.ServiceFilter;
 import br.com.fiap.garage.domain.use_case.ServiceCreationUseCase;
 import br.com.fiap.garage.domain.use_case.ServiceSearchUseCase;
+import br.com.fiap.garage.domain.use_case.ServiceUpdateUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +26,8 @@ public class ServiceController implements ServiceSwagger {
     private final ServiceCreationUseCase serviceCreationUseCase;
 
     private final ServiceSearchUseCase serviceSearchUseCase;
+
+    private final ServiceUpdateUseCase serviceUpdateUseCase;
 
     @PostMapping(
             consumes = APPLICATION_JSON_VALUE,
@@ -56,5 +59,19 @@ public class ServiceController implements ServiceSwagger {
                 .map(ServiceDto.Representation::buildServiceDtoRepresentation)
                 .toList();
         return new PageImpl<>(responseBody, filter.buildPageRequest(), responseBody.size());
+    }
+
+    @PutMapping(path = "/{serviceId}",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public ServiceDto.Response update(
+            @PathVariable("serviceId")
+            UUID serviceId,
+            @RequestBody
+            @Valid
+            ServiceDto.PutRequest requestBody) {
+        var service = requestBody.buildService();
+        var updatedService = serviceUpdateUseCase.update(serviceId, requestBody.getMaterialsIds(), service);
+        return buildServiceDtoResponse(updatedService);
     }
 }

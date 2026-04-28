@@ -5,6 +5,7 @@ import br.com.fiap.garage.application.v1.swagger.EmployeeSwagger;
 import br.com.fiap.garage.domain.filter.EmployeeFilter;
 import br.com.fiap.garage.domain.use_case.EmployeeCreationUseCase;
 import br.com.fiap.garage.domain.use_case.EmployeeSearchUseCase;
+import br.com.fiap.garage.domain.use_case.EmployeeUpdateUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,9 +23,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping(path = "/v1/employees")
 public class EmployeeController implements EmployeeSwagger {
 
-    private final EmployeeCreationUseCase customerCreationUseCase;
+    private final EmployeeCreationUseCase employeeCreationUseCase;
 
-    private final EmployeeSearchUseCase customerSearchUseCase;
+    private final EmployeeSearchUseCase employeeSearchUseCase;
+
+    private final EmployeeUpdateUseCase employeeUpdateUseCase;
 
     @PostMapping(
             consumes = APPLICATION_JSON_VALUE,
@@ -34,27 +37,41 @@ public class EmployeeController implements EmployeeSwagger {
             @Valid
             @RequestBody
             EmployeeDto.Request requestBody) {
-        var customer = requestBody.buildEmployee();
-        var createdEmployee = customerCreationUseCase.create(customer);
+        var employee = requestBody.buildEmployee();
+        var createdEmployee = employeeCreationUseCase.create(employee);
         return buildEmployeeDtoResponse(createdEmployee);
     }
 
-    @GetMapping(path = "/{customerId}",
+    @GetMapping(path = "/{employeeId}",
             produces = APPLICATION_JSON_VALUE)
     public EmployeeDto.Response findById(
-            @PathVariable("customerId")
-            UUID customerId) {
-        var foundEmployee = customerSearchUseCase.findById(customerId);
+            @PathVariable("employeeId")
+            UUID employeeId) {
+        var foundEmployee = employeeSearchUseCase.findById(employeeId);
         return buildEmployeeDtoResponse(foundEmployee);
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public Page<EmployeeDto.Representation> findAll(
             EmployeeFilter filter) {
-        var foundEmployees = customerSearchUseCase.findAll(filter);
+        var foundEmployees = employeeSearchUseCase.findAll(filter);
         var responseBody = foundEmployees.stream()
                 .map(EmployeeDto.Representation::buildEmployeeDtoRepresentation)
                 .toList();
         return new PageImpl<>(responseBody, filter.buildPageRequest(), responseBody.size());
+    }
+
+    @PatchMapping(path = "/{employeeId}",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public EmployeeDto.Response update(
+            @PathVariable("employeeId")
+            UUID employeeId,
+            @RequestBody
+            @Valid
+            EmployeeDto.PatchRequest requestBody) {
+        var employee = requestBody.buildEmployee();
+        var updatedEmployee = employeeUpdateUseCase.update(employeeId, employee);
+        return buildEmployeeDtoResponse(updatedEmployee);
     }
 }

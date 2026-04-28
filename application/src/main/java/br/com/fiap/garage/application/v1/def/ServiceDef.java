@@ -2,7 +2,6 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.controller.ServiceController;
-import br.com.fiap.garage.application.v1.dto.MaterialDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -52,12 +51,13 @@ public interface ServiceDef {
 
     interface Request extends Detailed {
 
+        @Schema(example = "[1723546e-37e4-4692-863c-9d00be8aae1b]", description = "Materials ids. Owner: db")
         Set<UUID> getMaterialsIds();
     }
 
     interface Response extends Detailed, DetailedPersisted {
 
-        <T extends MaterialDto.Representation> Set<T> getMaterials();
+        <T extends MaterialDef.Representation> Set<T> getMaterials();
     }
 
     interface Representation extends Represented, RepresentedPersisted {
@@ -65,5 +65,9 @@ public interface ServiceDef {
         default Class<?> getControllerClass() {
             return ServiceController.class;
         }
+    }
+
+    interface PutRequest extends Request {
+
     }
 }

@@ -85,4 +85,18 @@ public final class CustomerDto {
             return MAPPER.convertToRepresentation(customer);
         }
     }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".Customer.UpdateRequest")
+    public static class PatchRequest implements CustomerDef.PatchRequest {
+        private String name;
+        private String email;
+
+        public Customer buildCustomer() {
+            return MAPPER.convert(this);
+        }
+    }
 }

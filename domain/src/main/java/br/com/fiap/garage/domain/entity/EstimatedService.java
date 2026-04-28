@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
-import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -26,9 +26,9 @@ import static lombok.AccessLevel.PROTECTED;
 public class EstimatedService extends AuditableEntity implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     @Column(comment = "Estimated Service id. Owner: db")
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false, comment = "Estimated Service name. Owner: self")
     private String name;

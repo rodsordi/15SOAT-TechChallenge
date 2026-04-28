@@ -7,7 +7,6 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -20,7 +19,6 @@ public final class EstimatedServiceDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".EstimatedService.Response")
     public static class Response implements EstimatedServiceDef.Response {
-        private UUID id;
         private String name;
         private String description;
         private BigDecimal cost;

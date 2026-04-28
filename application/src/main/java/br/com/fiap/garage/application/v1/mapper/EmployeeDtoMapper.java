@@ -14,6 +14,8 @@ public interface EmployeeDtoMapper extends CpfMap {
     @Mapping(target = "cpf", qualifiedByName = "unformattedCpf")
     Employee convert(EmployeeDto.Request source);
 
+    Employee convert(EmployeeDto.PatchRequest source);
+
     @Mapping(target = "cpf", qualifiedByName = "formattedCpf")
     EmployeeDto.Response convert(Employee source);
 

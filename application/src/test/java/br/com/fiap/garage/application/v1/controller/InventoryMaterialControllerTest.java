@@ -3,6 +3,7 @@ package br.com.fiap.garage.application.v1.controller;
 import br.com.fiap.commons.config.RestControllerTestConfig;
 import br.com.fiap.garage.domain.use_case.InventoryMaterialCreationUseCase;
 import br.com.fiap.garage.domain.use_case.InventoryMaterialSearchUseCase;
+import br.com.fiap.garage.domain.use_case.InventoryMaterialUpdateUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,6 +46,9 @@ class InventoryMaterialControllerTest {
 
     @MockitoBean
     private InventoryMaterialCreationUseCase inventoryMaterialCreationUseCase;
+
+    @MockitoBean
+    private InventoryMaterialUpdateUseCase inventoryMaterialUpdateUseCase;
 
     @DisplayName("When finding all inventory materials")
     @Nested

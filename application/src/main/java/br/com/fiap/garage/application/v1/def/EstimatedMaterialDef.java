@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 /**
  * | dto            | Request     | Response             |
@@ -18,10 +17,6 @@ import java.util.UUID;
 public interface EstimatedMaterialDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
-
-        @Schema(example = "ba6c3148-53ad-4fec-9e55-4bb17582b4b0", description = "Estimated Material id. Owner: db")
-        @NotNull
-        UUID getId();
 
         @NotNull
         MaterialType getType();

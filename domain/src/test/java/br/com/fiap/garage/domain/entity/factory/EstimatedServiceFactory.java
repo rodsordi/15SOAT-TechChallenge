@@ -27,7 +27,7 @@ public final class EstimatedServiceFactory {
     public EstimatedService withAllFields() {
         var result = builder
                 // Self
-                .id(fromString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409"))
+                .id(2L)
                 .name("Engine Overhaul")
                 .description("Complete disassembly and rebuilding of the engine block.")
                 .cost(new BigDecimal("4500.00"))

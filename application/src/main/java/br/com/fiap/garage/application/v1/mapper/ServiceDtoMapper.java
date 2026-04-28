@@ -11,6 +11,8 @@ public interface ServiceDtoMapper {
 
     Service convert(ServiceDto.Request source);
 
+    Service convert(ServiceDto.PutRequest source);
+
     ServiceDto.Response convert(Service source);
 
     ServiceDto.Representation convertToRepresentation(Service source);

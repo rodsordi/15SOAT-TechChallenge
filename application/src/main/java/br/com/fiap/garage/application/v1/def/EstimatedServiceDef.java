@@ -10,7 +10,6 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
@@ -22,10 +21,6 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 public interface EstimatedServiceDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
-
-        @Schema(example = "63d85e5d-64b7-44a4-931a-270493cc0eb7", description = "Estimated Service id. Owner: db")
-        @NotNull
-        UUID getId();
 
         @Schema(example = "Oil Change", description = "Estimated Service name. Owner: self")
         @NotBlank

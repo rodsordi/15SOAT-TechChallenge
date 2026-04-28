@@ -4,6 +4,7 @@ import br.com.fiap.commons.config.RestControllerTestConfig;
 import br.com.fiap.garage.domain.entity.Customer;
 import br.com.fiap.garage.domain.use_case.CustomerCreationUseCase;
 import br.com.fiap.garage.domain.use_case.CustomerSearchUseCase;
+import br.com.fiap.garage.domain.use_case.CustomerUpdateUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -55,6 +56,9 @@ class CustomerControllerTest {
 
     @MockitoBean
     private CustomerSearchUseCase customerSearchUseCase;
+
+    @MockitoBean
+    private CustomerUpdateUseCase customerUpdateUseCase;
 
     @DisplayName("When creating Customer")
     @Nested

@@ -73,4 +73,15 @@ public interface EmployeeDef {
             return EmployeeController.class;
         }
     }
+
+    interface PatchRequest {
+
+        @Schema(example = "Jack Doe", description = "Employee password.")
+        @Size(max = 255)
+        String getName();
+
+        @Schema(example = "jack.doe@email.com", description = "Employee e-mail.")
+        @Size(max = 255)
+        String getEmail();
+    }
 }

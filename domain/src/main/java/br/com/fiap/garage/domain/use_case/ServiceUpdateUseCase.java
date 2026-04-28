@@ -13,16 +13,19 @@ import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 @RequiredArgsConstructor
-public class ServiceCreationUseCase {
+public class ServiceUpdateUseCase {
 
     private final ServiceRepository serviceRepository;
 
     private final MaterialRepository materialRepository;
 
-    public Service create(Service service, Set<UUID> materialsIds) {
+    public Service update(UUID id, Set<UUID> materialsIds, Service service) {
+        var foundService = serviceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(Service.class, "id", id));
         var materials = loadMaterials(materialsIds);
         service.updateMaterialsReference(materials);
-        return serviceRepository.save(service);
+        foundService.update(service);
+        return serviceRepository.save(foundService);
     }
 
     private Set<Material> loadMaterials(Set<UUID> materialsIds) {

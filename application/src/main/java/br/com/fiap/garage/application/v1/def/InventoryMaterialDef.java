@@ -58,4 +58,20 @@ public interface InventoryMaterialDef {
             return InventoryMaterialController.class;
         }
     }
+
+    interface PutRequest extends Request {
+
+    }
+
+    interface PatchRequest {
+
+        @Schema(example = "100", description = "Inventory quantity to be added to stock. Owner: self")
+        Integer getQuantityToBeAddedToStock();
+
+        @Schema(example = "1", description = "Inventory quantity to be reserved. Owner: self")
+        Integer getQuantityToBeReserved();
+
+        @Schema(example = "1", description = "Inventory reserved quantity to be concluded. Owner: self")
+        Integer getReservedQuantityToBeConcluded();
+    }
 }

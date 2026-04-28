@@ -2,9 +2,11 @@ package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.garage.application.v1.dto.InventoryMaterialDto;
 import br.com.fiap.garage.application.v1.swagger.InventoryMaterialSwagger;
+import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import br.com.fiap.garage.domain.filter.InventoryMaterialFilter;
 import br.com.fiap.garage.domain.use_case.InventoryMaterialCreationUseCase;
 import br.com.fiap.garage.domain.use_case.InventoryMaterialSearchUseCase;
+import br.com.fiap.garage.domain.use_case.InventoryMaterialUpdateUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,8 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
     private final InventoryMaterialSearchUseCase inventoryMaterialSearchUseCase;
 
     private final InventoryMaterialCreationUseCase inventoryMaterialCreationUseCase;
+
+    private final InventoryMaterialUpdateUseCase inventoryMaterialUpdateUseCase;
 
     @PostMapping(
             consumes = APPLICATION_JSON_VALUE,
@@ -56,5 +60,45 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
                 .map(InventoryMaterialDto.Representation::buildInventoryDtoRepresentation)
                 .toList();
         return new PageImpl<>(responseBody, filter.buildPageRequest(), responseBody.size());
+    }
+
+    @PutMapping(path = "/{inventoryMaterialId}",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public InventoryMaterialDto.Response update(
+            @PathVariable("inventoryMaterialId")
+            UUID inventoryMaterialId,
+            @RequestBody
+            @Valid
+            InventoryMaterialDto.PutRequest requestBody) {
+        var inventoryMaterial = requestBody.buildInventoryMaterial();
+        var updatedInventoryMaterial = inventoryMaterialUpdateUseCase.update(inventoryMaterialId, inventoryMaterial);
+        return buildInventoryMaterialDtoResponse(updatedInventoryMaterial);
+    }
+
+    @PatchMapping(path = "/{inventoryMaterialId}",
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public InventoryMaterialDto.Response update(
+            @PathVariable("inventoryMaterialId")
+            UUID inventoryMaterialId,
+            @RequestBody
+            @Valid
+            InventoryMaterialDto.PatchRequest requestBody) {
+        InventoryMaterial updatedInventoryMaterial = null;
+
+        if (requestBody.getQuantityToBeAddedToStock() != null)
+            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addQuantityToStock(inventoryMaterialId, requestBody.getQuantityToBeAddedToStock());
+
+        if (requestBody.getQuantityToBeReserved() != null)
+            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addReserveQuantity(inventoryMaterialId, requestBody.getQuantityToBeReserved());
+
+        if (requestBody.getReservedQuantityToBeConcluded() != null)
+            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addReserveQuantity(inventoryMaterialId, requestBody.getReservedQuantityToBeConcluded());
+
+        if (updatedInventoryMaterial == null)
+            inventoryMaterialSearchUseCase.findById(inventoryMaterialId);
+
+        return buildInventoryMaterialDtoResponse(updatedInventoryMaterial);
     }
 }

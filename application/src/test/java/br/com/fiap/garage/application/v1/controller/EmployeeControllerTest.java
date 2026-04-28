@@ -4,6 +4,7 @@ import br.com.fiap.commons.config.RestControllerTestConfig;
 import br.com.fiap.garage.domain.entity.Employee;
 import br.com.fiap.garage.domain.use_case.EmployeeCreationUseCase;
 import br.com.fiap.garage.domain.use_case.EmployeeSearchUseCase;
+import br.com.fiap.garage.domain.use_case.EmployeeUpdateUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,6 +57,9 @@ class EmployeeControllerTest {
 
     @MockitoBean
     private EmployeeSearchUseCase employeeSearchUseCase;
+
+    @MockitoBean
+    private EmployeeUpdateUseCase employeeUpdateUseCase;
 
     @DisplayName("When creating Employee")
     @Nested

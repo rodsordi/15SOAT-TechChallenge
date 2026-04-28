@@ -13,6 +13,10 @@ public interface InventoryMaterialDtoMapper {
 
     InventoryMaterial convert(InventoryMaterialDto.Request source);
 
+    InventoryMaterial convert(InventoryMaterialDto.PutRequest source);
+
+    InventoryMaterial convert(InventoryMaterialDto.PatchRequest source);
+
     InventoryMaterialDto.Response convert(InventoryMaterial source);
 
     InventoryMaterialDto.Representation convertToRepresentation(InventoryMaterial source);

@@ -14,6 +14,8 @@ public interface CustomerDtoMapper extends DocumentMap {
     @Mapping(target = "document", qualifiedByName = "unformattedDocument")
     Customer convert(CustomerDto.Request source);
 
+    Customer convert(CustomerDto.PatchRequest source);
+
     @Mapping(target = "document", qualifiedByName = "formattedDocument")
     CustomerDto.Response convert(Customer source);
 

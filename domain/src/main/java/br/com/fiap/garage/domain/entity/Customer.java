@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 import java.util.Set;
 
-import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter

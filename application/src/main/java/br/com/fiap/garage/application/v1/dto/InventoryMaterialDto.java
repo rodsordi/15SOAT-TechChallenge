@@ -75,4 +75,29 @@ public final class InventoryMaterialDto {
             return MAPPER.convertToRepresentation(inventoryMaterial);
         }
     }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".InventoryMaterial.PutRequest")
+    public static class PutRequest implements InventoryMaterialDef.PutRequest {
+        private Integer quantityInStock;
+        private MaterialDto.Request material;
+
+        public InventoryMaterial buildInventoryMaterial() {
+            return MAPPER.convert(this);
+        }
+    }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".InventoryMaterial.PatchRequest")
+    public static class PatchRequest implements InventoryMaterialDef.PatchRequest {
+        private Integer quantityToBeAddedToStock;
+        private Integer quantityToBeReserved;
+        private Integer reservedQuantityToBeConcluded;
+    }
 }
