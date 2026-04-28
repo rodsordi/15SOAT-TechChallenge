@@ -3,6 +3,7 @@ package br.com.fiap.garage;
 import br.com.fiap.commons.iandt.setup.LocalStackSetup;
 import br.com.fiap.commons.iandt.setup.PostgresSetup;
 import io.restassured.RestAssured;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.core.env.Profiles.of;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
+@Slf4j
 public abstract class GarageIntegrationTest implements PostgresSetup, LocalStackSetup {
 
     @Autowired
@@ -42,12 +44,10 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
         RestAssured.baseURI = format("http://localhost:%s/api", port);
 
         if (env.acceptsProfiles(of("int_test"))) {
-            for (var i = repositories.size() - 1; i >= 0; i--)
-                System.out.println("Repository: " + repositories.get(i).getClass().getGenericInterfaces()[0]);
-
+            log.info("Deleting all test data");
             for (var i = repositories.size() - 1; i >= 0; i--) {
                 var repository = repositories.get(i);
-                System.out.println("Deleting all: " + repository.getClass().getGenericInterfaces()[0]);
+//                System.out.println("Deleting all: " + repository.getClass().getGenericInterfaces()[0]);
                 repository.deleteAll();
             }
         }

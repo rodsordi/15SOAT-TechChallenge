@@ -123,10 +123,6 @@ public final class MaterialDtoAssertions {
             assertThat(actual.getUpdatedAt())
                     .isEqualTo(newDateTime("14/12/2026 23:59:59"));
 
-            // RepresentationModel
-            assertThat(actual.getLinks())
-                    .isNullOrEmpty();
-
             // And
             assertThatObject(actual)
                     .hasAllGetMethodsVerifiedOnceAtLeast();

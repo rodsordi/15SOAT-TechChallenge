@@ -15,7 +15,6 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class MaterialDtoFactory {
 
-    // --- REQUEST ---
     public static Request create_MaterialDto_Request() {
         return new Request(MaterialDto.Request.builder());
     }
@@ -27,13 +26,11 @@ public final class MaterialDtoFactory {
 
         public MaterialDto.Request withAllFields() {
             var result = builder
-                    // Self
                     .type(SHOP_SUPPLY)
                     .name("Synthetic Engine Oil")
                     .description("Oil 5W-30")
                     .cost(new BigDecimal("85.50"))
                     .build();
-
             // And
             assertThatObject(result)
                     .hasNoEmptyFields();
@@ -54,7 +51,6 @@ public final class MaterialDtoFactory {
         }
     }
 
-    // --- RESPONSE ---
     public static Response create_MaterialDto_Response() {
         return new Response(MaterialDto.Response.builder());
     }
@@ -66,17 +62,14 @@ public final class MaterialDtoFactory {
 
         public MaterialDto.Response withAllFields() {
             var result = builder
-                    // Self
                     .id(fromString("4f5f9b7c-bd7c-4f5f-a747-0b1f63aac409"))
                     .type(MaterialType.values()[0])
                     .name("Synthetic Engine Oil")
                     .description("High-performance 5W-30 synthetic oil")
                     .cost(new BigDecimal("45.50"))
-                    // Auditable
                     .createdAt(newDateTime("30/12/2024 23:59:59"))
                     .updatedAt(newDateTime("31/12/2024 23:59:59"))
                     .build();
-
             // And
             assertThatObject(result)
                     .hasNoEmptyFields();
@@ -96,7 +89,6 @@ public final class MaterialDtoFactory {
         }
     }
 
-    // --- REPRESENTATION ---
     public static Representation create_MaterialDto_Representation() {
         return new Representation(MaterialDto.Representation.builder());
     }
@@ -108,16 +100,13 @@ public final class MaterialDtoFactory {
 
         public MaterialDto.Representation withAllFields() {
             var result = builder
-                    // Self
                     .id(fromString("4f5f9b7c-bd7c-4f5f-a747-0b1f63aac409"))
                     .type(MaterialType.values()[0])
                     .name("Synthetic Engine Oil")
                     .cost(new BigDecimal("45.50"))
-                    // Auditable
                     .createdAt(newDateTime("30/12/2024 23:59:59"))
                     .updatedAt(newDateTime("31/12/2024 23:59:59"))
                     .build();
-
             // And
             assertThatObject(result)
                     .hasNoEmptyFields();

@@ -1,0 +1,52 @@
+package br.com.fiap.garage.infra.def;
+
+import br.com.fiap.commons.def.AuditableDef;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
+
+import java.io.Serializable;
+import java.util.UUID;
+
+/**
+ * | dto            | Request     | Response             |
+ * | Representation | Represented | RepresentedPersisted |
+ * | Detailed       | Detailed    | DetailedPersisted    |
+ */
+public interface NotificationDef {
+
+    interface Represented extends Serializable {
+    }
+
+    interface Detailed extends Represented {
+
+    }
+
+    interface RepresentedPersisted extends AuditableDef {
+
+        @Schema(example = "b9a16f67-e44e-4d55-90fa-0cc92b80049e", description = "Notification id. Owner: db")
+        @NotNull
+        UUID getId();
+    }
+
+    interface DetailedPersisted extends RepresentedPersisted {
+
+    }
+
+    interface Request extends Detailed {
+
+        // Value Object
+        <T extends EmailDef.Request> T getEmail();
+    }
+
+    interface Response extends Detailed, DetailedPersisted {
+
+        // Value Object
+        <T extends EmailDef.Response> T getEmail();
+    }
+
+    interface Representation extends Represented, RepresentedPersisted {
+
+        // Value Object
+        <T extends EmailDef.Representation> T getEmail();
+    }
+}

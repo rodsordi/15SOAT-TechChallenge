@@ -1,6 +1,6 @@
 package br.com.fiap.commons.security;
 
-import br.com.fiap.commons.exception.NotFoundException;
+import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.User;
 import br.com.fiap.garage.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,6 @@ public class LoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByEmail(username)
-                .orElseThrow(() -> new NotFoundException(User.class));
+                .orElseThrow(() -> new ResourceNotFoundException(User.class));
     }
 }

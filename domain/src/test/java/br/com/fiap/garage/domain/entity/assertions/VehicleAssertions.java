@@ -20,6 +20,10 @@ public final class VehicleAssertions {
         return new VehicleAssertions(spy(actual));
     }
 
+
+    public void isEqualTo_Vehicle() {
+    }
+
     /**
      * @see br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory
      * .withAllFields()

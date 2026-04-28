@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.use_case;
 
-import br.com.fiap.commons.exception.NotFoundException;
+import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.Service;
 import br.com.fiap.garage.domain.filter.ServiceFilter;
 import br.com.fiap.garage.domain.repository.ServiceRepository;
@@ -17,7 +17,7 @@ public class ServiceSearchUseCase {
 
     public Service findById(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(Service.class, "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(Service.class, "id", id));
     }
 
     public Page<Service> findAll(ServiceFilter filter) {

@@ -86,10 +86,6 @@ public final class EstimatedMaterialDtoAssertions {
             assertThat(actual.getUpdatedAt())
                     .isEqualTo(newDateTime("25/04/2026 18:30:00"));
 
-            // HATEOAS
-            assertThat(actual.getLinks())
-                    .isNullOrEmpty();
-
             // And
             assertThatObject(actual)
                     .hasAllGetMethodsVerifiedOnceAtLeast();

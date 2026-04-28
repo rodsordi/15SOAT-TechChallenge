@@ -52,72 +52,89 @@ public abstract class AuditableEntity implements Serializable {
 ## Example: Expected Output Style
 
 ```java
-package br.com.fiap.chargeback.domain.entity.credit.assertions;
+package br.com.fiap.garage.domain.entity.assertions;
 
-import br.com.fiap.chargeback.domain.entity.credit.CreditAuthorizationSingleMessage;
-import br.com.fiap.chargeback.domain.entity.credit.CreditClearingSingleMessage;
-import br.com.fiap.chargeback.domain.entity.credit.CreditTransaction;
-import br.com.fiap.chargeback.domain.entity.credit.factory.CreditTransactionFactory;
-import br.com.fiap.commons.util.DateUtil;
+import br.com.fiap.garage.domain.entity.WorkOrder;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigDecimal;
-
-import static br.com.fiap.chargeback.domain.entity.credit.assertions.AuthorizationAssertions.assertThatAuthorization;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.assertions.EmployeeAssertions.assertThat_Employee;
+import static br.com.fiap.garage.domain.entity.assertions.EstimatedServiceAssertions.assertThat_EstimatedService;
+import static br.com.fiap.garage.domain.entity.assertions.VehicleAssertions.assertThat_Vehicle;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class CreditTransactionAssertions {
+public final class WorkOrderAssertions {
 
-    private final CreditTransaction actual;
+    private final WorkOrder actual;
 
-    public static TransactionAssertions assertThat_CreditTransaction(CreditTransaction actual) {
+    public static WorkOrderAssertions assertThat_WorkOrder(WorkOrder actual) {
         assertThat(actual).isNotNull();
-        return new TransactionAssertions(spy(actual));
+        return new WorkOrderAssertions(spy(actual));
     }
 
     /**
-     * @see CreditTransactionFactory
+     * @see br.com.fiap.garage.domain.entity.factory.WorkOrderFactory
      * .withAllFields()
      */
-    public void isEqualTo_Transaction() {
-        // Inheritance (Transaction)
-        assertThat(actual.getTransactionId())
-                .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
-
+    public void isEqualTo_WorkOrder() {
         // Self
-        assertThat(actual.getCorrelationId())
-                .isEqualTo("correlation-id-xpto-123");
-        assertThat(actual.getArn())
-                .isEqualTo("arn123xpto");
-        assertThat(actual.getAmount())
-                .isEqualTo(new BigDecimal("50.00"));
-        assertThat(actual.getDateTime())
-                .isEqualTo(newDateTime("31/12/2025 23:59:59"));
-        assertThat(actual.getIsSingleMessage())
-                .isFalse();
-        assertThat(actual.getExternalTransactionId())
-                .isEqualTo("abc123");
-        assertThat(actual.getAuthorizationSummaryCount())
-                .isEqualTo("1");
-        assertThat(actual.getMessage())
-                .isEqualTo("Message-123");
+        assertThat(actual.getId())
+                .hasToString("fdbbe77f-1386-4b03-9612-2de63ad4daed");
+        assertThat(actual.getStatus())
+                .isEqualTo(RECEIVED);
+        assertThat(actual.getTotalAmount())
+                .isNull();
 
         // Composition
-        assertThatAuthorization(actual.getAuthorizations().stream().findFirst().orElseThrow())
-                .isEqualTo_Authorization();
-        assertThat(actual.getAuthorizationSingleMessage())
-                .isNotNull();
+        assertThat_Vehicle(actual.getVehicle())
+                .isEqualTo_Vehicle();
+        assertThat_Employee(actual.getEmployee())
+                .isEqualTo_Employee();
+        assertThat_EstimatedService(actual.getEstimatedServices().stream().findFirst().orElseThrow())
+                .isEqualTo_EstimatedService();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())
-                .isEqualTo(newDateTime("30/12/2024 23:59:59"));
+                .isEqualTo(newDateTime("13/12/2026 23:59:59"));
         assertThat(actual.getUpdatedAt())
-                .isEqualTo(newDateTime("31/12/2024 23:59:59"));
+                .isEqualTo(newDateTime("14/12/2026 23:59:59"));
+
+        // And
+        assertThatObject(actual)
+                .hasAllGetMethodsVerifiedOnceAtLeast();
+    }
+
+    /**
+     * @see br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory
+     * .withAllFields()
+     */
+    public void wasConvertedFrom_WorkOrderDto_Request() {
+        // Self
+        assertThat(actual.getId())
+                .isNull();
+        assertThat(actual.getStatus())
+                .isEqualTo(RECEIVED);
+        assertThat(actual.getTotalAmount())
+                .isNull();
+
+        // Composition
+        assertThat_Vehicle(actual.getVehicle())
+                .wasConvertedFrom_VehicleDto_Request();
+        assertThat_Employee(actual.getEmployee())
+                .wasConvertedFrom_EmployeeDto_Request();
+        assertThat_EstimatedService(actual.getEstimatedServices().stream().findFirst().orElseThrow())
+                .wasConvertedFrom_EstimatedServiceDto_Request();
+
+        // Inheritance (AuditableEntity)
+        assertThat(actual.getCreatedAt())
+                .isNull();
+        assertThat(actual.getUpdatedAt())
+                .isNull();
 
         // And
         assertThatObject(actual)
@@ -228,6 +245,6 @@ public final class VehicleDtoAssertions {
 ## Source Code: The Objects
 
 ```java
-	
+
 
 ```

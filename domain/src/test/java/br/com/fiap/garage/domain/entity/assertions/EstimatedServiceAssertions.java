@@ -23,36 +23,8 @@ public final class EstimatedServiceAssertions {
         return new EstimatedServiceAssertions(spy(actual));
     }
 
-    /**
-     * @see br.com.fiap.garage.application.v1.dto.factory.ServiceDtoFactory
-     * .withAllFields()
-     */
-    public void wasConvertedFrom_ServiceDto_Request() {
-        // Self
-        assertThat(actual.getId())
-                .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
-        assertThat(actual.getName())
-                .isEqualTo("Engine Maintenance");
-        assertThat(actual.getDescription())
-                .isEqualTo("Complete engine diagnostic and oil change");
-        assertThat(actual.getCost())
-                .isEqualTo(new BigDecimal("500.00"));
-        assertThat(actual.getFinishedAt())
-                .isEqualTo(newDateTime("25/04/2026 14:00:00"));
+    public void isEqualTo_EstimatedService() {
 
-        // Composition
-        assertThat_EstimatedMaterial(actual.getEstimatedMaterials().stream().findFirst().orElseThrow())
-                .isEqualTo_EstimatedMaterial();
-
-        // Inheritance (AuditableEntity)
-        assertThat(actual.getCreatedAt())
-                .isEqualTo(newDateTime("24/04/2026 10:00:00"));
-        assertThat(actual.getUpdatedAt())
-                .isEqualTo(newDateTime("25/04/2026 09:00:00"));
-
-        // And
-        assertThatObject(actual)
-                .hasAllGetMethodsVerifiedOnceAtLeast();
     }
 
     /**
@@ -75,6 +47,38 @@ public final class EstimatedServiceAssertions {
         // Composition
         assertThat(actual.getEstimatedMaterials())
                 .isNullOrEmpty();
+
+        // Inheritance (AuditableEntity)
+        assertThat(actual.getCreatedAt())
+                .isNull();
+        assertThat(actual.getUpdatedAt())
+                .isNull();
+
+        // And
+        assertThatObject(actual)
+                .hasAllGetMethodsVerifiedOnceAtLeast();
+    }
+
+    /**
+     * @see br.com.fiap.garage.domain.entity.factory.ServiceFactory
+     * .withAllFields()
+     */
+    public void wasConvertedFrom_Service() {
+        // Self
+        assertThat(actual.getId())
+                .isNull();
+        assertThat(actual.getName())
+                .isEqualTo("Complete Engine Overhaul");
+        assertThat(actual.getDescription())
+                .isEqualTo("Comprehensive engine inspection, repair, and parts replacement");
+        assertThat(actual.getCost())
+                .isEqualByComparingTo(new BigDecimal("3500.00"));
+        assertThat(actual.getFinishedAt())
+                .isNull();
+
+        // Composition
+        assertThat_EstimatedMaterial(actual.getEstimatedMaterials().stream().findFirst().orElseThrow())
+                .wasConvertedFrom_Material();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

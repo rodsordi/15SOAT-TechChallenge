@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.use_case;
 
-import br.com.fiap.commons.exception.NotFoundException;
+import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.filter.WorkOrderFilter;
 import br.com.fiap.garage.domain.repository.WorkOrderRepository;
@@ -18,7 +18,7 @@ public class WorkOrderSearchUseCase {
 
     public WorkOrder findById(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(WorkOrder.class, "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(WorkOrder.class, "id", id));
     }
 
     public Page<WorkOrder> findAll(WorkOrderFilter filter) {

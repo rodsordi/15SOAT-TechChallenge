@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
 import static lombok.AccessLevel.PRIVATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.spy;
@@ -22,25 +23,27 @@ public final class EstimatedMaterialAssertions {
     }
 
     /**
-     * @see br.com.fiap.garage.domain.entity.factory.EstimatedMaterialFactory
+     * @see br.com.fiap.garage.domain.entity.factory.MaterialFactory
      * .withAllFields()
      */
-    public void isEqualTo_EstimatedMaterial() {
+    public void wasConvertedFrom_Material() {
         // Self
         assertThat(actual.getId())
-                .hasToString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409");
+                .isNull();
+        assertThat(actual.getType())
+                .isEqualTo(SHOP_SUPPLY);
         assertThat(actual.getName())
-                .isEqualTo("Synthetic Oil 5W30");
+                .isEqualTo("Engine Oil");
         assertThat(actual.getDescription())
-                .isEqualTo("High-performance synthetic motor oil");
+                .isEqualTo("Synthetic 5W-30 motor oil");
         assertThat(actual.getCost())
-                .isEqualTo(new BigDecimal("85.50"));
+                .isEqualByComparingTo(new BigDecimal("150.00"));
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())
-                .isEqualTo(newDateTime("30/12/2024 23:59:59"));
+                .isNull();
         assertThat(actual.getUpdatedAt())
-                .isEqualTo(newDateTime("31/12/2024 23:59:59"));
+                .isNull();
 
         // And
         assertThatObject(actual)

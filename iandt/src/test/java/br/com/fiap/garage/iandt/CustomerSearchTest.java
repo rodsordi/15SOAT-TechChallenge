@@ -5,6 +5,8 @@ import br.com.fiap.garage.application.GarageApplication;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -85,18 +87,24 @@ public class CustomerSearchTest extends GarageIntegrationTest {
                         .isEqualTo(200);
             }
 
-            @DisplayName("Given a valid document query param, in scenario with registered customer")
-            @Test
-            void test2() {
+            @DisplayName("Given a customer with {document}, and {documentFilter} query param, in scenario with registered customer")
+            @CsvSource(value = {
+                    "54.662.770/0001-29 | 54662770000129 | 54.662.770/0001-29",
+                    "33268627000187     | 33268627000187 | 33.268.627/0001-87",
+                    "574.425.940-69     | 57442594069    | 574.425.940-69",
+                    "48424855078        | 48424855078    | 484.248.550-78",
+            }, delimiterString = "|")
+            @ParameterizedTest
+            void test(String document, String documentFilter, String expected) {
                 //Scenario
                 var scenarioRequestBody = create_CustomerDto_Request().withAllFields();
-                setField(scenarioRequestBody, "document", "54.662.770/0001-29");
+                setField(scenarioRequestBody, "document", document);
                 createCustomer(authorization, json, scenarioRequestBody);
                 //When
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .param("document", "54662770000129")
+                        .param("document", documentFilter)
                         .get("/v1/customers")
                         .then()
                         .log().all()
@@ -108,7 +116,7 @@ public class CustomerSearchTest extends GarageIntegrationTest {
                 assertThat(response.body().jsonPath().getList("content"))
                         .hasSize(1);
                 assertThat(response.body().jsonPath().getString("content.[0].document"))
-                        .isEqualTo("54.662.770/0001-29");
+                        .isEqualTo(expected);
             }
         }
     }

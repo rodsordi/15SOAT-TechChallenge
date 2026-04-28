@@ -52,82 +52,76 @@ public abstract class AuditableEntity implements Serializable {
 ## Example: Expected Output Style
 
 ```java
-package br.com.fiap.chargeback.domain.entity.credit.factory;
+package br.com.fiap.garage.domain.entity.factory;
 
-import br.com.fiap.chargeback.domain.entity.credit.CreditAuthorization;
-import br.com.fiap.chargeback.domain.entity.credit.CreditTransaction;
+import br.com.fiap.garage.domain.entity.WorkOrder;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
-import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationFactory.create_CreditAuthorization;
-import static br.com.fiap.chargeback.domain.entity.credit.factory.CreditAuthorizationSingleMessageFactory.create_CreditAuthorizationSingleMessage;
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
+import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
+import static br.com.fiap.garage.domain.entity.factory.EstimatedServiceFactory.create_EstimatedService;
+import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class CreditTransactionFactory {
+public final class WorkOrderFactory {
 
-    private final CreditTransaction.CreditTransactionBuilder<?, ?> builder;
+    private final WorkOrder.WorkOrderBuilder<?, ?> builder;
 
-    public static CreditTransactionFactory create_CreditTransaction() {
-        return new CreditTransactionFactory(CreditTransaction.builder());
+    public static WorkOrderFactory create_WorkOrder() {
+        return new WorkOrderFactory(WorkOrder.builder());
     }
 
-    public CreditTransaction withAllFields() {
+    public WorkOrder withAllFields() {
         var result = builder
-                // Inheritance (Transaction)
-                .transactionId(fromString("9d1b9b7c-bd7c-4f5f-a747-0b1f63aac409"))
                 // Self
-                .correlationId("correlation-id-xpto-123")
-                .arn("arn123xpto")
-                .amount(new BigDecimal("50.00"))
-                .dateTime(newDateTime("31/12/2025 23:59:59"))
-                .isSingleMessage(false)
-                .externalTransactionId("abc123")
-                .authorizationSummaryCount("1")
-                .message("Message-123")
+                .id(fromString("e48ad20c-69dd-4382-b567-0e02b2c3d480"))
+                .status(RECEIVED)
+                .totalAmount(new BigDecimal("999.99"))
                 // Composition
-                .authorizations(new HashSet<>(Set.of(create_CreditAuthorization().withAllFields())))
-                .authorizationSingleMessage(create_CreditAuthorizationSingleMessage().withAllFields())
+                .vehicle(create_Vehicle().withAllFields())
+                .employee(create_Employee().withAllFields())
+                .estimatedService(create_EstimatedService().withAllFields())
                 // Inheritance (AuditableEntity)
-                .createdAt(newDateTime("30/12/2024 23:59:59"))
-                .updatedAt(newDateTime("31/12/2024 23:59:59"))
+                .createdAt(newDateTime("13/12/2026 23:59:59"))
+                .updatedAt(newDateTime("14/12/2026 23:59:59"))
                 .build();
+
         // And
         assertThatObject(result)
                 .hasNoEmptyFields();
         return result;
     }
 
-    public CreditTransaction withAllFieldsExceptDB() {
+    public WorkOrder withAllFieldsExceptDB() {
         withAllFields();
         return builder
-                .transactionId(null)
-                .authorizations(new HashSet<>(Set.of(create_CreditAuthorization().withAllFieldsExceptDB())))
-                .authorizationSingleMessage(create_CreditAuthorizationSingleMessage().withAllFieldsExceptId())
+                .id(null)
+                .vehicle(create_Vehicle().withAllFieldsExceptDB())
+                .employee(create_Employee().withAllFieldsExceptDB())
+                .clearEstimatedServices()
+                .estimatedService(create_EstimatedService().withAllFieldsExceptDB())
+                .createdAt(null)
+                .updatedAt(null)
                 .build();
     }
 
-    public CreditTransaction valid() {
+    public WorkOrder valid() {
         return builder
-                .correlationId("correlation-id-xpto-321")
-                .arn("arn123xpto")
-                .amount(new BigDecimal("50.00"))
-                .dateTime(newDateTime("31/12/2025 23:59:59"))
-                .isSingleMessage(false)
-                .authorizations(new HashSet<>(Set.of(create_CreditAuthorization().withAllFields())))
+                .status(RECEIVED)
+                .estimatedService(create_EstimatedService().valid())
                 .build();
     }
 
-    public CreditTransaction initiatedEmpty() {
+    public WorkOrder initiatedEmpty() {
         return builder
-                .authorizations(new HashSet<>(Set.of(CreditAuthorization.builder().build())))
-                .authorizationSingleMessage(create_CreditAuthorizationSingleMessage().initiatedEmpty())
+                .estimatedService(create_EstimatedService().initiatedEmpty())
                 .build();
     }
 }
@@ -136,48 +130,128 @@ public final class CreditTransactionFactory {
 ```java
 package br.com.fiap.garage.application.v1.dto.factory;
 
-import br.com.fiap.garage.application.v1.dto.CustomerDto;
+import br.com.fiap.garage.application.v1.dto.MaterialDto;
+import br.com.fiap.garage.domain.enums.MaterialType;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
+import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
+import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
-public final class CustomerDtoFactory {
+public final class MaterialDtoFactory {
 
-    public static Request create_CustomerDto_Request() {
-        return new Request(CustomerDto.Request.builder());
+    public static Request create_MaterialDto_Request() {
+        return new Request(MaterialDto.Request.builder());
     }
 
     @RequiredArgsConstructor(access = PRIVATE)
     public static final class Request {
 
-        private final CustomerDto.Request.RequestBuilder builder;
+        private final MaterialDto.Request.RequestBuilder builder;
 
-        public CustomerDto.Request withAllFields() {
+        public MaterialDto.Request withAllFields() {
             var result = builder
-                    // Self
-                    .username("john.doe@example.com")
-                    .name("John Doe")
-                    .password("1234asdl")
-                    .email("john.doe@example.com")
-                    .document("00.123.456/0001-90")
+                    .type(SHOP_SUPPLY)
+                    .name("Synthetic Engine Oil")
+                    .description("Oil 5W-30")
+                    .cost(new BigDecimal("85.50"))
                     .build();
-
             // And
             assertThatObject(result)
                     .hasNoEmptyFields();
             return result;
         }
 
-        public CustomerDto.Request valid() {
+        public MaterialDto.Request valid() {
             return builder
-                    .name("Jane Doe")
-                    .email("jane.doe@example.com")
+                    .type(SHOP_SUPPLY)
+                    .name("Synthetic Engine Oil")
+                    .description("Oil 5W-30")
+                    .cost(new BigDecimal("85.50"))
                     .build();
         }
 
-        public CustomerDto.Request initiatedEmpty() {
+        public MaterialDto.Request initiatedEmpty() {
+            return builder.build();
+        }
+    }
+
+    public static Response create_MaterialDto_Response() {
+        return new Response(MaterialDto.Response.builder());
+    }
+
+    @RequiredArgsConstructor(access = PRIVATE)
+    public static final class Response {
+
+        private final MaterialDto.Response.ResponseBuilder builder;
+
+        public MaterialDto.Response withAllFields() {
+            var result = builder
+                    .id(fromString("4f5f9b7c-bd7c-4f5f-a747-0b1f63aac409"))
+                    .type(MaterialType.values()[0])
+                    .name("Synthetic Engine Oil")
+                    .description("High-performance 5W-30 synthetic oil")
+                    .cost(new BigDecimal("45.50"))
+                    .createdAt(newDateTime("13/12/2026 23:59:59"))
+                    .updatedAt(newDateTime("14/12/2026 23:59:59"))
+                    .build();
+            // And
+            assertThatObject(result)
+                    .hasNoEmptyFields();
+            return result;
+        }
+
+        public MaterialDto.Response valid() {
+            return builder
+                    .id(fromString("123e4567-e89b-12d3-a456-426614174000"))
+                    .name("Standard Brake Pad")
+                    .cost(new BigDecimal("120.00"))
+                    .build();
+        }
+
+        public MaterialDto.Response initiatedEmpty() {
+            return builder.build();
+        }
+    }
+
+    public static Representation create_MaterialDto_Representation() {
+        return new Representation(MaterialDto.Representation.builder());
+    }
+
+    @RequiredArgsConstructor(access = PRIVATE)
+    public static final class Representation {
+
+        private final MaterialDto.Representation.RepresentationBuilder builder;
+
+        public MaterialDto.Representation withAllFields() {
+            var result = builder
+                    .id(fromString("4f5f9b7c-bd7c-4f5f-a747-0b1f63aac409"))
+                    .type(MaterialType.values()[0])
+                    .name("Synthetic Engine Oil")
+                    .cost(new BigDecimal("45.50"))
+                    .createdAt(newDateTime("13/12/2026 23:59:59"))
+                    .updatedAt(newDateTime("14/12/2026 23:59:59"))
+                    .build();
+            // And
+            assertThatObject(result)
+                    .hasNoEmptyFields();
+            return result;
+        }
+
+        public MaterialDto.Representation valid() {
+            return builder
+                    .id(fromString("123e4567-e89b-12d3-a456-426614174000"))
+                    .name("Standard Brake Pad")
+                    .cost(new BigDecimal("120.00"))
+                    .build();
+        }
+
+        public MaterialDto.Representation initiatedEmpty() {
             return builder.build();
         }
     }
@@ -186,6 +260,7 @@ public final class CustomerDtoFactory {
 ## Source Code: The Objects
 
 ```java
+
 
 
 ```

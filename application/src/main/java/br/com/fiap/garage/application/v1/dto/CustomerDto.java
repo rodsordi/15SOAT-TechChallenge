@@ -92,9 +92,8 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Customer.ResumedRepresentation")
-    public static class ResumedRepresentation extends RepresentationModel<ResumedRepresentation> implements CustomerDef.ResumedRepresentation {
+    public static class ResumedRepresentation implements CustomerDef.ResumedRepresentation {
         private UUID id;
         private String username;
         private String name;

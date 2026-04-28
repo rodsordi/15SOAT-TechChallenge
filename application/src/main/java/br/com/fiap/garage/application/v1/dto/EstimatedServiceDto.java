@@ -3,7 +3,6 @@ package br.com.fiap.garage.application.v1.dto;
 import br.com.fiap.garage.application.v1.def.EstimatedServiceDef;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -36,9 +35,8 @@ public final class EstimatedServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".EstimatedService.Representation")
-    public static class Representation extends RepresentationModel<EstimatedServiceDto.Representation> implements EstimatedServiceDef.Representation {
+    public static class Representation implements EstimatedServiceDef.Representation {
         private UUID id;
         private String name;
         private BigDecimal cost;

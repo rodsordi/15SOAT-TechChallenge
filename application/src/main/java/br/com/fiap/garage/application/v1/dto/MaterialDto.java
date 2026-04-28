@@ -5,8 +5,10 @@ import br.com.fiap.garage.application.v1.mapper.MaterialDtoMapper;
 import br.com.fiap.garage.domain.entity.Material;
 import br.com.fiap.garage.domain.enums.MaterialType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import org.springframework.hateoas.RepresentationModel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -59,19 +61,13 @@ public final class MaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @EqualsAndHashCode(callSuper = true)
     @Schema(name = ".Material.Representation")
-    public static class Representation extends RepresentationModel<MaterialDto.Representation> implements MaterialDef.Representation {
+    public static class Representation implements MaterialDef.Representation {
         private UUID id;
         private MaterialType type;
         private String name;
         private BigDecimal cost;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-        
-        // Agragate/VO
-        public static MaterialDto.Representation buildMaterialDtoRepresentation(Material material) {
-            return MAPPER.convertToRepresentation(material);
-        }
     }
 }

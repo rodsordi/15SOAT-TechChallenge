@@ -1,6 +1,7 @@
 package br.com.fiap.garage.domain.use_case;
 
 import br.com.fiap.garage.domain.entity.WorkOrder;
+import br.com.fiap.garage.domain.publisher.NotifyCustomerForApprovalPublisher;
 import br.com.fiap.garage.domain.repository.EmployeeRepository;
 import br.com.fiap.garage.domain.repository.ServiceRepository;
 import br.com.fiap.garage.domain.repository.VehicleRepository;
@@ -46,6 +47,9 @@ class WorkOrderCreationUseCaseTest {
     @Mock
     private WorkOrderRepository workOrderRepository;
 
+    @Mock
+    private NotifyCustomerForApprovalPublisher notifyCustomerForApprovalPublisher;
+
     @DisplayName("When creating WorkOrder")
     @Nested
     class Create {
@@ -56,12 +60,16 @@ class WorkOrderCreationUseCaseTest {
 
             @BeforeEach
             void beforeEach() {
+                //Scenario
                 when(employeeRepository.findById(any()))
                         .thenReturn(Optional.of(create_Employee().withAllFields()));
+                //And
                 when(vehicleRepository.findById(any()))
                         .thenReturn(Optional.of(create_Vehicle().withAllFields()));
+                //And
                 when(serviceRepository.findById(any()))
                         .thenReturn(Optional.of(create_Service().withAllFields()));
+                //And
                 when(workOrderRepository.save(any()))
                         .thenAnswer(invocationOnMock -> {
                             WorkOrder workOrder = invocationOnMock.getArgument(0);

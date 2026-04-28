@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.use_case;
 
-import br.com.fiap.commons.exception.NotFoundException;
+import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.Customer;
 import br.com.fiap.garage.domain.entity.Vehicle;
 import br.com.fiap.garage.domain.repository.CustomerRepository;
@@ -20,7 +20,7 @@ public class VehicleCreationUseCase {
 
     public Vehicle create(UUID customerId, Vehicle vehicle) {
         var customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new NotFoundException(Customer.class, "id", customerId));
+                .orElseThrow(() -> new ResourceNotFoundException(Customer.class, "id", customerId));
         vehicle.setCustomer(customer);
         return vehicleRepository.save(vehicle);
     }

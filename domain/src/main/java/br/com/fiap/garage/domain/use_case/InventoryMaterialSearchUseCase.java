@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.use_case;
 
-import br.com.fiap.commons.exception.NotFoundException;
+import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.InventoryMaterial;
 import br.com.fiap.garage.domain.filter.InventoryMaterialFilter;
 import br.com.fiap.garage.domain.repository.InventoryMaterialRepository;
@@ -18,13 +18,13 @@ public class InventoryMaterialSearchUseCase {
 
     public InventoryMaterial findById(UUID id) {
         return inventoryMaterialRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(InventoryMaterial.class, "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException(InventoryMaterial.class, "id", id));
     }
 
     public Page<InventoryMaterial> findAll(InventoryMaterialFilter filter) {
         var foundInventories = inventoryMaterialRepository.findAll(filter, filter.buildPageRequest());
         if (foundInventories.isEmpty())
-            throw new NotFoundException(InventoryMaterial.class);
+            throw new ResourceNotFoundException(InventoryMaterial.class);
         return foundInventories;
     }
 }

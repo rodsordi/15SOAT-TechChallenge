@@ -18,6 +18,9 @@ public final class EmployeeAssertions {
         return new EmployeeAssertions(spy(actual));
     }
 
+    public void isEqualTo_Employee() {
+    }
+
     /**
      * @see br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory
      * .withAllFields()

@@ -1,8 +1,8 @@
 CREATE SCHEMA IF NOT EXISTS garage;
 
--- -----------------------------------------------------------------------------
--- TABLE: garage.authority
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- AUTHORITY
+-- ---------------------------------------------------------
 CREATE TABLE garage.authority (
                                   id UUID NOT NULL,
                                   authority VARCHAR(20) NOT NULL,
@@ -16,10 +16,9 @@ COMMENT ON COLUMN garage.authority.authority IS 'Authorization name. Owner: self
 COMMENT ON COLUMN garage.authority.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.authority.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.users
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- USERS
+-- ---------------------------------------------------------
 CREATE TABLE garage.users (
                               id UUID NOT NULL,
                               username VARCHAR(255) NOT NULL,
@@ -41,50 +40,44 @@ COMMENT ON COLUMN garage.users.email IS 'User e-mail. Owner: self';
 COMMENT ON COLUMN garage.users.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.users.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.users_authority
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- USERS_AUTHORITY (Join Table)
+-- ---------------------------------------------------------
 CREATE TABLE garage.users_authority (
                                         user_id UUID NOT NULL,
                                         authority_id UUID NOT NULL,
                                         CONSTRAINT pk_users_authority PRIMARY KEY (user_id, authority_id),
-                                        CONSTRAINT fk_users_authority_user FOREIGN KEY (user_id) REFERENCES garage.users (id),
-                                        CONSTRAINT fk_users_authority_authority FOREIGN KEY (authority_id) REFERENCES garage.authority (id)
+                                        CONSTRAINT fk_users_authority_user FOREIGN KEY (user_id) REFERENCES garage.users(id),
+                                        CONSTRAINT fk_users_authority_authority FOREIGN KEY (authority_id) REFERENCES garage.authority(id)
 );
 
--- No specific entity comments provided for this join table.
-
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.customer (JOINED inheritance from users)
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- CUSTOMER (Inherits from USERS)
+-- ---------------------------------------------------------
 CREATE TABLE garage.customer (
                                  id UUID NOT NULL,
                                  document VARCHAR(14) NOT NULL,
                                  CONSTRAINT pk_customer PRIMARY KEY (id),
-                                 CONSTRAINT fk_customer_users FOREIGN KEY (id) REFERENCES garage.users (id) ON DELETE CASCADE
+                                 CONSTRAINT fk_customer_users FOREIGN KEY (id) REFERENCES garage.users(id)
 );
 
 COMMENT ON COLUMN garage.customer.document IS 'Customer document (CPF/CNPJ). Owner: self';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.employee (JOINED inheritance from users)
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- EMPLOYEE (Inherits from USERS)
+-- ---------------------------------------------------------
 CREATE TABLE garage.employee (
                                  id UUID NOT NULL,
                                  cpf VARCHAR(11) NOT NULL,
                                  CONSTRAINT pk_employee PRIMARY KEY (id),
-                                 CONSTRAINT fk_employee_users FOREIGN KEY (id) REFERENCES garage.users (id) ON DELETE CASCADE
+                                 CONSTRAINT fk_employee_users FOREIGN KEY (id) REFERENCES garage.users(id)
 );
 
 COMMENT ON COLUMN garage.employee.cpf IS 'Employee cpf. Owner: self';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.vehicle
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- VEHICLE
+-- ---------------------------------------------------------
 CREATE TABLE garage.vehicle (
                                 id UUID NOT NULL,
                                 make VARCHAR(100) NOT NULL,
@@ -95,7 +88,7 @@ CREATE TABLE garage.vehicle (
                                 created_at TIMESTAMP NOT NULL,
                                 updated_at TIMESTAMP,
                                 CONSTRAINT pk_vehicle PRIMARY KEY (id),
-                                CONSTRAINT fk_vehicle_customer FOREIGN KEY (customer_id) REFERENCES garage.customer (id)
+                                CONSTRAINT fk_vehicle_customer FOREIGN KEY (customer_id) REFERENCES garage.customer(id)
 );
 
 COMMENT ON COLUMN garage.vehicle.id IS 'Vehicle id. Owner: db';
@@ -107,16 +100,52 @@ COMMENT ON COLUMN garage.vehicle.customer_id IS 'Customer id. Owner: db';
 COMMENT ON COLUMN garage.vehicle.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.vehicle.updated_at IS 'Register updated at. Owner: db';
 
+-- ---------------------------------------------------------
+-- EMAIL
+-- ---------------------------------------------------------
+CREATE TABLE garage.email (
+                              id UUID NOT NULL,
+                              recipient VARCHAR(255) NOT NULL,
+                              bcc VARCHAR(255) NOT NULL,
+                              subject VARCHAR(255) NOT NULL,
+                              message TEXT NOT NULL,
+                              created_at TIMESTAMP NOT NULL,
+                              updated_at TIMESTAMP,
+                              CONSTRAINT pk_email PRIMARY KEY (id)
+);
 
--- -----------------------------------------------------------------------------
--- TABLE: garage.material
--- -----------------------------------------------------------------------------
+COMMENT ON COLUMN garage.email.id IS 'Email id. Owner: db';
+COMMENT ON COLUMN garage.email.recipient IS 'Email recipient. Owner: self';
+COMMENT ON COLUMN garage.email.bcc IS 'Email bcc. Owner: self';
+COMMENT ON COLUMN garage.email.subject IS 'Email subject. Owner: self';
+COMMENT ON COLUMN garage.email.message IS 'Email message. Owner: self';
+COMMENT ON COLUMN garage.email.created_at IS 'Register created at. Owner: db';
+COMMENT ON COLUMN garage.email.updated_at IS 'Register updated at. Owner: db';
+
+-- ---------------------------------------------------------
+-- NOTIFICATION
+-- ---------------------------------------------------------
+CREATE TABLE garage.notification (
+                                     id UUID NOT NULL,
+                                     created_at TIMESTAMP NOT NULL,
+                                     updated_at TIMESTAMP,
+                                     CONSTRAINT pk_notification PRIMARY KEY (id),
+                                     CONSTRAINT fk_notification_email FOREIGN KEY (id) REFERENCES garage.email(id)
+);
+
+COMMENT ON COLUMN garage.notification.id IS 'Notification id. Owner: db';
+COMMENT ON COLUMN garage.notification.created_at IS 'Register created at. Owner: db';
+COMMENT ON COLUMN garage.notification.updated_at IS 'Register updated at. Owner: db';
+
+-- ---------------------------------------------------------
+-- MATERIAL
+-- ---------------------------------------------------------
 CREATE TABLE garage.material (
                                  id UUID NOT NULL,
                                  type VARCHAR(55) NOT NULL,
                                  name VARCHAR(255) NOT NULL,
-                                 description TEXT,
-                                 cost DECIMAL(19, 2) NOT NULL,
+                                 description VARCHAR(255),
+                                 cost NUMERIC NOT NULL,
                                  created_at TIMESTAMP NOT NULL,
                                  updated_at TIMESTAMP,
                                  CONSTRAINT pk_material PRIMARY KEY (id)
@@ -130,10 +159,9 @@ COMMENT ON COLUMN garage.material.cost IS 'Material cost. Owner: self';
 COMMENT ON COLUMN garage.material.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.material.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.inventory_material (@MapsId maps id directly to material)
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- INVENTORY_MATERIAL
+-- ---------------------------------------------------------
 CREATE TABLE garage.inventory_material (
                                            id UUID NOT NULL,
                                            quantity_in_stock INTEGER NOT NULL,
@@ -141,7 +169,7 @@ CREATE TABLE garage.inventory_material (
                                            created_at TIMESTAMP NOT NULL,
                                            updated_at TIMESTAMP,
                                            CONSTRAINT pk_inventory_material PRIMARY KEY (id),
-                                           CONSTRAINT fk_inventory_material_material FOREIGN KEY (id) REFERENCES garage.material (id) ON DELETE CASCADE
+                                           CONSTRAINT fk_inventory_material_material FOREIGN KEY (id) REFERENCES garage.material(id)
 );
 
 COMMENT ON COLUMN garage.inventory_material.id IS 'Inventory id. Owner: db';
@@ -150,15 +178,14 @@ COMMENT ON COLUMN garage.inventory_material.reserved_quantity IS 'Inventory rese
 COMMENT ON COLUMN garage.inventory_material.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.inventory_material.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.service
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- SERVICE
+-- ---------------------------------------------------------
 CREATE TABLE garage.service (
                                 id UUID NOT NULL,
                                 name VARCHAR(255) NOT NULL,
-                                description TEXT,
-                                cost DECIMAL(19, 2) NOT NULL,
+                                description VARCHAR(255),
+                                cost NUMERIC NOT NULL,
                                 created_at TIMESTAMP NOT NULL,
                                 updated_at TIMESTAMP,
                                 CONSTRAINT pk_service PRIMARY KEY (id)
@@ -171,35 +198,31 @@ COMMENT ON COLUMN garage.service.cost IS 'Service cost. Owner: self';
 COMMENT ON COLUMN garage.service.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.service.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.service_inventory_material
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- SERVICE_INVENTORY_MATERIAL (Join Table)
+-- ---------------------------------------------------------
 CREATE TABLE garage.service_inventory_material (
                                                    service_id UUID NOT NULL,
                                                    inventory_material_id UUID NOT NULL,
                                                    CONSTRAINT pk_service_inventory_material PRIMARY KEY (service_id, inventory_material_id),
-                                                   CONSTRAINT fk_sim_service FOREIGN KEY (service_id) REFERENCES garage.service (id),
-                                                   CONSTRAINT fk_sim_inventory_material FOREIGN KEY (inventory_material_id) REFERENCES garage.inventory_material (id)
+                                                   CONSTRAINT fk_sim_service FOREIGN KEY (service_id) REFERENCES garage.service(id),
+                                                   CONSTRAINT fk_sim_inventory FOREIGN KEY (inventory_material_id) REFERENCES garage.inventory_material(id)
 );
 
--- No specific entity comments provided for this join table.
-
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.work_order
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- WORK_ORDER
+-- ---------------------------------------------------------
 CREATE TABLE garage.work_order (
                                    id UUID NOT NULL,
-                                   status VARCHAR(50) DEFAULT 'RECEIVED',
-                                   total_amount DECIMAL(19, 2) NOT NULL,
+                                   status VARCHAR(255),
+                                   total_amount NUMERIC NOT NULL,
                                    vehicle_id UUID,
                                    employee_id UUID,
                                    created_at TIMESTAMP NOT NULL,
                                    updated_at TIMESTAMP,
                                    CONSTRAINT pk_work_order PRIMARY KEY (id),
-                                   CONSTRAINT fk_work_order_vehicle FOREIGN KEY (vehicle_id) REFERENCES garage.vehicle (id),
-                                   CONSTRAINT fk_work_order_employee FOREIGN KEY (employee_id) REFERENCES garage.employee (id)
+                                   CONSTRAINT fk_work_order_vehicle FOREIGN KEY (vehicle_id) REFERENCES garage.vehicle(id),
+                                   CONSTRAINT fk_work_order_employee FOREIGN KEY (employee_id) REFERENCES garage.employee(id)
 );
 
 COMMENT ON COLUMN garage.work_order.id IS 'Work Order id. Owner: db';
@@ -210,47 +233,45 @@ COMMENT ON COLUMN garage.work_order.employee_id IS 'Employee id. Owner: db';
 COMMENT ON COLUMN garage.work_order.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.work_order.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.estimated_service
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- ESTIMATED_SERVICE
+-- ---------------------------------------------------------
 CREATE TABLE garage.estimated_service (
                                           id UUID NOT NULL,
-                                          work_order_id UUID NOT NULL,
                                           name VARCHAR(255) NOT NULL,
-                                          description TEXT,
-                                          cost DECIMAL(19, 2) NOT NULL,
+                                          description VARCHAR(255),
+                                          cost NUMERIC NOT NULL,
                                           finished_at TIMESTAMP,
+                                          work_order_id UUID NOT NULL,
                                           created_at TIMESTAMP NOT NULL,
                                           updated_at TIMESTAMP,
                                           CONSTRAINT pk_estimated_service PRIMARY KEY (id),
-                                          CONSTRAINT fk_estimated_service_work_order FOREIGN KEY (work_order_id) REFERENCES garage.work_order (id) ON DELETE CASCADE
+                                          CONSTRAINT fk_es_work_order FOREIGN KEY (work_order_id) REFERENCES garage.work_order(id)
 );
 
 COMMENT ON COLUMN garage.estimated_service.id IS 'Estimated Service id. Owner: db';
-COMMENT ON COLUMN garage.estimated_service.work_order_id IS 'Work Order id. Owner: db';
 COMMENT ON COLUMN garage.estimated_service.name IS 'Estimated Service name. Owner: self';
 COMMENT ON COLUMN garage.estimated_service.description IS 'Estimated Service description. Owner: self';
 COMMENT ON COLUMN garage.estimated_service.cost IS 'Estimated Service cost. Owner: self';
 COMMENT ON COLUMN garage.estimated_service.finished_at IS 'Estimated Service finished at. Owner: self';
+COMMENT ON COLUMN garage.estimated_service.work_order_id IS 'Work Order id. Owner: db';
 COMMENT ON COLUMN garage.estimated_service.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.estimated_service.updated_at IS 'Register updated at. Owner: db';
 
-
--- -----------------------------------------------------------------------------
--- TABLE: garage.estimated_material
--- -----------------------------------------------------------------------------
+-- ---------------------------------------------------------
+-- ESTIMATED_MATERIAL
+-- ---------------------------------------------------------
 CREATE TABLE garage.estimated_material (
                                            id UUID NOT NULL,
-                                           estimated_service_id UUID NOT NULL,
                                            type VARCHAR(55) NOT NULL,
                                            name VARCHAR(55) NOT NULL,
-                                           description TEXT,
-                                           cost DECIMAL(19, 2) NOT NULL,
+                                           description VARCHAR(255),
+                                           cost NUMERIC NOT NULL,
+                                           estimated_service_id UUID NOT NULL,
                                            created_at TIMESTAMP NOT NULL,
                                            updated_at TIMESTAMP,
                                            CONSTRAINT pk_estimated_material PRIMARY KEY (id),
-                                           CONSTRAINT fk_estimated_material_service FOREIGN KEY (estimated_service_id) REFERENCES garage.estimated_service (id) ON DELETE CASCADE
+                                           CONSTRAINT fk_em_estimated_service FOREIGN KEY (estimated_service_id) REFERENCES garage.estimated_service(id)
 );
 
 COMMENT ON COLUMN garage.estimated_material.id IS 'Estimated Material id. Owner: db';

@@ -3,7 +3,6 @@ package br.com.fiap.garage.application.v1.def;
 import br.com.fiap.commons.def.AuditableDef;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
