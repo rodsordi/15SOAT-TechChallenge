@@ -127,6 +127,7 @@ COMMENT ON COLUMN garage.email.updated_at IS 'Register updated at. Owner: db';
 -- ---------------------------------------------------------
 CREATE TABLE garage.notification (
                                      id UUID NOT NULL,
+                                     external_id UUID NOT NULL,
                                      created_at TIMESTAMP NOT NULL,
                                      updated_at TIMESTAMP,
                                      CONSTRAINT pk_notification PRIMARY KEY (id),
@@ -134,6 +135,7 @@ CREATE TABLE garage.notification (
 );
 
 COMMENT ON COLUMN garage.notification.id IS 'Notification id. Owner: db';
+COMMENT ON COLUMN garage.notification.external_id IS 'Notification id. Owner: db';
 COMMENT ON COLUMN garage.notification.created_at IS 'Register created at. Owner: db';
 COMMENT ON COLUMN garage.notification.updated_at IS 'Register updated at. Owner: db';
 

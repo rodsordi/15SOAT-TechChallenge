@@ -4,8 +4,8 @@ import br.com.fiap.commons.exception.FieldNotFoundException;
 import br.com.fiap.commons.exception.InternalErrorException;
 import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.*;
-import br.com.fiap.garage.infra.msg.EmailPublishMsg;
-import br.com.fiap.garage.infra.msg.NotificationPublishMsg;
+import br.com.fiap.garage.infra.evt.EmailEvt;
+import br.com.fiap.garage.infra.evt.NotificationEvt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -27,7 +27,7 @@ import static org.apache.commons.lang3.StringUtils.replaceEach;
 
 @Slf4j
 @Component
-public class NotificationPublishMsgMapper {
+public class NotificationEvtMapper {
 
     private static final NumberFormat NF = getCurrencyInstance(Locale.of("pt", "BR"));
 
@@ -40,7 +40,11 @@ public class NotificationPublishMsgMapper {
     @Value("${email.body-template-file-name}")
     private String emailBodyTemplateFileName;
 
-    public NotificationPublishMsg convert(WorkOrder workOrder) {
+    public NotificationEvt convert(WorkOrder workOrder) {
+        var workOrderId = Optional.of(workOrder)
+                .map(WorkOrder::getId)
+                .orElseThrow(() -> new FieldNotFoundException(WorkOrder.class, "id"));
+
         var customer = Optional.of(workOrder)
                 .map(WorkOrder::getVehicle)
                 .map(Vehicle::getCustomer)
@@ -53,8 +57,9 @@ public class NotificationPublishMsgMapper {
         var emailBody = buildEmailBody(workOrder);
         log.info(emailBody);
 
-        return NotificationPublishMsg.builder()
-                .email(EmailPublishMsg.builder()
+        return NotificationEvt.builder()
+                .externalId(workOrderId)
+                .email(EmailEvt.builder()
                         .recipient(recipient)
                         .subject(estimateCustomerApprovalEmailSubject)
                         .message(emailBody)

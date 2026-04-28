@@ -23,6 +23,8 @@ public final class NotificationDtoFactory {
 
         public NotificationDto.Request withAllFields() {
             var result = builder
+                    // Self
+                    .externalId(fromString("c38d7c09-e064-43ea-ba87-f7ff76113e34"))
                     // Composition
                     .email(create_EmailDto_Request().withAllFields())
                     .build();
@@ -56,6 +58,7 @@ public final class NotificationDtoFactory {
             var result = builder
                     // Self
                     .id(fromString("a7c8e9d0-1234-4567-890a-bcdef1234567"))
+                    .externalId(fromString("da5c2284-23e6-4957-b66a-2aaa52b56645"))
                     // Composition
                     .email(create_EmailDto_Response().withAllFields())
                     // Inheritance (AuditableEntity context)
@@ -93,6 +96,7 @@ public final class NotificationDtoFactory {
             var result = builder
                     // Self
                     .id(fromString("a7c8e9d0-1234-4567-890a-bcdef1234567"))
+                    .externalId(fromString("1a4cf8fc-8dfa-4ba5-9ee0-9a787e113caf"))
                     // Composition
                     .email(create_EmailDto_Representation().withAllFields())
                     // Inheritance (AuditableEntity context)

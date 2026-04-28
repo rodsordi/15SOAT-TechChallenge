@@ -22,6 +22,9 @@ public class EmployeeSearchUseCase {
     }
 
     public Page<Employee> findAll(EmployeeFilter filter) {
-        return repository.findAll(filter, filter.buildPageRequest());
+        var foundEmployees = repository.findAll(filter, filter.buildPageRequest());
+        if (foundEmployees.isEmpty())
+            throw new ResourceNotFoundException(Employee.class);
+        return foundEmployees;
     }
 }

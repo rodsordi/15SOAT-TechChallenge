@@ -22,6 +22,9 @@ public class NotificationSearchUseCase {
     }
 
     public Page<Notification> findAll(NotificationFilter filter) {
-        return repository.findAll(filter, filter.buildPageRequest());
+        var foundNotifications = repository.findAll(filter, filter.buildPageRequest());
+        if (foundNotifications.isEmpty())
+            throw new ResourceNotFoundException(Notification.class);
+        return foundNotifications;
     }
 }

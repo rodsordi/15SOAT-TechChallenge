@@ -27,7 +27,9 @@ import static br.com.fiap.garage.iandt.ServiceCreationTest.createService;
 import static br.com.fiap.garage.iandt.VehicleCreationTest.createVehicle;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static java.time.Duration.ofSeconds;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
@@ -55,8 +57,31 @@ public class WorkOrderCreationTest extends GarageIntegrationTest {
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(201);
+                var workOrderId = response.jsonPath().getString("id");
+                await()
+                        .atMost(ofSeconds(3))
+                        .pollInterval(ofSeconds(1))
+                        .untilAsserted(() -> {
+                            searchNotificationByWorkOrderId(workOrderId);
+                        });
             }
         }
+    }
+
+    private void searchNotificationByWorkOrderId(String workOrderId) {
+        //When
+        var notificationResponse = given()
+                .log().all()
+                .header("Authorization", authorization)
+                .param("externalId", workOrderId)
+                .get("/v1/notifications")
+                .then()
+                .log().all()
+                .extract()
+                .response();
+        //Then
+        assertThat(notificationResponse.statusCode())
+                .isEqualTo(200);
     }
 
     public static Response createWorkOrder(String authorization, JsonMapper json, WorkOrderDto.Request requestBody) {

@@ -22,6 +22,9 @@ public class VehicleSearchUseCase {
     }
 
     public Page<Vehicle> findAll(VehicleFilter filter) {
-        return repository.findAll(filter, filter.buildPageRequest());
+        var foundVehicles = repository.findAll(filter, filter.buildPageRequest());
+        if (foundVehicles.isEmpty())
+            throw new ResourceNotFoundException(Vehicle.class);
+        return foundVehicles;
     }
 }

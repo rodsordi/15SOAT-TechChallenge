@@ -22,6 +22,9 @@ public class WorkOrderSearchUseCase {
     }
 
     public Page<WorkOrder> findAll(WorkOrderFilter filter) {
-        return repository.findAll(filter, filter.buildPageRequest());
+        var foundWorkOrders = repository.findAll(filter, filter.buildPageRequest());
+        if (foundWorkOrders.isEmpty())
+            throw new ResourceNotFoundException(WorkOrder.class);
+        return foundWorkOrders;
     }
 }

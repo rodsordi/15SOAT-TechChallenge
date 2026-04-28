@@ -3,6 +3,8 @@ package br.com.fiap.garage.domain.entity.factory;
 import br.com.fiap.garage.domain.entity.Notification;
 import lombok.RequiredArgsConstructor;
 
+import java.util.UUID;
+
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.EmailFactory.create_Email;
@@ -22,6 +24,7 @@ public final class NotificationFactory {
         var result = builder
                 // Self
                 .id(fromString("d515e9fb-7c82-4e7b-9991-797988ccfa64"))
+                .externalId(UUID.fromString("d2b16521-39ce-479c-b779-a9ed5238a6c3"))
                 // Composition
                 .email(create_Email().withAllFields())
                 // Inheritance (AuditableEntity)

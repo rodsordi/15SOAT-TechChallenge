@@ -13,10 +13,20 @@ import org.jspecify.annotations.Nullable;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @ParameterObject
 public class NotificationFilter extends AuditableFilter<Notification> implements Specification<Notification> {
+
+    @Schema(example = "c273c76e-6f8b-4ca6-97a0-fe88f29cb523", description = "External Client id.")
+    private UUID externalId;
+
+    private Specification<Notification> externalIdEqual() {
+        return (root, query, builder) -> externalId == null ? null :
+                builder.equal(root.get("externalId"), externalId);
+    }
 
     @Schema(example = "john.doe@email.com", description = "Notification recipient.")
     private String recipient;
@@ -29,6 +39,7 @@ public class NotificationFilter extends AuditableFilter<Notification> implements
     @Override
     public @Nullable Predicate toPredicate(Root<Notification> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         return super.buildSpecification()
+                .and(externalIdEqual())
                 .and(emailEqual())
                 .toPredicate(root, query, criteriaBuilder);
     }

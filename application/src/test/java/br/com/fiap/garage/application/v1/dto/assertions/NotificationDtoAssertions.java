@@ -32,6 +32,8 @@ public final class NotificationDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("d515e9fb-7c82-4e7b-9991-797988ccfa64");
+            assertThat(actual.getExternalId())
+                    .hasToString("d2b16521-39ce-479c-b779-a9ed5238a6c3");
 
             // Composition
             assertThat_EmailDto_Response(actual.getEmail())
@@ -67,6 +69,8 @@ public final class NotificationDtoAssertions {
             // Self
             assertThat(actual.getId())
                     .hasToString("d515e9fb-7c82-4e7b-9991-797988ccfa64");
+            assertThat(actual.getExternalId())
+                    .hasToString("d2b16521-39ce-479c-b779-a9ed5238a6c3");
 
             // Composition
             assertThat_EmailDto_Representation(actual.getEmail())

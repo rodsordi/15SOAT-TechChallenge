@@ -26,6 +26,9 @@ public class Notification extends AuditableEntity implements Serializable {
     @Column(comment = "Notification id. Owner: db")
     private UUID id;
 
+    @Column(comment = "Api Client id. Owner: client")
+    private UUID externalId;
+
     // Value Object
     @OneToOne(cascade = ALL, orphanRemoval = true)
     @JoinColumn(name = "id")

@@ -28,6 +28,8 @@ public final class NotificationAssertions {
         // Self
         assertThat(actual.getId())
                 .hasToString("a7c8e9d0-1234-4567-890a-bcdef1234567");
+        assertThat(actual.getExternalId())
+                .hasToString("86dee474-1fd9-4e21-bd53-2b4018a0c01e");
 
         // Composition
         assertThat_Email(actual.getEmail())
@@ -52,6 +54,8 @@ public final class NotificationAssertions {
         // Self
         assertThat(actual.getId())
                 .isNull();
+        assertThat(actual.getExternalId())
+                .hasToString("c38d7c09-e064-43ea-ba87-f7ff76113e34");
 
         // Composition
         assertThat_Email(actual.getEmail())

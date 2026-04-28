@@ -1,7 +1,7 @@
 package br.com.fiap.garage.application.v1.listener;
 
-import br.com.fiap.garage.application.v1.mapper.NotificationListenMsgMapper;
-import br.com.fiap.garage.application.v1.msg.NotificationListenMsg;
+import br.com.fiap.garage.application.v1.mapper.NotificationMsgMapper;
+import br.com.fiap.garage.application.v1.msg.NotificationMsg;
 import br.com.fiap.garage.domain.use_case.NotificationCreationUseCase;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +13,13 @@ import static org.mapstruct.factory.Mappers.getMapper;
 @Component
 public class NotificationListener {
 
-    private static final NotificationListenMsgMapper MAPPER = getMapper(NotificationListenMsgMapper.class);
+    private static final NotificationMsgMapper MAPPER = getMapper(NotificationMsgMapper.class);
 
     private final NotificationCreationUseCase notificationCreationUseCase;
 
-    @SqsListener(value = "${sns.notification-creation.topic}")
-    public void listenNotificationCreation(NotificationListenMsg notificationListenMsg) {
-        var notification = MAPPER.convert(notificationListenMsg);
+    @SqsListener(value = "${message.notification-creation.queue}")
+    public void listenNotificationCreation(NotificationMsg notificationMsg) {
+        var notification = MAPPER.convert(notificationMsg);
         notificationCreationUseCase.create(notification);
     }
 }

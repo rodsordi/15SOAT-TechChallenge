@@ -12,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static br.com.fiap.garage.application.v1.dto.factory.NotificationDtoFactory.create_NotificationDto_Request;
-import static br.com.fiap.garage.application.v1.dto.factory.NotificationDtoFactory.create_NotificationDto_Request;
-import static br.com.fiap.garage.iandt.NotificationCreationTest.createNotification;
 import static br.com.fiap.garage.iandt.NotificationCreationTest.createNotification;
 import static io.restassured.RestAssured.given;
 import static java.text.MessageFormat.format;

@@ -21,6 +21,9 @@ public class ServiceSearchUseCase {
     }
 
     public Page<Service> findAll(ServiceFilter filter) {
-        return repository.findAll(filter, filter.buildPageRequest());
+        var foundServices = repository.findAll(filter, filter.buildPageRequest());
+        if (foundServices.isEmpty())
+            throw new ResourceNotFoundException(Service.class);
+        return foundServices;
     }
 }

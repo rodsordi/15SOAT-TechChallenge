@@ -27,6 +27,7 @@ public final class NotificationDto {
     @Schema(name = ".Notification.Request")
     public static class Request implements NotificationDef.Request {
 
+        private UUID externalId;
         private EmailDto.Request email;
 
         public Notification buildNotification() {
@@ -42,6 +43,7 @@ public final class NotificationDto {
     public static class Response implements NotificationDef.Response {
 
         private UUID id;
+        private UUID externalId;
         private EmailDto.Response email;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -60,6 +62,7 @@ public final class NotificationDto {
     public static class Representation extends RepresentationModel<Representation> implements NotificationDef.Representation {
 
         private UUID id;
+        private UUID externalId;
         private EmailDto.Representation email;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
