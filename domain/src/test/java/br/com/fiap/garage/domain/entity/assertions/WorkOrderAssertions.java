@@ -24,38 +24,6 @@ public final class WorkOrderAssertions {
     }
 
     /**
-     * @see br.com.fiap.garage.domain.entity.factory.WorkOrderFactory
-     * .withAllFields()
-     */
-    public void isEqualTo_WorkOrder() {
-        // Self
-        assertThat(actual.getId())
-                .hasToString("fdbbe77f-1386-4b03-9612-2de63ad4daed");
-        assertThat(actual.getStatus())
-                .isEqualTo(RECEIVED);
-        assertThat(actual.getTotalAmount())
-                .isNull();
-
-        // Composition
-        assertThat_Vehicle(actual.getVehicle())
-                .isEqualTo_Vehicle();
-        assertThat_Employee(actual.getEmployee())
-                .isEqualTo_Employee();
-        assertThat_EstimatedService(actual.getEstimatedServices().stream().findFirst().orElseThrow())
-                .isEqualTo_EstimatedService();
-
-        // Inheritance (AuditableEntity)
-        assertThat(actual.getCreatedAt())
-                .isEqualTo(newDateTime("13/12/2026 23:59:59"));
-        assertThat(actual.getUpdatedAt())
-                .isEqualTo(newDateTime("14/12/2026 23:59:59"));
-
-        // And
-        assertThatObject(actual)
-                .hasAllGetMethodsVerifiedOnceAtLeast();
-    }
-
-    /**
      * @see br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory
      * .withAllFields()
      */

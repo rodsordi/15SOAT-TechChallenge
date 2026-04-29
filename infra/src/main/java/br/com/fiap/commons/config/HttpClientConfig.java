@@ -1,6 +1,6 @@
 package br.com.fiap.commons.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -11,13 +11,13 @@ import org.springframework.web.client.RestClient;
 import static org.springframework.web.client.support.RestClientAdapter.create;
 import static org.springframework.web.service.invoker.HttpServiceProxyFactory.builderFor;
 
+@RequiredArgsConstructor
 @Configuration
 public class HttpClientConfig {
 
     private static final ClientHttpRequestFactory FACTORY = new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
 
-    @Autowired
-    private LogInterceptor logInterceptor;
+    private final LogInterceptor logInterceptor;
 
     public <T> T createClient(
             RestClient.Builder builder,

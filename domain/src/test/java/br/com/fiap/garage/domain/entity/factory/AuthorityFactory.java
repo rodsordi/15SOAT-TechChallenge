@@ -1,6 +1,6 @@
 package br.com.fiap.garage.domain.entity.factory;
 
-import br.com.fiap.garage.domain.entity.Authority;
+import br.com.fiap.garage.domain.entity.Auth;
 import lombok.RequiredArgsConstructor;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
@@ -11,13 +11,13 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE)
 public final class AuthorityFactory {
 
-    private final Authority.AuthorityBuilder<?, ?> builder;
+    private final Auth.AuthBuilder<?, ?> builder;
 
     public static AuthorityFactory create_Authority() {
-        return new AuthorityFactory(Authority.builder());
+        return new AuthorityFactory(Auth.builder());
     }
 
-    public Authority withAllFields() {
+    public Auth withAllFields() {
         var result = builder
                 // Self
                 .id(fromString("9f2c6680-d47f-4a91-9680-8d64b514e5f8"))
@@ -33,7 +33,7 @@ public final class AuthorityFactory {
         return result;
     }
 
-    public Authority withAllFieldsExceptDB() {
+    public Auth withAllFieldsExceptDB() {
         withAllFields();
         return builder
                 .id(null)
@@ -42,13 +42,13 @@ public final class AuthorityFactory {
                 .build();
     }
 
-    public Authority valid() {
+    public Auth valid() {
         return builder
                 .authority("ROLE_USER")
                 .build();
     }
 
-    public Authority initiatedEmpty() {
+    public Auth initiatedEmpty() {
         return builder.build();
     }
 }

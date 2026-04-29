@@ -68,7 +68,6 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
             log.info("Deleting all test data");
             for (var i = repositories.size() - 1; i >= 0; i--) {
                 var repository = repositories.get(i);
-//                System.out.println("Deleting all: " + repository.getClass().getGenericInterfaces()[0]);
                 repository.deleteAll();
             }
         }

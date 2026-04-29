@@ -3,11 +3,11 @@ package br.com.fiap.commons.iandt.setup;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 public interface PostgresSetup {
 
-    PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:17.6-alpine3.22")
+    PostgreSQLContainer POSTGRES = new PostgreSQLContainer("postgres:17.6-alpine3.22")
             .withAccessToHost(true)
             .withExposedPorts(5432)
             .withEnv("SKIP_SSL_CERT_DOWNLOAD", "true");

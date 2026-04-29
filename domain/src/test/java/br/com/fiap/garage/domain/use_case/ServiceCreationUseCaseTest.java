@@ -2,7 +2,6 @@ package br.com.fiap.garage.domain.use_case;
 
 import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.Service;
-import br.com.fiap.garage.domain.entity.factory.MaterialFactory;
 import br.com.fiap.garage.domain.repository.MaterialRepository;
 import br.com.fiap.garage.domain.repository.ServiceRepository;
 import org.junit.jupiter.api.BeforeEach;

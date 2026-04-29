@@ -216,9 +216,9 @@ class InventoryMaterialTest {
                 inventoryMaterial.concludeReservedQuantity(reservedQuantityToBeConcluded3);
                 //Then
                 assertThat(inventoryMaterial.getQuantityInStock())
-                        .isEqualTo(0);
+                        .isZero();
                 assertThat(inventoryMaterial.getReservedQuantity())
-                        .isEqualTo(0);
+                        .isZero();
             }
         }
 

@@ -4,11 +4,9 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.examples.Example;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import java.util.Collection;
 import java.util.Map;
@@ -25,9 +23,6 @@ public class SwaggerConfig {
 
     @Value("${info.app.description}")
     private String appDescription;
-
-    @Autowired
-    private Environment env;
 
     @Bean
     public OpenAPI openAPI(Info info, Collection<Map.Entry<String, Example>> examples) {

@@ -3,18 +3,18 @@ CREATE SCHEMA IF NOT EXISTS garage;
 -- ---------------------------------------------------------
 -- AUTHORITY
 -- ---------------------------------------------------------
-CREATE TABLE garage.authority (
+CREATE TABLE garage.auth (
                                   id UUID NOT NULL,
                                   authority VARCHAR(20) NOT NULL,
                                   created_at TIMESTAMP NOT NULL,
                                   updated_at TIMESTAMP,
-                                  CONSTRAINT pk_authority PRIMARY KEY (id)
+                                  CONSTRAINT pk_auth PRIMARY KEY (id)
 );
 
-COMMENT ON COLUMN garage.authority.id IS 'Authorization id. Owner: db';
-COMMENT ON COLUMN garage.authority.authority IS 'Authorization name. Owner: self';
-COMMENT ON COLUMN garage.authority.created_at IS 'Register created at. Owner: db';
-COMMENT ON COLUMN garage.authority.updated_at IS 'Register updated at. Owner: db';
+COMMENT ON COLUMN garage.auth.id IS 'Authorization id. Owner: db';
+COMMENT ON COLUMN garage.auth.authority IS 'Authorization name. Owner: self';
+COMMENT ON COLUMN garage.auth.created_at IS 'Register created at. Owner: db';
+COMMENT ON COLUMN garage.auth.updated_at IS 'Register updated at. Owner: db';
 
 -- ---------------------------------------------------------
 -- USERS
@@ -43,12 +43,12 @@ COMMENT ON COLUMN garage.users.updated_at IS 'Register updated at. Owner: db';
 -- ---------------------------------------------------------
 -- USERS_AUTHORITY (Join Table)
 -- ---------------------------------------------------------
-CREATE TABLE garage.users_authority (
+CREATE TABLE garage.users_auth (
                                         user_id UUID NOT NULL,
-                                        authority_id UUID NOT NULL,
-                                        CONSTRAINT pk_users_authority PRIMARY KEY (user_id, authority_id),
-                                        CONSTRAINT fk_users_authority_user FOREIGN KEY (user_id) REFERENCES garage.users(id),
-                                        CONSTRAINT fk_users_authority_authority FOREIGN KEY (authority_id) REFERENCES garage.authority(id)
+                                        auth_id UUID NOT NULL,
+                                        CONSTRAINT pk_users_auth PRIMARY KEY (user_id, auth_id),
+                                        CONSTRAINT fk_users_auth_user FOREIGN KEY (user_id) REFERENCES garage.users(id),
+                                        CONSTRAINT fk_users_auth_auth FOREIGN KEY (auth_id) REFERENCES garage.auth(id)
 );
 
 -- ---------------------------------------------------------

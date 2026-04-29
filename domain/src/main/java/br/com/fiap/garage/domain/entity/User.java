@@ -50,11 +50,11 @@ public class User extends AuditableEntity implements UserDetails {
     // Aggregate
     @Singular(value = "authority", ignoreNullCollections = true)
     @ManyToMany(cascade = {MERGE, PERSIST}, fetch = EAGER)
-    @JoinTable(schema = "garage", name = "users_authority",
+    @JoinTable(schema = "garage", name = "users_auth",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "authority_id"))
+            inverseJoinColumns = @JoinColumn(name = "auth_id"))
     @OrderBy("createdAt desc")
-    private Set<Authority> authorities;
+    private Set<Auth> authorities;
 
     public void update(User user) {
         if (user == null)

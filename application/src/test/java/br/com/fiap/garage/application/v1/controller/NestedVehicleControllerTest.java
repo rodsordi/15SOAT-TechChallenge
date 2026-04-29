@@ -3,7 +3,6 @@ package br.com.fiap.garage.application.v1.controller;
 import br.com.fiap.commons.config.RestControllerTestConfig;
 import br.com.fiap.garage.domain.entity.Vehicle;
 import br.com.fiap.garage.domain.use_case.VehicleCreationUseCase;
-import br.com.fiap.garage.domain.use_case.VehicleSearchUseCase;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

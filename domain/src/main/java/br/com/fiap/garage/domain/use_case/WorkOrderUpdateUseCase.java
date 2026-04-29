@@ -1,5 +1,6 @@
 package br.com.fiap.garage.domain.use_case;
 
+import br.com.fiap.commons.exception.InternalErrorException;
 import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.enums.WorkOrderStatus;
@@ -25,6 +26,7 @@ public class WorkOrderUpdateUseCase {
             case EXECUTING -> foundWorkOrder.execute();
             case FINISHED -> foundWorkOrder.finish();
             case RELEASED -> foundWorkOrder.release();
+            default -> throw new InternalErrorException("Status not found");
         }
 
         return repository.save(foundWorkOrder);

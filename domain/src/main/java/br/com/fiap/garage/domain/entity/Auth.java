@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(callSuper = false, exclude = "id")
 @Entity
 @Table(schema = "garage")
-public class Authority extends AuditableEntity implements GrantedAuthority {
+public class Auth extends AuditableEntity implements GrantedAuthority {
 
     @Id
     @GeneratedValue

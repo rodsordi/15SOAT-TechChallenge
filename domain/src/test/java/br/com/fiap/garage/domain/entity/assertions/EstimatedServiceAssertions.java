@@ -23,10 +23,6 @@ public final class EstimatedServiceAssertions {
         return new EstimatedServiceAssertions(spy(actual));
     }
 
-    public void isEqualTo_EstimatedService() {
-
-    }
-
     /**
      * @see br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory
      * .withAllFields()

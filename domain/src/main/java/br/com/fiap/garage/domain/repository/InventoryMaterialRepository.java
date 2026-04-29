@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-@Order(0)
+@Order(1)
 public interface InventoryMaterialRepository extends CrudRepository<InventoryMaterial, UUID> {
 
     Page<InventoryMaterial> findAll(Specification<InventoryMaterial> filter, Pageable pageable);

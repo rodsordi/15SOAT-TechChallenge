@@ -2,8 +2,6 @@ package br.com.fiap.garage.infra.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 
-import java.io.Serializable;
-
 /**
  * | dto            | Request     | Response             |
  * | Representation | Represented | RepresentedPersisted |
