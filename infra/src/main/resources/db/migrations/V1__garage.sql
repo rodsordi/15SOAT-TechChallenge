@@ -269,7 +269,7 @@ CREATE TABLE garage.estimated_material (
                                            name VARCHAR(55) NOT NULL,
                                            description VARCHAR(255),
                                            cost NUMERIC NOT NULL,
-                                           estimated_service_id UUID NOT NULL,
+                                           estimated_service_id BIGINT NOT NULL,
                                            created_at TIMESTAMP NOT NULL,
                                            updated_at TIMESTAMP,
                                            CONSTRAINT pk_estimated_material PRIMARY KEY (id),

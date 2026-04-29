@@ -16,7 +16,6 @@ import java.util.UUID;
 
 import static br.com.fiap.garage.application.v1.dto.WorkOrderDto.Response.buildWorkOrderDtoResponse;
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
@@ -65,13 +64,13 @@ public class WorkOrderController implements WorkOrderSwagger {
     @PatchMapping(path = "/{workOrderId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
-    @ResponseStatus(NO_CONTENT)
-    public void update(
+    public WorkOrderDto.Response update(
             @PathVariable("workOrderId")
             UUID workOrderId,
             @RequestBody
             @Valid
-            WorkOrderDto.UpdateRequest requestBody) {
-        workOrderUpdateUseCase.update(workOrderId, requestBody.getStatus());
+            WorkOrderDto.PatchRequest requestBody) {
+        var updatedWorkOrder = workOrderUpdateUseCase.update(workOrderId, requestBody.getStatus());
+        return buildWorkOrderDtoResponse(updatedWorkOrder);
     }
 }

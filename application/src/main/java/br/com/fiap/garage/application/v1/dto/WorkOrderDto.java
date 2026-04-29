@@ -42,17 +42,6 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".WorkOrder.UpdateRequest")
-    public static class UpdateRequest implements WorkOrderDef.UpdateRequest {
-        private WorkOrderStatus status;
-        private UUID employeeId;
-        private Set<UUID> servicesIds;
-    }
-
-    @Getter(onMethod_ = @Override)
-    @Builder
-    @NoArgsConstructor(access = PRIVATE)
-    @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".WorkOrder.Response")
     public static class Response implements WorkOrderDef.Response {
         private UUID id;
@@ -92,5 +81,16 @@ public final class WorkOrderDto {
         public static WorkOrderDto.Representation buildWorkOrderDtoRepresentation(WorkOrder workOrder) {
             return MAPPER.convertToRepresentation(workOrder);
         }
+    }
+
+    @Getter(onMethod_ = @Override)
+    @Builder
+    @NoArgsConstructor(access = PRIVATE)
+    @AllArgsConstructor(access = PRIVATE)
+    @Schema(name = ".WorkOrder.PatchRequest")
+    public static class PatchRequest implements WorkOrderDef.PatchRequest {
+        private WorkOrderStatus status;
+        private UUID employeeId;
+        private Set<UUID> servicesIds;
     }
 }

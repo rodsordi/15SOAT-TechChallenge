@@ -1,10 +1,13 @@
 package br.com.fiap.commons.exception;
 
 import lombok.Getter;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import static java.lang.String.format;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_CONTENT;
 
 @Getter
+@ResponseStatus(UNPROCESSABLE_CONTENT)
 public class AlreadyExistsException extends RuntimeException {
 
     private final Class<?> clazz;

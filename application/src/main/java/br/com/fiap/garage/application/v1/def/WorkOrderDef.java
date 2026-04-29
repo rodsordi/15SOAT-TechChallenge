@@ -83,7 +83,7 @@ public interface WorkOrderDef {
     }
 
 
-    interface UpdateRequest {
+    interface PatchRequest {
 
         WorkOrderStatus getStatus();
 
