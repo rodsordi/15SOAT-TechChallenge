@@ -37,6 +37,6 @@ public class Notification extends AuditableEntity implements Serializable {
 
     public void initEmailBcc(String bcc) {
         if (email != null)
-            email.updateBcc(bcc);
+            email.setBcc(bcc);
     }
 }

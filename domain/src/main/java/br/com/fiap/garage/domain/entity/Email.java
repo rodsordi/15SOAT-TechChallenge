@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
@@ -28,6 +29,7 @@ public class Email extends AuditableEntity implements Serializable {
     @Column(nullable = false, comment = "Email recipient. Owner: self")
     private String recipient;
 
+    @Setter
     @Column(nullable = false, comment = "Email bcc. Owner: self")
     private String bcc;
 
@@ -36,8 +38,4 @@ public class Email extends AuditableEntity implements Serializable {
 
     @Column(nullable = false, columnDefinition = "text", comment = "Email message. Owner: self")
     private String message;
-
-    public void updateBcc(String bcc) {
-        this.bcc = bcc;
-    }
 }

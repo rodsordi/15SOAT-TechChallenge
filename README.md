@@ -1,62 +1,93 @@
-# API Mecânica
+# Garage API
 
-API responsável por gerenciar o fluxo de trabalho da mecânica de veículos.
-Tech Challenge do curso 15SOAT.
+API responsible for managing the vehicle mechanic workflow.
+Tech Challenge for the 15SOAT course.
 
-## 🗒️ Informações
+## 🗒️ Information
 
-- [Documentação]()
+- [Documentation]()
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-- [JDK 26](https://jdk.java.net/26/)
+- [JDK 25](https://jdk.java.net/archive/)
 - [IDE 2026.1](https://www.jetbrains.com/idea/download/)
 - [Apache Maven 3.9.11](https://maven.apache.org/download.cgi)
 
-## 🔧 Instalação
+## ⚙️ Setup
 
-
-
-## 🌳 Variáveis de ambiente
-
-| Nome                   | Valor |
-|------------------------|-------|
-| spring.profiles.active | local |
-
-## 📦 Construindo o Pacote
-
-```shell
-mvn clean install -DskipTests
+```sh
+export M2_HOME=~/app/apache-maven-3.9.11
+export M2=$M2_HOME/bin
+export PATH=$PATH:$M2
 ```
 
-## 🎬 Executando a Aplicação
-
-```shell
-java -jar application/target/api-garage.jar
+```sh
+export JAVA_HOME=~/app/jdk-25.0.2
+export PATH=$PATH:$JAVA_HOME/bin
 ```
 
-## 👌 Executando os Testes de Unidade
+### 📂 Cloning the repository
 
-```shell
+```sh
+git clone https://github.com/rodsordi/15SOAT-TechChallenge.git
+```
+
+### 👌 Running unit tests
+
+```sh
 mvn test
 ```
 
-## 🍿 Executando Testes de Integração
+### 📦 Package building
 
-```shell
+```sh
+mvn clean install -DskipTests
+```
+
+### 🐳 Running the application with Docker
+
+```sh
+docker build -t garage:0.0.1-SNAPSHOT .
+```
+
+### 🚀 Running the application with Docker Compose
+
+```sh
+docker compose up
+```
+
+## 🧪 Integration tests:
+
+### 🍿 Running integration tests
+
+```sh
 mvn test -DintegrationTests
+```
+
+### 📂 Postman collection
+
+```sh
+curl 
+```
+
+## 🧹 Running unit tests with coverage report
+
+```sh
+curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=Sonarqube@2026"
+SONAR_TOKEN=$(curl -u admin:Sonarqube@2026 -X POST "http://localhost:9000/api/user_tokens/generate?name=setup-token" | grep -oP '"token":"\K[^"]+')
+echo $SONAR_TOKEN
+mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.token=$SONAR_TOKEN
 ```
 
 ## 📄 Swagger
 
-| Ambiente | Url                                                      | 
-|----------|----------------------------------------------------------|
-| local    | [link](http://localhost:18080/api/swagger-ui/index.html) |
-| hml      | [link]()                                                 |
+| Ambiente | Url                                                     | 
+|----------|---------------------------------------------------------|
+| local    | [link](http://localhost:8080/api/swagger-ui/index.html) |
 
 ## 📌 Versão
 
-- Usando [SemVer](https://semver.org/lang/pt-BR/) para controle de versão.
+- Using [SemVer](https://semver.org/) for version control.
 
 ## ✒ Autores
 

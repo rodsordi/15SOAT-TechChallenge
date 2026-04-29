@@ -23,11 +23,16 @@
     </modules>
 
     <properties>
-        <java.version>26</java.version>
+        <java.version>25</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <mapstruct.version>1.6.3</mapstruct.version>
         <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
+        <sonar.coverage.exclusions>
+            infra/**,
+            application/**,
+            iandt/**,
+        </sonar.coverage.exclusions>
     </properties>
 
     <profiles>

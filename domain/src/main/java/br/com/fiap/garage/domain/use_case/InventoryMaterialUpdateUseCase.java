@@ -28,7 +28,7 @@ public class InventoryMaterialUpdateUseCase {
         return repository.save(foundInventoryMaterial);
     }
 
-    public InventoryMaterial addReserveQuantity(UUID id, int quantityToBeReserved) {
+    public InventoryMaterial addReservedQuantity(UUID id, int quantityToBeReserved) {
         var foundInventoryMaterial = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(InventoryMaterial.class, "id", id));
         foundInventoryMaterial.reserveQuantity(quantityToBeReserved);

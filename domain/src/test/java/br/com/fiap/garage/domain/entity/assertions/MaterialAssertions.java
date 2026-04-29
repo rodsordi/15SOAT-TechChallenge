@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
-import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
 import static lombok.AccessLevel.PRIVATE;
@@ -26,8 +25,10 @@ public final class MaterialAssertions {
      * @see br.com.fiap.garage.domain.entity.factory.MaterialFactory
      * .withAllFields()
      */
-    public void isEqualTo_Material() {
+    public void wasUpdatedUsing_Material() {
         // Self
+        assertThat(actual.getId())
+                .isNull();
         assertThat(actual.getName())
                 .isEqualTo("Engine Oil");
         assertThat(actual.getType())
@@ -39,9 +40,9 @@ public final class MaterialAssertions {
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())
-                .isEqualTo(newDateTime("25/04/2026 10:00:00"));
+                .isNull();
         assertThat(actual.getUpdatedAt())
-                .isEqualTo(newDateTime("25/04/2026 15:30:00"));
+                .isNull();
 
         // And
         assertThatObject(actual)

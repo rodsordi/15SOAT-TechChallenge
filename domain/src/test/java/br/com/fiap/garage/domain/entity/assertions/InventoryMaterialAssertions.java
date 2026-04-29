@@ -20,19 +20,19 @@ public final class InventoryMaterialAssertions {
     }
 
     /**
-     * @see InventoryMaterialFactory
+     * @see br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory
      * .withAllFields()
      */
-    public void isEqualTo_InventoryMaterial() {
+    public void wasUpdatedUsing_InventoryMaterial() {
         // Self
         assertThat(actual.getId())
                 .isNull();
         assertThat(actual.getQuantityInStock())
-                .isEqualTo(6);
+                .isEqualTo(100);
         assertThat(actual.getReservedQuantity())
-                .isEqualTo(2);
+                .isEqualTo(0);
         assertThat_Material(actual.getMaterial())
-                .isEqualTo_Material();
+                .wasUpdatedUsing_Material();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

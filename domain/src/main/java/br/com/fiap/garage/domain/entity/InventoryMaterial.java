@@ -29,8 +29,9 @@ public class InventoryMaterial extends AuditableEntity implements Serializable {
     @Column(comment = "Inventory id. Owner: db")
     private UUID id;
 
+    @Builder.Default
     @Column(nullable = false, comment = "Inventory quantity in stock. Owner: self")
-    private Integer quantityInStock;
+    private Integer quantityInStock = 0;
 
     @Builder.Default
     @Column(nullable = false, comment = "Inventory reserved quantity. Owner: self")
@@ -54,11 +55,13 @@ public class InventoryMaterial extends AuditableEntity implements Serializable {
     }
 
     private void update(Material material) {
-        if (material != null)
+        if (this.material == null)
+            this.material = material;
+        else
             this.material.update(material);
     }
 
-    public void addQuantityToStock(Integer quantityToBeAddedToStock) {
+    public void addQuantityToStock(int quantityToBeAddedToStock) {
         quantityInStock += quantityToBeAddedToStock;
     }
 
@@ -66,10 +69,15 @@ public class InventoryMaterial extends AuditableEntity implements Serializable {
         if (quantityToBeReserved <= 0)
             throw new BusinessException("You are trying to reserve an empty or negative quantity.");
 
-        if (this.reservedQuantity + quantityToBeReserved > quantityInStock)
-            throw new BusinessException(format("Cannot reserve %s quantity of %s material, because there are only %s quantity in stock.",
+        if (quantityToBeReserved > quantityInStock)
+            throw new BusinessException(format("Cannot reserve %s quantity, because there are only %s quantity in stock.",
                     quantityToBeReserved,
-                    material.getName(),
+                    quantityInStock));
+
+        if (quantityToBeReserved > quantityInStock - this.reservedQuantity)
+            throw new BusinessException(format("Cannot reserve %s quantity, because there are already too many reserved quantities reserved: %s in a stock with just %s quantity.",
+                    quantityToBeReserved,
+                    this.reservedQuantity,
                     quantityInStock));
 
         this.reservedQuantity += quantityToBeReserved;

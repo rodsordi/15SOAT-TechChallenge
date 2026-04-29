@@ -40,7 +40,7 @@ public final class ServiceAssertions {
 
         // Composition (Many-to-Many)
         assertThat_Material(actual.getMaterials().stream().findFirst().orElseThrow())
-                .isEqualTo_Material();
+                .wasUpdatedUsing_Material();
 
         // Inheritance (AuditableEntity)
         assertThat(actual.getCreatedAt())

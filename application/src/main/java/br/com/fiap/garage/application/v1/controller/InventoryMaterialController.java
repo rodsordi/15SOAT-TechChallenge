@@ -91,10 +91,10 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
             updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addQuantityToStock(inventoryMaterialId, requestBody.getQuantityToBeAddedToStock());
 
         if (requestBody.getQuantityToBeReserved() != null)
-            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addReserveQuantity(inventoryMaterialId, requestBody.getQuantityToBeReserved());
+            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addReservedQuantity(inventoryMaterialId, requestBody.getQuantityToBeReserved());
 
         if (requestBody.getReservedQuantityToBeConcluded() != null)
-            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.addReserveQuantity(inventoryMaterialId, requestBody.getReservedQuantityToBeConcluded());
+            updatedInventoryMaterial = inventoryMaterialUpdateUseCase.concludeReservedQuantity(inventoryMaterialId, requestBody.getReservedQuantityToBeConcluded());
 
         if (updatedInventoryMaterial == null)
             inventoryMaterialSearchUseCase.findById(inventoryMaterialId);
