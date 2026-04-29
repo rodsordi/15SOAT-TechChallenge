@@ -1,8 +1,8 @@
 package br.com.fiap.garage.domain.use_case;
 
 import br.com.fiap.commons.exception.ResourceNotFoundException;
-import br.com.fiap.garage.domain.filter.CustomerFilter;
-import br.com.fiap.garage.domain.repository.CustomerRepository;
+import br.com.fiap.garage.domain.filter.ServiceFilter;
+import br.com.fiap.garage.domain.repository.ServiceRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,22 +17,23 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
+import static br.com.fiap.garage.domain.entity.factory.ServiceFactory.create_Service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CustomerSearchUseCaseTest {
+class ServiceSearchUseCaseTest {
 
     @InjectMocks
-    private CustomerSearchUseCase customerSearchUseCase;
+    private ServiceSearchUseCase serviceSearchUseCase;
 
     @Mock
-    private CustomerRepository repository;
+    private ServiceRepository repository;
 
-    @DisplayName("When finding Customer by id")
+    @DisplayName("When finding Service by id")
     @Nested
     class FindById {
 
@@ -43,17 +44,17 @@ class CustomerSearchUseCaseTest {
             @BeforeEach
             void beforeEach() {
                 when(repository.findById(any()))
-                        .thenReturn(Optional.of(create_Customer()
+                        .thenReturn(Optional.of(create_Service()
                                 .withAllFields()));
             }
 
-            @DisplayName("Given a valid customer id")
+            @DisplayName("Given a valid service id")
             @Test
             void test1() {
                 //Given
-                var customerId = UUID.fromString("fbd817e7-64f5-4e0a-80fe-51a6eb35e9a2");
+                var serviceId = UUID.fromString("fbd817e7-64f5-4e0a-80fe-51a6eb35e9a2");
                 //When
-                var actual = customerSearchUseCase.findById(customerId);
+                var actual = serviceSearchUseCase.findById(serviceId);
                 //Then
                 assertThat(actual)
                         .isNotNull();
@@ -64,22 +65,22 @@ class CustomerSearchUseCaseTest {
         @Nested
         class Failure {
 
-            @DisplayName("Given a customerId, in scenario with no registered Customer")
+            @DisplayName("Given a serviceId, in scenario with no registered Service")
             @Test
             void test1() {
                 //Given
-                var customerId = UUID.fromString("fbd817e7-64f5-4e0a-80fe-51a6eb35e9a2");
+                var serviceId = UUID.fromString("fbd817e7-64f5-4e0a-80fe-51a6eb35e9a2");
                 //When
                 var actual = assertThrows(ResourceNotFoundException.class,
-                        () -> customerSearchUseCase.findById(customerId));
+                        () -> serviceSearchUseCase.findById(serviceId));
                 //Then
                 assertThat(actual)
-                        .hasMessage("Resource [Customer] with [id]: [fbd817e7-64f5-4e0a-80fe-51a6eb35e9a2] not found");
+                        .hasMessage("Resource [Service] with [id]: [fbd817e7-64f5-4e0a-80fe-51a6eb35e9a2] not found");
             }
         }
     }
-
-    @DisplayName("When finding all Customers")
+    
+    @DisplayName("When finding all Inventories")
     @Nested
     class FindAll {
 
@@ -89,18 +90,21 @@ class CustomerSearchUseCaseTest {
 
             @BeforeEach
             void beforeEach() {
-                when(repository.findAll(any(), any()))
-                        .thenReturn(new PageImpl<>(List.of(create_Customer()
-                                .withAllFields())));
+                lenient()
+                        .when(repository.findAll(any(), any()))
+                        .thenReturn(new PageImpl<>(List.of(
+                                create_Service().withAllFields(),
+                                create_Service().withAllFields()
+                        )));
             }
 
-            @DisplayName("Given an empty Customer filter")
+            @DisplayName("Given a valid inventory filter")
             @Test
             void test1() {
                 //Given
-                var customerFilter = new CustomerFilter();
+                var inventoryFilter = new ServiceFilter();
                 //When
-                var actual = customerSearchUseCase.findAll(customerFilter);
+                var actual = serviceSearchUseCase.findAll(inventoryFilter);
                 //Then
                 assertThat(actual)
                         .isNotEmpty();
@@ -111,17 +115,17 @@ class CustomerSearchUseCaseTest {
         @Nested
         class Failure {
 
-            @DisplayName("Given an empty Customer filter, in scenario with no registered Customer")
+            @DisplayName("Given an empty Service filter, in scenario with no registered Service")
             @Test
             void test1() {
                 //Given
-                var customerFilter = new CustomerFilter();
+                var serviceFilter = new ServiceFilter();
                 //When
                 var actual = assertThrows(ResourceNotFoundException.class,
-                        () -> customerSearchUseCase.findAll(customerFilter));
+                        () -> serviceSearchUseCase.findAll(serviceFilter));
                 //Then
                 assertThat(actual)
-                        .hasMessage("Resource [Customer] not found");
+                        .hasMessage("Resource [Service] not found");
             }
         }
     }

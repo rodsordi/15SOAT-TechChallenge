@@ -23,7 +23,7 @@ public class InventoryMaterialSearchUseCase {
 
     public Page<InventoryMaterial> findAll(InventoryMaterialFilter filter) {
         var foundInventories = inventoryMaterialRepository.findAll(filter, filter.buildPageRequest());
-        if (foundInventories.isEmpty())
+        if (foundInventories == null || foundInventories.isEmpty())
             throw new ResourceNotFoundException(InventoryMaterial.class);
         return foundInventories;
     }

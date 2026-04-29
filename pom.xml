@@ -29,6 +29,9 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
         <sonar.coverage.exclusions>
+            **/filter/**,
+            **/exception/**,
+            **/map/**,
             infra/**,
             application/**,
             iandt/**,

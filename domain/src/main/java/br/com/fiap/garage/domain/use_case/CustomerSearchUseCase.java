@@ -23,7 +23,7 @@ public class CustomerSearchUseCase {
 
     public Page<Customer> findAll(CustomerFilter filter) {
         var foundCustomers = repository.findAll(filter, filter.buildPageRequest());
-        if (foundCustomers.isEmpty())
+        if (foundCustomers == null || foundCustomers.isEmpty())
             throw new ResourceNotFoundException(Customer.class);
         return foundCustomers;
     }
