@@ -2,6 +2,7 @@ package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.garage.application.v1.dto.WorkOrderDto;
 import br.com.fiap.garage.application.v1.swagger.WorkOrderSwagger;
+import br.com.fiap.garage.domain.entity.WorkOrder;
 import br.com.fiap.garage.domain.filter.WorkOrderFilter;
 import br.com.fiap.garage.domain.use_case.WorkOrderCreationUseCase;
 import br.com.fiap.garage.domain.use_case.WorkOrderSearchUseCase;
@@ -70,7 +71,18 @@ public class WorkOrderController implements WorkOrderSwagger {
             @RequestBody
             @Valid
             WorkOrderDto.PatchRequest requestBody) {
-        var updatedWorkOrder = workOrderUpdateUseCase.update(workOrderId, requestBody.getStatus());
+
+        WorkOrder updatedWorkOrder = null;
+
+        if (requestBody.getFinishedServiceId() != null)
+            updatedWorkOrder = workOrderUpdateUseCase.finishService(workOrderId, requestBody.getFinishedServiceId());
+
+        if (requestBody.getEmployeeId() != null)
+            updatedWorkOrder = workOrderUpdateUseCase.updateEmployee(workOrderId, requestBody.getEmployeeId());
+
+        if (requestBody.getStatus() != null)
+            updatedWorkOrder = workOrderUpdateUseCase.updateStatus(workOrderId, requestBody.getStatus());
+
         return buildWorkOrderDtoResponse(updatedWorkOrder);
     }
 }

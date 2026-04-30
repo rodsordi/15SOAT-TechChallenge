@@ -1,6 +1,7 @@
 package br.com.fiap.garage.infra.def;
 
 import br.com.fiap.commons.def.AuditableDef;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +16,7 @@ public interface NotificationDef {
 
     interface Represented {
 
+        @JsonProperty(index = 1)
         @Schema(example = "3a49a18d-5482-4ee6-8d19-c786a6489008", description = "External Client id. Owner: client")
         @NotNull
         UUID getExternalId();

@@ -5,14 +5,11 @@ import br.com.fiap.garage.domain.entity.EstimatedService;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.EstimatedMaterialFactory.create_EstimatedMaterial;
-import static br.com.fiap.garage.domain.entity.factory.ServiceFactory.create_Service;
-import static java.util.UUID.fromString;
 import static lombok.AccessLevel.PRIVATE;
 
 @RequiredArgsConstructor(access = PRIVATE)
@@ -28,6 +25,7 @@ public final class EstimatedServiceFactory {
         var result = builder
                 // Self
                 .id(2L)
+                .serviceId(UUID.fromString("b69f475d-40b4-41bc-b0ab-22500db01821"))
                 .name("Engine Overhaul")
                 .description("Complete disassembly and rebuilding of the engine block.")
                 .cost(new BigDecimal("4500.00"))
@@ -50,7 +48,9 @@ public final class EstimatedServiceFactory {
         return builder
                 .id(null)
                 .clearEstimatedMaterials()
-                .estimatedMaterials(new HashSet<>(Set.of(create_EstimatedMaterial().withAllFieldsExceptDB())))
+                .estimatedMaterial(create_EstimatedMaterial().withAllFieldsExceptDB())
+                .createdAt(null)
+                .updatedAt(null)
                 .build();
     }
 
@@ -58,13 +58,13 @@ public final class EstimatedServiceFactory {
         return builder
                 .name("Engine Overhaul")
                 .cost(new BigDecimal("4500.00"))
-                .estimatedMaterials(new HashSet<>(Set.of(create_EstimatedMaterial().valid())))
+                .estimatedMaterial(create_EstimatedMaterial().valid())
                 .build();
     }
 
     public EstimatedService initiatedEmpty() {
         return builder
-                .estimatedMaterials(new HashSet<>(Set.of(EstimatedMaterial.builder().build())))
+                .estimatedMaterial(EstimatedMaterial.builder().build())
                 .build();
     }
 }

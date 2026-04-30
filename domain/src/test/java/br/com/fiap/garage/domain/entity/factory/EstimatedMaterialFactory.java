@@ -5,6 +5,7 @@ import br.com.fiap.garage.domain.enums.MaterialType;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
@@ -26,6 +27,7 @@ public final class EstimatedMaterialFactory {
         var result = builder
                 // Self
                 .id(1L)
+                .materialId(UUID.fromString("68f15de3-8a96-4ba1-bf0e-6fae79517065"))
                 .type(SHOP_SUPPLY)
                 .name("Ceramic Brake Pads")
                 .description("High-performance front ceramic brake pads")

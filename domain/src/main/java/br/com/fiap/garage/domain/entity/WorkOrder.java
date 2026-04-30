@@ -59,9 +59,15 @@ public class WorkOrder extends AuditableEntity implements Serializable {
     @Valid
     private Set<EstimatedService> estimatedServices;
 
-    public void updateReferences(Vehicle vehicle, Employee employee, Set<Service> services) {
-        this.vehicle = vehicle;
+    public void update(Employee employee) {
         this.employee = employee;
+    }
+
+    public void update(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public void update(Set<Service> services) {
         estimatedServices = services.stream()
                 .map(Service::buildEstimatedService)
                 .collect(Collectors.toSet());

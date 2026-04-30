@@ -34,4 +34,14 @@ public class ServiceUpdateUseCase {
                         .orElseThrow(() -> new ResourceNotFoundException(Material.class, "id", materialId)))
                 .collect(Collectors.toSet());
     }
+
+    public void calculateAverageTime() {
+        //TODO: Not ideal but it is like it is for a while
+        var services = serviceRepository.findAll();
+        for (var service : services) {
+            var avgTimeInMinutes = serviceRepository.calculateAverageTimeOfServiceInMinutes(service.getId());
+            service.updateAverageTime(avgTimeInMinutes);
+            serviceRepository.save(service);
+        }
+    }
 }

@@ -15,8 +15,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static br.com.fiap.garage.iandt.CustomerCreationTest.createCustomer;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
@@ -47,7 +45,8 @@ public class CustomerSearchTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get(format("/v1/customers/{0}", customerId))
+                        .pathParam("customerId", customerId)
+                        .get("/v1/customers/{customerId}")
                         .then()
                         .log().all()
                         .extract()

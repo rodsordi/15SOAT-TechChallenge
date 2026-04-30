@@ -18,7 +18,6 @@ import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.cr
 import static br.com.fiap.garage.iandt.CustomerCreationTest.createCustomer;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -60,7 +59,8 @@ public class VehicleCreationTest extends GarageIntegrationTest {
                 .header("Authorization", authorization)
                 .contentType(JSON)
                 .body(json.writeValueAsString(requestBody))
-                .post(format("/v1/customers/{0}/vehicles", customerId))
+                .pathParam("customerId", customerId)
+                .post("/v1/customers/{customerId}/vehicles")
                 .then()
                 .log().all()
                 .extract()

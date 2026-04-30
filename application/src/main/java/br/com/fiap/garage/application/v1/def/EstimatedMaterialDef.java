@@ -2,12 +2,14 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.domain.enums.MaterialType;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * | dto            | Request     | Response             |
@@ -17,6 +19,10 @@ import java.math.BigDecimal;
 public interface EstimatedMaterialDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
+
+        @JsonProperty(index = 1)
+        @NotNull
+        UUID getId();
 
         @NotNull
         MaterialType getType();

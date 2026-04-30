@@ -24,8 +24,10 @@ public interface WorkOrderDtoMapper extends CpfMap {
 
     WorkOrderDto.Representation convertToRepresentation(WorkOrder source);
 
+    @Mapping(target = "id", source = "serviceId")
     EstimatedServiceDto.Response convert(EstimatedService source);
 
+    @Mapping(target = "id", source = "materialId")
     EstimatedMaterialDto.Response convert(EstimatedMaterial source);
 
     default Vehicle mapVehicle(UUID vehicleId) {

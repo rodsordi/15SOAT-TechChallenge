@@ -27,6 +27,7 @@ public final class ServiceFactory {
                 .name("Complete Engine Overhaul")
                 .description("Comprehensive engine inspection, repair, and parts replacement")
                 .cost(new BigDecimal("3500.00"))
+                .averageTimeInMinutes(0L)
                 // Composition
                 .material(create_Material().withAllFields())
                 // Inheritance (AuditableEntity)
@@ -43,6 +44,10 @@ public final class ServiceFactory {
         withAllFields();
         return builder
                 .id(null)
+                .clearMaterials()
+                .material(create_Material().withAllFieldsExceptDB())
+                .createdAt(null)
+                .updatedAt(null)
                 .build();
     }
 

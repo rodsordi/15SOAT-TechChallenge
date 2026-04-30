@@ -14,7 +14,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static br.com.fiap.garage.application.v1.dto.factory.EmployeeDtoFactory.create_EmployeeDto_Request;
 import static br.com.fiap.garage.iandt.EmployeeCreationTest.createEmployee;
 import static io.restassured.RestAssured.given;
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
@@ -45,7 +44,8 @@ class EmployeeSearchTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get(format("/v1/employees/{0}", employeeId))
+                        .pathParam("employeeId", employeeId)
+                        .get("/v1/employees/{employeeId}")
                         .then()
                         .log().all()
                         .extract()

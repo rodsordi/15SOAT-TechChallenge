@@ -31,6 +31,8 @@ public final class EstimatedServiceAssertions {
         // Self
         assertThat(actual.getId())
                 .isNull();
+        assertThat(actual.getServiceId())
+                .hasToString("");
         assertThat(actual.getName())
                 .isNull();
         assertThat(actual.getDescription())
@@ -63,6 +65,8 @@ public final class EstimatedServiceAssertions {
         // Self
         assertThat(actual.getId())
                 .isNull();
+        assertThat(actual.getServiceId())
+                .hasToString("f47ac10b-58cc-4372-a567-0e02b2c3d479");
         assertThat(actual.getName())
                 .isEqualTo("Complete Engine Overhaul");
         assertThat(actual.getDescription())

@@ -2,6 +2,8 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.controller.EmployeeController;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -46,6 +48,7 @@ public interface EmployeeDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
+        @JsonProperty(index = 1)
         @Schema(example = "a0949107-8b0e-4e28-b541-ecc34bb35b1d", description = "Employee id.")
         @NotNull
         UUID getId();
@@ -69,6 +72,7 @@ public interface EmployeeDef {
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        @JsonIgnore
         default Class<?> getControllerClass() {
             return EmployeeController.class;
         }

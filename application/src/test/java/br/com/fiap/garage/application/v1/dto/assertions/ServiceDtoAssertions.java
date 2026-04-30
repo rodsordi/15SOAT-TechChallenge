@@ -39,6 +39,8 @@ public final class ServiceDtoAssertions {
                     .isEqualTo("Comprehensive engine inspection, repair, and parts replacement");
             assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("3500.00"));
+            assertThat(actual.getAverageTimeInMinutes())
+                    .isZero();
 
             // Composition
             assertThat(actual.getMaterials())
@@ -86,6 +88,8 @@ public final class ServiceDtoAssertions {
                     .isEqualTo("Comprehensive engine inspection, repair, and parts replacement");
             assertThat(actual.getCost())
                     .isEqualTo(new BigDecimal("3500.00"));
+            assertThat(actual.getAverageTimeInMinutes())
+                    .isZero();
 
             // Inheritance (AuditableTable / AuditableEntity)
             assertThat(actual.getCreatedAt())

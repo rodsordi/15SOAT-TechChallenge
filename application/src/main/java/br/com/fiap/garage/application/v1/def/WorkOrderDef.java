@@ -3,6 +3,8 @@ package br.com.fiap.garage.application.v1.def;
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.controller.WorkOrderController;
 import br.com.fiap.garage.domain.enums.WorkOrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -28,6 +30,7 @@ public interface WorkOrderDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
+        @JsonProperty(index = 1)
         @Schema(example = "819d14e1-ad48-4e60-8192-b15ad37f66a5", description = "Work Order id. Owner: db")
         @NotNull
         UUID getId();
@@ -77,6 +80,7 @@ public interface WorkOrderDef {
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        @JsonIgnore
         default Class<?> getControllerClass() {
             return WorkOrderController.class;
         }
@@ -89,6 +93,6 @@ public interface WorkOrderDef {
 
         UUID getEmployeeId();
 
-        Set<UUID> getServicesIds();
+        UUID getFinishedServiceId();
     }
 }

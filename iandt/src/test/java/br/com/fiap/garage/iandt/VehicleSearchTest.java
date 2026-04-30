@@ -13,7 +13,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static br.com.fiap.garage.application.v1.dto.factory.VehicleDtoFactory.create_VehicleDto_Request;
 import static br.com.fiap.garage.iandt.VehicleCreationTest.createVehicle;
 import static io.restassured.RestAssured.given;
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -43,7 +42,8 @@ public class VehicleSearchTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get(format("/v1/vehicles/{0}", vehicleId))
+                        .pathParam("vehicleId", vehicleId)
+                        .get("/v1/vehicles/{vehicleId}")
                         .then()
                         .log().all()
                         .extract()

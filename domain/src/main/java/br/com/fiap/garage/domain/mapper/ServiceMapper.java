@@ -13,12 +13,14 @@ import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 public interface ServiceMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "serviceId", source = "id")
     @Mapping(target = "estimatedMaterials", source = "materials")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     EstimatedService convert(Service source);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "materialId", source = "id")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     EstimatedMaterial convert(Material source);

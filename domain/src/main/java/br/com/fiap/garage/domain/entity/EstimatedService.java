@@ -12,9 +12,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.time.LocalDateTime.now;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -29,6 +31,9 @@ public class EstimatedService extends AuditableEntity implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(comment = "Estimated Service id. Owner: db")
     private Long id;
+
+    @Column(nullable = false, comment = "Original service id. Owner: self")
+    private UUID serviceId;
 
     @Column(nullable = false, comment = "Estimated Service name. Owner: self")
     private String name;
@@ -48,4 +53,8 @@ public class EstimatedService extends AuditableEntity implements Serializable {
     @JoinColumn(name = "estimated_service_id", updatable = false, nullable = false)
     @OrderBy("createdAt desc")
     private Set<EstimatedMaterial> estimatedMaterials;
+
+    public void finish() {
+        finishedAt = now();
+    }
 }

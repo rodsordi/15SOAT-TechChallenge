@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import static br.com.fiap.garage.application.v1.dto.ServiceDto.Response.buildServiceDtoResponse;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
@@ -73,5 +74,12 @@ public class ServiceController implements ServiceSwagger {
         var service = requestBody.buildService();
         var updatedService = serviceUpdateUseCase.update(serviceId, requestBody.getMaterialsIds(), service);
         return buildServiceDtoResponse(updatedService);
+    }
+
+    @GetMapping(path = "/calculateAverageTime")
+    @ResponseStatus(NO_CONTENT)
+    public void calculateAverageTime() {
+        System.out.println("Substituting a scheduler or batch job for a while");
+        serviceUpdateUseCase.calculateAverageTime();
     }
 }

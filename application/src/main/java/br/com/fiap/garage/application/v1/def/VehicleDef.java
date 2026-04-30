@@ -3,6 +3,8 @@ package br.com.fiap.garage.application.v1.def;
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.controller.VehicleController;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -49,6 +51,7 @@ public interface VehicleDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
+        @JsonProperty(index = 1)
         @Schema(example = "50902f1c-1db9-4f38-94b1-02b538d54f7c", description = "Vehicle id. Owner: db")
         @NotNull
         UUID getId();
@@ -69,6 +72,7 @@ public interface VehicleDef {
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        @JsonIgnore
         default Class<?> getControllerClass() {
             return VehicleController.class;
         }

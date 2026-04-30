@@ -48,6 +48,7 @@ public final class ServiceDto {
         private String name;
         private String description;
         private BigDecimal cost;
+        private Long averageTimeInMinutes;
         @Singular(value = "material", ignoreNullCollections = true)
         private Set<MaterialDto.Response> materials;
         private LocalDateTime createdAt;
@@ -69,6 +70,7 @@ public final class ServiceDto {
         private String name;
         private String description;
         private BigDecimal cost;
+        private Long averageTimeInMinutes;
         private LocalDateTime createdAt;
 
         public UUID getId() {

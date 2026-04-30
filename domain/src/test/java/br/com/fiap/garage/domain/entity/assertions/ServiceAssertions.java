@@ -37,6 +37,8 @@ public final class ServiceAssertions {
                 .isEqualTo("Complete engine checkup and oil change");
         assertThat(actual.getCost())
                 .isEqualTo(new BigDecimal("250.00"));
+        assertThat(actual.getAverageTimeInMinutes())
+                .isZero();
 
         // Composition (Many-to-Many)
         assertThat_Material(actual.getMaterials().stream().findFirst().orElseThrow())
@@ -67,6 +69,8 @@ public final class ServiceAssertions {
                 .isEqualTo("Complete engine oil and filter change");
         assertThat(actual.getCost())
                 .isEqualTo(new BigDecimal("150.00"));
+        assertThat(actual.getAverageTimeInMinutes())
+                .isNull();
 
         // Composition (Many-to-Many)
         assertThat(actual.getMaterials())
@@ -97,6 +101,8 @@ public final class ServiceAssertions {
                 .isNull();
         assertThat(actual.getCost())
                 .isNull();
+        assertThat(actual.getAverageTimeInMinutes())
+                .isZero();
 
         // Composition (Many-to-Many)
         assertThat(actual.getMaterials())

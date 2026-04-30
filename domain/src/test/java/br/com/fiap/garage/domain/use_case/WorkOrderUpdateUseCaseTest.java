@@ -55,7 +55,7 @@ class WorkOrderUpdateUseCaseTest {
                 var id = UUID.fromString("b06b216f-215d-41eb-8c03-570f03562064");
                 var status = DIAGNOSING;
                 //When
-                var actual = workOrderUpdateUseCase.update(id, status);
+                var actual = workOrderUpdateUseCase.updateStatus(id, status);
                 //Then
                 assertThat(actual).isNotNull();
                 verify(repository, times(1)).save(any());
@@ -74,7 +74,7 @@ class WorkOrderUpdateUseCaseTest {
                 var status = EXECUTING;
                 //When
                 var actual = assertThrows(ResourceNotFoundException.class,
-                        () -> workOrderUpdateUseCase.update(id, status));
+                        () -> workOrderUpdateUseCase.updateStatus(id, status));
                 //Then
                 assertThat(actual)
                         .hasMessage("Resource [WorkOrder] with [id]: [b06b216f-215d-41eb-8c03-570f03562064] not found");

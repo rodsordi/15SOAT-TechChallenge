@@ -2,6 +2,7 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 
@@ -21,6 +23,10 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 public interface EstimatedServiceDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
+
+        @JsonProperty(index = 1)
+        @NotNull
+        UUID getId();
 
         @Schema(example = "Oil Change", description = "Estimated Service name. Owner: self")
         @NotBlank

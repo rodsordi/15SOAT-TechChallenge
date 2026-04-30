@@ -31,6 +31,8 @@ public final class EstimatedMaterialDtoAssertions {
          */
         public void wasConvertedFrom_EstimatedMaterial() {
             // Self
+            assertThat(actual.getId())
+                    .hasToString("68f15de3-8a96-4ba1-bf0e-6fae79517065");
             assertThat(actual.getType())
                     .isEqualTo(SHOP_SUPPLY);
             assertThat(actual.getName())

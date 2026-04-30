@@ -2,8 +2,10 @@ package br.com.fiap.garage.domain.use_case;
 
 import br.com.fiap.commons.exception.ResourceNotFoundException;
 import br.com.fiap.garage.domain.entity.*;
-import br.com.fiap.garage.domain.publisher.NotifyCustomerForApprovalPublisher;
-import br.com.fiap.garage.domain.repository.*;
+import br.com.fiap.garage.domain.repository.EmployeeRepository;
+import br.com.fiap.garage.domain.repository.ServiceRepository;
+import br.com.fiap.garage.domain.repository.VehicleRepository;
+import br.com.fiap.garage.domain.repository.WorkOrderRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -23,21 +25,18 @@ public class WorkOrderCreationUseCase {
 
     private final WorkOrderRepository workOrderRepository;
 
-    private final NotifyCustomerForApprovalPublisher notifyCustomerForApprovalPublisher;
-
     public WorkOrder create(WorkOrder workOrder, Set<UUID> servicesIds) {
         var foundEmployee = findEmployee(workOrder);
         var foundVehicle = findVehicle(workOrder);
         var foundServices = findServices(servicesIds);
-        workOrder.updateReferences(foundVehicle, foundEmployee, foundServices);
+
+        workOrder.update(foundEmployee);
+        workOrder.update(foundVehicle);
+        workOrder.update(foundServices);
 
         workOrder.calculateTotalAmount();
 
-        var createdWorkOrder = workOrderRepository.save(workOrder);
-
-        notifyCustomerForApprovalPublisher.notify(createdWorkOrder);
-
-        return createdWorkOrder;
+        return workOrderRepository.save(workOrder);
     }
 
     private Employee findEmployee(WorkOrder workOrder) {

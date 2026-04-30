@@ -2,6 +2,8 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.controller.ServiceController;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,9 +42,13 @@ public interface ServiceDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
+        @JsonProperty(index = 1)
         @Schema(example = "1723546e-37e4-4692-863c-9d00be8aae1b", description = "Service id. Owner: db")
         @NotNull
         UUID getId();
+
+        @Schema(example = "10", description = "Service average time in minutes. Owner: self")
+        Long getAverageTimeInMinutes();
     }
 
     interface DetailedPersisted extends AuditableDef.DetailedPersisted, RepresentedPersisted {
@@ -62,6 +68,7 @@ public interface ServiceDef {
 
     interface Representation extends Represented, RepresentedPersisted {
 
+        @JsonIgnore
         default Class<?> getControllerClass() {
             return ServiceController.class;
         }

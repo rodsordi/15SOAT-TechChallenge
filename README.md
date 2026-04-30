@@ -70,7 +70,20 @@ mvn test -DintegrationTests
 curl 
 ```
 
-## 🧹 Running unit tests with coverage report
+## Quality
+
+## 🛡️ Vulnerabilities
+
+- Request an api-key on https://nvd.nist.gov/developers/request-an-api-key
+- Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability checks.
+
+```sh
+
+NVD_API_KEY=${confirmed_api_key_on_email}
+mvn clean verify -DskipTests -Dowasp
+```
+
+## 🧹 Quality coverage
 
 ```sh
 curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=Sonarqube@2026"

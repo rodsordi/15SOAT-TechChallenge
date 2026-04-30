@@ -31,6 +31,8 @@ public final class EstimatedServiceDtoAssertions {
          */
         public void wasConvertedFrom_EstimatedService() {
             // Self
+            assertThat(actual.getId())
+                    .hasToString("b69f475d-40b4-41bc-b0ab-22500db01821");
             assertThat(actual.getName())
                     .isEqualTo("Engine Overhaul");
             assertThat(actual.getDescription())

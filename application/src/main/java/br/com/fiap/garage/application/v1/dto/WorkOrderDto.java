@@ -91,6 +91,6 @@ public final class WorkOrderDto {
     public static class PatchRequest implements WorkOrderDef.PatchRequest {
         private WorkOrderStatus status;
         private UUID employeeId;
-        private Set<UUID> servicesIds;
+        private UUID finishedServiceId;
     }
 }

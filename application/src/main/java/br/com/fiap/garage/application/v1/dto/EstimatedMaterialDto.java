@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -22,6 +23,7 @@ public final class EstimatedMaterialDto {
     @AllArgsConstructor(access = PRIVATE)
     @Schema(name = ".EstimatedMaterial.Response")
     public static class Response implements EstimatedMaterialDef.Response {
+        private UUID id;
         private MaterialType type;
         private String name;
         private String description;

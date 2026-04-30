@@ -13,7 +13,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.create_WorkOrderDto_Request;
 import static br.com.fiap.garage.iandt.WorkOrderCreationTest.createWorkOrder;
 import static io.restassured.RestAssured.given;
-import static java.text.MessageFormat.format;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -43,7 +42,8 @@ public class WorkOrderSearchTest extends GarageIntegrationTest {
                 var response = given()
                         .log().all()
                         .header("Authorization", authorization)
-                        .get(format("/v1/work-orders/{0}", workOrderId))
+                        .pathParam("workOrderId", workOrderId)
+                        .get("/v1/work-orders/{workOrderId}")
                         .then()
                         .log().all()
                         .extract()

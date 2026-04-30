@@ -42,6 +42,10 @@ public class Service extends AuditableEntity implements Serializable {
     @Column(nullable = false, comment = "Service cost. Owner: self")
     private BigDecimal cost;
 
+    @Column(comment = "Service average time in minutes. Owner: self")
+    private Long averageTimeInMinutes;
+
+    // Aggregate
     @Singular(value = "material", ignoreNullCollections = true)
     @ManyToMany(fetch = EAGER)
     @JoinTable(schema = "garage", name = "service_inventory_material",
@@ -73,5 +77,9 @@ public class Service extends AuditableEntity implements Serializable {
 
     public void updateMaterialsReference(Set<Material> materials) {
         this.materials = materials;
+    }
+
+    public void updateAverageTime(Long averageTimeInMinutes) {
+        this.averageTimeInMinutes = averageTimeInMinutes;
     }
 }

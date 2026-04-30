@@ -2,6 +2,8 @@ package br.com.fiap.garage.application.v1.def;
 
 import br.com.fiap.commons.def.AuditableDef;
 import br.com.fiap.garage.application.v1.controller.InventoryMaterialController;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,6 +29,7 @@ public interface InventoryMaterialDef {
 
     interface RepresentedPersisted extends AuditableDef.RepresentedPersisted {
 
+        @JsonProperty(index = 1)
         @Schema(example = "4ee13743-56d1-4e66-8ef0-cf2c8c45d847", description = "Inventory id. Owner: db")
         @NotNull
         UUID getId();
@@ -54,6 +57,7 @@ public interface InventoryMaterialDef {
 
         <T extends MaterialDef.Representation> T getMaterial();
 
+        @JsonIgnore
         default Class<?> getControllerClass() {
             return InventoryMaterialController.class;
         }
