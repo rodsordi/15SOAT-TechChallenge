@@ -24,7 +24,7 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Customer.Request")
+    @Schema(name = "Customer.Request")
     public static class Request implements CustomerDef.Request {
         private String username;
         private String password;
@@ -43,7 +43,7 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Customer.Response")
+    @Schema(name = "Customer.Response")
     public static class Response implements CustomerDef.Response {
         private UUID id;
         private String username;
@@ -65,7 +65,7 @@ public final class CustomerDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Customer.Representation")
+    @Schema(name = "Customer.Representation")
     public static class Representation extends RepresentationModel<Representation> implements CustomerDef.Representation {
         private UUID id;
         private String username;
@@ -90,7 +90,7 @@ public final class CustomerDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Customer.UpdateRequest")
+    @Schema(name = "Customer.UpdateRequest")
     public static class PatchRequest implements CustomerDef.PatchRequest {
         private String name;
         private String email;

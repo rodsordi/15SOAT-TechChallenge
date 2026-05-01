@@ -18,7 +18,7 @@ public final class EstimatedServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".EstimatedService.Response")
+    @Schema(name = "EstimatedService.Response")
     public static class Response implements EstimatedServiceDef.Response {
         private UUID id;
         private String name;

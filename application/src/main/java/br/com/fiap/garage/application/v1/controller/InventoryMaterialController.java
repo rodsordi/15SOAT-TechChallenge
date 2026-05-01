@@ -34,6 +34,7 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public InventoryMaterialDto.Response create(
             @Valid
             @RequestBody
@@ -45,6 +46,7 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
 
     @GetMapping(path = "/{inventoryMaterialId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public InventoryMaterialDto.Response findById(
             @PathVariable("inventoryMaterialId")
             UUID inventoryMaterialId) {
@@ -53,6 +55,7 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<InventoryMaterialDto.Representation> findAll(
             InventoryMaterialFilter filter) {
         var foundInventories = inventoryMaterialSearchUseCase.findAll(filter);
@@ -65,6 +68,7 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
     @PutMapping(path = "/{inventoryMaterialId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public InventoryMaterialDto.Response update(
             @PathVariable("inventoryMaterialId")
             UUID inventoryMaterialId,
@@ -79,6 +83,7 @@ public class InventoryMaterialController implements InventoryMaterialSwagger {
     @PatchMapping(path = "/{inventoryMaterialId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public InventoryMaterialDto.Response update(
             @PathVariable("inventoryMaterialId")
             UUID inventoryMaterialId,

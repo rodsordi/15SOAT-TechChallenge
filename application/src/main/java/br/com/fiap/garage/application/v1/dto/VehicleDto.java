@@ -24,7 +24,7 @@ public final class VehicleDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Vehicle.Request")
+    @Schema(name = "Vehicle.Request")
     public static class Request implements VehicleDef.Request {
         private String make;
         private String model;
@@ -40,7 +40,7 @@ public final class VehicleDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Vehicle.Response")
+    @Schema(name = "Vehicle.Response")
     public static class Response implements VehicleDef.Response {
         private UUID id;
         private String make;
@@ -61,7 +61,7 @@ public final class VehicleDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Vehicle.Representation")
+    @Schema(name = "Vehicle.Representation")
     public static class Representation extends RepresentationModel<Representation> implements VehicleDef.Representation {
         private UUID id;
         private String make;

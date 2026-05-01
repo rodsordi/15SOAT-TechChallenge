@@ -34,6 +34,7 @@ public class ServiceController implements ServiceSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public ServiceDto.Response create(
             @Valid
             @RequestBody
@@ -45,6 +46,7 @@ public class ServiceController implements ServiceSwagger {
 
     @GetMapping(path = "/{serviceId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public ServiceDto.Response findById(
             @PathVariable("serviceId")
             UUID serviceId) {
@@ -53,6 +55,7 @@ public class ServiceController implements ServiceSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<ServiceDto.Representation> findAll(
             ServiceFilter filter) {
         var foundServices = serviceSearchUseCase.findAll(filter);
@@ -65,6 +68,7 @@ public class ServiceController implements ServiceSwagger {
     @PutMapping(path = "/{serviceId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public ServiceDto.Response update(
             @PathVariable("serviceId")
             UUID serviceId,
@@ -78,8 +82,9 @@ public class ServiceController implements ServiceSwagger {
 
     @GetMapping(path = "/calculateAverageTime")
     @ResponseStatus(NO_CONTENT)
+    @Override
     public void calculateAverageTime() {
-        System.out.println("Substituting a scheduler or batch job for a while");
+        //TODO: Substituting a scheduler or batch job for a while
         serviceUpdateUseCase.calculateAverageTime();
     }
 }

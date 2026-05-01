@@ -34,6 +34,7 @@ public class WorkOrderController implements WorkOrderSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public WorkOrderDto.Response create(
             @Valid
             @RequestBody
@@ -45,6 +46,7 @@ public class WorkOrderController implements WorkOrderSwagger {
 
     @GetMapping(path = "/{workOrderId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public WorkOrderDto.Response findById(
             @PathVariable("workOrderId")
             UUID workOrderId) {
@@ -53,6 +55,7 @@ public class WorkOrderController implements WorkOrderSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<WorkOrderDto.Representation> findAll(
             WorkOrderFilter filter) {
         var foundWorkOrders = workOrderSearchUseCase.findAll(filter);
@@ -65,6 +68,7 @@ public class WorkOrderController implements WorkOrderSwagger {
     @PatchMapping(path = "/{workOrderId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public WorkOrderDto.Response update(
             @PathVariable("workOrderId")
             UUID workOrderId,

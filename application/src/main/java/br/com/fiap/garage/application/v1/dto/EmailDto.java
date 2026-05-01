@@ -18,7 +18,7 @@ public final class EmailDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Email.Request")
+    @Schema(name = "Email.Request")
     public static class Request implements EmailDef.Request {
 
         private String recipient;
@@ -30,7 +30,7 @@ public final class EmailDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Email.Response")
+    @Schema(name = "Email.Response")
     public static class Response implements EmailDef.Response {
 
         private String recipient;
@@ -45,7 +45,7 @@ public final class EmailDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Email.Representation")
+    @Schema(name = "Email.Representation")
     public static class Representation implements EmailDef.Representation {
 
         private String recipient;

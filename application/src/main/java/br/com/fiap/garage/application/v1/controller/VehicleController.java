@@ -26,6 +26,7 @@ public class VehicleController implements VehicleSwagger {
 
     @GetMapping(path = "/{vehicleId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public VehicleDto.Response findById(
             @PathVariable("vehicleId")
             UUID vehicleId) {
@@ -34,6 +35,7 @@ public class VehicleController implements VehicleSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<VehicleDto.Representation> findAll(
             VehicleFilter filter) {
         var foundVehicles = vehicleSearchUseCase.findAll(filter);

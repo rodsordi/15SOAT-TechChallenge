@@ -23,7 +23,7 @@ public final class EmployeeDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Employee.Request")
+    @Schema(name = "Employee.Request")
     public static class Request implements EmployeeDef.Request {
         private String username;
         private String password;
@@ -40,7 +40,7 @@ public final class EmployeeDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Employee.Response")
+    @Schema(name = "Employee.Response")
     public static class Response implements EmployeeDef.Response {
         private UUID id;
         private String username;
@@ -60,7 +60,7 @@ public final class EmployeeDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Employee.Representation")
+    @Schema(name = "Employee.Representation")
     public static class Representation extends RepresentationModel<Representation> implements EmployeeDef.Representation {
         private UUID id;
         private String username;
@@ -85,7 +85,7 @@ public final class EmployeeDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Employee.UpdateRequest")
+    @Schema(name = "Employee.UpdateRequest")
     public static class PatchRequest implements EmployeeDef.PatchRequest {
         private String name;
         private String email;

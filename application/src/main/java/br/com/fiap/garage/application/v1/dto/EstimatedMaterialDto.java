@@ -21,7 +21,7 @@ public final class EstimatedMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".EstimatedMaterial.Response")
+    @Schema(name = "EstimatedMaterial.Response")
     public static class Response implements EstimatedMaterialDef.Response {
         private UUID id;
         private MaterialType type;

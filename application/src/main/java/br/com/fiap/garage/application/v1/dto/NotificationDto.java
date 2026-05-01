@@ -24,7 +24,7 @@ public final class NotificationDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Notification.Request")
+    @Schema(name = "Notification.Request")
     public static class Request implements NotificationDef.Request {
 
         private UUID externalId;
@@ -39,7 +39,7 @@ public final class NotificationDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Notification.Response")
+    @Schema(name = "Notification.Response")
     public static class Response implements NotificationDef.Response {
 
         private UUID id;
@@ -58,7 +58,7 @@ public final class NotificationDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Notification.Representation")
+    @Schema(name = "Notification.Representation")
     public static class Representation extends RepresentationModel<Representation> implements NotificationDef.Representation {
 
         private UUID id;

@@ -1,6 +1,7 @@
 package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.garage.application.v1.dto.VehicleDto;
+import br.com.fiap.garage.application.v1.swagger.NestedVehicleSwagger;
 import br.com.fiap.garage.application.v1.swagger.VehicleSwagger;
 import br.com.fiap.garage.domain.use_case.VehicleCreationUseCase;
 import jakarta.validation.Valid;
@@ -16,7 +17,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(path = "/v1/customers/{customerId}/vehicles")
-public class NestedVehicleController implements VehicleSwagger {
+public class NestedVehicleController implements NestedVehicleSwagger {
 
     private final VehicleCreationUseCase vehicleCreationUseCase;
 
@@ -24,6 +25,7 @@ public class NestedVehicleController implements VehicleSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public VehicleDto.Response create(
             @PathVariable
             UUID customerId,

@@ -23,7 +23,7 @@ public final class InventoryMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".InventoryMaterial.Request")
+    @Schema(name = "InventoryMaterial.Request")
     public static class Request implements InventoryMaterialDef.Request {
         private Integer quantityInStock;
         private MaterialDto.Request material;
@@ -37,7 +37,7 @@ public final class InventoryMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".InventoryMaterial.Response")
+    @Schema(name = "InventoryMaterial.Response")
     public static class Response implements InventoryMaterialDef.Response {
         private UUID id;
         private Integer quantityInStock;
@@ -56,7 +56,7 @@ public final class InventoryMaterialDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".InventoryMaterial.Representation")
+    @Schema(name = "InventoryMaterial.Representation")
     public static class Representation extends RepresentationModel<Representation> implements InventoryMaterialDef.Representation {
         private UUID id;
         private Integer quantityInStock;
@@ -80,7 +80,7 @@ public final class InventoryMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".InventoryMaterial.PutRequest")
+    @Schema(name = "InventoryMaterial.PutRequest")
     public static class PutRequest implements InventoryMaterialDef.PutRequest {
         private Integer quantityInStock;
         private MaterialDto.Request material;
@@ -94,7 +94,7 @@ public final class InventoryMaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".InventoryMaterial.PatchRequest")
+    @Schema(name = "InventoryMaterial.PatchRequest")
     public static class PatchRequest implements InventoryMaterialDef.PatchRequest {
         private Integer quantityToBeAddedToStock;
         private Integer quantityToBeReserved;

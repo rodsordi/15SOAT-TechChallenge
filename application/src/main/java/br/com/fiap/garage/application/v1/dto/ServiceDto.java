@@ -25,7 +25,7 @@ public final class ServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Service.Request")
+    @Schema(name = "Service.Request")
     public static class Request implements ServiceDef.Request {
         private String name;
         private String description;
@@ -42,7 +42,7 @@ public final class ServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Service.Response")
+    @Schema(name = "Service.Response")
     public static class Response implements ServiceDef.Response {
         private UUID id;
         private String name;
@@ -64,7 +64,7 @@ public final class ServiceDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".Service.Representation")
+    @Schema(name = "Service.Representation")
     public static class Representation extends RepresentationModel<ServiceDto.Representation> implements ServiceDef.Representation {
         private UUID id;
         private String name;
@@ -89,7 +89,7 @@ public final class ServiceDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Service.PutRequest")
+    @Schema(name = "Service.PutRequest")
     public static class PutRequest implements ServiceDef.PutRequest {
         private String name;
         private String description;

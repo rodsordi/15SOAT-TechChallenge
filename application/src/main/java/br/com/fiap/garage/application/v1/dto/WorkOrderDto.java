@@ -26,7 +26,7 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".WorkOrder.Request")
+    @Schema(name = "WorkOrder.Request")
     public static class Request implements WorkOrderDef.Request {
         private UUID vehicleId;
         private UUID employeeId;
@@ -42,7 +42,7 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".WorkOrder.Response")
+    @Schema(name = "WorkOrder.Response")
     public static class Response implements WorkOrderDef.Response {
         private UUID id;
         private WorkOrderStatus status;
@@ -64,7 +64,7 @@ public final class WorkOrderDto {
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
     @EqualsAndHashCode(callSuper = true)
-    @Schema(name = ".WorkOrder.Representation")
+    @Schema(name = "WorkOrder.Representation")
     public static class Representation extends RepresentationModel<Representation> implements WorkOrderDef.Representation {
         private UUID id;
         private WorkOrderStatus status;
@@ -87,7 +87,7 @@ public final class WorkOrderDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".WorkOrder.PatchRequest")
+    @Schema(name = "WorkOrder.PatchRequest")
     public static class PatchRequest implements WorkOrderDef.PatchRequest {
         private WorkOrderStatus status;
         private UUID employeeId;

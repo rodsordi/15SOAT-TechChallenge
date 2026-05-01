@@ -22,6 +22,7 @@ public class AuthController implements AuthSwagger {
     @PostMapping(path = "/login",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public ResponseEntity<LoginResponseDto> login(
             @RequestBody
             LoginRequestDto data) {
@@ -30,7 +31,7 @@ public class AuthController implements AuthSwagger {
         return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
-    record LoginRequestDto(String username, String password) {}
+    public record LoginRequestDto(String username, String password) {}
 
-    record LoginResponseDto(String token) {}
+    public record LoginResponseDto(String token) {}
 }

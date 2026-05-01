@@ -6,11 +6,10 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
 
-  localstack:
-    image: localstack/localstack
+  floci:
+    image: floci/floci:latest
     ports:
       - "4566:4566"
-      - "4510-4559:4510-4559"
 
   sonarqube:
     image: sonarqube:community

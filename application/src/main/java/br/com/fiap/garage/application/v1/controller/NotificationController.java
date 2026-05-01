@@ -30,6 +30,7 @@ public class NotificationController implements NotificationSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public NotificationDto.Response create(
             @Valid
             @RequestBody
@@ -41,6 +42,7 @@ public class NotificationController implements NotificationSwagger {
 
     @GetMapping(path = "/{notificationId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public NotificationDto.Response findById(
             @PathVariable("notificationId")
             UUID notificationId) {
@@ -49,6 +51,7 @@ public class NotificationController implements NotificationSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<NotificationDto.Representation> findAll(
             NotificationFilter filter) {
         var foundNotifications = notificationSearchUseCase.findAll(filter);

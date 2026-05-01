@@ -33,6 +33,7 @@ public class CustomerController implements CustomerSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public CustomerDto.Response create(
             @RequestBody
             @Valid
@@ -44,6 +45,7 @@ public class CustomerController implements CustomerSwagger {
 
     @GetMapping(path = "/{customerId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public CustomerDto.Response findById(
             @PathVariable("customerId")
             UUID customerId) {
@@ -52,6 +54,7 @@ public class CustomerController implements CustomerSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<CustomerDto.Representation> findAll(
             CustomerFilter filter) {
         var foundCustomers = customerSearchUseCase.findAll(filter);
@@ -64,6 +67,7 @@ public class CustomerController implements CustomerSwagger {
     @PatchMapping(path = "/{customerId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public CustomerDto.Response update(
             @PathVariable("customerId")
             UUID customerId,

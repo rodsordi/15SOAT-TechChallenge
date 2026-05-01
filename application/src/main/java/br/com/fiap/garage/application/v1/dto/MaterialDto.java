@@ -27,7 +27,7 @@ public final class MaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Material.Request")
+    @Schema(name = "Material.Request")
     public static class Request implements MaterialDef.Request {
         private MaterialType type;
         private String name;
@@ -43,7 +43,7 @@ public final class MaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Material.Response")
+    @Schema(name = "Material.Response")
     public static class Response implements MaterialDef.Response {
         private UUID id;
         private MaterialType type;
@@ -62,7 +62,7 @@ public final class MaterialDto {
     @Builder
     @NoArgsConstructor(access = PRIVATE)
     @AllArgsConstructor(access = PRIVATE)
-    @Schema(name = ".Material.Representation")
+    @Schema(name = "Material.Representation")
     public static class Representation implements MaterialDef.Representation {
         private UUID id;
         private MaterialType type;

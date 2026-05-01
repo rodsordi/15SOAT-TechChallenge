@@ -19,14 +19,14 @@ import static br.com.fiap.garage.domain.enums.WorkOrderStatus.WAITING_FOR_APPROV
 @RequiredArgsConstructor
 public class WorkOrderUpdateUseCase {
 
-    private final WorkOrderRepository repository;
+    private final WorkOrderRepository workOrderRepository;
 
     private final EmployeeRepository employeeRepository;
 
     private final NotifyCustomerForApprovalPublisher notifyCustomerForApprovalPublisher;
 
     public WorkOrder updateStatus(UUID id, WorkOrderStatus status) {
-        var foundWorkOrder = repository.findById(id)
+        var foundWorkOrder = workOrderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(WorkOrder.class, "id", id));
 
         switch (status) {
@@ -41,11 +41,11 @@ public class WorkOrderUpdateUseCase {
         if (WAITING_FOR_APPROVAL == status)
             notifyCustomerForApprovalPublisher.notify(foundWorkOrder);
 
-        return repository.save(foundWorkOrder);
+        return workOrderRepository.save(foundWorkOrder);
     }
 
     public WorkOrder updateEmployee(UUID id, UUID employeeId) {
-        var foundWorkOrder = repository.findById(id)
+        var foundWorkOrder = workOrderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(WorkOrder.class, "id", id));
 
         var foundEmployee = employeeRepository.findById(employeeId)
@@ -53,17 +53,17 @@ public class WorkOrderUpdateUseCase {
 
         foundWorkOrder.update(foundEmployee);
 
-        return repository.save(foundWorkOrder);
+        return workOrderRepository.save(foundWorkOrder);
     }
 
     public WorkOrder finishService(UUID id, UUID serviceToBeFinished) {
-        var foundWorkOrder = repository.findById(id)
+        var foundWorkOrder = workOrderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(WorkOrder.class, "id", id));
 
         for (var estimatedService : foundWorkOrder.getEstimatedServices())
             if (estimatedService.getServiceId().toString().equals(serviceToBeFinished.toString()))
                 estimatedService.finish();
 
-        return repository.save(foundWorkOrder);
+        return workOrderRepository.save(foundWorkOrder);
     }
 }

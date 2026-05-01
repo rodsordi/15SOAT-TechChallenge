@@ -56,6 +56,12 @@ docker build -t garage:0.0.1-SNAPSHOT .
 docker compose up
 ```
 
+## 📄 Swagger
+
+| Ambiente | Url                                                     | 
+|----------|---------------------------------------------------------|
+| local    | [link](http://localhost:8080/api/swagger-ui/index.html) |
+
 ## 🧪 Integration tests:
 
 ### 🍿 Running integration tests
@@ -91,12 +97,6 @@ SONAR_TOKEN=$(curl -u admin:Sonarqube@2026 -X POST "http://localhost:9000/api/us
 echo $SONAR_TOKEN
 mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.token=$SONAR_TOKEN
 ```
-
-## 📄 Swagger
-
-| Ambiente | Url                                                     | 
-|----------|---------------------------------------------------------|
-| local    | [link](http://localhost:8080/api/swagger-ui/index.html) |
 
 ## 📌 Versão
 

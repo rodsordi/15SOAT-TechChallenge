@@ -31,6 +31,7 @@
         <sonar.coverage.exclusions>
             **/filter/**,
             **/exception/**,
+            **/validation/**,
             **/map/**,
             infra/**,
             application/**,

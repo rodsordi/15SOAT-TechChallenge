@@ -33,6 +33,7 @@ public class EmployeeController implements EmployeeSwagger {
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
+    @Override
     public EmployeeDto.Response create(
             @Valid
             @RequestBody
@@ -44,6 +45,7 @@ public class EmployeeController implements EmployeeSwagger {
 
     @GetMapping(path = "/{employeeId}",
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public EmployeeDto.Response findById(
             @PathVariable("employeeId")
             UUID employeeId) {
@@ -52,6 +54,7 @@ public class EmployeeController implements EmployeeSwagger {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @Override
     public Page<EmployeeDto.Representation> findAll(
             EmployeeFilter filter) {
         var foundEmployees = employeeSearchUseCase.findAll(filter);
@@ -64,6 +67,7 @@ public class EmployeeController implements EmployeeSwagger {
     @PatchMapping(path = "/{employeeId}",
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
+    @Override
     public EmployeeDto.Response update(
             @PathVariable("employeeId")
             UUID employeeId,

@@ -19,6 +19,7 @@ import static br.com.fiap.garage.domain.enums.WorkOrderStatus.*;
 import static br.com.fiap.garage.iandt.WorkOrderCreationTest.createWorkOrder;
 import static br.com.fiap.garage.iandt.WorkOrderUpdateTest.updateWorkOrder;
 import static io.restassured.RestAssured.given;
+import static java.lang.Thread.sleep;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -47,8 +48,7 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response1 = createWorkOrder(authorization, json, requestBody1);
                 //Then
-                assertThat(response1.statusCode())
-                        .isEqualTo(201);
+                assertThat(response1.statusCode()).isEqualTo(201);
                 var workOrderId = response1.jsonPath().getString("id");
 
                 System.out.println("\n====== Sending to the mechanic to diagnose the problems of the customer's vehicle ======\n");
@@ -60,10 +60,8 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response2 = updateWorkOrder(authorization, json, workOrderId, requestBody2);
                 //Then
-                assertThat(response2.statusCode())
-                        .isEqualTo(200);
-                assertThat(response2.jsonPath().getString("status"))
-                        .isEqualTo("DIAGNOSING");
+                assertThat(response2.statusCode()).isEqualTo(200);
+                assertThat(response2.jsonPath().getString("status")).isEqualTo("DIAGNOSING");
 
                 System.out.println("\n====== Finished the diagnose, waiting for the customer's approval ======\n");
 
@@ -74,27 +72,21 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response3 = updateWorkOrder(authorization, json, workOrderId, requestBody3);
                 //Then
-                assertThat(response3.statusCode())
-                        .isEqualTo(200);
-                assertThat(response3.jsonPath().getString("status"))
-                        .isEqualTo("WAITING_FOR_APPROVAL");
-
-                System.out.println("====== Wait 3 seconds until e-mail is approved ======");
-
+                assertThat(response3.statusCode()).isEqualTo(200);
+                assertThat(response3.jsonPath().getString("status")).isEqualTo("WAITING_FOR_APPROVAL");
                 try {
-                    Thread.sleep(3000);
+                    sleep(3000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
 
                 System.out.println("\n====== Checking the e-mail notification informing the service estimation ======\n");
 
                 //When
                 var response4 = searchNotificationByWorkOrderId(workOrderId);
                 //Then
-                assertThat(response4.statusCode())
-                        .isEqualTo(200);
-
+                assertThat(response4.statusCode()).isEqualTo(200);
 
                 System.out.println("\n====== Customer approval in website simulation ======\n");
 
@@ -105,10 +97,8 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response5 = updateWorkOrder(authorization, json, workOrderId, requestBody5);
                 //Then
-                assertThat(response5.statusCode())
-                        .isEqualTo(200);
-                assertThat(response5.jsonPath().getString("status"))
-                        .isEqualTo("EXECUTING");
+                assertThat(response5.statusCode()).isEqualTo(200);
+                assertThat(response5.jsonPath().getString("status")).isEqualTo("EXECUTING");
                 var serviceId = response5.jsonPath().getString("estimatedServices[0].id");
 
                 System.out.println("\n====== Finishing the service estimation ======\n");
@@ -120,10 +110,8 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response6 = updateWorkOrder(authorization, json, workOrderId, requestBody6);
                 //Then
-                assertThat(response6.statusCode())
-                        .isEqualTo(200);
-                assertThat(response6.jsonPath().getString("estimatedServices[0].finishedAt"))
-                        .isNotBlank();
+                assertThat(response6.statusCode()).isEqualTo(200);
+                assertThat(response6.jsonPath().getString("estimatedServices[0].finishedAt")).isNotBlank();
 
                 System.out.println("\n====== Finished the work order ======\n");
 
@@ -134,10 +122,8 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response7 = updateWorkOrder(authorization, json, workOrderId, requestBody7);
                 //Then
-                assertThat(response7.statusCode())
-                        .isEqualTo(200);
-                assertThat(response7.jsonPath().getString("status"))
-                        .isEqualTo("FINISHED");
+                assertThat(response7.statusCode()).isEqualTo(200);
+                assertThat(response7.jsonPath().getString("status")).isEqualTo("FINISHED");
 
                 System.out.println("\n====== Released the vehicle to the customer ======\n");
 
@@ -148,10 +134,8 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 //When
                 var response8 = updateWorkOrder(authorization, json, workOrderId, requestBody8);
                 //Then
-                assertThat(response8.statusCode())
-                        .isEqualTo(200);
-                assertThat(response8.jsonPath().getString("status"))
-                        .isEqualTo("RELEASED");
+                assertThat(response8.statusCode()).isEqualTo(200);
+                assertThat(response8.jsonPath().getString("status")).isEqualTo("RELEASED");
 
                 System.out.println("\n====== Simulate routine started of Services avg time calculation  ======\n");
 
@@ -165,8 +149,7 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                         .extract()
                         .response();
                 //Then
-                assertThat(response9.statusCode())
-                        .isEqualTo(204);
+                assertThat(response9.statusCode()).isEqualTo(204);
 
                 System.out.println("\n====== Query services average time ======\n");
 
@@ -181,10 +164,8 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                         .extract()
                         .response();
                 //Then
-                assertThat(response10.statusCode())
-                        .isEqualTo(200);
-                assertThat(response10.jsonPath().getLong("averageTimeInMinutes"))
-                        .isGreaterThan(0);
+                assertThat(response10.statusCode()).isEqualTo(200);
+                assertThat(response10.jsonPath().getLong("averageTimeInMinutes")).isGreaterThan(0);
             }
         }
     }
