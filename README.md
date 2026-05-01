@@ -1,7 +1,7 @@
 # Garage API
 
 API responsible for managing the vehicle mechanic workflow.
-Tech Challenge for the 15SOAT course.
+- Tech Challenge for the 15SOAT course.
 
 ## 🗒️ Information
 
@@ -26,7 +26,7 @@ export JAVA_HOME=~/app/jdk-25.0.2
 export PATH=$PATH:$JAVA_HOME/bin
 ```
 
-### 📂 Cloning the repository
+### 📂 Cloning repository
 
 ```sh
 git clone https://github.com/rodsordi/15SOAT-TechChallenge.git
@@ -72,24 +72,51 @@ mvn test -DintegrationTests
 
 ### 📂 Postman collection
 
+- Creating Employee
+
 ```sh
-curl 
+curl --location 'http://localhost:8080/api/v1/employees' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "john@garage.com",
+    "password": "Garage@2026",
+    "name": "John",
+    "email": "john@garage.com",
+    "cpf": "664.260.660-44"
+}'
+```
+
+- Authenticating
+
+```sh
+curl --location 'http://localhost:8080/api/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "john@garage.com",
+    "password": "Garage@2026"
+}'
+```
+
+- Fetching Employees
+
+```sh
+curl --location 'http://localhost:8080/api/v1/employees' \
+--header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdhcmFnZS5jb20iLCJpYXQiOjE3Nzc2MDczOTEsImV4cCI6MTc3NzYxMDk5MX0.Fzwy1Ii8gnpgUtZBRUsZWf8WJgoum-dUNmhNFd6SldgHEW9L6fKLF_xWB6mkVaZ0iQJyZszuhUtNrK64LxUcaQ'
 ```
 
 ## Quality
 
-## 🛡️ Vulnerabilities
+### 🛡️ Vulnerabilities
 
 - Request an api-key on https://nvd.nist.gov/developers/request-an-api-key
 - Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability checks.
 
 ```sh
-
 NVD_API_KEY=${confirmed_api_key_on_email}
 mvn clean verify -DskipTests -Dowasp
 ```
 
-## 🧹 Quality coverage
+### 🧹 Coverage
 
 ```sh
 curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=Sonarqube@2026"

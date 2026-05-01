@@ -41,7 +41,7 @@ public class CompleteFlowTest extends GarageIntegrationTest {
             @Test
             void test1() {
 
-                System.out.println("====== Creating a new work order ====");
+                System.out.println("\n====== Creating a new work order ====\n");
 
                 //Given
                 var requestBody1 = create_WorkOrderDto_Request().valid();
