@@ -1,6 +1,7 @@
 package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.commons.config.RestControllerTestConfig;
+import br.com.fiap.commons.exception.BusinessException;
 import br.com.fiap.garage.domain.entity.Customer;
 import br.com.fiap.garage.domain.use_case.CustomerCreationUseCase;
 import br.com.fiap.garage.domain.use_case.CustomerSearchUseCase;
@@ -94,6 +95,32 @@ class CustomerControllerTest {
                         .andDo(print())
                         .andExpect(status().isCreated())
                         .andExpect(jsonPath("$.id", is("7a403fc9-3c96-408c-984f-1fea2729b59f")));
+            }
+        }
+
+        @DisplayName("Then should return error")
+        @Nested
+        class Failure {
+
+            @DisplayName("Given a customer with all fields, in scenario with BusinessException")
+            @Test
+            void test1() throws Exception {
+                //Scenario
+                when(customerCreationUseCase.create(any()))
+                        .thenThrow(new BusinessException("Erro"));
+                //Given
+                var requestBody = create_CustomerDto_Request()
+                        .withAllFields();
+                //When
+                mockMvc.perform(post("/v1/customers")
+                                .contentType(APPLICATION_JSON)
+                                .accept(APPLICATION_JSON)
+                                .characterEncoding(UTF_8.name())
+                                .content(gson.toJson(requestBody)))
+                        //Then
+                        .andDo(print())
+                        .andExpect(status().isUnprocessableContent())
+                        .andExpect(jsonPath("$.detail", is("Erro")));
             }
         }
     }

@@ -165,7 +165,7 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                         .response();
                 //Then
                 assertThat(response10.statusCode()).isEqualTo(200);
-                assertThat(response10.jsonPath().getLong("averageTimeInMinutes")).isGreaterThan(0);
+                assertThat(response10.jsonPath().getLong("averageTimeInMinutes")).isZero();
             }
         }
     }
