@@ -27,7 +27,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
         <sonar.coverage.exclusions>
             **/filter/**,
             **/exception/**,
@@ -170,6 +169,14 @@
 
             <!-- Vulnerability -->
             <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.7.11</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Vulnerability -->
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jackson</artifactId>
                 <version>4.0.6</version>
@@ -181,6 +188,7 @@
                 <artifactId>json-schema-validator</artifactId>
                 <version>6.0.0</version>
                 <exclusions>
+                    <!-- Vulnerability -->
                     <exclusion>
                         <groupId>rhino</groupId>
                         <artifactId>rhino</artifactId>
@@ -195,10 +203,12 @@
                 <version>4.2.1</version>
                 <scope>test</scope>
                 <exclusions>
+                    <!-- Vulnerability -->
                     <exclusion>
                         <groupId>com.github.jknack</groupId>
                         <artifactId>handlebars</artifactId>
                     </exclusion>
+                    <!-- Vulnerability -->
                     <exclusion>
                         <groupId>org.eclipse.jetty.ee10</groupId>
                         <artifactId>jetty-ee10-webapp</artifactId>
@@ -247,6 +257,10 @@
                 <exclusion>
                     <groupId>io.opentelemetry.semconv</groupId>
                     <artifactId>opentelemetry-semconv</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.opentelemetry.proto</groupId>
+                    <artifactId>opentelemetry-proto</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

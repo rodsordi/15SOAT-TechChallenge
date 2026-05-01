@@ -42,24 +42,11 @@ class ServiceCreationTest extends GarageIntegrationTest {
             @DisplayName("Given a valid service, in scenario with a registered inventory material")
             @Test
             void test1() {
-                //Scenario
-                var registeredInventoryMaterial = create_InventoryMaterialDto_Request().withAllFields();
-                var scenarioResponse = createInventoryMaterial(authorization, json, registeredInventoryMaterial);
-                var materialId = UUID.fromString(scenarioResponse.body().jsonPath().getString("id"));
                 //Given
-                var requestBody = create_ServiceDto_Request().valid();
-                setField(requestBody, "materialsIds", Set.of(materialId));
+                var requestBody = create_ServiceDto_Request()
+                        .withAllFields();
                 //When
-                var response = given()
-                        .log().all()
-                        .header("Authorization", authorization)
-                        .contentType(JSON)
-                        .body(json.writeValueAsString(requestBody))
-                        .post("/v1/services")
-                        .then()
-                        .log().all()
-                        .extract()
-                        .response();
+                var response = createService(authorization, json, requestBody);
                 //Then
                 assertThat(response.statusCode())
                         .isEqualTo(201);
@@ -68,6 +55,10 @@ class ServiceCreationTest extends GarageIntegrationTest {
     }
 
     public static Response createService(String authorization, JsonMapper json, ServiceDto.Request requestBody) {
+        var registeredInventoryMaterial = create_InventoryMaterialDto_Request().withAllFields();
+        var scenarioResponse = createInventoryMaterial(authorization, json, registeredInventoryMaterial);
+        var materialId = UUID.fromString(scenarioResponse.jsonPath().getString("id"));
+        setField(requestBody, "materialsIds", Set.of(materialId));
         return given()
                 .log().all()
                 .header("Authorization", authorization)

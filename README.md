@@ -1,6 +1,7 @@
 # Garage API
 
 API responsible for managing the vehicle mechanic workflow.
+
 - Tech Challenge for the 15SOAT course.
 
 ## 🗒️ Information
@@ -62,15 +63,7 @@ docker compose up
 |----------|---------------------------------------------------------|
 | local    | [link](http://localhost:8080/api/swagger-ui/index.html) |
 
-## 🧪 Integration tests:
-
-### 🍿 Running integration tests
-
-```sh
-mvn test -DintegrationTests
-```
-
-### 📂 Postman collection
+## 🌐 Curls
 
 - Creating Employee
 
@@ -104,26 +97,56 @@ curl --location 'http://localhost:8080/api/v1/employees' \
 --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdhcmFnZS5jb20iLCJpYXQiOjE3Nzc2MDczOTEsImV4cCI6MTc3NzYxMDk5MX0.Fzwy1Ii8gnpgUtZBRUsZWf8WJgoum-dUNmhNFd6SldgHEW9L6fKLF_xWB6mkVaZ0iQJyZszuhUtNrK64LxUcaQ'
 ```
 
-## Quality
+## ✨ Quality
+
+### 🧪 Integration tests:
+
+```sh
+mvn test -DintegrationTests
+```
 
 ### 🛡️ Vulnerabilities
 
 - Request an api-key on https://nvd.nist.gov/developers/request-an-api-key
-- Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability checks.
+- Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability
+  checks.
 
 ```sh
 NVD_API_KEY=${confirmed_api_key_on_email}
+echo $NVD_API_KEY
+```
+
+```sh
 mvn clean verify -DskipTests -Dowasp
 ```
 
 ### 🧹 Coverage
 
 ```sh
+docker compose -f docker-compose-devops.yml up -d
+```
+
+- Change password and create token
+- Obs: To change new tokens, you should change the name query param.
+
+```sh
 curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=Sonarqube@2026"
 SONAR_TOKEN=$(curl -u admin:Sonarqube@2026 -X POST "http://localhost:9000/api/user_tokens/generate?name=setup-token" | grep -oP '"token":"\K[^"]+')
 echo $SONAR_TOKEN
+```
+
+- Run report
+
+```sh
 mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.token=$SONAR_TOKEN
 ```
+
+- Browse [sonar](http://localhost:9000/)
+
+| User  | Pass           | 
+|-------|----------------|
+| admin | Sonarqube@2026 |
+
 
 ## 📌 Versão
 

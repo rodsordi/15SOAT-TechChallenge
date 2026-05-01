@@ -8,7 +8,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
-      SPRING_CLOUD_AWS_SQS_ENDPOINT: http://localstack:4566
+      SPRING_CLOUD_AWS_SQS_ENDPOINT: http://floci:4566
     depends_on:
       - postgres
-      - localstack
+      - floci
