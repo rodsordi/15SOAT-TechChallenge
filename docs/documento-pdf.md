@@ -1,13 +1,20 @@
 # Documento de entrega tech challenge (fase 1)
 
 ## Grupo
+
 - Rodrigo de Sordi
 
 ## Integrantes
-  - Rodrigo de Sordi - RM372537 - rodsordi@gmail.com
+
+- Rodrigo de Sordi - RM372537 - rodsordi@gmail.com
 
 ## Repositório
-  - https://github.com/rodsordi/15SOAT-TechChallenge
+
+- https://github.com/rodsordi/15SOAT-TechChallenge
+
+## Vídeo
+
+- 
 
 ## Documentação
 
@@ -25,9 +32,10 @@
 
 ### Domain Story Telling
 
+![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.png)
+
 - https://egon.io/app/
 - https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.egn
-- ![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.png)
 
 ### Event Storming
 
@@ -58,8 +66,15 @@ Rel(garage_api, garage_db, "Save data", "jdbc")
 Rel(garage_api, send_notification_queue, "send e-mail", "aws/sdk")
 ```
 
+## Relatório de cobertura de testes de unidade
+
+![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/sonarqube-coverage-evidence.png)
+
+- Obs: Apesar de ter testes em várias camadas, restringi para validar apenas o módulo domain e ainda restringi mais alguns packages que entendi que não teriam impacto na cobertura.
+
 ## Relatório vulnerabilidades
 
+![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/owasp-report.png)
+
 - https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/dependency-check-report.html
-- ![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/owasp-report.png)
 - Obs: Resolvi todas as vulnerabilidades de nível alto, estou fazendo uma conceção sobre 2 vulnerabilidades médias devido à falta de resolução até o momento do relatório.
