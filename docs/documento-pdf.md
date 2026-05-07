@@ -27,7 +27,7 @@
 
 - https://egon.io/app/
 - https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.egn
-- ![Texto Alternativo](docs/domain-storytelling.png)
+- ![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.png)
 
 ### Event Storming
 
@@ -61,4 +61,5 @@ Rel(garage_api, send_notification_queue, "send e-mail", "aws/sdk")
 ## Relatório vulnerabilidades
 
 - https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/dependency-check-report.html
+- ![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/owasp-report.png)
 - Obs: Resolvi todas as vulnerabilidades de nível alto, estou fazendo uma conceção sobre 2 vulnerabilidades médias devido à falta de resolução até o momento do relatório.
