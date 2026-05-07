@@ -27,13 +27,11 @@
 
 - https://egon.io/app/
 - https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.egn
-- ![Texto Alternativo](https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/domain-storytelling.png)
+- ![Texto Alternativo](docs/domain-storytelling.png)
 
 ### Event Storming
 
-```mermaid
-
-```
+- [Link de acesso ao Miro compartilhado para visualização](https://miro.com/welcomeonboard/L2JXRVI4dWtaS3hoNGdyYkNTVWh0KytocHpUOStGTkpmREpQK1Z6RlNmbm03R3dmNDZESnN4S2tkaFFEZTBHcFF0VWJtNk40aXV0eXZlNGVyNW9lZkpROUJDWGhNRDdaZ0pTS3l2bkpwVk1NeDBLS290RHF3dExpeWk0RktBamdBd044SHFHaVlWYWk0d3NxeHNmeG9BPT0hdjE=?share_link_id=975820106497)
 
 ### c4model
 
@@ -63,3 +61,4 @@ Rel(garage_api, send_notification_queue, "send e-mail", "aws/sdk")
 ## Relatório vulnerabilidades
 
 - https://github.com/rodsordi/15SOAT-TechChallenge/blob/dev/docs/dependency-check-report.html
+- Obs: Resolvi todas as vulnerabilidades de nível alto, estou fazendo uma conceção sobre 2 vulnerabilidades médias devido à falta de resolução até o momento do relatório.

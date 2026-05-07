@@ -81,7 +81,7 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 }
 
 
-                System.out.println("\n====== Checking the e-mail notification informing the service estimation ======\n");
+                System.out.println("\n====== Checking the e-mail notification informing the estimated service ======\n");
 
                 //When
                 var response4 = searchNotificationByWorkOrderId(workOrderId);
@@ -101,7 +101,7 @@ public class CompleteFlowTest extends GarageIntegrationTest {
                 assertThat(response5.jsonPath().getString("status")).isEqualTo("EXECUTING");
                 var serviceId = response5.jsonPath().getString("estimatedServices[0].id");
 
-                System.out.println("\n====== Finishing the service estimation ======\n");
+                System.out.println("\n====== Finishing the requested service ======\n");
 
                 //Given
                 var requestBody6 = WorkOrderDto.PatchRequest.builder()
