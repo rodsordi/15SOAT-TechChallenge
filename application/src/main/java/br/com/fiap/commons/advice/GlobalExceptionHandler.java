@@ -5,11 +5,15 @@ import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.beanvalidation.IntegrationException;
 import org.springframework.http.ProblemDetail;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -25,7 +29,8 @@ public class GlobalExceptionHandler {
 
         var fieldErrors = e.getBindingResult().getFieldErrors();
         if (!fieldErrors.isEmpty()) {
-            for (var fieldError : fieldErrors) {
+            var sortedFieldErrors = new HashSet<>(fieldErrors);
+            for (var fieldError : sortedFieldErrors) {
                 if (problemDetail == null) {
                     var message = String.format("[%s]: %s", fieldError.getField(), fieldError.getDefaultMessage());
                     problemDetail = ProblemDetail.forStatusAndDetail(BAD_REQUEST, message);
@@ -34,7 +39,8 @@ public class GlobalExceptionHandler {
             }
         }
         else {
-            for (var error : e.getAllErrors()) {
+            var allSortedErrors = new HashSet<>(e.getAllErrors());
+            for (var error : allSortedErrors) {
                 if (problemDetail == null) {
                     var message = String.format("[%s]: %s", error.getObjectName(), error.getDefaultMessage());
                     problemDetail = ProblemDetail.forStatusAndDetail(BAD_REQUEST, message);
