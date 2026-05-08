@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -121,6 +123,29 @@ class CustomerControllerTest {
                         .andDo(print())
                         .andExpect(status().isUnprocessableContent())
                         .andExpect(jsonPath("$.detail", is("Erro")));
+            }
+
+            @DisplayName("Given a customer with invalid document")
+            @ParameterizedTest
+            @CsvSource(value = {
+                    "1245678910 | [document]: Document is not a valid CPF neither CNPJ.",
+                    "10123456000190 | [document]: Document is not a valid CPF neither CNPJ.",
+            }, delimiterString = "|")
+            void test(String document, String expectedMsg) throws Exception {
+                //Given
+                var requestBody = create_CustomerDto_Request()
+                        .withAllFields();
+                setField(requestBody, "document", document);
+                //When
+                mockMvc.perform(post("/v1/customers")
+                                .contentType(APPLICATION_JSON)
+                                .accept(APPLICATION_JSON)
+                                .characterEncoding(UTF_8.name())
+                                .content(gson.toJson(requestBody)))
+                        //Then
+                        .andDo(print())
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.detail", is(expectedMsg)));
             }
         }
     }

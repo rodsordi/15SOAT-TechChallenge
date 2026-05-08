@@ -5,18 +5,46 @@ import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.beanvalidation.IntegrationException;
 import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @Hidden
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handle(MethodArgumentNotValidException e) {
+        log.warn(e.getMessage());
+        ProblemDetail problemDetail = null;
+
+        var fieldErrors = e.getBindingResult().getFieldErrors();
+        if (!fieldErrors.isEmpty()) {
+            for (var fieldError : fieldErrors) {
+                if (problemDetail == null) {
+                    var message = String.format("[%s]: %s", fieldError.getField(), fieldError.getDefaultMessage());
+                    problemDetail = ProblemDetail.forStatusAndDetail(BAD_REQUEST, message);
+                }
+                problemDetail.setProperty(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+        }
+        else {
+            for (var error : e.getAllErrors()) {
+                if (problemDetail == null) {
+                    var message = String.format("[%s]: %s", error.getObjectName(), error.getDefaultMessage());
+                    problemDetail = ProblemDetail.forStatusAndDetail(BAD_REQUEST, message);
+                }
+                problemDetail.setProperty(error.getObjectName(), error.getDefaultMessage());
+            }
+        }
+
+        return problemDetail;
+    }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ProblemDetail handle(MethodArgumentTypeMismatchException e) {
