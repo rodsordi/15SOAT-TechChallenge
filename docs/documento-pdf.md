@@ -18,6 +18,8 @@
 
 ## Documentação
 
+- https://github.com/rodsordi/15SOAT-TechChallenge/wiki
+
 ### Dicionário da Linguagem Ubíqua:
 
 - **Customer:** Cliente que possuí veículo e precisa de serviços de mecânica.

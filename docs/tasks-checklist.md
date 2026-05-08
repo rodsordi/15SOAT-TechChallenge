@@ -57,8 +57,8 @@
 - Vídeo de até 15 minutos demonstrando todos os pontos (pode ser em grupo ou individual); (❌)
 - Documentação DDD (Miro ou equivalente), com:
   - Event Storming completo dos fluxos:
-    - Criação e acompanhamento da OS; (❌)
-    - Gestão de peças e insumos; (❌)
+    - Criação e acompanhamento da OS; (✅)
+    - Gestão de peças e insumos; (✅)
   - Diagramas conforme apresentado na disciplina de DDD;
     - domain story telling; (✅)
     - c4model; (✅)
@@ -73,6 +73,6 @@
 - Documento de entrega (PDF) com:
   - Nome do grupo; (✅)
   - Participantes e usernames no Discord; (✅)
-  - Link da documentação; (❌)
+  - Link da documentação; (✅)
   - Link do repositório; (✅)
-  - Relatório com análise de vulnerabilidades encontradas no sistema. ()
+  - Relatório com análise de vulnerabilidades encontradas no sistema. (✅)

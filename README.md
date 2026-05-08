@@ -1,12 +1,10 @@
 # Garage API
 
-API responsible for managing the vehicle mechanic workflow.
-
-- Tech Challenge for the 15SOAT course.
+API responsible for managing the vehicle mechanic workflow. Tech Challenge for the 15SOAT course.
 
 ## 🗒️ Information
 
-- [Documentation]()
+- [Documentation](https://github.com/rodsordi/15SOAT-TechChallenge/wiki)
 
 ## 📋 Prerequisites
 
