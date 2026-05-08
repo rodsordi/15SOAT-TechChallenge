@@ -51,6 +51,7 @@
 - Testes automatizados com cobertura mínima de 80% nos domínios críticos. (✅) pdf
 - Configuração para execução local simples (README.md explicativo). (✅) readme
 - Organização em repositório privado com acesso ao usuário soat-architecture (✅)
+- --            
 
 ## Entregáveis da Fase 1
 
