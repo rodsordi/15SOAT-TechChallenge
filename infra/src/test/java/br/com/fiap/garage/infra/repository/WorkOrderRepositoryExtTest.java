@@ -12,10 +12,12 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import static br.com.fiap.garage.domain.enums.WorkOrderStatus.FINISHED;
+import java.time.LocalDate;
+
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
+import static br.com.fiap.garage.domain.enums.WorkOrderStatus.RECEIVED;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -36,23 +38,30 @@ class WorkOrderRepositoryExtTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a valid filter, in scenario with registers")
+            @DisplayName("Given a filter with all fields, in scenario with registers")
             @Test
             void test1() {
                 //Scenario
-                var workOrder = create_WorkOrder().withAllFieldsExceptDB();
-                setField(workOrder, "status", FINISHED);
+                var workOrder = create_WorkOrder()
+                        .withAllFieldsExceptDB();
                 em.merge(workOrder);
                 em.flush();
                 //Given
                 var filter = new WorkOrderFilter();
+                filter.setStatus(RECEIVED);
+                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
+                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
+                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
+                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                assertThatObject(filter)
+                        .hasNoEmptyFields();
                 //When
                 var actual = repository.findAll(filter, filter.buildPageRequest());
                 //Then
                 assertThat(actual)
                         .hasSize(1)
                         .extracting(WorkOrder::getStatus)
-                        .containsExactly(FINISHED);
+                        .containsExactly(RECEIVED);
             }
         }
     }

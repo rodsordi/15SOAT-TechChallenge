@@ -41,6 +41,9 @@ public class NotificationEvtMapper {
     private String emailBodyTemplateFileName;
 
     public NotificationEvt convert(WorkOrder workOrder) {
+        if (workOrder == null)
+            return null;
+
         var workOrderId = Optional.of(workOrder)
                 .map(WorkOrder::getId)
                 .orElseThrow(() -> new FieldNotFoundException(WorkOrder.class, "id"));

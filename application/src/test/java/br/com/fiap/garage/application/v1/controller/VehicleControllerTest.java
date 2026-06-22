@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static java.text.MessageFormat.format;
 import static org.hamcrest.Matchers.hasSize;
@@ -97,6 +98,8 @@ class VehicleControllerTest {
             void beforeEach() {
                 when(vehicleSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
+                            assertThatObject(invocationOnMock.getArgument(0))
+                                    .hasNoEmptyFields();
                             var vehicles = List.of(
                                     create_Vehicle().withAllFields(),
                                     create_Vehicle().withAllFields(),
@@ -105,11 +108,18 @@ class VehicleControllerTest {
                         });
             }
 
-            @DisplayName("Given empty filters")
+            @DisplayName("Given all filters")
             @Test
             void test1() throws Exception {
                 //When
-                mockMvc.perform(get("/v1/vehicles"))
+                mockMvc.perform(get("/v1/vehicles")
+                                .queryParam("make", "Volkswagen")
+                                .queryParam("model", "Gol")
+                                .queryParam("licensePlate", "ABC1C34")
+                                .queryParam("createdAtFrom", "2025-01-01")
+                                .queryParam("createdAtTo", "2025-12-31")
+                                .queryParam("updatedAtFrom", "2025-01-01")
+                                .queryParam("updatedAtTo", "2025-12-31"))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())

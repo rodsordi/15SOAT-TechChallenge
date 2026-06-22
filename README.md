@@ -129,7 +129,7 @@ docker compose -f docker-compose-devops.yml up -d
 
 ```sh
 curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=Sonarqube@2026"
-SONAR_TOKEN=$(curl -u admin:Sonarqube@2026 -X POST "http://localhost:9000/api/user_tokens/generate?name=setup-token" | grep -oP '"token":"\K[^"]+')
+SONAR_TOKEN=$(curl -u admin:Sonarqube@2026 -X POST "http://localhost:9000/api/user_tokens/generate?name=setup-token" | grep -o '"token":"[^"]*' | cut -d'"' -f4)
 echo $SONAR_TOKEN
 ```
 

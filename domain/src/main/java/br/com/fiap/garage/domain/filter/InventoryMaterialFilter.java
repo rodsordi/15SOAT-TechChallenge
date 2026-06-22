@@ -23,12 +23,14 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @ParameterObject
 public class InventoryMaterialFilter extends AuditableFilter<InventoryMaterial> implements Specification<InventoryMaterial> {
 
+    public static final String MATERIAL = "material";
+
     @Schema(example = "SPARE_PART", description = "Inventory Material type.")
     private MaterialType type;
 
     private Specification<InventoryMaterial> typeEqual() {
         return (root, query, builder) -> type == null ? null :
-                builder.equal(root.get("material.type"), type);
+                builder.equal(root.get(MATERIAL).get("type"), type);
     }
 
     @Schema(example = "Tire", description = "Inventory Material name.")
@@ -36,23 +38,23 @@ public class InventoryMaterialFilter extends AuditableFilter<InventoryMaterial> 
 
     private Specification<InventoryMaterial> nameEqual() {
         return (root, query, builder) -> isEmpty(name) ? null :
-                builder.equal(root.get("material.name"), name);
+                builder.equal(root.get(MATERIAL).get("name"), name);
     }
 
-    @Schema(example = "1.99", description = "Inventory Material amount (from).")
-    private BigDecimal amountFrom;
+    @Schema(example = "1.99", description = "Inventory Material cost (from).")
+    private BigDecimal costFrom;
 
-    private Specification<InventoryMaterial> amountFrom() {
-        return (root, query, builder) -> amountFrom == null ? null :
-                builder.greaterThanOrEqualTo(root.get("material.amount"), amountFrom);
+    private Specification<InventoryMaterial> costFrom() {
+        return (root, query, builder) -> costFrom == null ? null :
+                builder.greaterThanOrEqualTo(root.get(MATERIAL).get("cost"), costFrom);
     }
 
-    @Schema(example = "9.99", description = "Inventory Material amount (to).")
-    private BigDecimal amountTo;
+    @Schema(example = "9.99", description = "Inventory Material cost (to).")
+    private BigDecimal costTo;
 
-    private Specification<InventoryMaterial> amountTo() {
-        return (root, query, builder) -> amountTo == null ? null :
-                builder.lessThanOrEqualTo(root.get("material.amount"), amountTo);
+    private Specification<InventoryMaterial> costTo() {
+        return (root, query, builder) -> costTo == null ? null :
+                builder.lessThanOrEqualTo(root.get(MATERIAL).get("cost"), costTo);
     }
 
     @Override
@@ -60,8 +62,8 @@ public class InventoryMaterialFilter extends AuditableFilter<InventoryMaterial> 
         return super.buildSpecification()
                 .and(typeEqual())
                 .and(nameEqual())
-                .and(amountFrom())
-                .and(amountTo())
+                .and(costFrom())
+                .and(costTo())
                 .toPredicate(root, query, criteriaBuilder);
     }
 }

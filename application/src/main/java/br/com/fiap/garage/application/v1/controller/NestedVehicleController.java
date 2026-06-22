@@ -2,7 +2,6 @@ package br.com.fiap.garage.application.v1.controller;
 
 import br.com.fiap.garage.application.v1.dto.VehicleDto;
 import br.com.fiap.garage.application.v1.swagger.NestedVehicleSwagger;
-import br.com.fiap.garage.application.v1.swagger.VehicleSwagger;
 import br.com.fiap.garage.domain.use_case.VehicleCreationUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -12,9 +12,12 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.LocalDate;
+
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
+import static org.assertj.core.api.Assertions.tuple;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -35,23 +38,38 @@ class VehicleRepositoryExtTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a valid filter, in scenario with registers")
+            @DisplayName("Given a filter with all fields, in scenario with registers")
             @Test
             void test1() {
                 //Scenario
-                var vehicle = create_Vehicle().withAllFieldsExceptDB();
-                setField(vehicle, "make", "BMW");
+                var vehicle = create_Vehicle()
+                        .withAllFieldsExceptDB();
                 em.merge(vehicle);
                 em.flush();
                 //Given
                 var filter = new VehicleFilter();
+                filter.setMake("Toyota");
+                filter.setModel("Corolla");
+                filter.setLicensePlate("ABC1234");
+                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
+                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
+                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
+                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                assertThatObject(filter)
+                        .hasNoEmptyFields();
                 //When
                 var actual = repository.findAll(filter, filter.buildPageRequest());
                 //Then
                 assertThat(actual)
                         .hasSize(1)
-                        .extracting(Vehicle::getMake)
-                        .containsExactly("BMW");
+                        .extracting(
+                                Vehicle::getMake,
+                                Vehicle::getModel,
+                                Vehicle::getLicensePlate)
+                        .containsExactly(tuple(
+                                "Toyota",
+                                "Corolla",
+                                "ABC1234"));
             }
         }
     }

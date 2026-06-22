@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.UUID;
 
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -197,6 +198,8 @@ class CustomerControllerTest {
             void beforeEach() {
                 when(customerSearchUseCase.findAll(any()))
                         .thenAnswer(invocationOnMock -> {
+                            assertThatObject(invocationOnMock.getArgument(0))
+                                    .hasNoEmptyFields();
                             var customers = List.of(
                                     create_Customer().withAllFields(),
                                     create_Customer().withAllFields(),
@@ -205,11 +208,18 @@ class CustomerControllerTest {
                         });
             }
 
-            @DisplayName("Given empty filters")
+            @DisplayName("Given all filters")
             @Test
             void test1() throws Exception {
                 //When
-                mockMvc.perform(get("/v1/customers"))
+                mockMvc.perform(get("/v1/customers")
+                                .queryParam("document", "27351626000107")
+                                .queryParam("name", "John Doe")
+                                .queryParam("email", "john.doe@fiap.com.br")
+                                .queryParam("createdAtFrom", "2025-01-01")
+                                .queryParam("createdAtTo", "2025-12-31")
+                                .queryParam("updatedAtFrom", "2025-01-01")
+                                .queryParam("updatedAtTo", "2025-12-31"))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())

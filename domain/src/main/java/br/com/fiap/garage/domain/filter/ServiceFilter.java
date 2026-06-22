@@ -30,28 +30,28 @@ public class ServiceFilter extends AuditableFilter<Service> implements Specifica
                 builder.equal(root.get("name"), name);
     }
 
-    @Schema(example = "1.99", description = "Service amount (from).")
-    private BigDecimal amountFrom;
+    @Schema(example = "1.99", description = "Service cost (from).")
+    private BigDecimal costFrom;
 
-    private Specification<Service> amountFrom() {
-        return (root, query, builder) -> amountFrom == null ? null :
-                builder.greaterThanOrEqualTo(root.get("amount"), amountFrom);
+    private Specification<Service> costFrom() {
+        return (root, query, builder) -> costFrom == null ? null :
+                builder.greaterThanOrEqualTo(root.get("cost"), costFrom);
     }
 
-    @Schema(example = "9.99", description = "Service amount (to).")
-    private BigDecimal amountTo;
+    @Schema(example = "9.99", description = "Service cost (to).")
+    private BigDecimal costTo;
 
-    private Specification<Service> amountTo() {
-        return (root, query, builder) -> amountTo == null ? null :
-                builder.lessThanOrEqualTo(root.get("amount"), amountTo);
+    private Specification<Service> costTo() {
+        return (root, query, builder) -> costTo == null ? null :
+                builder.lessThanOrEqualTo(root.get("cost"), costTo);
     }
 
     @Override
     public @Nullable Predicate toPredicate(Root<Service> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         return super.buildSpecification()
                 .and(nameEqual())
-                .and(amountFrom())
-                .and(amountTo())
+                .and(costFrom())
+                .and(costTo())
                 .toPredicate(root, query, criteriaBuilder);
     }
 }

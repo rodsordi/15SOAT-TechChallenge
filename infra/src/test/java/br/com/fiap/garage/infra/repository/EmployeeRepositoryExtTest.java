@@ -12,8 +12,12 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.LocalDate;
+
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("test")
@@ -35,25 +39,40 @@ class EmployeeRepositoryExtTest {
         @Nested
         class Success {
 
-            @DisplayName("Given a valid filter, in scenario with registers")
+            @DisplayName("Given a filter with all fields, in scenario with registers")
             @Test
             void test1() {
                 //Scenario
-                var employee = create_Employee().withAllFieldsExceptDB();
+                var employee = create_Employee()
+                        .withAllFieldsExceptDB();
                 employee.getAuthorities()
                         .forEach(authority -> em.persist(authority));
-                setField(employee, "name", "John da Silva");
                 em.merge(employee);
                 em.flush();
                 //Given
                 var filter = new EmployeeFilter();
+                filter.setCpf("17902652075");
+                filter.setName("John Doe");
+                filter.setEmail("john.doe@garage.com");
+                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
+                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
+                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
+                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                assertThatObject(filter)
+                        .hasNoEmptyFields();
                 //When
                 var actual = repository.findAll(filter, filter.buildPageRequest());
                 //Then
                 assertThat(actual)
                         .hasSize(1)
-                        .extracting(Employee::getName)
-                        .containsExactly("John da Silva");
+                        .extracting(
+                                Employee::getCpf,
+                                Employee::getName,
+                                Employee::getEmail)
+                        .containsExactly(tuple(
+                                "17902652075",
+                                "John Doe",
+                                "john.doe@garage.com"));
             }
         }
     }
@@ -70,7 +89,8 @@ class EmployeeRepositoryExtTest {
             @Test
             void test1() {
                 //Scenario
-                var employee = create_Employee().withAllFieldsExceptDB();
+                var employee = create_Employee()
+                        .withAllFieldsExceptDB();
                 employee.getAuthorities()
                         .forEach(authority -> em.persist(authority));
                 setField(employee, "cpf", "03739169060");

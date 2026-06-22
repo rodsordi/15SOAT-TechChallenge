@@ -33,7 +33,7 @@ public class NotificationFilter extends AuditableFilter<Notification> implements
 
     private Specification<Notification> emailEqual() {
         return (root, query, builder) -> recipient == null ? null :
-                builder.equal(root.get("email.recipient"), recipient);
+                builder.equal(root.get("email").get("recipient"), recipient);
     }
 
     @Override

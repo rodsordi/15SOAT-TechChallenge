@@ -84,7 +84,7 @@ public class ServiceController implements ServiceSwagger {
     @ResponseStatus(NO_CONTENT)
     @Override
     public void calculateAverageTime() {
-        //TODO: Substituting a scheduler or batch job for a while
+        //TODO: Substituting a scheduler or batch job for a while //NOSONAR
         serviceUpdateUseCase.calculateAverageTime();
     }
 }

@@ -1,9 +1,8 @@
 package br.com.fiap.garage.infra.repository;
 
 import br.com.fiap.commons.config.JpaConfig;
-import br.com.fiap.garage.domain.entity.InventoryMaterial;
-import br.com.fiap.garage.domain.entity.Material;
-import br.com.fiap.garage.domain.filter.InventoryMaterialFilter;
+import br.com.fiap.garage.domain.entity.Notification;
+import br.com.fiap.garage.domain.filter.NotificationFilter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,27 +12,26 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
-import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
-import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
+import static br.com.fiap.garage.domain.entity.factory.NotificationFactory.create_Notification;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
 @ActiveProfiles("test")
 @DataJpaTest
 @ContextConfiguration(classes = JpaConfig.class)
-class InventoryMaterialRepositoryExtTest {
+class NotificationRepositoryExtTest {
 
     @Autowired
-    private InventoryMaterialRepositoryExt repository;
+    private NotificationRepositoryExt repository;
 
     @Autowired
     private TestEntityManager em;
 
-    @DisplayName("When finding all employees")
+    @DisplayName("When finding all notifications")
     @Nested
     class FindAll {
 
@@ -45,16 +43,14 @@ class InventoryMaterialRepositoryExtTest {
             @Test
             void test1() {
                 //Scenario
-                var inventoryMaterial = create_InventoryMaterial()
+                var notification = create_Notification()
                         .withAllFieldsExceptDB();
-                em.merge(inventoryMaterial);
+                em.merge(notification);
                 em.flush();
                 //Given
-                var filter = new InventoryMaterialFilter();
-                filter.setType(SHOP_SUPPLY);
-                filter.setName("Engine Oil");
-                filter.setCostFrom(new BigDecimal("150.00"));
-                filter.setCostTo(new BigDecimal("150.00"));
+                var filter = new NotificationFilter();
+                filter.setExternalId(UUID.fromString("d2b16521-39ce-479c-b779-a9ed5238a6c3"));
+                filter.setRecipient("customer@example.com");
                 filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
                 filter.setCreatedAtTo(LocalDate.now());//NOSONAR
                 filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
@@ -66,15 +62,12 @@ class InventoryMaterialRepositoryExtTest {
                 //Then
                 assertThat(actual)
                         .hasSize(1)
-                        .extracting(InventoryMaterial::getMaterial)
                         .extracting(
-                                Material::getType,
-                                Material::getName,
-                                Material::getCost)
+                                Notification::getExternalId,
+                                n -> n.getEmail().getRecipient())
                         .containsExactly(tuple(
-                                SHOP_SUPPLY,
-                                "Engine Oil",
-                                new BigDecimal("150.00")));
+                                UUID.fromString("d2b16521-39ce-479c-b779-a9ed5238a6c3"),
+                                "customer@example.com"));
             }
         }
     }

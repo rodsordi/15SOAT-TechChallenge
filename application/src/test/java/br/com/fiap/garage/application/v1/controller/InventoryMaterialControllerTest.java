@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -70,9 +71,40 @@ class InventoryMaterialControllerTest {
                         });
             }
 
-            @DisplayName("Given empty filters")
+            @DisplayName("Given all filters")
             @Test
             void test1() throws Exception {
+                //Scenario
+                when(inventoryMaterialSearchUseCase.findAll(any()))
+                        .thenAnswer(invocationOnMock -> {
+                            assertThatObject(invocationOnMock.getArgument(0))
+                                    .hasNoEmptyFields();
+                            var inventoryMaterials = List.of(
+                                    create_InventoryMaterial().withAllFields(),
+                                    create_InventoryMaterial().withAllFields(),
+                                    create_InventoryMaterial().withAllFields());
+                            return new PageImpl<>(inventoryMaterials);
+                        });
+                //When
+                mockMvc.perform(get("/v1/inventory-materials")
+                                .queryParam("type", "SPARE_PART")
+                                .queryParam("name", "John Doe")
+                                .queryParam("costFrom", "1.99")
+                                .queryParam("costTo", "9.99")
+                                .queryParam("createdAtFrom", "2025-01-01")
+                                .queryParam("createdAtTo", "2025-12-31")
+                                .queryParam("updatedAtFrom", "2025-01-01")
+                                .queryParam("updatedAtTo", "2025-12-31"))
+                        //Then
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.content.[*].id", hasSize(3)))
+                ;
+            }
+            
+            @DisplayName("Given empty filters")
+            @Test
+            void test2() throws Exception {
                 //When
                 mockMvc.perform(get("/v1/inventory-materials"))
                         //Then
