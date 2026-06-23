@@ -22,7 +22,6 @@ import java.util.UUID;
 
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.VehicleFactory.create_Vehicle;
-import static java.text.MessageFormat.format;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -76,7 +75,7 @@ class VehicleControllerTest {
                 //Given
                 var vehicleId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
                 //When
-                mockMvc.perform(get(format("/v1/vehicles/{0}", vehicleId)))
+                mockMvc.perform(get("/v1/vehicles/{0}", vehicleId))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())

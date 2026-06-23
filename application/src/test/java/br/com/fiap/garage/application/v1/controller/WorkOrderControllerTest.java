@@ -26,7 +26,6 @@ import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.application.v1.dto.factory.WorkOrderDtoFactory.create_WorkOrderDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.WorkOrderFactory.create_WorkOrder;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -34,8 +33,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -124,7 +122,7 @@ class WorkOrderControllerTest {
                 //Given
                 var workOrderId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
                 //When
-                mockMvc.perform(get(format("/v1/work-orders/{0}", workOrderId)))
+                mockMvc.perform(get("/v1/work-orders/{0}", workOrderId))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())
@@ -170,6 +168,60 @@ class WorkOrderControllerTest {
                         .andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.content.[*].id", hasSize(3)))
+                ;
+            }
+        }
+    }
+
+    @DisplayName("When updating workOrder")
+    @Nested
+    class Update {
+
+        @DisplayName("Then should execute successfully")
+        @Nested
+        class Success {
+
+            @BeforeEach
+            void beforeEach() {
+                when(workOrderUpdateUseCase.finishService(any(), any()))
+                        .thenAnswer(invocation -> {
+                            var result = create_WorkOrder().withAllFields();
+                            setField(result, "id", invocation.getArgument(0));
+                            return result;
+                        });
+                //And
+                when(workOrderUpdateUseCase.updateEmployee(any(), any()))
+                        .thenAnswer(invocation -> {
+                            var result = create_WorkOrder().withAllFields();
+                            setField(result, "id", invocation.getArgument(0));
+                            return result;
+                        });
+                //And
+                when(workOrderUpdateUseCase.updateStatus(any(), any()))
+                        .thenAnswer(invocation -> {
+                            var result = create_WorkOrder().withAllFields();
+                            setField(result, "id", invocation.getArgument(0));
+                            return result;
+                        });
+            }
+
+            @DisplayName("Given a WorkOrderDto with all fields and a valid workOrderId")
+            @Test
+            void test1() throws Exception {
+                //Given
+                var requestBody = create_WorkOrderDto_Request()
+                        .withAllFields();
+                var workOrderId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
+                //When
+                mockMvc.perform(patch("/v1/work-orders/{0}", workOrderId)
+                                .contentType(APPLICATION_JSON)
+                                .accept(APPLICATION_JSON)
+                                .characterEncoding(UTF_8.name())
+                                .content(gson.toJson(requestBody)))
+                        //Then
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.id", is("b17555de-3cb8-4ef5-8b43-6e3b3614d2f9")))
                 ;
             }
         }

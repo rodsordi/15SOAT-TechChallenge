@@ -25,7 +25,6 @@ import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.application.v1.dto.factory.NotificationDtoFactory.create_NotificationDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.NotificationFactory.create_Notification;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -120,7 +119,7 @@ class NotificationControllerTest {
                 //Given
                 var notificationId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
                 //When
-                mockMvc.perform(get(format("/v1/notifications/{0}", notificationId)))
+                mockMvc.perform(get("/v1/notifications/{0}", notificationId))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())

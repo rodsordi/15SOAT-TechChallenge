@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Getter(onMethod_ = @Override)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE)
 @Builder
 public class NotificationEvt implements NotificationDef.Request {
 

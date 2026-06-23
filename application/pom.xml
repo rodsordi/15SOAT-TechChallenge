@@ -14,6 +14,11 @@
     <dependencies>
         <dependency>
             <groupId>br.com.fiap</groupId>
+            <artifactId>api-garage.domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>br.com.fiap</groupId>
             <artifactId>api-garage.infra</artifactId>
         </dependency>
 

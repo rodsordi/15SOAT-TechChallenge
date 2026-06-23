@@ -21,7 +21,7 @@ public class NotifyCustomerForApprovalPublisherImpl implements NotifyCustomerFor
 
     @Override
     public void notify(WorkOrder workOrder) {
-        var workOrderMsg = mapper.convert(workOrder);
-        snsTemplate.convertAndSend(queueName, workOrderMsg);
+        var notificationEvt = mapper.convert(workOrder);
+        snsTemplate.convertAndSend(queueName, notificationEvt);
     }
 }

@@ -29,7 +29,6 @@ import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.application.v1.dto.factory.CustomerDtoFactory.create_CustomerDto_Request;
 import static br.com.fiap.garage.domain.entity.factory.CustomerFactory.create_Customer;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.text.MessageFormat.format;
 import static java.util.UUID.fromString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -176,7 +175,7 @@ class CustomerControllerTest {
                 //Given
                 var customerId = "b17555de-3cb8-4ef5-8b43-6e3b3614d2f9";
                 //When
-                mockMvc.perform(get(format("/v1/customers/{0}", customerId)))
+                mockMvc.perform(get("/v1/customers/{0}", customerId))
                         //Then
                         .andDo(print())
                         .andExpect(status().isOk())

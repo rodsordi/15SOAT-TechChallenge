@@ -6,9 +6,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Getter(onMethod_ = @Override)
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = PRIVATE)
+@AllArgsConstructor(access = PRIVATE)
 @Builder
 public class EmailListenMsg implements EmailDef.Request {
 
