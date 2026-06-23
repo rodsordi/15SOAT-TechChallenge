@@ -27,6 +27,9 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${maven.multiModuleProjectDirectory}/application/target/site/jacoco-aggregate/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>
             **/GarageApplication.java,
             **/br/com/fiap/commons/**,
@@ -131,6 +134,7 @@
                 <version>0.0.1-SNAPSHOT</version>
                 <type>test-jar</type>
                 <classifier>tests</classifier>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -145,6 +149,7 @@
                 <version>0.0.1-SNAPSHOT</version>
                 <type>test-jar</type>
                 <classifier>tests</classifier>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -159,6 +164,7 @@
                 <version>0.0.1-SNAPSHOT</version>
                 <type>test-jar</type>
                 <classifier>tests</classifier>
+                <scope>test</scope>
             </dependency>
 
             <!-- Vulnerabilities -->
