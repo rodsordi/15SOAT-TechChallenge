@@ -64,7 +64,7 @@ public class WorkOrderUpdateTest extends GarageIntegrationTest {
     }
 
     public static Response updateWorkOrder(String authorization, JsonMapper json, String workOrderId, WorkOrderDto.PatchRequest requestBody) {
-        return given()
+        var response = given()
                 .log().all()
                 .header("Authorization", authorization)
                 .contentType(JSON)
@@ -74,5 +74,8 @@ public class WorkOrderUpdateTest extends GarageIntegrationTest {
                 .log().all()
                 .extract()
                 .response();
+        assertThat(response.statusCode())
+                .isEqualTo(200);
+        return response;
     }
 }

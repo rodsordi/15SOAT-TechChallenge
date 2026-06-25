@@ -82,7 +82,7 @@ public class WorkOrderCreationTest extends GarageIntegrationTest {
         var servicesIds = Set.of(UUID.fromString(serviceId));
         setField(requestBody, "servicesIds", servicesIds);
 
-        return given()
+        var response = given()
                 .log().all()
                 .header("Authorization", authorization)
                 .contentType(JSON)
@@ -92,5 +92,8 @@ public class WorkOrderCreationTest extends GarageIntegrationTest {
                 .log().all()
                 .extract()
                 .response();
+        assertThat(response.statusCode())
+                .isEqualTo(201);
+        return response;
     }
 }
