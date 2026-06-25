@@ -32,12 +32,12 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
 * **Alterar/criar as seguintes APIs:**
     * **Abertura de Ordem de Serviço (OS):** receber os dados do cliente, veículo, serviços e peças, retornando a identificação única da OS. (✅) :
     * **Consulta de status da OS:** informar a situação atual da OS (*Recebida*, *Diagnóstico*, *Aguardando Aprovação*, *Execução*, *Finalizada*, *Entregue*). (✅) :
-    * **Aprovação de orçamento:** endpoint para receber notificações externas de aprovação ou recusa do orçamento do cliente. (❌) :
+    * **Aprovação de orçamento:** endpoint para receber notificações externas de aprovação ou recusa do orçamento do cliente. (✅) :
     * **Listagem de ordens de serviço:**
-        * Ordenação por status: `Em Execução` > `Aguardando Aprovação` > `Diagnóstico` > `Recebida`. (❌)
-        * Mais antigas primeiro. (❌)
-        * Excluir (lógica não física) da listagem as OS finalizadas e entregues. (❌)
-    * **Atualização de status da OS** via alguma ferramenta como e-mail. (❌)
+        * Ordenação por status: `Em Execução` > `Aguardando Aprovação` > `Diagnóstico` > `Recebida`. (✅)
+        * Mais antigas primeiro. (✅)
+        * Excluir (lógica não física) da listagem as OS finalizadas e entregues. (✅)
+    * **Atualização de status da OS** via alguma ferramenta como e-mail. (?)
 
 ### Infraestrutura
 
@@ -76,7 +76,7 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
 Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de arquitetura escolhida:
 * `Dockerfile` e `docker-compose` revisados; (❌)
 * Manifestos Kubernetes (em `/k8s`); (❌)
-* Scripts Terraform (em `/infra`); (❌)
+* Scripts Terraform (em `/infra` ou `iac`); (❌)
 * Arquivos de configuração da pipeline CI/CD. (❌)
 
 ### README.md atualizado com:

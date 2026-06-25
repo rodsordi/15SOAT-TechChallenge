@@ -13,9 +13,9 @@ public abstract class PagedFilter {
             description = "Page index.")
     private Integer page = 0;
 
-    @Schema(example = "10",
+    @Schema(example = "20",
             description = "Page size.")
-    private Integer size = 10;
+    private Integer size = 20;
 
     public PageRequest buildPageRequest() {
         return PageRequest.of(page, size);
