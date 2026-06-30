@@ -16,7 +16,14 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashi
 sudo apt update && sudo apt install terraform
 ```
 
-### K8S
+### Terraform - K8S
+
+**Kubernetes reset**
+
+```sh
+terraform init -upgrade
+terraform destroy -auto-approve
+```
 
 **Kubernetes setup**
 
@@ -34,11 +41,4 @@ terraform apply -auto-approve
 
 ```sh
 kubectl get nodes
-```
-
-**Kubernetes reset**
-
-```sh
-terraform init -upgrade
-terraform destroy -auto-approve
 ```

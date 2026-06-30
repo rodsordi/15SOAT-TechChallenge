@@ -1,69 +1,66 @@
 terraform {
   required_providers {
-    kind = {
-      source  = "tehcyx/kind"
-      version = "~> 0.8.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.12"
-    }
+    kind = { source = "tehcyx/kind", version = "~> 0.8.0" }
+    kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.23" }
   }
 }
 
 provider "kind" {}
 
-resource "kind_cluster" "meu_cluster" {
+resource "kind_cluster" "garage_cluster" {
   name = "cluster-local-dev"
+}
 
-  kind_config {
-    kind        = "Cluster"
-    api_version = "kind.x-k8s.io/v1alpha4"
+provider "kubernetes" {
+  host                   = kind_cluster.garage_cluster.endpoint
+  client_certificate     = kind_cluster.garage_cluster.client_certificate
+  client_key             = kind_cluster.garage_cluster.client_key
+  cluster_ca_certificate = kind_cluster.garage_cluster.cluster_ca_certificate
+}
 
-    node {
-      role = "control-plane"
+resource "kubernetes_deployment" "postgres" {
+  metadata { name = "postgres" }
+
+  spec {
+    replicas = 1
+    selector { match_labels = { app = "postgres" } }
+
+    template {
+      metadata { labels = { app = "postgres" } }
+      spec {
+        container {
+          name  = "postgres"
+          image = "postgres:15"
+
+          port {
+            container_port = 5432
+          }
+
+          # Variáveis corrigidas (sem ponto e vírgula e em linhas separadas)
+          env {
+            name  = "POSTGRES_USER"
+            value = "postgres"
+          }
+          env {
+            name  = "POSTGRES_PASSWORD"
+            value = "senha_secreta"
+          }
+          env {
+            name  = "POSTGRES_DB"
+            value = "meu_banco_local"
+          }
+        }
+      }
     }
   }
 }
 
-provider "helm" {
-  kubernetes {
-    host                   = kind_cluster.meu_cluster.endpoint
-    client_certificate     = kind_cluster.meu_cluster.client_certificate
-    client_key             = kind_cluster.meu_cluster.client_key
-    cluster_ca_certificate = kind_cluster.meu_cluster.cluster_ca_certificate
+resource "kubernetes_service" "postgres" {
+  metadata { name = "postgres" }
+
+  spec {
+    selector = { app = "postgres" }
+    port { port = 5432 }
+    type = "ClusterIP"
   }
-}
-
-resource "helm_release" "postgres" {
-  name       = "meu-postgres"
-
-  repository = "oci://registry-1.docker.io/bitnamicharts"
-  chart      = "postgresql"
-  namespace  = "default"
-
-  version    = "15.5.0"
-
-  wait = true
-  timeout = 600
-
-  set {
-    name  = "auth.postgresPassword"
-    value = "senha_super_secreta"
-  }
-
-  set {
-    name  = "auth.database"
-    value = "meu_banco_dev"
-  }
-
-  set {
-    name  = "primary.persistence.enabled"
-    value = "false"
-  }
-}
-
-output "postgres_host" {
-  value       = "${helm_release.postgres.name}-postgresql.default.svc.cluster.local"
-  description = "Endereço interno do banco de dados dentro do Kubernetes"
 }
