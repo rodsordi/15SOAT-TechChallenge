@@ -37,7 +37,7 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
         * Ordenação por status: `Em Execução` > `Aguardando Aprovação` > `Diagnóstico` > `Recebida`. (✅)
         * Mais antigas primeiro. (✅)
         * Excluir (lógica não física) da listagem as OS finalizadas e entregues. (✅)
-    * **Atualização de status da OS** via alguma ferramenta como e-mail. (?)
+    * **Atualização de status da OS** via alguma ferramenta como e-mail. (✅) : Mostrar link no corpo do e-mail
 
 ### Infraestrutura
 
