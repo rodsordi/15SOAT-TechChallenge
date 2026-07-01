@@ -46,3 +46,7 @@ kubectl get nodes
 ```sh
 kubectl get pods
 ```
+
+```sh
+kubectl logs -f -l app=github-runner
+```
