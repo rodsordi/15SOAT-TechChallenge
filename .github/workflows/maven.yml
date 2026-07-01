@@ -2,13 +2,12 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "fase2" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "fase2" ]
 
 jobs:
   build:
-    # Sistema operacional onde o script vai rodar
     runs-on: ubuntu-latest
 
     steps:
