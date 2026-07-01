@@ -12,13 +12,15 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
+import static br.com.fiap.commons.util.DateUtil.newDate;
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.NotificationFactory.create_Notification;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -45,16 +47,16 @@ class NotificationRepositoryExtTest {
                 //Scenario
                 var notification = create_Notification()
                         .withAllFieldsExceptDB();
-                em.merge(notification);
+                notification = em.merge(notification);
+                em.flush();
+                setField(notification,  "createdAt", newDateTime("13/12/2026 23:59:59"));
                 em.flush();
                 //Given
                 var filter = new NotificationFilter();
                 filter.setExternalId(UUID.fromString("d2b16521-39ce-479c-b779-a9ed5238a6c3"));
                 filter.setRecipient("customer@example.com");
-                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                filter.setCreatedAtFrom(newDate("13/12/2026"));
+                filter.setCreatedAtTo(newDate("13/12/2026"));
                 assertThatObject(filter)
                         .hasNoEmptyFields();
                 //When

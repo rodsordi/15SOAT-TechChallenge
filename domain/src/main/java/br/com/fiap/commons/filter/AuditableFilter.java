@@ -28,18 +28,6 @@ public abstract class AuditableFilter<T> extends PagedFilter {
             description = "Register created at (to).")
     private LocalDate createdAtTo;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = STRING)
-    @Schema(example = "2025-01-01",
-            format = "date",
-            description = "Register updated at (from).")
-    private LocalDate updatedAtFrom;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = STRING)
-    @Schema(example = "2025-12-31",
-            format = "date",
-            description = "Register updated at (to).")
-    private LocalDate updatedAtTo;
-
     private Specification<T> createdAtFromGreaterThanOrEqualTo() {
         return (root, query, builder) -> createdAtFrom == null ? null :
                 builder.greaterThanOrEqualTo(root.get("createdAt"), createdAtFrom);
@@ -50,20 +38,8 @@ public abstract class AuditableFilter<T> extends PagedFilter {
                 builder.lessThanOrEqualTo(root.get("createdAt"), LocalDateTime.of(createdAtTo, MAX));
     }
 
-    private Specification<T> updatedAtFromGreaterThanOrEqualTo() {
-        return (root, query, builder) -> updatedAtFrom == null ? null :
-                builder.greaterThanOrEqualTo(root.get("updatedAt"), updatedAtFrom);
-    }
-
-    private Specification<T> updatedAtToLessThanOrEqualTo() {
-        return (root, query, builder) -> updatedAtTo == null ? null :
-                builder.lessThanOrEqualTo(root.get("updatedAt"), LocalDateTime.of(updatedAtTo, MAX));
-    }
-
     protected Specification<T> buildSpecification() {
         return createdAtFromGreaterThanOrEqualTo()
-                .and(createdAtToLessThanOrEqualTo())
-                .and(updatedAtFromGreaterThanOrEqualTo())
-                .and(updatedAtToLessThanOrEqualTo());
+                .and(createdAtToLessThanOrEqualTo());
     }
 }

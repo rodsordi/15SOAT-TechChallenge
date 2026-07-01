@@ -12,8 +12,8 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.time.LocalDate;
-
+import static br.com.fiap.commons.util.DateUtil.newDate;
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.EmployeeFactory.create_Employee;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,17 +47,17 @@ class EmployeeRepositoryExtTest {
                         .withAllFieldsExceptDB();
                 employee.getAuthorities()
                         .forEach(authority -> em.persist(authority));
-                em.merge(employee);
+                employee = em.merge(employee);
+                em.flush();
+                setField(employee, "createdAt", newDateTime("13/12/2026 23:59:59"));
                 em.flush();
                 //Given
                 var filter = new EmployeeFilter();
                 filter.setCpf("17902652075");
                 filter.setName("John Doe");
                 filter.setEmail("john.doe@garage.com");
-                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                filter.setCreatedAtFrom(newDate("13/12/2026"));
+                filter.setCreatedAtTo(newDate("13/12/2026"));
                 assertThatObject(filter)
                         .hasNoEmptyFields();
                 //When

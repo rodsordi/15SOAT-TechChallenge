@@ -14,13 +14,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
+import static br.com.fiap.commons.util.DateUtil.newDate;
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.InventoryMaterialFactory.create_InventoryMaterial;
 import static br.com.fiap.garage.domain.enums.MaterialType.SHOP_SUPPLY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -47,7 +49,9 @@ class InventoryMaterialRepositoryExtTest {
                 //Scenario
                 var inventoryMaterial = create_InventoryMaterial()
                         .withAllFieldsExceptDB();
-                em.merge(inventoryMaterial);
+                inventoryMaterial = em.merge(inventoryMaterial);
+                em.flush();
+                setField(inventoryMaterial, "createdAt", newDateTime("13/12/2026 23:59:59"));
                 em.flush();
                 //Given
                 var filter = new InventoryMaterialFilter();
@@ -55,10 +59,8 @@ class InventoryMaterialRepositoryExtTest {
                 filter.setName("Engine Oil");
                 filter.setCostFrom(new BigDecimal("150.00"));
                 filter.setCostTo(new BigDecimal("150.00"));
-                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                filter.setCreatedAtFrom(newDate("13/12/2026"));
+                filter.setCreatedAtTo(newDate("13/12/2026"));
                 assertThatObject(filter)
                         .hasNoEmptyFields();
                 //When

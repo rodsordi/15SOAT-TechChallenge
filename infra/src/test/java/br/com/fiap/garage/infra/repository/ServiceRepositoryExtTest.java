@@ -14,9 +14,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.HashSet;
 
+import static br.com.fiap.commons.util.DateUtil.newDate;
+import static br.com.fiap.commons.util.DateUtil.newDateTime;
 import static br.com.fiap.commons.util.ReflectionUtil.assertThatObject;
 import static br.com.fiap.garage.domain.entity.factory.EstimatedServiceFactory.create_EstimatedService;
 import static br.com.fiap.garage.domain.entity.factory.ServiceFactory.create_Service;
@@ -53,17 +54,17 @@ class ServiceRepositoryExtTest {
                 var material = service.getMaterials().stream().findFirst().orElseThrow();
                 em.persist(material);
                 em.flush();
-                em.merge(service);
+                service = em.merge(service);
+                em.flush();
+                setField(service, "createdAt", newDateTime("13/12/2026 23:59:59"));
                 em.flush();
                 //Given
                 var filter = new ServiceFilter();
                 filter.setName("Complete Engine Overhaul");
                 filter.setCostFrom(new BigDecimal("3500.00"));
                 filter.setCostTo(new BigDecimal("3500.00"));
-                filter.setCreatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setCreatedAtTo(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtFrom(LocalDate.now());//NOSONAR
-                filter.setUpdatedAtTo(LocalDate.now());//NOSONAR
+                filter.setCreatedAtFrom(newDate("13/12/2026"));
+                filter.setCreatedAtTo(newDate("13/12/2026"));
                 assertThatObject(filter)
                         .hasNoEmptyFields();
                 //When
