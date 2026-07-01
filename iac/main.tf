@@ -8,6 +8,14 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.23"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.4"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.2"
+    }
   }
 }
 
@@ -75,7 +83,26 @@ resource "kubernetes_service" "postgres" {
   }
 }
 
+resource "null_resource" "build_and_load_image" {
+  depends_on = [
+    kind_cluster.garage_cluster
+  ]
+
+  triggers = {
+    dockerfile_hash = filemd5("${path.module}/Dockerfile-runner")
+  }
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      docker build --network host -t custom-runner:latest -f ${path.module}/Dockerfile-runner ${path.module}
+      docker save custom-runner:latest | docker exec -i cluster-local-dev-control-plane ctr -n k8s.io images import -
+    EOT
+  }
+}
+
 resource "kubernetes_deployment" "github_runner" {
+  depends_on = [null_resource.build_and_load_image]
+
   metadata {
     name = "github-runner"
   }
@@ -88,8 +115,9 @@ resource "kubernetes_deployment" "github_runner" {
       metadata { labels = { app = "github-runner" } }
       spec {
         container {
-          name  = "github-runner"
-          image = "myoung34/github-runner:latest"
+          name              = "github-runner"
+          image             = "custom-runner:latest"
+          image_pull_policy = "Never"
 
           env {
             name  = "REPO_URL"

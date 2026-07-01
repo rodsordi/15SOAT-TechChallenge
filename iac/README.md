@@ -39,6 +39,8 @@ terraform plan
 terraform apply -auto-approve
 ```
 
+**Valide k8s**
+
 ```sh
 kubectl get nodes
 ```
