@@ -42,3 +42,7 @@ terraform apply -auto-approve
 ```sh
 kubectl get nodes
 ```
+
+```sh
+kubectl get pods
+```

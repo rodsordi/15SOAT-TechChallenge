@@ -1,8 +1,19 @@
 terraform {
   required_providers {
-    kind = { source = "tehcyx/kind", version = "~> 0.8.0" }
-    kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.23" }
+    kind = {
+      source  = "tehcyx/kind"
+      version = "~> 0.8.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.23"
+    }
   }
+}
+
+variable "github_pat" {
+  type      = string
+  sensitive = true
 }
 
 provider "kind" {}
@@ -36,18 +47,17 @@ resource "kubernetes_deployment" "postgres" {
             container_port = 5432
           }
 
-          # Variáveis corrigidas (sem ponto e vírgula e em linhas separadas)
           env {
             name  = "POSTGRES_USER"
             value = "postgres"
           }
           env {
             name  = "POSTGRES_PASSWORD"
-            value = "senha_secreta"
+            value = "postgres"
           }
           env {
             name  = "POSTGRES_DB"
-            value = "meu_banco_local"
+            value = "postgres"
           }
         }
       }
@@ -62,5 +72,47 @@ resource "kubernetes_service" "postgres" {
     selector = { app = "postgres" }
     port { port = 5432 }
     type = "ClusterIP"
+  }
+}
+
+resource "kubernetes_deployment" "github_runner" {
+  metadata {
+    name = "github-runner"
+  }
+
+  spec {
+    replicas = 1
+    selector { match_labels = { app = "github-runner" } }
+
+    template {
+      metadata { labels = { app = "github-runner" } }
+      spec {
+        container {
+          name  = "github-runner"
+          image = "myoung34/github-runner:latest"
+
+          env {
+            name  = "REPO_URL"
+            value = "https://github.com/rodsordi/15SOAT-TechChallenge"
+          }
+          env {
+            name  = "RUNNER_NAME"
+            value = "runner-k8s-local"
+          }
+          env {
+            name  = "ACCESS_TOKEN"
+            value = var.github_pat
+          }
+          env {
+            name  = "LABELS"
+            value = "local,k8s,kind"
+          }
+
+          security_context {
+            privileged = true
+          }
+        }
+      }
+    }
   }
 }
