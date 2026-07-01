@@ -1,0 +1,5 @@
+FROM myoung34/github-runner:latest
+
+RUN apt-get update && \
+    apt-get install -y maven default-jdk && \
+    rm -rf /var/lib/apt/lists/*
