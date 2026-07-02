@@ -1,6 +1,12 @@
 # IaC
 
-## Terraform
+- Github Actions Runner
+- k8s/helm
+- Postgres
+- Jaeger
+- Sonarqube
+
+## Terraform - Setup
 
 **Linux**
 

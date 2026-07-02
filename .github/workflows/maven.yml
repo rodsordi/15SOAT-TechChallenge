@@ -48,3 +48,30 @@ jobs:
       - name: Clean up local cache
         if: always()
         run: rm -rf /tmp/actions-cache/${{ github.run_id }}
+
+  deploy:
+    needs: docker-image
+    runs-on: [self-hosted, local, k8s]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Load image into cluster containerd
+        run: docker save api-garage:${{ github.sha }} | ctr -a /run/containerd/containerd.sock -n k8s.io images import -
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install api-garage iac/charts/app \
+            --namespace default \
+            --set image.repository=api-garage \
+            --set image.tag=${{ github.sha }} \
+            --set image.pullPolicy=Never \
+            --set service.port=8080 \
+            --set env.SPRING_PROFILES_ACTIVE=local \
+            --set env.SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres \
+            --set env.SPRING_DATASOURCE_USERNAME=postgres \
+            --set env.SPRING_DATASOURCE_PASSWORD=postgres \
+            --set probes.enabled=true \
+            --set probes.path=/api/actuator/health \
+            --wait --timeout 2m

@@ -182,6 +182,11 @@ resource "kubernetes_deployment" "github_runner" {
             value = "tcp://localhost:2375"
           }
 
+          volume_mount {
+            name       = "containerd-sock"
+            mount_path = "/run/containerd/containerd.sock"
+          }
+
           security_context {
             privileged = true
           }
@@ -203,6 +208,15 @@ resource "kubernetes_deployment" "github_runner" {
 
           security_context {
             privileged = true
+          }
+        }
+
+        volume {
+          name = "containerd-sock"
+
+          host_path {
+            path = "/run/containerd/containerd.sock"
+            type = "Socket"
           }
         }
       }
