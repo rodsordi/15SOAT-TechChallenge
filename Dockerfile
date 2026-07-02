@@ -4,10 +4,8 @@ WORKDIR /app
 
 COPY application/target/api-garage.application-0.0.1-SNAPSHOT.jar api-garage.jar
 
-RUN groupadd -r appgroup \
-    && useradd -r -g appgroup -m appuser \
-    && chown -R appuser:appgroup /app
+RUN chown -R 1000 /app
 
-USER appuser
+USER 1000
 
 ENTRYPOINT ["java","-jar","/api-garage.jar"]
