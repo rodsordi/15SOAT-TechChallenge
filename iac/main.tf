@@ -181,6 +181,10 @@ resource "kubernetes_deployment" "github_runner" {
             name  = "DOCKER_HOST"
             value = "tcp://localhost:2375"
           }
+          env {
+            name  = "RUN_AS_ROOT"
+            value = "true"
+          }
 
           volume_mount {
             name       = "containerd-sock"
