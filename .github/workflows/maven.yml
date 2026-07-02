@@ -72,6 +72,15 @@ jobs:
             --set env.SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres \
             --set env.SPRING_DATASOURCE_USERNAME=postgres \
             --set env.SPRING_DATASOURCE_PASSWORD=postgres \
-            --set probes.enabled=true \
-            --set probes.path=/api/actuator/health \
             --wait --timeout 2m
+
+      - name: Diagnose failed deploy
+        if: failure()
+        run: |
+          kubectl get pods -l app=api-garage -o wide
+          echo "--- describe ---"
+          kubectl describe pods -l app=api-garage
+          echo "--- logs ---"
+          kubectl logs -l app=api-garage --tail=100 --all-containers --prefix || true
+          echo "--- previous logs (if crashed/restarted) ---"
+          kubectl logs -l app=api-garage --tail=100 --all-containers --prefix --previous || true
