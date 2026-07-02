@@ -8,4 +8,4 @@ RUN chown -R 1000 /app
 
 USER 1000
 
-ENTRYPOINT ["java","-jar","/api-garage.jar"]
+ENTRYPOINT ["java","-jar","api-garage.jar"]
