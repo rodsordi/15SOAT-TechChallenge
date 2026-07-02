@@ -7,8 +7,8 @@ RUN apt-get update && \
     curl -k -LO "https://dl.k8s.io/release/$(curl -k -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
     rm kubectl && \
-    curl -k -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 -o get_helm.sh && \
-    chmod +x get_helm.sh && \
-    ./get_helm.sh && \
-    rm get_helm.sh && \
+    curl -k -fsSL -o helm.tar.gz https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz && \
+    tar -zxf helm.tar.gz && \
+    install -o root -g root -m 0755 linux-amd64/helm /usr/local/bin/helm && \
+    rm -rf helm.tar.gz linux-amd64 && \
     rm -rf /var/lib/apt/lists/*

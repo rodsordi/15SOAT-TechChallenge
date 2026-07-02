@@ -1,7 +1,9 @@
 # IaC
 
+## Infrastructure
+
 - Github Actions Runner
-- k8s/helm
+- KinD
 - Postgres
 - Jaeger
 - Sonarqube
@@ -34,11 +36,6 @@ sudo apt update && sudo apt install terraform
 terraform init -upgrade
 terraform destroy -auto-approve
 ```
-```sh
-terraform state rm helm_release.postgres
-terraform state rm helm_release.github_runner
-```
-
 ```sh
 terraform state rm kubernetes_deployment.github_runner
 terraform state rm kubernetes_service.github_runner
