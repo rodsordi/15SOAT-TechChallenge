@@ -824,3 +824,8 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,maven,eclipse,windows,intellij,terraform,visualstudio,visualstudiocode,intellij+all,intellij+iml
+
+# Custom project-specific ignores
+iac/custom-runner.tar
+iac/cluster-local-dev-config
+iac/.terraform.lock.hcl

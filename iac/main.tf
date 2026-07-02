@@ -37,6 +37,36 @@ provider "kubernetes" {
   cluster_ca_certificate = kind_cluster.garage_cluster.cluster_ca_certificate
 }
 
+resource "kubernetes_service_account" "github_runner_sa" {
+  depends_on = [kind_cluster.garage_cluster]
+
+  metadata {
+    name      = "github-runner-sa"
+    namespace = "default"
+  }
+}
+
+# 2. Associação da ServiceAccount ao papel de cluster-admin (permissão total)
+resource "kubernetes_cluster_role_binding" "github_runner_admin" {
+  depends_on = [kubernetes_service_account.github_runner_sa]
+
+  metadata {
+    name = "github-runner-admin-binding"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.github_runner_sa.metadata[0].name
+    namespace = kubernetes_service_account.github_runner_sa.metadata[0].namespace
+  }
+}
+
 resource "kubernetes_deployment" "postgres" {
   metadata { name = "postgres" }
 
@@ -89,19 +119,29 @@ resource "null_resource" "build_and_load_image" {
   ]
 
   triggers = {
-    dockerfile_hash = filemd5("${path.module}/Dockerfile-runner")
+    always_run = timestamp()
   }
 
   provisioner "local-exec" {
+    interpreter = ["bash", "-c"]
+
     command = <<-EOT
-      docker build --network host -t custom-runner:latest -f ${path.module}/Dockerfile-runner ${path.module}
-      docker save custom-runner:latest | docker exec -i cluster-local-dev-control-plane ctr -n k8s.io images import -
+      set -e
+      export MSYS_NO_PATHCONV=1
+      docker build --network host -t custom-runner:latest -f "${path.module}/Dockerfile-runner" "${path.module}"
+      docker save -o custom-runner.tar custom-runner:latest
+      docker cp custom-runner.tar cluster-local-dev-control-plane:/custom-runner.tar
+      docker exec cluster-local-dev-control-plane ctr -n k8s.io images import /custom-runner.tar
+      rm -f custom-runner.tar
     EOT
   }
 }
 
 resource "kubernetes_deployment" "github_runner" {
-  depends_on = [null_resource.build_and_load_image]
+  depends_on = [
+    null_resource.build_and_load_image,
+    kubernetes_cluster_role_binding.github_runner_admin
+  ]
 
   metadata {
     name = "github-runner"
@@ -114,6 +154,8 @@ resource "kubernetes_deployment" "github_runner" {
     template {
       metadata { labels = { app = "github-runner" } }
       spec {
+        service_account_name = kubernetes_service_account.github_runner_sa.metadata[0].name
+
         container {
           name              = "github-runner"
           image             = "custom-runner:latest"

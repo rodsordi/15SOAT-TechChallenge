@@ -54,8 +54,8 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
     * Horizontal Pod Autoscaler (HPA), escalando conforme consumo de CPU/memória. (❌)
 
 #### Infraestrutura como Código (IaC)
-* Criar scripts em Terraform para provisionamento do cluster Kubernetes (local ou cloud); (❌)
-* Banco de Dados; (❌)
+* Criar scripts em Terraform para provisionamento do cluster Kubernetes (local ou cloud); (✅)
+* Banco de Dados; (✅)
 * Documentar quais recursos estão sendo criados e como aplicar. (❌)
 
 #### Integração Contínua/Entrega Contínua (CI/CD)

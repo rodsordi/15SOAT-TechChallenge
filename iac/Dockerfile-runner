@@ -1,5 +1,18 @@
 FROM myoung34/github-runner:latest
 
+# Executa como root para instalar dependências
+USER root
+
 RUN apt-get update && \
-    apt-get install -y maven default-jdk && \
+    apt-get install -y maven default-jdk curl && \
+    # Faz o download da última versão estável do kubectl
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    # Instala o binário na pasta correta com as permissões de execução
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    # Limpa os arquivos temporários e cache do apt para manter a imagem leve
+    rm kubectl && \
     rm -rf /var/lib/apt/lists/*
+
+# Se a imagem myoung34 usar um usuário específico (como 'runner')
+# para a execução do entrypoint, você pode retornar para ele aqui:
+# USER runner
