@@ -177,6 +177,29 @@ resource "kubernetes_deployment" "github_runner" {
             name  = "LABELS"
             value = "local,k8s,kind"
           }
+          env {
+            name  = "DOCKER_HOST"
+            value = "tcp://localhost:2375"
+          }
+
+          security_context {
+            privileged = true
+          }
+        }
+
+        container {
+          name  = "dind"
+          image = "docker:27-dind"
+          args  = ["--host=tcp://0.0.0.0:2375", "--host=unix:///var/run/docker.sock"]
+
+          env {
+            name  = "DOCKER_TLS_CERTDIR"
+            value = ""
+          }
+
+          port {
+            container_port = 2375
+          }
 
           security_context {
             privileged = true
