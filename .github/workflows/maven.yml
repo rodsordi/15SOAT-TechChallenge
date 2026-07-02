@@ -23,3 +23,28 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+
+      - name: Cache application artifact locally
+        run: |
+          mkdir -p /tmp/actions-cache/${{ github.run_id }}
+          cp application/target/*.jar /tmp/actions-cache/${{ github.run_id }}/
+
+  docker-image:
+    needs: build
+    runs-on: [self-hosted, local, k8s]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Restore application artifact from local cache
+        run: |
+          mkdir -p application/target
+          cp /tmp/actions-cache/${{ github.run_id }}/*.jar application/target/
+
+      - name: Build Docker image
+        run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
+
+      - name: Clean up local cache
+        if: always()
+        run: rm -rf /tmp/actions-cache/${{ github.run_id }}
