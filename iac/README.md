@@ -9,6 +9,13 @@
 - Sonarqube
 - Floci
 
+## Setup
+
+```sh
+export TF_VAR_github_pat=#secret
+export TF_VAR_sonar_admin_password=#create a new password
+```
+
 ## Terraform - Installation
 
 **Linux**
