@@ -4,7 +4,7 @@ resource "null_resource" "build_and_load_image" {
   ]
 
   triggers = {
-    always_run = timestamp()
+    dockerfile_hash = filesha256("${path.module}/Dockerfile-runner")
   }
 
   provisioner "local-exec" {

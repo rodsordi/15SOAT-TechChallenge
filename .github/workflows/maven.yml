@@ -72,6 +72,7 @@ jobs:
             --set env.SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres \
             --set env.SPRING_DATASOURCE_USERNAME=postgres \
             --set env.SPRING_DATASOURCE_PASSWORD=postgres \
+            --set env.SPRING_CLOUD_AWS_SQS_ENDPOINT=http://floci:4566 \
             --wait --timeout 2m
 
       - name: Diagnose failed deploy

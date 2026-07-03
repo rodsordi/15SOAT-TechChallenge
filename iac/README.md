@@ -7,8 +7,9 @@
 - Postgres
 - Jaeger
 - Sonarqube
+- Floci
 
-## Terraform - Setup
+## Terraform - Installation
 
 **Linux**
 
@@ -30,7 +31,7 @@ sudo apt update && sudo apt install terraform
 
 ### Terraform - K8S
 
-**Kubernetes reset**
+**Uninstall**
 
 ```sh
 terraform init -upgrade
@@ -39,6 +40,9 @@ terraform destroy -auto-approve
 ```sh
 terraform state rm kubernetes_deployment.github_runner
 terraform state rm kubernetes_service.github_runner
+```
+```sh
+sudo rm $(which kubectl)
 ```
 
 **Kubernetes setup**
@@ -51,6 +55,8 @@ terraform plan
 ```
 ```sh
 terraform apply -auto-approve
+source use-kubeconfig.sh
+hash -r
 ```
 
 **Valide k8s**
@@ -61,6 +67,12 @@ kubectl get nodes
 ```sh
 kubectl get pods
 ```
+
+**Analise pods**
+
 ```sh
 kubectl logs -f -l app=github-runner
+```
+```sh
+kubectl logs -l app=api-garage --tail=100 --previous
 ```
