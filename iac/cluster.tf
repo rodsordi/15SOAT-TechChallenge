@@ -2,6 +2,21 @@ provider "kind" {}
 
 resource "kind_cluster" "garage_cluster" {
   name = "cluster-local-dev"
+
+  kind_config {
+    kind        = "Cluster"
+    api_version = "kind.x-k8s.io/v1alpha4"
+
+    node {
+      role = "control-plane"
+
+      extra_port_mappings {
+        container_port = 30080
+        host_port      = 8080
+        protocol       = "TCP"
+      }
+    }
+  }
 }
 
 provider "kubernetes" {
