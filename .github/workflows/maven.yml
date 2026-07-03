@@ -7,7 +7,29 @@ on:
     branches: [ "phase2" ]
 
 jobs:
+  code-quality:
+    runs-on: [self-hosted, local, k8s]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: JDK 25 config
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Test and SonarQube analysis
+        run: |
+          mvn -B clean verify sonar:sonar \
+            -Dsonar.host.url=http://sonarqube:9000 \
+            -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.qualitygate.wait=true
+
   build:
+    needs: code-quality
     runs-on: [self-hosted, local, k8s]
 
     steps:

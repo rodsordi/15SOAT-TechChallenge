@@ -63,6 +63,13 @@ docker compose up
 
 ## 🌐 Curls
 
+- Health check
+
+```sh
+curl --location 'http://localhost:8080/api/actuator/health' \
+--header 'Content-Type: application/json'
+```
+
 - Creating Employee
 
 ```sh

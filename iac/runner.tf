@@ -70,6 +70,10 @@ resource "kubernetes_deployment" "github_runner" {
             name  = "RUN_AS_ROOT"
             value = "true"
           }
+          env {
+            name  = "SONAR_TOKEN"
+            value = sensitive(trimspace(data.local_file.sonar_token.content))
+          }
 
           volume_mount {
             name       = "containerd-sock"

@@ -55,6 +55,11 @@ terraform plan
 ```
 ```sh
 terraform apply -auto-approve
+```
+```sh
+terraform apply -auto-approve -replace
+```
+```sh
 source use-kubeconfig.sh
 hash -r
 ```
