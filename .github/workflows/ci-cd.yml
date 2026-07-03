@@ -38,7 +38,7 @@ jobs:
 #        run: mvn test -DintegrationTests
 
   build:
-    needs: [code-quality, integration-tests]
+#    needs: [code-quality, integration-tests]
     runs-on: [self-hosted, local, k8s]
 
     steps:
