@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: api-garage
+  tag: latest
+  pullPolicy: Never
+
+service:
+  port: 8080
+
+env:
+  SPRING_PROFILES_ACTIVE: local
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+  SPRING_DATASOURCE_USERNAME: postgres
+  SPRING_DATASOURCE_PASSWORD: postgres
+  SPRING_CLOUD_AWS_SQS_ENDPOINT: http://floci:4566
+
+probes:
+  enabled: false
+  path: /actuator/health
+  initialDelaySeconds: 20
+  periodSeconds: 10

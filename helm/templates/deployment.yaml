@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: api-garage
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
+      app: api-garage
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
+        app: api-garage
     spec:
       containers:
-        - name: {{ .Release.Name }}
+        - name: api-garage
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
