@@ -56,15 +56,15 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
 #### Infraestrutura como Código (IaC)
 * Criar scripts em Terraform para provisionamento do cluster Kubernetes (local ou cloud); (✅)
 * Banco de Dados; (✅)
-* Documentar quais recursos estão sendo criados e como aplicar. (❌)
+* Documentar quais recursos estão sendo criados e como aplicar. (✅)
 
 #### Integração Contínua/Entrega Contínua (CI/CD)
 * Pipeline de CI/CD configurada (GitHub Actions, GitLab CI, etc.), que execute:
-    * Build da aplicação. (❌)
-    * Execução dos testes automatizados. (❌)
-    * Build da imagem Docker. (❌)
-    * Deploy no cluster Kubernetes. (❌)
-    * Deploy do banco de dados. (❌)
+    * Build da aplicação. (✅)
+    * Execução dos testes automatizados. (✅)
+    * Build da imagem Docker. (✅)
+    * Deploy no cluster Kubernetes. (✅)
+    * Deploy do banco de dados. (✅)
     * Aplicação dos manifestos YAML no cluster. (❌)
 
 ---
@@ -87,9 +87,9 @@ Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de
     * Infraestrutura provisionada. (❌)
     * Fluxo de deploy. (❌)
 * Instruções para:
-    * Execução local. (❌)
-    * Deploy em Kubernetes. (❌)
-    * Provisionamento da infraestrutura com Terraform. (❌)
+    * Execução local. (✅)
+    * Deploy em Kubernetes. (✅)
+    * Provisionamento da infraestrutura com Terraform. (✅)
 * Link para a collection completa das APIs (Postman, Swagger ou Similar); (❌)
 * Link para vídeo demonstrativo do ambiente em execução:
     * Publicado no YouTube ou Vimeo (público ou não listado) de até 15 minutos. (❌)

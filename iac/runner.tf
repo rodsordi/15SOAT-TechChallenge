@@ -33,7 +33,7 @@ resource "kubernetes_deployment" "github_runner" {
   }
 
   spec {
-    replicas = 1
+    replicas = 2
     selector { match_labels = { app = "github-runner" } }
 
     template {
@@ -51,8 +51,12 @@ resource "kubernetes_deployment" "github_runner" {
             value = "https://github.com/rodsordi/15SOAT-TechChallenge"
           }
           env {
-            name  = "RUNNER_NAME"
-            value = "runner-k8s-local"
+            name = "RUNNER_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
           }
           env {
             name  = "ACCESS_TOKEN"

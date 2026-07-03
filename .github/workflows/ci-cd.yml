@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: CI/CD Pipeline
 
 on:
   push:
@@ -14,12 +14,8 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v5
 
-      - name: JDK 25 config
-        uses: actions/setup-java@v5
-        with:
-          java-version: '25'
-          distribution: 'temurin'
-          cache: maven
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
 
       - name: Test and SonarQube analysis
         run: |
@@ -28,23 +24,32 @@ jobs:
             -Dsonar.token=$SONAR_TOKEN \
             -Dsonar.qualitygate.wait=true
 
-  build:
-    needs: code-quality
+  integration-tests:
     runs-on: [self-hosted, local, k8s]
 
     steps:
       - name: Code checkout
         uses: actions/checkout@v5
 
-      - name: JDK 25 config
-        uses: actions/setup-java@v5
-        with:
-          java-version: '25'
-          distribution: 'temurin'
-          cache: maven
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Run integration tests
+        run: mvn test -DintegrationTests
+
+  build:
+    needs: [code-quality, integration-tests]
+    runs-on: [self-hosted, local, k8s]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -DskipTests
 
       - name: Cache application artifact locally
         run: |
