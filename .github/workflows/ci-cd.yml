@@ -51,10 +51,12 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml -DskipTests
 
-      - name: Cache application artifact locally
-        run: |
-          mkdir -p /tmp/actions-cache/${{ github.run_id }}
-          cp application/target/*.jar /tmp/actions-cache/${{ github.run_id }}/
+      - name: Upload application artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-jar
+          path: application/target/*.jar
+          retention-days: 1
 
   docker-image:
     needs: build
@@ -64,17 +66,24 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v5
 
-      - name: Restore application artifact from local cache
-        run: |
-          mkdir -p application/target
-          cp /tmp/actions-cache/${{ github.run_id }}/*.jar application/target/
+      - name: Download application artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: application-jar
+          path: application/target
 
       - name: Build Docker image
         run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
 
-      - name: Clean up local cache
-        if: always()
-        run: rm -rf /tmp/actions-cache/${{ github.run_id }}
+      - name: Save Docker image
+        run: docker save -o api-garage-image.tar api-garage:${{ github.sha }}
+
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-garage-image
+          path: api-garage-image.tar
+          retention-days: 1
 
   deploy:
     needs: docker-image
@@ -84,8 +93,13 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v5
 
+      - name: Download Docker image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: api-garage-image
+
       - name: Load image into cluster containerd
-        run: docker save api-garage:${{ github.sha }} | ctr -a /run/containerd/containerd.sock -n k8s.io images import -
+        run: ctr -a /run/containerd/containerd.sock -n k8s.io images import api-garage-image.tar
 
       - name: Deploy with Helm
         run: |
