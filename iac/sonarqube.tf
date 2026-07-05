@@ -48,14 +48,15 @@ resource "null_resource" "sonar_setup" {
 
     command = <<-EOT
       set -eo pipefail
-      export KUBECONFIG="${kind_cluster.garage_cluster.kubeconfig_path}"
+      export MSYS_NO_PATHCONV=1
+      export KUBECONFIG="${replace(kind_cluster.garage_cluster.kubeconfig_path, "\\", "/")}"
 
       kubectl -n default port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
       PF_PID=$!
       trap 'kill $PF_PID 2>/dev/null || true' EXIT
 
       echo "Aguardando SonarQube responder..."
-      for i in $(seq 1 60); do
+      for i in {1..60}; do
         STATUS=$(curl -s http://127.0.0.1:19000/api/system/status | grep -o '"status":"[^"]*' | cut -d'"' -f4 || true)
         [ "$STATUS" = "UP" ] && break
         sleep 3

@@ -13,7 +13,7 @@
 
 ```sh
 export TF_VAR_github_pat=#secret
-export TF_VAR_sonar_admin_password=#create a new password
+export TF_VAR_sonar_admin_password=#secret (Sonarqube@2026)
 ```
 
 ## Terraform - Installation
@@ -44,15 +44,8 @@ sudo apt update && sudo apt install terraform
 terraform init -upgrade
 terraform destroy -auto-approve
 ```
-```sh
-terraform state rm kubernetes_deployment.github_runner
-terraform state rm kubernetes_service.github_runner
-```
-```sh
-sudo rm $(which kubectl)
-```
 
-**Kubernetes setup**
+**Kubernetes setup *(Linux/Windows Gitbash)***
 
 ```sh
 terraform init
