@@ -1,11 +1,12 @@
-FROM amazoncorretto:25
+FROM amazoncorretto:25-alpine-headless
+
+RUN addgroup -g 1000 appgroup && \
+    adduser -u 1000 -G appgroup -D -s /bin/false appuser
 
 WORKDIR /app
 
-COPY application/target/api-garage.application-0.0.1-SNAPSHOT.jar api-garage.jar
+COPY --chown=appuser:appgroup application/target/api-garage.application-0.0.1-SNAPSHOT.jar api-garage.jar
 
-RUN chown -R 1000 /app
-
-USER 1000
+USER appuser
 
 ENTRYPOINT ["java","-jar","api-garage.jar"]

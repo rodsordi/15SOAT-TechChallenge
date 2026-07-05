@@ -51,29 +51,25 @@ resource "null_resource" "sonar_setup" {
       export MSYS_NO_PATHCONV=1
       export KUBECONFIG="${replace(kind_cluster.garage_cluster.kubeconfig_path, "\\", "/")}"
 
+      # Port-forward com auto-recuperação
       kubectl -n default port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
-      PF_PID=$!
-      trap 'kill $PF_PID 2>/dev/null || true' EXIT
+      trap 'kill $! 2>/dev/null || true' EXIT
 
-      echo "Aguardando SonarQube responder..."
-      for i in {1..60}; do
-        STATUS=$(curl -s http://127.0.0.1:19000/api/system/status | grep -o '"status":"[^"]*' | cut -d'"' -f4 || true)
-        [ "$STATUS" = "UP" ] && break
+      # Aguarda SonarQube ficar UP (com timeouts para resiliência)
+      for i in {1..100}; do
+        curl -s -m 5 --connect-timeout 2 http://127.0.0.1:19000/api/system/status | grep -q '"status":"UP"' && break
+        kill -0 $! 2>/dev/null || kubectl -n default port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
         sleep 3
       done
 
-      curl -sf -u admin:admin -X POST "http://127.0.0.1:19000/api/users/change_password?login=admin&previousPassword=admin&password=${var.sonar_admin_password}" || true
+      # Altera senha e revoga token anterior (ignora erros e evita travar)
+      curl -s -m 10 --connect-timeout 3 -u admin:admin -X POST "http://127.0.0.1:19000/api/users/change_password?login=admin&previousPassword=admin&password=${var.sonar_admin_password}" >/dev/null || true
+      curl -s -m 10 --connect-timeout 3 -u "admin:${var.sonar_admin_password}" -X POST "http://127.0.0.1:19000/api/user_tokens/revoke?name=terraform-token" >/dev/null || true
 
-      # revoga um token com o mesmo nome antes de gerar, garantindo idempotencia
-      curl -sf -u "admin:${var.sonar_admin_password}" -X POST "http://127.0.0.1:19000/api/user_tokens/revoke?name=terraform-token" || true
-
-      TOKEN=$(curl -sf -u "admin:${var.sonar_admin_password}" -X POST "http://127.0.0.1:19000/api/user_tokens/generate?name=terraform-token" | grep -o '"token":"[^"]*' | cut -d'"' -f4)
-
-      if [ -z "$TOKEN" ]; then
-        echo "ERRO: falha ao gerar o token do SonarQube" >&2
-        exit 1
-      fi
-
+      # Gera o novo token e finaliza o port-forward para evitar travamentos do shell/pipes
+      TOKEN=$(curl -s -m 10 --connect-timeout 3 -u "admin:${var.sonar_admin_password}" -X POST "http://127.0.0.1:19000/api/user_tokens/generate?name=terraform-token" | grep -o '"token":"[^"]*' | cut -d'"' -f4 || true)
+      kill $! 2>/dev/null || true  # Força o encerramento do kubectl port-forward em background
+      [ -n "$TOKEN" ] || { echo "Falha ao obter token do SonarQube" >&2; exit 1; }
       echo -n "$TOKEN" > "${path.module}/.sonar_token"
     EOT
   }

@@ -43,8 +43,8 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
 
 #### Conteinerização
 * Garantir a aplicação containerizada via Docker, com:
-    * `Dockerfile` atualizado. (❌) ajustar segurança de user root
-    * `docker-compose` para desenvolvimento local. (❌) ajustar segurança de user root
+    * `Dockerfile` atualizado. (✅)
+    * `docker-compose` para desenvolvimento local. (✅)
 
 #### Orquestração com Kubernetes (K8s)
 * Criar manifestos YAML para deploy em Kubernetes, contemplando:
@@ -90,7 +90,7 @@ Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de
     * Execução local. (✅)
     * Deploy em Kubernetes. (✅)
     * Provisionamento da infraestrutura com Terraform. (✅)
-* Link para a collection completa das APIs (Postman, Swagger ou Similar); (❌)
+* Link para a collection completa das APIs (Postman, Swagger ou Similar); (❌) 
 * Link para vídeo demonstrativo do ambiente em execução:
     * Publicado no YouTube ou Vimeo (público ou não listado) de até 15 minutos. (❌)
     * O vídeo deve demonstrar:
