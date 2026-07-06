@@ -12,6 +12,10 @@ API responsible for managing the vehicle mechanic workflow. Tech Challenge for t
 - [IDE 2026.1](https://www.jetbrains.com/idea/download/)
 - [Apache Maven 3.9.11](https://maven.apache.org/download.cgi)
 
+## Arquitetura
+
+![Hexagon Arch](docs/Hexagon-Arch.png)
+
 ## ⚙️ Setup
 
 ```sh
