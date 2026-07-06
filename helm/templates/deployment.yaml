@@ -3,7 +3,9 @@ kind: Deployment
 metadata:
   name: api-garage
 spec:
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       app: api-garage
@@ -23,6 +25,8 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           {{- if .Values.probes.enabled }}
           livenessProbe:
             httpGet:

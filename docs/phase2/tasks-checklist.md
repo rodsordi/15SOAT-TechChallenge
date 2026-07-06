@@ -48,9 +48,9 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
 
 #### Orquestração com Kubernetes (K8s)
 * Criar manifestos YAML para deploy em Kubernetes, contemplando:
-    * Deployments. (❌)
-    * Services. (❌)
-    * ConfigMaps e Secrets (para variáveis sensíveis, como tokens de serviços externos). (❌)
+    * Deployments. (✅)
+    * Services. (✅)
+    * ConfigMaps e Secrets (para variáveis sensíveis, como tokens de serviços externos). (✅)
     * Horizontal Pod Autoscaler (HPA), escalando conforme consumo de CPU/memória. (❌)
 
 #### Infraestrutura como Código (IaC)

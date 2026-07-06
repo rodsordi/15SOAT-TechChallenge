@@ -16,6 +16,16 @@ export TF_VAR_github_pat=#secret
 export TF_VAR_sonar_admin_password=#secret (Sonarqube@2026)
 ```
 
+### OWASP Setup
+
+- Request an api-key on https://nvd.nist.gov/developers/request-an-api-key
+- Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability checks.
+
+```sh
+NVD_API_KEY=${confirmed_api_key_on_email}
+echo $NVD_API_KEY
+```
+
 ## Terraform - Installation
 
 **Linux**

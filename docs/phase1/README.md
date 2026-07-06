@@ -9,17 +9,18 @@ API responsible for managing the vehicle mechanic workflow. Tech Challenge for t
 ## 📋 Prerequisites
 
 - [JDK 25](https://jdk.java.net/archive/)
-- [IDE 2026.1](https://www.jetbrains.com/idea/download/)
 - [Apache Maven 3.9.11](https://maven.apache.org/download.cgi)
 
 ## ⚙️ Setup
 
+**Maven**
 ```sh
 export M2_HOME=~/app/apache-maven-3.9.11
 export M2=$M2_HOME/bin
 export PATH=$PATH:$M2
 ```
 
+**jdk**
 ```sh
 export JAVA_HOME=~/app/jdk-25.0.2
 export PATH=$PATH:$JAVA_HOME/bin
@@ -29,6 +30,12 @@ export PATH=$PATH:$JAVA_HOME/bin
 
 ```sh
 git clone https://github.com/rodsordi/15SOAT-TechChallenge.git
+```
+
+### 👌 Running unit tests
+
+```sh
+mvn test
 ```
 
 ### 📦 Package building
@@ -95,65 +102,56 @@ curl --location 'http://localhost:8080/api/v1/employees' \
 --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdhcmFnZS5jb20iLCJpYXQiOjE3Nzc2MDczOTEsImV4cCI6MTc3NzYxMDk5MX0.Fzwy1Ii8gnpgUtZBRUsZWf8WJgoum-dUNmhNFd6SldgHEW9L6fKLF_xWB6mkVaZ0iQJyZszuhUtNrK64LxUcaQ'
 ```
 
-## CI/CD
+## ✨ Quality
 
-**Gitflow**
-```mermaid
----
-config:
-  logLevel: 'debug'
-  theme: 'base'
-  gitGraph:
-    showBranches: true
-    showCommitLabel: true
-    mainBranchOrder: 1
----
-gitGraph
-  commit id: "last delivery (main)" tag: "v1.0.0"
-  
-%% hotfix
-  branch hotfix/new-fix
-  checkout hotfix/new-fix
-  commit id: "fix-prod"
-  
-%% develop
-  checkout main
-  branch develop order: 2
-  checkout develop
-  commit id: "last delivery (dev)"
-  
-%% feature1
-  checkout develop
-  branch feature/new-feature-1 order: 4
-  checkout feature/new-feature-1
-  commit id: "commit1 feature1"
-  commit id: "commit2 feature1"
-  
-%% feature2
-  checkout develop
-  branch feature/new-feature-2 order: 5
-  checkout feature/new-feature-2
-  commit id: "commit feature2"
+### 🧪 Integration tests:
 
-%% merge features on develop
-  checkout develop
-  merge feature/new-feature-1 id: "merge feature1"
-  checkout develop
-  merge feature/new-feature-2 id: "merge feature2"
-
-%% release
-  checkout develop
-  branch release/1.0.1-new-release order: 1
-  checkout release/1.0.1-new-release
-  cherry-pick id: "merge feature2" parent: "commit feature2"
-  commit id: "commit release"
-
-%% merge release on main
-  checkout main
-  merge hotfix/new-fix tag: "v1.0.1a" id: "merge hotfix"
-  checkout main
-  merge release/1.0.1-new-release tag: "v1.0.1" id: "merge release"
+```sh
+mvn test -DintegrationTests
 ```
+
+### 🛡️ Vulnerabilities
+
+- Request an api-key on https://nvd.nist.gov/developers/request-an-api-key
+- Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability
+  checks.
+
+```sh
+NVD_API_KEY=${confirmed_api_key_on_email}
+echo $NVD_API_KEY
+```
+
+```sh
+mvn clean verify -DskipTests -Dowasp
+```
+
+### 🧹 Coverage
+
+```sh
+docker compose -f docker-compose-devops.yml up -d
+```
+
+- Change password and create token
+- Obs: To change new tokens, you should change the name query param.
+
+```sh
+curl -u admin:admin -X POST "http://localhost:9000/api/users/change_password?login=admin&previousPassword=admin&password=Sonarqube@2026"
+SONAR_TOKEN=$(curl -u admin:Sonarqube@2026 -X POST "http://localhost:9000/api/user_tokens/generate?name=setup-token" | grep -o '"token":"[^"]*' | cut -d'"' -f4)
+echo $SONAR_TOKEN
+```
+
+- Run report
+
+```sh
+mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.token=$SONAR_TOKEN
+```
+
+- Browse [sonar](http://localhost:9000/)
+
+| User  | Pass           | 
+|-------|----------------|
+| admin | Sonarqube@2026 |
+
 
 ## 📌 Versão
 
