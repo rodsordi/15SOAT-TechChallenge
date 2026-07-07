@@ -1,32 +1,33 @@
 # IaC
 
-## Infrastructure
+## 🏗️ Infrastructure
 
-- Github Actions Runner
-- KinD
-- Postgres
-- Jaeger
-- Sonarqube
-- Floci
+This repository contains the Terraform configurations and automation scripts to provision and manage the infrastructure required for the project, including Kubernetes (K8S) clusters, GitHub self-hosted runners, and security analysis tools.
 
-## Setup
+![InfraDesign](TechChallenge-InfraDesign.png)
+
+## ⚙️ Setup
+
+Before executing the Terraform scripts, you need to configure the required environment variables for authentication and third-party integrations.
 
 ```sh
-export TF_VAR_github_pat=#secret
-export TF_VAR_sonar_admin_password=#secret (Sonarqube@2026)
+export TF_VAR_github_pat="your_github_pat_here"
+export TF_VAR_sonar_admin_password="Sonarqube@2026"
 ```
 
 ### OWASP Setup
 
+To perform security and vulnerability scans during the pipeline execution, it is highly recommended to use an NVD API Key.
+
 - Request an api-key on https://nvd.nist.gov/developers/request-an-api-key
-- Obs: This sptep is optional, but it will provide more accurate results and a higher rate limit for vulnerability checks.
+- Note: This step is optional but strongly recommended as it prevents rate-limiting issues and ensures up-to-date vulnerability definitions.
 
 ```sh
-NVD_API_KEY=${confirmed_api_key_on_email}
+export NVD_API_KEY="your_confirmed_api_key_from_email"
 echo $NVD_API_KEY
 ```
 
-## Terraform - Installation
+## 💾 Terraform - Installation
 
 **Linux**
 
@@ -46,7 +47,9 @@ sudo apt update && sudo apt install terraform
 - Extract in `C:\devtools\terraform`
 - Add `C:\devtools\terraform` to Path
 
-### Terraform - K8S
+### ☸️ Terraform - K8S
+
+Follow these commands to initialize, plan, and apply the infrastructure changes. These commands are compatible with Linux and Windows (Git Bash) environments.
 
 **Uninstall**
 
@@ -57,6 +60,8 @@ terraform destroy -auto-approve
 
 **Kubernetes setup *(Linux/Windows Gitbash)***
 
+After a successful deployment, source the helper script to export the Kubernetes configuration:
+
 ```sh
 terraform init
 ```
@@ -66,12 +71,13 @@ terraform plan
 ```sh
 terraform apply -auto-approve
 ```
+
 ```sh
 source use-kubeconfig.sh
 hash -r
 ```
 
-**Valide k8s**
+**Verify k8s**
 
 ```sh
 kubectl get nodes
@@ -80,7 +86,7 @@ kubectl get nodes
 kubectl get pods
 ```
 
-**Analise pods**
+**Analyze Pods**
 
 ```sh
 kubectl logs -f -l app=github-runner

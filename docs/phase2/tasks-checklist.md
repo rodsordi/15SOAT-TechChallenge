@@ -81,10 +81,10 @@ Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de
 
 ### README.md atualizado com:
 
-* Descrição da solução e dos objetivos desta fase; (❌)
+* Descrição da solução e dos objetivos desta fase; (✅)
 * Desenho da arquitetura proposta, incluindo: 
     * Componentes da aplicação. (✅)
-    * Infraestrutura provisionada. (❌)
+    * Infraestrutura provisionada. (✅)
     * Fluxo de deploy. (✅)
 * Instruções para:
     * Execução local. (✅)

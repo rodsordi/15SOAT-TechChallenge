@@ -6,15 +6,11 @@ API responsible for managing the vehicle mechanic workflow. Tech Challenge for t
 
 - [Documentation](https://github.com/rodsordi/15SOAT-TechChallenge/wiki)
 
-## 📋 Prerequisites
+## Architecture
 
-- [JDK 25](https://jdk.java.net/archive/)
-- [IDE 2026.1](https://www.jetbrains.com/idea/download/)
-- [Apache Maven 3.9.11](https://maven.apache.org/download.cgi)
+**Hexagonal Architecture**
 
-## Arquitetura
-
-![Hexagon Architecture](docs/TechChallenge-ArchDesign.png)
+![Hexagonal Architecture](docs/TechChallenge-ArchDesign.png)
 
 ### C4Model
 
@@ -49,6 +45,12 @@ title Garage (Container Diagram)
     Rel(api, db, "Reads from and writes to", "JDBC")
     Rel(api, email, "Sends e-mails via", "HTTP")
 ```
+
+## 📋 Prerequisites
+
+- [JDK 25](https://jdk.java.net/archive/)
+- [IDE 2026.1](https://www.jetbrains.com/idea/download/)
+- [Apache Maven 3.9.11](https://maven.apache.org/download.cgi)
 
 ## ⚙️ Setup
 
@@ -134,6 +136,10 @@ curl --location 'http://localhost:8080/api/v1/employees' \
 ```
 
 ## CI/CD
+
+**IaC**
+
+- Follow the `iac/README.md` instructions to enable CI/CD pipe-line.
 
 **Gitflow**
 ```mermaid
