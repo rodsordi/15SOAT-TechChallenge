@@ -51,7 +51,7 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
     * Deployments. (✅)
     * Services. (✅)
     * ConfigMaps e Secrets (para variáveis sensíveis, como tokens de serviços externos). (✅)
-    * Horizontal Pod Autoscaler (HPA), escalando conforme consumo de CPU/memória. (❌)
+    * Horizontal Pod Autoscaler (HPA), escalando conforme consumo de CPU/memória. (✅)
 
 #### Infraestrutura como Código (IaC)
 * Criar scripts em Terraform para provisionamento do cluster Kubernetes (local ou cloud); (✅)
@@ -65,7 +65,7 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
     * Build da imagem Docker. (✅)
     * Deploy no cluster Kubernetes. (✅)
     * Deploy do banco de dados. (✅)
-    * Aplicação dos manifestos YAML no cluster. (❌)
+    * Aplicação dos manifestos YAML no cluster. (✅)
 
 ---
 
@@ -74,23 +74,23 @@ Evoluir a aplicação desenvolvida na Fase 1 para garantir qualidade, resiliênc
 ### Repositório Git (mesmo da fase 1), contendo:
 
 Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de arquitetura escolhida:
-* `Dockerfile` e `docker-compose` revisados; (❌)
-* Manifestos Kubernetes (em `/k8s`); (❌)
-* Scripts Terraform (em `/infra` ou `iac`); (❌)
-* Arquivos de configuração da pipeline CI/CD. (❌)
+* `Dockerfile` e `docker-compose` revisados; (✅)
+* Manifestos Kubernetes (em `helm/`); (✅)
+* Scripts Terraform (em `iac/`); (✅)
+* Arquivos de configuração da pipeline CI/CD. (✅)
 
 ### README.md atualizado com:
 
 * Descrição da solução e dos objetivos desta fase; (❌)
 * Desenho da arquitetura proposta, incluindo: 
-    * Componentes da aplicação. (❌)
+    * Componentes da aplicação. (✅)
     * Infraestrutura provisionada. (❌)
-    * Fluxo de deploy. (❌)
+    * Fluxo de deploy. (✅)
 * Instruções para:
     * Execução local. (✅)
     * Deploy em Kubernetes. (✅)
     * Provisionamento da infraestrutura com Terraform. (✅)
-* Link para a collection completa das APIs (Postman, Swagger ou Similar); (❌) 
+* Link para a collection completa das APIs (Postman, Swagger ou Similar); (✅) 
 * Link para vídeo demonstrativo do ambiente em execução:
     * Publicado no YouTube ou Vimeo (público ou não listado) de até 15 minutos. (❌)
     * O vídeo deve demonstrar:

@@ -2,9 +2,15 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "phase2" ]
+    branches:
+      - 'feature/**'
+      - 'develop'
+      - 'main'
   pull_request:
-    branches: [ "phase2" ]
+    branches:
+      - 'feature/**'
+      - 'develop'
+      - 'main'
 
 jobs:
 #  code-quality:

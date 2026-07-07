@@ -14,7 +14,41 @@ API responsible for managing the vehicle mechanic workflow. Tech Challenge for t
 
 ## Arquitetura
 
-![Hexagon Arch](docs/Hexagon-Arch.png)
+![Hexagon Architecture](docs/TechChallenge-ArchDesign.png)
+
+### C4Model
+
+```mermaid
+C4Container
+title Garage (Container Diagram)
+
+    Person(employee, "Organization Employee", "Garage staff member.")
+    Person(customer, "System Customer", "Garage customer.")
+
+    System_Boundary(c1, "Garage Applications") {
+        Container(web_app, "Web Application", "React / SPA", "Vehicle repair<br> data management interface.")
+        Container(mobile_app, "Mobile App", "Flutter", "Mobile vehicle repair<br> data management.")
+        Container(api, "API Application", "Java / Spring Boot", "Handles garage business logic<br> via REST API.")
+    }
+
+    System_Boundary(c2, "External Systems") {
+        System_Ext(email, "E-mail Service", "External SMTP<br> Notification System.")
+    }
+
+    System_Boundary(c3, "Storage & Databases") {
+        ContainerDb(db, "Database", "PostgreSQL", "Manages work orders, services<br> and authorization data.")
+    }
+
+    Rel(employee, web_app, "Uses", "HTTPS")
+    Rel(customer, web_app, "Uses", "HTTPS")
+    Rel(customer, mobile_app, "Uses", "HTTPS")
+    
+    Rel(web_app, api, "Consumes", "HTTPS")
+    Rel(mobile_app, api, "Consumes", "HTTPS")
+    
+    Rel(api, db, "Reads from and writes to", "JDBC")
+    Rel(api, email, "Sends e-mails via", "HTTP")
+```
 
 ## ⚙️ Setup
 
