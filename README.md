@@ -147,25 +147,25 @@ config:
     mainBranchOrder: 1
 ---
 gitGraph
-  commit id: "last delivery (main)" tag: "v1.0.0"
+  commit id: "e3f946 (main)" tag: "v1.0.0"
   
 %% hotfix
   branch hotfix/new-fix
   checkout hotfix/new-fix
-  commit id: "last delivery (hotfix)"
+  commit id: "e3f946 (hotfix)"
   commit id: "commit (hotfix)"
   
 %% develop
   checkout main
   branch develop order: 2
   checkout develop
-  commit id: "last delivery (dev)"
+  commit id: "e3f946 (dev)"
   
 %% feature1
   checkout develop
   branch feature/new-feature-1 order: 4
   checkout feature/new-feature-1
-  commit id: "last delivery (feature1)"
+  commit id: "e3f946 (feature1)"
   commit id: "commit1 (feature1)"
   commit id: "commit2 (feature1)"
   
@@ -173,7 +173,7 @@ gitGraph
   checkout develop
   branch feature/new-feature-2 order: 5
   checkout feature/new-feature-2
-  commit id: "last delivery (feature2)"
+  commit id: "e3f946 (feature2)"
   commit id: "commit (feature2)"
 
 %% merge features on develop
