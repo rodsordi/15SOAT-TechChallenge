@@ -152,7 +152,8 @@ gitGraph
 %% hotfix
   branch hotfix/new-fix
   checkout hotfix/new-fix
-  commit id: "fix-prod"
+  commit id: "last delivery (hotfix)"
+  commit id: "commit (hotfix)"
   
 %% develop
   checkout main
@@ -164,33 +165,35 @@ gitGraph
   checkout develop
   branch feature/new-feature-1 order: 4
   checkout feature/new-feature-1
-  commit id: "commit1 feature1"
-  commit id: "commit2 feature1"
+  commit id: "last delivery (feature1)"
+  commit id: "commit1 (feature1)"
+  commit id: "commit2 (feature1)"
   
 %% feature2
   checkout develop
   branch feature/new-feature-2 order: 5
   checkout feature/new-feature-2
-  commit id: "commit feature2"
+  commit id: "last delivery (feature2)"
+  commit id: "commit (feature2)"
 
 %% merge features on develop
   checkout develop
-  merge feature/new-feature-1 id: "merge feature1"
+  merge feature/new-feature-1 id: "merge (feature1)"
   checkout develop
-  merge feature/new-feature-2 id: "merge feature2"
+  merge feature/new-feature-2 id: "merge (feature2)"
 
 %% release
   checkout develop
   branch release/1.0.1-new-release order: 1
   checkout release/1.0.1-new-release
-  cherry-pick id: "merge feature2" parent: "commit feature2"
-  commit id: "commit release"
+  cherry-pick id: "merge (feature2)" parent: "commit (feature2)"
+  commit id: "commit (release)"
 
 %% merge release on main
   checkout main
-  merge hotfix/new-fix tag: "v1.0.1a" id: "merge hotfix"
+  merge hotfix/new-fix tag: "v1.0.1a" id: "merge (hotfix)"
   checkout main
-  merge release/1.0.1-new-release tag: "v1.0.1" id: "merge release"
+  merge release/1.0.1-new-release tag: "v1.0.1" id: "merge (release)"
 ```
 
 ## 📌 Versão
