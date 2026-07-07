@@ -6,7 +6,7 @@ API responsible for managing the vehicle mechanic workflow. Tech Challenge for t
 
 - [Documentation](https://github.com/rodsordi/15SOAT-TechChallenge/wiki)
 
-## Architecture
+## 🏛️ Architecture
 
 **Hexagonal Architecture**
 
@@ -135,7 +135,7 @@ curl --location 'http://localhost:8080/api/v1/employees' \
 --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdhcmFnZS5jb20iLCJpYXQiOjE3Nzc2MDczOTEsImV4cCI6MTc3NzYxMDk5MX0.Fzwy1Ii8gnpgUtZBRUsZWf8WJgoum-dUNmhNFd6SldgHEW9L6fKLF_xWB6mkVaZ0iQJyZszuhUtNrK64LxUcaQ'
 ```
 
-## CI/CD
+## 🚀 CI/CD
 
 **IaC**
 
