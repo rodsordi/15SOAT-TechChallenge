@@ -830,3 +830,4 @@ iac/custom-runner.tar
 iac/cluster-local-dev-config
 iac/.terraform.lock.hcl
 iac/.sonar_token
+.aider*
