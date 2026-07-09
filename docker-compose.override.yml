@@ -9,8 +9,14 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_CLOUD_AWS_SQS_ENDPOINT: http://floci:4566
+      MANAGEMENT_TRACING_ENABLED: "true"
+      MANAGEMENT_OTLP_TRACING_EXPORT_ENABLED: "true"
+      MANAGEMENT_OTLP_TRACING_ENDPOINT: http://jaeger:4318/v1/traces
+      MANAGEMENT_OTLP_TRACING_TRANSPORT: http
     depends_on:
       postgres:
         condition: service_healthy
       floci:
+        condition: service_started
+      jaeger:
         condition: service_started

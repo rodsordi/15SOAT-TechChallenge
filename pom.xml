@@ -20,6 +20,7 @@
         <module>infra</module>
         <module>application</module>
         <module>iandt</module>
+        <module>stress</module>
     </modules>
 
     <properties>
@@ -43,6 +44,27 @@
             <activation>
                 <property>
                     <name>integrationTests</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>stressTests</id>
+            <activation>
+                <property>
+                    <name>stressTests</name>
                     <value>true</value>
                 </property>
             </activation>
@@ -294,7 +316,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
     <build>
