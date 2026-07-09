@@ -11,6 +11,21 @@
 
     <artifactId>api-garage.stress</artifactId>
 
+    <properties>
+        <jMeterTestFile>scalability-test.jmx</jMeterTestFile>
+        <host>localhost</host>
+        <port>8080</port>
+        <threads>5</threads>
+        <rampup>2</rampup>
+        <duration>30</duration>
+        <delay>500</delay>
+        <saveOutputFormat>csv</saveOutputFormat>
+        <saveRequestHeaders>false</saveRequestHeaders>
+        <saveResponseHeaders>false</saveResponseHeaders>
+        <saveSamplerData>false</saveSamplerData>
+        <saveResponseDataOnError>false</saveResponseDataOnError>
+    </properties>
+
     <profiles>
         <profile>
             <id>stressTests</id>
@@ -23,10 +38,43 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
+                        <groupId>com.lazerycode.jmeter</groupId>
+                        <artifactId>jmeter-maven-plugin</artifactId>
+                        <version>3.8.0</version>
+                        <executions>
+                            <execution>
+                                <id>configuration</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>configure</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>jmeter-tests</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jmeter</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                         <configuration>
-                            <skipTests>false</skipTests>
+                            <generateReports>true</generateReports>
+                            <propertiesUser>
+                                <threads>${threads}</threads>
+                                <rampup>${rampup}</rampup>
+                                <duration>${duration}</duration>
+                                <delay>${delay}</delay>
+                                <host>${host}</host>
+                                <port>${port}</port>
+                                <jmeter.save.saveservice.output_format>${saveOutputFormat}</jmeter.save.saveservice.output_format>
+                                <jmeter.save.saveservice.requestHeaders>${saveRequestHeaders}</jmeter.save.saveservice.requestHeaders>
+                                <jmeter.save.saveservice.responseHeaders>${saveResponseHeaders}</jmeter.save.saveservice.responseHeaders>
+                                <jmeter.save.saveservice.samplerData>${saveSamplerData}</jmeter.save.saveservice.samplerData>
+                                <jmeter.save.saveservice.response_data.on_error>${saveResponseDataOnError}</jmeter.save.saveservice.response_data.on_error>
+                            </propertiesUser>
+                            <testFilesIncluded>
+                                <jMeterTestFile>${jMeterTestFile}</jMeterTestFile>
+                            </testFilesIncluded>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -41,33 +89,5 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.lazerycode.jmeter</groupId>
-                <artifactId>jmeter-maven-plugin</artifactId>
-                <version>3.8.0</version>
-                <executions>
-                    <execution>
-                        <id>jmeter-tests</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jmeter</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <generateReports>true</generateReports>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 </project>

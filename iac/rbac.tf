@@ -3,7 +3,7 @@ resource "kubernetes_service_account" "github_runner_sa" {
 
   metadata {
     name      = "github-runner-sa"
-    namespace = "default"
+    namespace = kubernetes_namespace.garage.metadata[0].name
   }
 }
 

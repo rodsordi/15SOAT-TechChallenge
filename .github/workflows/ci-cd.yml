@@ -148,17 +148,17 @@ jobs:
       - name: Deploy with Helm
         run: |
           helm upgrade --install api-garage helm \
-            --namespace default \
+            --namespace garage \
             --set image.tag=${{ github.sha }} \
             --wait --timeout 2m
 
       - name: Diagnose failed deploy
         if: failure()
         run: |
-          kubectl get pods -l app=api-garage -o wide
+          kubectl -n garage get pods -l app=api-garage -o wide
           echo "--- describe ---"
-          kubectl describe pods -l app=api-garage
+          kubectl -n garage describe pods -l app=api-garage
           echo "--- logs ---"
-          kubectl logs -l app=api-garage --tail=100 --all-containers --prefix || true
+          kubectl -n garage logs -l app=api-garage --tail=100 --all-containers --prefix || true
           echo "--- previous logs (if crashed/restarted) ---"
-          kubectl logs -l app=api-garage --tail=100 --all-containers --prefix --previous || true
+          kubectl -n garage logs -l app=api-garage --tail=100 --all-containers --prefix --previous || true

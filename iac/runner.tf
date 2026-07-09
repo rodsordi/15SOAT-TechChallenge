@@ -29,7 +29,8 @@ resource "kubernetes_deployment" "github_runner" {
   ]
 
   metadata {
-    name = "github-runner"
+    name      = "github-runner"
+    namespace = kubernetes_namespace.garage.metadata[0].name
   }
 
   spec {

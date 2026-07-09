@@ -1,5 +1,8 @@
 resource "kubernetes_deployment" "sonarqube" {
-  metadata { name = "sonarqube" }
+  metadata {
+    name      = "sonarqube"
+    namespace = kubernetes_namespace.garage.metadata[0].name
+  }
 
   spec {
     replicas = 1
@@ -27,12 +30,19 @@ resource "kubernetes_deployment" "sonarqube" {
 }
 
 resource "kubernetes_service" "sonarqube" {
-  metadata { name = "sonarqube" }
+  metadata {
+    name      = "sonarqube"
+    namespace = kubernetes_namespace.garage.metadata[0].name
+  }
 
   spec {
     selector = { app = "sonarqube" }
-    port { port = 9000 }
-    type = "ClusterIP"
+    port {
+      port        = 9000
+      target_port = 9000
+      node_port   = 30900
+    }
+    type = "NodePort"
   }
 }
 
@@ -52,13 +62,13 @@ resource "null_resource" "sonar_setup" {
       export KUBECONFIG="${replace(kind_cluster.garage_cluster.kubeconfig_path, "\\", "/")}"
 
       # Port-forward com auto-recuperação
-      kubectl -n default port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
+      kubectl -n garage port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
       trap 'kill $! 2>/dev/null || true' EXIT
 
       # Aguarda SonarQube ficar UP (com timeouts para resiliência)
       for i in {1..100}; do
         curl -s -m 5 --connect-timeout 2 http://127.0.0.1:19000/api/system/status | grep -q '"status":"UP"' && break
-        kill -0 $! 2>/dev/null || kubectl -n default port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
+        kill -0 $! 2>/dev/null || kubectl -n garage port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
         sleep 3
       done
 
