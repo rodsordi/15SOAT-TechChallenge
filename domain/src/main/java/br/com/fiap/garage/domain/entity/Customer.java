@@ -23,7 +23,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Customer extends User implements Serializable {
 
     @CpfOrCnpj
-    @Column(nullable = false, length = 14, comment = "Customer document (CPF/CNPJ). Owner: self")
+    @Column(nullable = false, length = 14, unique = true, comment = "Customer document (CPF/CNPJ). Owner: self")
     private String document;
 
     // Value Object (bi-directional)

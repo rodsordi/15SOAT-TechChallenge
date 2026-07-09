@@ -22,6 +22,6 @@ import static lombok.AccessLevel.PROTECTED;
 public class Employee extends User implements Serializable {
 
     @CPF
-    @Column(nullable = false, length = 11, comment = "Employee cpf. Owner: self")
+    @Column(nullable = false, length = 11, unique = true, comment = "Employee cpf. Owner: self")
     private String cpf;
 }

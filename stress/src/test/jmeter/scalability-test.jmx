@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plano de Teste - Escalabilidade API Garage" enabled="true">
@@ -51,7 +51,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">${__P(loops,-1)}</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
@@ -62,215 +62,20 @@
             <stringProp name="ConstantTimer.delay">${__P(delay,500)}</stringProp>
           </ConstantTimer>
           <hashTree />
-          <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="01. Criar Empregado Admin" enabled="true" />
-          <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Criar Empregado Admin" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/employees</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{"username":"admin_${__threadNum}@garage.com","password":"abcd1234","name":"John Admin","email":"admin_${__threadNum}@garage.com","cpf":"${__RandomString(3,123456789)}.${__RandomString(3,123456789)}.${__RandomString(3,123456789)}-${__RandomString(2,123456789)}"}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree />
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="02. Login Admin Auth" enabled="true">
-            <stringProp name="HTTPSampler.path">/api/auth/login</stringProp>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Criar Empregado" enabled="true">
+            <stringProp name="HTTPSampler.path">/api/v1/employees</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
-                  <stringProp name="Argument.value">{"username":"admin_${__threadNum}@garage.com","password":"abcd1234"}</stringProp>
+                  <stringProp name="Argument.value">{"username":"employee_${__threadNum}_${__RandomString(5,abcdefghijklmnopqrstuvwxyz)}@garage.com","password":"abcd1234","name":"John Employee","email":"employee_${__threadNum}_${__RandomString(5,abcdefghijklmnopqrstuvwxyz)}@garage.com","cpf":"${__RandomString(3,123456789)}.${__RandomString(3,123456789)}.${__RandomString(3,123456789)}-${__RandomString(2,123456789)}"}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
           </HTTPSamplerProxy>
-          <hashTree>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor - Token JWT" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">tokenJWT</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
-            </JSONPostProcessor>
-            <hashTree />
-          </hashTree>
-          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Controlador - Endpoints Autenticados" enabled="true" />
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header - Authorization Bearer" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Authorization</stringProp>
-                  <stringProp name="Header.value">Bearer ${tokenJWT}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree />
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="03. Criar Cliente" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/customers</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{
-    "username": "customer_${__RandomString(5,abcdefghijklmnopqrstuvwxyz)}@example.com",
-    "password": "1234asdl",
-    "name": "John Doe Client",
-    "email": "customer_${__RandomString(5,abcdefghijklmnopqrstuvwxyz)}@example.com",
-    "document": "27.614.623/0001-00",
-    "vehicles": []
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor - Customer ID" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">customerId</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              </JSONPostProcessor>
-              <hashTree />
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="04. Adicionar VeÃ­culo" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/customers/${customerId}/vehicles</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{
-    "make": "Honda",
-    "model": "Civic",
-    "licensePlate": "${__RandomString(3,ABCDEFGHIJKLMNOPQRSTUVWXYZ)}${__RandomString(4,123456789)}",
-    "manufactureYear": "2027"
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor - Vehicle ID" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">vehicleId</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              </JSONPostProcessor>
-              <hashTree />
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="05. Criar Empregado MecÃ¢nico" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/employees</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{
-    "username": "mechanic_${__RandomString(5,abcdefghijklmnopqrstuvwxyz)}@garage.com",
-    "password": "1a2s3d4f",
-    "name": "Jack Mechanic",
-    "email": "mechanic_${__RandomString(5,abcdefghijklmnopqrstuvwxyz)}@garage.com",
-    "cpf": "${__RandomString(3,123456789)}.${__RandomString(3,123456789)}.${__RandomString(3,123456789)}-${__RandomString(2,123456789)}"
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor - Employee ID" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">employeeId</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              </JSONPostProcessor>
-              <hashTree />
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="06. Cadastrar Estoque Material" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/inventory-materials</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{
-    "quantityInStock": 100,
-    "material": {
-        "type": "SHOP_SUPPLY",
-        "name": "Synthetic Engine Oil",
-        "description": "Oil 5W-30",
-        "cost": 85.50
-    }
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor - Material ID" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">materialId</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              </JSONPostProcessor>
-              <hashTree />
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="07. Criar ServiÃ§o" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/services</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{
-    "name": "Oil Change Service",
-    "description": "Complete engine oil change",
-    "cost": 150.00,
-    "materialsIds": [
-        "${materialId}"
-    ]
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor - Service ID" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">serviceId</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              </JSONPostProcessor>
-              <hashTree />
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="08. Criar Ordem de ServiÃ§o (Work Order)" enabled="true">
-              <stringProp name="HTTPSampler.path">/api/v1/work-orders</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <stringProp name="Argument.value">{
-    "vehicleId": "${vehicleId}",
-    "employeeId": "${employeeId}",
-    "servicesIds": [
-        "${serviceId}"
-    ]
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-            </HTTPSamplerProxy>
-            <hashTree />
-          </hashTree>
+          <hashTree />
         </hashTree>
       </hashTree>
     </hashTree>

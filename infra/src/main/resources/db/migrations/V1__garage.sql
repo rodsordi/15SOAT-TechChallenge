@@ -56,7 +56,7 @@ CREATE TABLE garage.users_auth (
 -- ---------------------------------------------------------
 CREATE TABLE garage.customer (
                                  id UUID NOT NULL,
-                                 document VARCHAR(14) NOT NULL,
+                                 document VARCHAR(14) NOT NULL unique,
                                  CONSTRAINT pk_customer PRIMARY KEY (id),
                                  CONSTRAINT fk_customer_users FOREIGN KEY (id) REFERENCES garage.users(id)
 );
@@ -68,7 +68,7 @@ COMMENT ON COLUMN garage.customer.document IS 'Customer document (CPF/CNPJ). Own
 -- ---------------------------------------------------------
 CREATE TABLE garage.employee (
                                  id UUID NOT NULL,
-                                 cpf VARCHAR(11) NOT NULL,
+                                 cpf VARCHAR(11) NOT NULL unique,
                                  CONSTRAINT pk_employee PRIMARY KEY (id),
                                  CONSTRAINT fk_employee_users FOREIGN KEY (id) REFERENCES garage.users(id)
 );
