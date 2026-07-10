@@ -81,7 +81,7 @@ jobs:
 #          path: target/dependency-check-report.*
 #          retention-days: 1
 
-  build:
+  build-and-deploy:
 #    needs: [code-quality, integration-tests]
     runs-on: [self-hosted, local, k8s]
 
@@ -95,55 +95,11 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml -DskipTests
 
-      - name: Upload application artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: application-jar
-          path: application/target/*.jar
-          retention-days: 1
-
-  docker-image:
-    needs: build
-    runs-on: [self-hosted, local, k8s]
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Download application artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: application-jar
-          path: application/target
-
       - name: Build Docker image
         run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
 
-      - name: Save Docker image
-        run: docker save -o api-garage-image.tar api-garage:${{ github.sha }}
-
-      - name: Upload Docker image artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: api-garage-image
-          path: api-garage-image.tar
-          retention-days: 1
-
-  deploy:
-    needs: docker-image
-    runs-on: [self-hosted, local, k8s]
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: api-garage-image
-
       - name: Load image into cluster containerd
-        run: ctr -a /run/containerd/containerd.sock -n k8s.io images import api-garage-image.tar
+        run: docker save api-garage:${{ github.sha }} | ctr -a /run/containerd/containerd.sock -n k8s.io images import -
 
       - name: Deploy with Helm
         run: |
