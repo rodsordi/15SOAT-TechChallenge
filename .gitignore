@@ -826,8 +826,8 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,maven,eclipse,windows,intellij,terraform,visualstudio,visualstudiocode,intellij+all,intellij+iml
 
 # Custom project-specific ignores
-iac/custom-runner.tar
-iac/cluster-local-dev-config
-iac/.terraform.lock.hcl
-iac/.sonar_token
+iac/terraform/custom-runner.tar
+iac/terraform/cluster-local-dev-config
+iac/terraform/.terraform.lock.hcl
+iac/terraform/.sonar_token
 .aider*

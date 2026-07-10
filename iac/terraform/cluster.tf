@@ -51,6 +51,24 @@ resource "kind_cluster" "garage_cluster" {
         host_port      = 9000
         protocol       = "TCP"
       }
+
+      extra_port_mappings {
+        container_port = 30909
+        host_port      = 9090
+        protocol       = "TCP"
+      }
+
+      extra_port_mappings {
+        container_port = 30310
+        host_port      = 3100
+        protocol       = "TCP"
+      }
+
+      extra_port_mappings {
+        container_port = 30300
+        host_port      = 3000
+        protocol       = "TCP"
+      }
     }
   }
 }

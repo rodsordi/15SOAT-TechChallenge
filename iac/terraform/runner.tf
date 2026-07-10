@@ -4,7 +4,7 @@ resource "null_resource" "build_and_load_image" {
   ]
 
   triggers = {
-    dockerfile_hash = filesha256("${path.module}/Dockerfile-runner")
+    dockerfile_hash = filesha256("${path.module}/../Dockerfile-runner")
   }
 
   provisioner "local-exec" {
@@ -13,7 +13,7 @@ resource "null_resource" "build_and_load_image" {
     command = <<-EOT
       set -e
       export MSYS_NO_PATHCONV=1
-      docker build --network host -t custom-runner:latest -f "${path.module}/Dockerfile-runner" "${path.module}"
+      docker build --network host -t custom-runner:latest -f "${path.module}/../Dockerfile-runner" "${path.module}/.."
       docker save -o custom-runner.tar custom-runner:latest
       docker cp custom-runner.tar cluster-local-dev-control-plane:/custom-runner.tar
       docker exec cluster-local-dev-control-plane ctr -n k8s.io images import /custom-runner.tar

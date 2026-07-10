@@ -83,7 +83,7 @@
         {
           "refId": "A",
           "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "time() - (application_started_time_milliseconds{job=\"api-garage\"} / 1000)"
+          "expr": "process_uptime_milliseconds{job=\"api-garage\"} / 1000"
         }
       ]
     },

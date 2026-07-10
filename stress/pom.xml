@@ -18,7 +18,7 @@
         <port>8080</port>
         <threads>5</threads>
         <rampup>2</rampup>
-        <duration>30</duration>
+        <duration>300</duration>
         <delay>500</delay>
         <loops>-1</loops>
         <saveOutputFormat>csv</saveOutputFormat>

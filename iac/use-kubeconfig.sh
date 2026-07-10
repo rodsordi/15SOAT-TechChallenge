@@ -4,7 +4,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 
-KUBECONFIG_PATH="$(terraform -chdir="$SCRIPT_DIR" output -raw kubeconfig_path 2>/dev/null)"
+KUBECONFIG_PATH="$(terraform -chdir="$SCRIPT_DIR/terraform" output -raw kubeconfig_path 2>/dev/null)"
 
 if [ -z "$KUBECONFIG_PATH" ] || [ ! -f "$KUBECONFIG_PATH" ]; then
   echo "Não foi possível obter o kubeconfig. Rode 'terraform apply' primeiro." >&2

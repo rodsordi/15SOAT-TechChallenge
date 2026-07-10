@@ -55,14 +55,14 @@ sudo apt update && sudo apt install terraform
 
 ### ☸️ Terraform - K8S
 
-Follow these commands to initialize, plan, and apply the infrastructure changes. These commands are compatible with
-Linux and Windows (Git Bash) environments.
+The Terraform configuration files live in `iac/terraform/`. Run all commands below from `iac/`, using `-chdir` to
+target that folder. These commands are compatible with Linux and Windows (Git Bash) environments.
 
 **Uninstall**
 
 ```sh
-terraform init -upgrade
-terraform destroy -auto-approve
+terraform -chdir=terraform init -upgrade
+terraform -chdir=terraform destroy -auto-approve
 ```
 ```sh
 kubectl delete namespace garage
@@ -73,15 +73,15 @@ kubectl delete namespace garage
 After a successful deployment, source the helper script to export the Kubernetes configuration:
 
 ```sh
-terraform init
+terraform -chdir=terraform init
 ```
 
 ```sh
-terraform plan
+terraform -chdir=terraform plan
 ```
 
 ```sh
-terraform apply -auto-approve
+terraform -chdir=terraform apply -auto-approve
 ```
 
 ```sh
@@ -112,6 +112,9 @@ After `terraform apply`, these services are available on `localhost`:
 | Jaeger OTLP gRPC | `4317`     |
 | Jaeger OTLP HTTP | `4318`     |
 | SonarQube        | `9000`     |
+| Prometheus       | `9090`     |
+| Loki             | `3100`     |
+| Grafana          | `3000`     |
 
 **Analyze Pods**
 
