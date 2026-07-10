@@ -4,21 +4,21 @@ import br.com.fiap.commons.exception.*;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.boot.beanvalidation.IntegrationException;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.util.HashSet;
-import java.util.stream.Collectors;
-
+import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @Hidden
+@Order(HIGHEST_PRECEDENCE)
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -29,24 +29,30 @@ public class GlobalExceptionHandler {
 
         var fieldErrors = e.getBindingResult().getFieldErrors();
         if (!fieldErrors.isEmpty()) {
-            var sortedFieldErrors = new HashSet<>(fieldErrors);
-            for (var fieldError : sortedFieldErrors) {
+            for (var fieldError : fieldErrors) {
+                Object invalidValue = fieldError.getRejectedValue();
+
                 if (problemDetail == null) {
-                    var message = String.format("[%s]: %s", fieldError.getField(), fieldError.getDefaultMessage());
-                    problemDetail = ProblemDetail.forStatusAndDetail(BAD_REQUEST, message);
+                    var message = String.format("[%s]: '%s' is invalid. Reason: %s",
+                            fieldError.getField(), invalidValue, fieldError.getDefaultMessage());
+                    problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, message);
                 }
-                problemDetail.setProperty(fieldError.getField(), fieldError.getDefaultMessage());
+
+                problemDetail.setProperty(fieldError.getField(), String.format("Sent value: '%s'. Erro: %s", invalidValue, fieldError.getDefaultMessage()));
             }
         }
         else {
-            var allSortedErrors = new HashSet<>(e.getAllErrors());
-            for (var error : allSortedErrors) {
+            for (var error : e.getBindingResult().getGlobalErrors()) {
                 if (problemDetail == null) {
                     var message = String.format("[%s]: %s", error.getObjectName(), error.getDefaultMessage());
-                    problemDetail = ProblemDetail.forStatusAndDetail(BAD_REQUEST, message);
+                    problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, message);
                 }
                 problemDetail.setProperty(error.getObjectName(), error.getDefaultMessage());
             }
+        }
+
+        if (problemDetail == null) {
+            problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Erro de validação nos dados enviados.");
         }
 
         return problemDetail;

@@ -81,8 +81,10 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <jmeterVersion>5.6.3</jmeterVersion>
                             <generateReports>${generateReports}</generateReports>
                             <resultsFileFormat>${saveOutputFormat}</resultsFileFormat>
+
                             <propertiesUser>
                                 <threads>${threads}</threads>
                                 <rampup>${rampup}</rampup>
@@ -111,7 +113,6 @@
         <testResources>
             <testResource>
                 <directory>src/test/jmeter</directory>
-                <filtering>true</filtering>
             </testResource>
         </testResources>
     </build>

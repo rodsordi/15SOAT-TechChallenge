@@ -37,7 +37,7 @@ public class ManualTest {
                           "password":"abcd1234",
                           "name":"John Employee",
                           "email":"employee_1_mypbo@garage.com",
-                          "cpf":"651.885.891-57"
+                          "cpf":"651.885.891-58"
                         }
                         """)
                         .post("/v1/employees")
