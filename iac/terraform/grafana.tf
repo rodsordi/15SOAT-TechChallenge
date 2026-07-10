@@ -22,6 +22,7 @@ resource "kubernetes_config_map" "grafana_dashboards_json" {
     "jaeger-traces.json"      = file("${path.module}/../grafana/provisioning/dashboards/json/jaeger-traces.json")
     "loki-metrics.json"       = file("${path.module}/../grafana/provisioning/dashboards/json/loki-metrics.json")
     "prometheus-metrics.json" = file("${path.module}/../grafana/provisioning/dashboards/json/prometheus-metrics.json")
+    "hpa-scaling.json"        = file("${path.module}/../grafana/provisioning/dashboards/json/hpa-scaling.json")
   }
 }
 
@@ -89,6 +90,11 @@ resource "kubernetes_deployment" "grafana" {
             name       = "grafana-dashboards-json"
             mount_path = "/etc/grafana/provisioning/dashboards/json/prometheus-metrics.json"
             sub_path   = "prometheus-metrics.json"
+          }
+          volume_mount {
+            name       = "grafana-dashboards-json"
+            mount_path = "/etc/grafana/provisioning/dashboards/json/hpa-scaling.json"
+            sub_path   = "hpa-scaling.json"
           }
         }
 
