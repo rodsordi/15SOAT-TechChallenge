@@ -128,8 +128,8 @@ class CustomerControllerTest {
             @DisplayName("Given a customer with invalid document")
             @ParameterizedTest
             @CsvSource(value = {
-                    "1245678910 | [document]: Document is not a valid CPF neither CNPJ.",
-                    "10123456000190 | [document]: Document is not a valid CPF neither CNPJ.",
+                    "12345678911 | [document]: '12345678911' is invalid. Reason: Document is not a valid CPF neither CNPJ.",
+                    "10123456000190 | [document]: '10123456000190' is invalid. Reason: Document is not a valid CPF neither CNPJ.",
             }, delimiterString = "|")
             void test(String document, String expectedMsg) throws Exception {
                 //Given
