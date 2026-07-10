@@ -63,12 +63,13 @@ resource "null_resource" "sonar_setup" {
 
       # Port-forward com auto-recuperação
       kubectl -n garage port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
-      trap 'kill $! 2>/dev/null || true' EXIT
+      disown
+      trap 'kill -9 $! 2>/dev/null || true' EXIT
 
       # Aguarda SonarQube ficar UP (com timeouts para resiliência)
       for i in {1..100}; do
         curl -s -m 5 --connect-timeout 2 http://127.0.0.1:19000/api/system/status | grep -q '"status":"UP"' && break
-        kill -0 $! 2>/dev/null || kubectl -n garage port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 &
+        kill -0 $! 2>/dev/null || { kubectl -n garage port-forward svc/sonarqube 19000:9000 >/dev/null 2>&1 & disown; }
         sleep 3
       done
 
@@ -78,7 +79,7 @@ resource "null_resource" "sonar_setup" {
 
       # Gera o novo token e finaliza o port-forward para evitar travamentos do shell/pipes
       TOKEN=$(curl -s -m 10 --connect-timeout 3 -u "admin:${var.sonar_admin_password}" -X POST "http://127.0.0.1:19000/api/user_tokens/generate?name=terraform-token" | grep -o '"token":"[^"]*' | cut -d'"' -f4 || true)
-      kill $! 2>/dev/null || true  # Força o encerramento do kubectl port-forward em background
+      kill -9 $! 2>/dev/null || true  # Força o encerramento do kubectl port-forward em background
       [ -n "$TOKEN" ] || { echo "Falha ao obter token do SonarQube" >&2; exit 1; }
       echo -n "$TOKEN" > "${path.module}/.sonar_token"
     EOT
