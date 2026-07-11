@@ -135,12 +135,6 @@ curl --location 'http://localhost:8080/api/v1/employees' \
 --header 'Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huQGdhcmFnZS5jb20iLCJpYXQiOjE3Nzc2MDczOTEsImV4cCI6MTc3NzYxMDk5MX0.Fzwy1Ii8gnpgUtZBRUsZWf8WJgoum-dUNmhNFd6SldgHEW9L6fKLF_xWB6mkVaZ0iQJyZszuhUtNrK64LxUcaQ'
 ```
 
-## 🔍 Observability
-
-- [Grafana](http://localhost:3000)
-- [Jaeger](http://localhost:16686)
-- [Prometheus](http://localhost:9090)
-
 ## 🚀 CI/CD
 
 **IaC**

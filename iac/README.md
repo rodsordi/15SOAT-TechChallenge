@@ -99,22 +99,11 @@ kubectl get nodes -n garage
 kubectl get pods -n garage
 ```
 
-### Local ports exposed by Terraform
+## 🔍 Observability
 
-After `terraform apply`, these services are available on `localhost`:
-
-| Service          | Local port |
-|------------------|------------|
-| API Garage       | `8080`     |
-| PostgreSQL       | `5432`     |
-| Floci            | `4566`     |
-| Jaeger UI        | `16686`    |
-| Jaeger OTLP gRPC | `4317`     |
-| Jaeger OTLP HTTP | `4318`     |
-| SonarQube        | `9000`     |
-| Prometheus       | `9090`     |
-| Loki             | `3100`     |
-| Grafana          | `3000`     |
+- [Grafana](http://localhost:3000)
+- [Jaeger](http://localhost:16686)
+- [Prometheus](http://localhost:9090)
 
 **Analyze Pods**
 
