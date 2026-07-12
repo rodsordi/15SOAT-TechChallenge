@@ -107,7 +107,7 @@ jobs:
           kubectl -n garage logs -l app=api-garage --tail=100 --all-containers --prefix --previous || true
 
   stress-tests:
-    needs: [build-and-deploy, security, owasp-report]
+    needs: [build-and-deploy]
     runs-on: [self-hosted, local, k8s]
     environment: stress-testing
 
