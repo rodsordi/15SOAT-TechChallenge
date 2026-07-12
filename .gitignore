@@ -831,3 +831,6 @@ iac/terraform/cluster-local-dev-config
 iac/terraform/.terraform.lock.hcl
 iac/terraform/.sonar_token
 .aider*
+/iac/.sonar_token
+/iac/.terraform.lock.hcl
+/iac/cluster-local-dev-config

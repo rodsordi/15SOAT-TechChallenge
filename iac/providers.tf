@@ -8,7 +8,6 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "~> 2.23"
     }
-    # ADICIONE ESTE BLOCO:
     helm = {
       source  = "hashicorp/helm"
       version = "~> 2.12.0"

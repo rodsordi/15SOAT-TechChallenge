@@ -6,12 +6,18 @@ resource "kind_cluster" "garage_cluster" {
     api_version = "kind.x-k8s.io/v1alpha4"
 
     node {
-      role = "control-plane"
+      role  = "control-plane"
       image = "kindest/node:v1.28.0"
 
       extra_port_mappings {
         container_port = 80
-        host_port      = 8081
+        host_port      = 9080
+        protocol       = "TCP"
+      }
+
+      extra_port_mappings {
+        container_port = 443
+        host_port      = 9443
         protocol       = "TCP"
       }
 

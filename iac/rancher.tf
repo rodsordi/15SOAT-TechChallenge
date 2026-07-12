@@ -1,4 +1,3 @@
-# Cert-Manager
 resource "kubernetes_namespace" "cert_manager" {
   metadata {
     name = "cert-manager"
@@ -18,7 +17,39 @@ resource "helm_release" "cert_manager" {
   }
 }
 
-# Rancher
+resource "helm_release" "nginx_ingress" {
+  name       = "ingress-nginx"
+  repository = "https://kubernetes.github.io/ingress-nginx"
+  chart      = "ingress-nginx"
+  namespace  = "ingress-nginx"
+  version    = "4.8.3"
+  create_namespace = true
+
+  wait          = false
+  timeout       = 300
+
+  set {
+    name  = "controller.hostPort.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "controller.nodeSelector.ingress-ready"
+    value = "true"
+    type  = "string"
+  }
+
+  set {
+    name  = "controller.watchIngressWithoutClass"
+    value = "true"
+  }
+
+  set {
+    name  = "controller.admissionWebhooks.enabled"
+    value = "false"
+  }
+}
+
 resource "kubernetes_namespace" "cattle_system" {
   metadata {
     name = "cattle-system"
@@ -26,7 +57,7 @@ resource "kubernetes_namespace" "cattle_system" {
 }
 
 resource "helm_release" "rancher" {
-  depends_on = [helm_release.cert_manager]
+  depends_on = [helm_release.cert_manager, helm_release.nginx_ingress]
 
   name       = "rancher"
   repository = "https://releases.rancher.com/server-charts/stable"
@@ -36,12 +67,12 @@ resource "helm_release" "rancher" {
 
   set {
     name  = "hostname"
-    value = "rancher.localhost"
+    value = "rancher.local.dev"
   }
 
   set {
     name  = "bootstrapPassword"
-    value = "admin123456"
+    value = "admin"
   }
 
   set {
@@ -55,26 +86,35 @@ resource "helm_release" "rancher" {
   }
 }
 
-resource "kubernetes_service" "rancher_nodeport" {
+resource "kubernetes_ingress_v1" "rancher_localhost_bypass" {
   depends_on = [helm_release.rancher]
 
   metadata {
-    name      = "rancher-nodeport"
+    name      = "rancher-localhost-bypass"
     namespace = kubernetes_namespace.cattle_system.metadata[0].name
+    annotations = {
+      "kubernetes.io/ingress.class"              = "nginx"
+      "nginx.ingress.kubernetes.io/ssl-redirect" = "true"
+      "nginx.ingress.kubernetes.io/backend-protocol" = "HTTPS"
+    }
   }
 
   spec {
-    selector = {
-      "app" = "rancher"
+    rule {
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "rancher"
+              port {
+                number = 443
+              }
+            }
+          }
+        }
+      }
     }
-
-    port {
-      name        = "http"
-      port        = 80
-      target_port = 80
-      node_port   = 30080
-    }
-
-    type = "NodePort"
   }
 }

@@ -64,9 +64,10 @@ terraform init -upgrade
 terraform destroy -auto-approve
 ```
 ```sh
-kubectl delete namespace garage
 terraform state rm kind_cluster.garage_cluster
 rm -f terraform.tfstate terraform.tfstate.backup
+docker rm -f cluster-local-dev-control-plane
+rm -rf ~/.kube/config
 ```
 
 **Kubernetes setup *(Linux/Windows Gitbash)***
@@ -109,6 +110,7 @@ kubectl get pods -n garage
 - [Grafana](http://localhost:3000)
 - [Jaeger](http://localhost:16686)
 - [Prometheus](http://localhost:9090)
+- [Rancher](https://localhost:9443) # Pass:admin NewPass:Rancher@2026
 
 **Analyze Pods**
 
