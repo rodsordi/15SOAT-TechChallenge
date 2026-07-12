@@ -109,6 +109,16 @@ resource "kubernetes_deployment" "github_runner" {
             value = sensitive(trimspace(data.local_file.sonar_token.content))
           }
 
+          env {
+            name  = "NVD_API_KEY"
+            value = var.NVD_API_KEY
+          }
+
+          volume_mount {
+            name       = "owasp-cache"
+            mount_path = "/root/.owasp/dependency-check/data"
+          }
+
           volume_mount {
             name       = "containerd-sock"
             mount_path = "/run/containerd/containerd.sock"
@@ -144,6 +154,15 @@ resource "kubernetes_deployment" "github_runner" {
           host_path {
             path = "/run/containerd/containerd.sock"
             type = "Socket"
+          }
+        }
+
+        volume {
+          name = "owasp-cache"
+
+          host_path {
+            path = var.owasp_cache_host_path
+            type = "DirectoryOrCreate"
           }
         }
       }

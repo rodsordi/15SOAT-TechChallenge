@@ -15,6 +15,8 @@ third-party integrations.
 ```sh
 export TF_VAR_github_pat="your_github_pat_here"
 export TF_VAR_sonar_admin_password="Sonarqube@2026"
+export TF_VAR_owasp_cache_host_path="//run/desktop/mnt/host/c/Users/${user_here}/owasp-cache" # windows
+export TF_VAR_owasp_cache_host_path="/tmp/owasp-dependency-check-cache" # linux
 ```
 
 ### OWASP Setup
@@ -27,8 +29,8 @@ Key.
   vulnerability definitions.
 
 ```sh
-export NVD_API_KEY="your_confirmed_api_key_from_email"
-echo $NVD_API_KEY
+export TF_VAR_NVD_API_KEY="your_confirmed_api_key_from_email"
+echo $TF_VAR_NVD_API_KEY
 ```
 
 ## 💾 Terraform - Installation
@@ -103,6 +105,7 @@ kubectl get nodes -n garage
 
 ```sh
 kubectl get pods -n garage
+kubectl describe pod github-runner-67d7d598b9-9g9nb -n garage
 ```
 
 ## 🔍 Observability

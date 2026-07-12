@@ -30,22 +30,9 @@ jobs:
             -Dsonar.token=$SONAR_TOKEN \
             -Dsonar.qualitygate.wait=true
 
-  security:
-    runs-on: [self-hosted, local, k8s]
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Setup JDK
-        uses: ./.github/actions/setup-jdk
-
-      - name: Execute security static analysis
-        run: |
-          mvn -B clean verify -DskipTests -Dowasp
-
   integration-tests:
     runs-on: [self-hosted, local, k8s]
+    needs: [code-quality]
 
     steps:
       - name: Code checkout
@@ -82,7 +69,7 @@ jobs:
           retention-days: 1
 
   build-and-deploy:
-    needs: [code-quality, integration-tests]
+    needs: [owasp-report, integration-tests]
     runs-on: [self-hosted, local, k8s]
 
     steps:
@@ -118,3 +105,18 @@ jobs:
           kubectl -n garage logs -l app=api-garage --tail=100 --all-containers --prefix || true
           echo "--- previous logs (if crashed/restarted) ---"
           kubectl -n garage logs -l app=api-garage --tail=100 --all-containers --prefix --previous || true
+
+  stress-tests:
+    needs: [build-and-deploy, security, owasp-report]
+    runs-on: [self-hosted, local, k8s]
+    environment: stress-testing
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Execute manual stress tests
+        run: mvn clean verify -DstressTests
