@@ -55,17 +55,18 @@ sudo apt update && sudo apt install terraform
 
 ### ☸️ Terraform - K8S
 
-The Terraform configuration files live in `iac/terraform/`. Run all commands below from `iac/`, using `-chdir` to
-target that folder. These commands are compatible with Linux and Windows (Git Bash) environments.
+The Terraform configuration files live in `iac/`. These commands are compatible with Linux and Windows (Git Bash) environments.
 
 **Uninstall**
 
 ```sh
-terraform -chdir=terraform init -upgrade
-terraform -chdir=terraform destroy -auto-approve
+terraform init -upgrade
+terraform destroy -auto-approve
 ```
 ```sh
 kubectl delete namespace garage
+terraform state rm kind_cluster.garage_cluster
+rm -f terraform.tfstate terraform.tfstate.backup
 ```
 
 **Kubernetes setup *(Linux/Windows Gitbash)***
@@ -73,15 +74,15 @@ kubectl delete namespace garage
 After a successful deployment, source the helper script to export the Kubernetes configuration:
 
 ```sh
-terraform -chdir=terraform init
+terraform init
 ```
 
 ```sh
-terraform -chdir=terraform plan
+terraform plan
 ```
 
 ```sh
-terraform -chdir=terraform apply -auto-approve
+terraform apply -auto-approve
 ```
 
 ```sh
@@ -90,6 +91,10 @@ hash -r
 ```
 
 **Verify k8s**
+
+```sh
+kubectl get namespaces
+```
 
 ```sh
 kubectl get nodes -n garage
