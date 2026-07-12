@@ -13,76 +13,76 @@ on:
       - 'main'
 
 jobs:
-#  code-quality:
-#    runs-on: [self-hosted, local, k8s]
-#
-#    steps:
-#      - name: Code checkout
-#        uses: actions/checkout@v5
-#
-#      - name: Setup JDK
-#        uses: ./.github/actions/setup-jdk
-#
-#      - name: Test and SonarQube analysis
-#        run: |
-#          mvn -B clean verify sonar:sonar \
-#            -Dsonar.host.url=http://sonarqube:9000 \
-#            -Dsonar.token=$SONAR_TOKEN \
-#            -Dsonar.qualitygate.wait=true
-#
-#  security:
-#    runs-on: [self-hosted, local, k8s]
-#
-#    steps:
-#      - name: Code checkout
-#        uses: actions/checkout@v5
-#
-#      - name: Setup JDK
-#        uses: ./.github/actions/setup-jdk
-#
-#      - name: Execute security static analysis
-#        run: |
-#          mvn -B clean verify -DskipTests -Dowasp
-#
-#  integration-tests:
-#    runs-on: [self-hosted, local, k8s]
-#
-#    steps:
-#      - name: Code checkout
-#        uses: actions/checkout@v5
-#
-#      - name: Setup JDK
-#        uses: ./.github/actions/setup-jdk
-#
-#      - name: Run integration tests
-#        run: mvn test -DintegrationTests
+  code-quality:
+    runs-on: [self-hosted, local, k8s]
 
-#  owasp-report:
-#    runs-on: [self-hosted, local, k8s]
-#
-#    env:
-#      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-#
-#    steps:
-#      - name: Code checkout
-#        uses: actions/checkout@v5
-#
-#      - name: Setup JDK
-#        uses: ./.github/actions/setup-jdk
-#
-#      - name: Generate OWASP Dependency-Check report
-#        run: mvn -B clean verify -DskipTests -Dowasp
-#
-#      - name: Upload OWASP report
-#        if: always()
-#        uses: actions/upload-artifact@v7
-#        with:
-#          name: owasp-dependency-check-report
-#          path: target/dependency-check-report.*
-#          retention-days: 1
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Test and SonarQube analysis
+        run: |
+          mvn -B clean verify sonar:sonar \
+            -Dsonar.host.url=http://sonarqube:9000 \
+            -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.qualitygate.wait=true
+
+  security:
+    runs-on: [self-hosted, local, k8s]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Execute security static analysis
+        run: |
+          mvn -B clean verify -DskipTests -Dowasp
+
+  integration-tests:
+    runs-on: [self-hosted, local, k8s]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Run integration tests
+        run: mvn test -DintegrationTests
+
+  owasp-report:
+    runs-on: [self-hosted, local, k8s]
+
+    env:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Generate OWASP Dependency-Check report
+        run: mvn -B clean verify -DskipTests -Dowasp
+
+      - name: Upload OWASP report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: owasp-dependency-check-report
+          path: target/dependency-check-report.*
+          retention-days: 1
 
   build-and-deploy:
-#    needs: [code-quality, integration-tests]
+    needs: [code-quality, integration-tests]
     runs-on: [self-hosted, local, k8s]
 
     steps:
