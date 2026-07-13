@@ -54,4 +54,12 @@ jobs:
         uses: ./.github/actions/setup-jdk
 
       - name: Execute stress tests
-        run: mvn clean verify -DstressTests
+        run: mvn clean verify -DstressTests -Dhost=api-garage.garage.svc.cluster.local
+
+      - name: Upload stress test report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stress-test-report
+          path: stress/target/jmeter/reports/**
+          retention-days: 7
