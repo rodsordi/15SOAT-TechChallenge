@@ -92,6 +92,7 @@ jobs:
 
   deploy:
     runs-on: [ self-hosted, local, k8s ]
+    needs: [build]
 
     steps:
       - name: Code checkout
