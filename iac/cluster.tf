@@ -41,5 +41,12 @@ resource "kind_cluster" "garage_cluster" {
         EOF
       ]
     }
+
+    containerd_config_patches = [
+      <<-TOML
+      [plugins."io.containerd.grpc.v1.crt".registry.mirrors."localhost:5001"]
+        endpoint = ["http://kind-registry:5000"]
+      TOML
+    ]
   }
 }

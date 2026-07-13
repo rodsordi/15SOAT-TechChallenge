@@ -132,7 +132,12 @@ resource "kubernetes_deployment" "github_runner" {
         container {
           name  = "dind"
           image = "docker:27-dind"
-          args  = ["--host=tcp://0.0.0.0:2375", "--host=unix:///var/run/docker.sock"]
+          # Adicione a flag do registro inseguro aqui nos args:
+          args  = [
+            "--host=tcp://0.0.0.0:2375",
+            "--host=unix:///var/run/docker.sock",
+            "--insecure-registry=kind-registry:5000"
+          ]
 
           env {
             name  = "DOCKER_TLS_CERTDIR"
@@ -267,4 +272,37 @@ output "sonar_token" {
   description = "Token gerado via API do SonarQube (usar em SONAR_TOKEN / mvn -Dsonar.token)."
   value       = trimspace(data.local_file.sonar_token.content)
   sensitive   = true
+}
+
+# 1. Container do Registro Local (Substituindo o comando manual)
+resource "docker_container" "kind_registry" {
+  name    = "kind-registry"
+  image   = "registry:2"
+  restart = "always"
+
+  ports {
+    internal = 5000
+    external = 5001
+  }
+
+  networks_advanced {
+    name = "kind"
+  }
+}
+
+# 3. Configuração do ConfigMap para o Kubelet descobrir o Registro (Padrão do Kind)
+resource "kubernetes_config_map" "local_registry_hosting" {
+  metadata {
+    name      = "local-registry-hosting"
+    namespace = "kube-public"
+  }
+
+  data = {
+    "localRegistryHosting.v1" = <<-EOF
+      host: "localhost:5001"
+      help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
+    EOF
+  }
+
+  depends_on = [kind_cluster.garage_cluster]
 }
