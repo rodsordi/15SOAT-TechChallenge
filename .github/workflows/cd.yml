@@ -19,10 +19,10 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          # O Helm avisa o Kubernetes para buscar no localhost:5001 (que o Kind redireciona internamente)
+          # Alterado de localhost:5001 para kind-registry:5000
           helm upgrade --install api-garage helm \
             --namespace garage \
-            --set image.repository=localhost:5001/api-garage \
+            --set image.repository=kind-registry:5000/api-garage \
             --set image.tag=${{ github.sha }} \
             --set image.pullPolicy=IfNotPresent \
             --wait --timeout 2m
