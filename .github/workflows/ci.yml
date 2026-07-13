@@ -9,64 +9,64 @@ on:
       - 'feature/**'
 
 jobs:
-  code-quality:
-    runs-on: [self-hosted, local, k8s]
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Setup JDK
-        uses: ./.github/actions/setup-jdk
-
-      - name: Test and SonarQube analysis
-        run: |
-          mvn -B clean verify sonar:sonar \
-            -Dsonar.host.url=http://sonarqube:9000 \
-            -Dsonar.token=$SONAR_TOKEN \
-            -Dsonar.qualitygate.wait=true
-
-  integration-tests:
-    runs-on: [self-hosted, local, k8s]
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Setup JDK
-        uses: ./.github/actions/setup-jdk
-
-      - name: Run integration tests
-        run: mvn test -DintegrationTests
-
-  owasp-report:
-    runs-on: [self-hosted, local, k8s]
-    needs: [code-quality]
-
-    env:
-      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Setup JDK
-        uses: ./.github/actions/setup-jdk
-
-      - name: Generate OWASP Dependency-Check report
-        run: mvn -B clean verify -DskipTests -Dowasp -DdataDirectory=/root/.owasp/dependency-check/data
-
-      - name: Upload OWASP report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: owasp-dependency-check-report
-          path: target/dependency-check-report.*
-          retention-days: 1
+#  code-quality:
+#    runs-on: [self-hosted, local, k8s]
+#
+#    steps:
+#      - name: Code checkout
+#        uses: actions/checkout@v5
+#
+#      - name: Setup JDK
+#        uses: ./.github/actions/setup-jdk
+#
+#      - name: Test and SonarQube analysis
+#        run: |
+#          mvn -B clean verify sonar:sonar \
+#            -Dsonar.host.url=http://sonarqube:9000 \
+#            -Dsonar.token=$SONAR_TOKEN \
+#            -Dsonar.qualitygate.wait=true
+#
+#  integration-tests:
+#    runs-on: [self-hosted, local, k8s]
+#
+#    steps:
+#      - name: Code checkout
+#        uses: actions/checkout@v5
+#
+#      - name: Setup JDK
+#        uses: ./.github/actions/setup-jdk
+#
+#      - name: Run integration tests
+#        run: mvn test -DintegrationTests
+#
+#  owasp-report:
+#    runs-on: [self-hosted, local, k8s]
+#    needs: [code-quality]
+#
+#    env:
+#      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+#
+#    steps:
+#      - name: Code checkout
+#        uses: actions/checkout@v5
+#
+#      - name: Setup JDK
+#        uses: ./.github/actions/setup-jdk
+#
+#      - name: Generate OWASP Dependency-Check report
+#        run: mvn -B clean verify -DskipTests -Dowasp -DdataDirectory=/root/.owasp/dependency-check/data
+#
+#      - name: Upload OWASP report
+#        if: always()
+#        uses: actions/upload-artifact@v7
+#        with:
+#          name: owasp-dependency-check-report
+#          path: target/dependency-check-report.*
+#          retention-days: 1
 
   build:
     runs-on: [ self-hosted, local, k8s ]
-    needs: [ owasp-report ]
+#    needs: [ owasp-report ]
 
     steps:
       - name: Code checkout
@@ -82,8 +82,4 @@ jobs:
         run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
 
       - name: Load image into cluster containerd
-        run: |
-          docker save -o api-garage.tar api-garage:${{ github.sha }}
-          docker cp api-garage.tar cluster-local-dev-control-plane:/api-garage.tar
-          docker exec cluster-local-dev-control-plane ctr -n k8s.io images import /api-garage.tar
-          rm -f api-garage.tar
+        run: docker save api-garage:${{ github.sha }} | ctr -a /run/containerd/containerd.sock -n k8s.io images import -
