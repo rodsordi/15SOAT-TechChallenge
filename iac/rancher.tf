@@ -63,7 +63,7 @@ resource "helm_release" "rancher" {
   repository = "https://releases.rancher.com/server-charts/stable"
   chart      = "rancher"
   namespace  = kubernetes_namespace.cattle_system.metadata[0].name
-  version    = "v2.8.5"
+  version    = "v2.14.3"
 
   set {
     name  = "hostname"

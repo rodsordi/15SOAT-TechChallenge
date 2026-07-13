@@ -71,6 +71,14 @@ resource "kubernetes_deployment" "github_runner" {
       spec {
         service_account_name = kubernetes_service_account.github_runner_sa.metadata[0].name
 
+        # Pods resolvem nomes via CoreDNS, que não conhece "kind-registry" (nome de container
+        # Docker na rede "kind", fora do DNS do Kubernetes). Fixamos o IP real via /etc/hosts
+        # para o build/push do dind alcançar o registry.
+        host_aliases {
+          ip        = docker_container.kind_registry.network_data[0].ip_address
+          hostnames = ["kind-registry"]
+        }
+
         container {
           name              = "github-runner"
           image             = "custom-runner:latest"
@@ -274,41 +282,3 @@ output "sonar_token" {
   sensitive   = true
 }
 
-resource "docker_container" "kind_registry" {
-  name     = "kind-registry"
-  image    = "registry:2"
-  start    = true
-  must_run = true
-
-  ports {
-    internal = 5000
-    external = 5001
-  }
-
-  networks_advanced {
-    name = "kind"
-  }
-
-  # O TRUQUE SIMPLES: Limpa o container do Docker antes do Terraform tentar criar o novo
-  provisioner "local-exec" {
-    when    = create
-    command = "docker rm -f kind-registry 2>/dev/null || true"
-  }
-}
-
-# 3. Configuração do ConfigMap para o Kubelet descobrir o Registro (Padrão do Kind)
-resource "kubernetes_config_map" "local_registry_hosting" {
-  metadata {
-    name      = "local-registry-hosting"
-    namespace = "kube-public"
-  }
-
-  data = {
-    "localRegistryHosting.v1" = <<-EOF
-      host: "localhost:5001"
-      help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
-    EOF
-  }
-
-  depends_on = [kind_cluster.garage_cluster]
-}
