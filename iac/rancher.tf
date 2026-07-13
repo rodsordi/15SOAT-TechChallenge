@@ -2,6 +2,10 @@ resource "kubernetes_namespace" "cert_manager" {
   metadata {
     name = "cert-manager"
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations, metadata[0].labels]
+  }
 }
 
 resource "helm_release" "cert_manager" {
@@ -54,6 +58,10 @@ resource "kubernetes_namespace" "cattle_system" {
   metadata {
     name = "cattle-system"
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations, metadata[0].labels]
+  }
 }
 
 resource "helm_release" "rancher" {
@@ -63,7 +71,7 @@ resource "helm_release" "rancher" {
   repository = "https://releases.rancher.com/server-charts/stable"
   chart      = "rancher"
   namespace  = kubernetes_namespace.cattle_system.metadata[0].name
-  version    = "v2.8.5"
+  version    = "v2.14.3"
 
   set {
     name  = "hostname"

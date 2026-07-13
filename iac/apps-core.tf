@@ -4,6 +4,11 @@ resource "kubernetes_deployment" "postgres" {
     name      = "postgres"
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     replicas = 1
     selector { match_labels = { app = "postgres" } }
@@ -41,6 +46,11 @@ resource "kubernetes_service" "postgres" {
     name      = "postgres"
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     selector = { app = "postgres" }
     port {
@@ -58,6 +68,11 @@ resource "kubernetes_deployment" "floci" {
     name      = "floci"
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     replicas = 1
     selector { match_labels = { app = "floci" } }
@@ -82,6 +97,11 @@ resource "kubernetes_service" "floci" {
     name      = "floci"
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     selector = { app = "floci" }
     port {

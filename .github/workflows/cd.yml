@@ -19,7 +19,6 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          # Alterado de localhost:5001 para kind-registry:5000
           helm upgrade --install api-garage helm \
             --namespace garage \
             --set image.repository=kind-registry:5000/api-garage \

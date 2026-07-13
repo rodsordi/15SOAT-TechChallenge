@@ -102,6 +102,10 @@ resource "kubernetes_deployment" "loki" {
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
 
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     replicas = 1
     selector { match_labels = { app = "loki" } }
@@ -128,6 +132,10 @@ resource "kubernetes_service" "loki" {
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
 
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     selector = { app = "loki" }
 
@@ -145,6 +153,10 @@ resource "kubernetes_deployment" "jaeger" {
   metadata {
     name      = "jaeger"
     namespace = kubernetes_namespace.garage.metadata[0].name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
   }
 
   spec {
@@ -184,6 +196,10 @@ resource "kubernetes_service" "jaeger" {
   metadata {
     name      = "jaeger"
     namespace = kubernetes_namespace.garage.metadata[0].name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
   }
 
   spec {
@@ -231,6 +247,10 @@ resource "kubernetes_deployment" "prometheus" {
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
 
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     replicas = 1
     selector { match_labels = { app = "prometheus" } }
@@ -273,6 +293,10 @@ resource "kubernetes_service" "prometheus" {
   metadata {
     name      = "prometheus"
     namespace = kubernetes_namespace.garage.metadata[0].name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
   }
 
   spec {
@@ -320,6 +344,10 @@ resource "kubernetes_deployment" "grafana" {
   metadata {
     name      = "grafana"
     namespace = kubernetes_namespace.garage.metadata[0].name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
   }
 
   spec {
@@ -409,6 +437,10 @@ resource "kubernetes_service" "grafana" {
   metadata {
     name      = "grafana"
     namespace = kubernetes_namespace.garage.metadata[0].name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
   }
 
   spec {
