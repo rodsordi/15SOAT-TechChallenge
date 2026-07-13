@@ -32,7 +32,6 @@ jobs:
 
   integration-tests:
     runs-on: [self-hosted, local, k8s]
-    needs: [code-quality]
 
     steps:
       - name: Code checkout
@@ -58,7 +57,7 @@ jobs:
         uses: ./.github/actions/setup-jdk
 
       - name: Generate OWASP Dependency-Check report
-        run: mvn -B clean verify -DskipTests -Dowasp
+        run: mvn -B clean verify -DskipTests -Dowasp -DdataDirectory=${{ owasp_cache_host_path }}
 
       - name: Upload OWASP report
         if: always()
@@ -69,7 +68,7 @@ jobs:
           retention-days: 1
 
   build-and-deploy:
-    needs: [owasp-report, integration-tests]
+    needs: [code-quality, owasp-report, integration-tests]
     runs-on: [self-hosted, local, k8s]
 
     steps:
