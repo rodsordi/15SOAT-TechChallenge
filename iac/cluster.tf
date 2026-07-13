@@ -9,6 +9,11 @@ resource "kind_cluster" "garage_cluster" {
       role  = "control-plane"
       image = "kindest/node:v1.28.0"
 
+      extra_mounts {
+        host_path      = var.owasp_cache_host_path
+        container_path = var.owasp_cache_host_path
+      }
+
       extra_port_mappings {
         container_port = 80
         host_port      = 9080
