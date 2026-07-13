@@ -97,6 +97,7 @@ public abstract class GarageIntegrationTest implements PostgresSetup, LocalStack
         var requestBody = create_EmployeeDto_Request()
                 .withAllFields();
         setField(requestBody, "username", "admin@garage.com");
+        setField(requestBody, "cpf", "904.434.710-10");
         setField(requestBody, "email", "admin@garage.com");
         setField(requestBody, "password", "abcd1234");
 
