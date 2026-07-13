@@ -189,6 +189,10 @@ resource "kubernetes_deployment" "sonarqube" {
     namespace = kubernetes_namespace.garage.metadata[0].name
   }
 
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
+  }
+
   spec {
     replicas = 1
     selector { match_labels = { app = "sonarqube" } }
@@ -218,6 +222,10 @@ resource "kubernetes_service" "sonarqube" {
   metadata {
     name      = "sonarqube"
     namespace = kubernetes_namespace.garage.metadata[0].name
+  }
+
+  lifecycle {
+    ignore_changes = [metadata[0].annotations]
   }
 
   spec {

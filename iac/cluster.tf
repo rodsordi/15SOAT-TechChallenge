@@ -49,6 +49,8 @@ resource "docker_container" "kind_registry" {
   networks_advanced {
     name = "kind"
   }
+
+  restart = "unless-stopped"
 }
 
 # Configuração do ConfigMap para o Kubelet descobrir o Registro (Padrão do Kind)
