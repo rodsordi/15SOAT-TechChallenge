@@ -63,3 +63,23 @@ jobs:
           name: owasp-dependency-check-report
           path: target/dependency-check-report.*
           retention-days: 1
+
+  build:
+    runs-on: [ self-hosted, local, k8s ]
+    needs: [owasp-report]
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v5
+
+      - name: Setup JDK
+        uses: ./.github/actions/setup-jdk
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml -DskipTests
+
+      - name: Build Docker image
+        run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
+
+      - name: Load image into cluster containerd
+        run: docker save api-garage:${{ github.sha }} | ctr -a /run/containerd/containerd.sock -n k8s.io images import -
