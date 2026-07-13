@@ -272,9 +272,15 @@
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring-boot.version}</version>
                 <exclusions>
+                    <!-- Vulnerability -->
                     <exclusion>
                         <groupId>org.apache.tomcat.embed</groupId>
                         <artifactId>tomcat-embed-core</artifactId>
+                    </exclusion>
+                    <!-- Vulnerability -->
+                    <exclusion>
+                        <groupId>org.apache.tomcat.embed</groupId>
+                        <artifactId>tomcat-embed-websocket</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -368,6 +374,14 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
+            <version>11.0.24</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Vulnerability -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
             <version>11.0.24</version>
             <scope>compile</scope>
         </dependency>
