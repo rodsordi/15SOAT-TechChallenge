@@ -92,8 +92,5 @@ jobs:
           # 3. Importa no containerd do nó do Kind usando o socket mapeado
           ./ctr -a /run/containerd/containerd.sock -n k8s.io images import api-garage.tar
           
-          # 4. GARANTIA EXTRA: Força uma tag adicional "latest" no containerd do cluster para facilitar o debug
-          ./ctr -a /run/containerd/containerd.sock -n k8s.io images tag api-garage:${{ github.sha }} api-garage:latest
-          
-          # 5. Limpa os arquivos temporários
+          # 4. Limpa os arquivos temporários
           rm -f api-garage.tar ./ctr
