@@ -43,8 +43,11 @@ resource "kind_cluster" "garage_cluster" {
     }
 
     containerd_config_patches = [
+      # Mapeia tanto a requisição interna do nó quanto a externa
       <<-TOML
       [plugins."io.containerd.grpc.v1.crt".registry.mirrors."localhost:5001"]
+        endpoint = ["http://kind-registry:5000"]
+      [plugins."io.containerd.grpc.v1.crt".registry.mirrors."kind-registry:5000"]
         endpoint = ["http://kind-registry:5000"]
       TOML
     ]
