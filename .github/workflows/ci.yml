@@ -78,19 +78,13 @@ jobs:
       - name: Build Docker image
         run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
 
-      - name: Load image into cluster containerd
+      - name: Push to Local Registry
         run: |
-          # 1. Exporta a imagem gerada pelo dind usando a tag dinâmica do commit atual
-          docker save -o api-garage.tar api-garage:${{ github.sha }}
+          # 1. Define o endereço do registro interno da rede do docker
+          REGISTRY="kind-registry:5000"
           
-          # 2. Cria o container dummy e extrai o ctr
-          docker create --name ctrtump linuxkit/containerd:v0.7 sh
-          docker cp ctrtump:/usr/bin/ctr ./ctr
-          docker rm ctrtump
-          chmod +x ./ctr
+          # 2. Builda a imagem apontando para o registro
+          docker build -t $REGISTRY/api-garage:${{ github.sha }} .
           
-          # 3. Importa no containerd do nó do Kind usando o socket mapeado
-          ./ctr -a /run/containerd/containerd.sock -n k8s.io images import api-garage.tar
-          
-          # 4. Limpa os arquivos temporários
-          rm -f api-garage.tar ./ctr
+          # 3. Empurra para o registro (o dind envia direto para o container irmão)
+          docker push $REGISTRY/api-garage:${{ github.sha }}

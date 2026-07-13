@@ -268,3 +268,36 @@ output "sonar_token" {
   value       = trimspace(data.local_file.sonar_token.content)
   sensitive   = true
 }
+
+# 1. Container do Registro Local (Substituindo o comando manual)
+resource "docker_container" "kind_registry" {
+  name    = "kind-registry"
+  image   = "registry:2"
+  restart = "always"
+
+  ports {
+    internal = 5000
+    external = 5001
+  }
+
+  networks_advanced {
+    name = "kind"
+  }
+}
+
+# 3. Configuração do ConfigMap para o Kubelet descobrir o Registro (Padrão do Kind)
+resource "kubernetes_config_map" "local_registry_hosting" {
+  metadata {
+    name      = "local-registry-hosting"
+    namespace = "kube-public"
+  }
+
+  data = {
+    "localRegistryHosting.v1" = <<-EOF
+      host: "localhost:5001"
+      help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
+    EOF
+  }
+
+  depends_on = [kind_cluster.garage_cluster]
+}
