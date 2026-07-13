@@ -80,16 +80,18 @@ jobs:
 
       - name: Load image into cluster containerd
         run: |
-          # 1. Exporta a imagem gerada no passo anterior pelo dind para um arquivo tar
+          # 1. Exporta a imagem gerada pelo dind para um arquivo tar
           docker save -o api-garage.tar api-garage:${{ github.sha }}
           
-          # 2. Usa um container temporário que possui o binário 'ctr' e monta o socket do containerd do nó 
-          # (Como o runner roda na mesma máquina do Kind, o socket mapeado aponta para o containerd do nó)
-          docker run --rm \
-            -v /run/containerd/containerd.sock:/run/containerd/containerd.sock \
-            -v $(pwd)/api-garage.tar:/tmp/api-garage.tar \
-            linuxkit/containerd:v0.7 \
-            ctr -a /run/containerd/containerd.sock -n k8s.io images import /tmp/api-garage.tar
+          # 2. Copia o binário oficial do 'ctr' de dentro de uma imagem pronta direto para o runner
+          # (Isso resolve a falta do comando ctr no seu runner de forma instantânea)
+          docker create --name ctrtump linuxkit/containerd:v0.7
+          docker cp ctrtump:/usr/bin/ctr ./ctr
+          docker rm ctrtump
+          chmod +x ./ctr
           
-          # 3. Limpa o arquivo tar temporário
-          rm -f api-garage.tar
+          # 3. Executa o import usando o socket que o seu runner JÁ possui mapeado no host
+          ./ctr -a /run/containerd/containerd.sock -n k8s.io images import api-garage.tar
+          
+          # 4. Limpa os arquivos temporários
+          rm -f api-garage.tar ./ctr
