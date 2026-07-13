@@ -12,7 +12,6 @@ on:
 
 jobs:
   build-and-deploy:
-    needs: [owasp-report]
     runs-on: [self-hosted, local, k8s]
 
     steps:
