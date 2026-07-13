@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/job-build-image.yml
+    uses: ./.github/workflows/build-image-job.yml
 
   deploy:
     needs: [build]

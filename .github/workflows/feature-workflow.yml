@@ -9,7 +9,7 @@ on:
 
 jobs:
   code-quality:
-    uses: ./.github/workflows/job-code-quality.yml
+    uses: ./.github/workflows/code-quality-job.yml
 
 #  integration-tests:
 #    runs-on: [self-hosted, local, k8s]
