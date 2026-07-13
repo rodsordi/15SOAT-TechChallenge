@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Feature Workflows
 
 on:
   push:
@@ -62,30 +62,3 @@ jobs:
 #          name: owasp-dependency-check-report
 #          path: target/dependency-check-report.*
 #          retention-days: 1
-
-  build:
-    runs-on: [ self-hosted, local, k8s ]
-#    needs: [ owasp-report ]
-
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v5
-
-      - name: Setup JDK
-        uses: ./.github/actions/setup-jdk
-
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml -DskipTests
-
-      - name: Build Docker image
-        run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
-
-      - name: Push to Local Registry
-        run: |
-          REGISTRY="kind-registry:5000"
-          
-          # 1. Builda a imagem apontando para o registro
-          docker build -t $REGISTRY/api-garage:${{ github.sha }} .
-          
-          # 2. Empurra para o registro (o dind agora aceita HTTP nativamente para esse host)
-          docker push $REGISTRY/api-garage:${{ github.sha }}
