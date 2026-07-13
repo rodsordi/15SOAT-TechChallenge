@@ -80,20 +80,10 @@ jobs:
 
       - name: Push to Local Registry
         run: |
-          # 1. Configura o registro como inseguro para o daemon do Docker atual
-          # Se o diretório /etc/docker não existir, nós o criamos.
-          sudo mkdir -p /etc/docker
-          echo '{"insecure-registries": ["kind-registry:5000"]}' | sudo tee /etc/docker/daemon.json
-          
-          # Como o dind já está rodando, precisamos recarregar as configurações.
-          # Em alguns ambientes dind, enviar um SIGHUP ou reiniciar o serviço funciona:
-          sudo kill -HUP $(pidof dockerd) || true
-          sleep 2 # Dá um pequeno respiro para o daemon processar o reload
-          
           REGISTRY="kind-registry:5000"
           
-          # 2. Builda a imagem apontando para o registro
+          # 1. Builda a imagem apontando para o registro
           docker build -t $REGISTRY/api-garage:${{ github.sha }} .
           
-          # 3. Empurra para o registro (agora aceitando HTTP)
+          # 2. Empurra para o registro (o dind agora aceita HTTP nativamente para esse host)
           docker push $REGISTRY/api-garage:${{ github.sha }}

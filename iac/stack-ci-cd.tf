@@ -132,7 +132,12 @@ resource "kubernetes_deployment" "github_runner" {
         container {
           name  = "dind"
           image = "docker:27-dind"
-          args  = ["--host=tcp://0.0.0.0:2375", "--host=unix:///var/run/docker.sock"]
+          # Adicione a flag do registro inseguro aqui nos args:
+          args  = [
+            "--host=tcp://0.0.0.0:2375",
+            "--host=unix:///var/run/docker.sock",
+            "--insecure-registry=kind-registry:5000"
+          ]
 
           env {
             name  = "DOCKER_TLS_CERTDIR"
