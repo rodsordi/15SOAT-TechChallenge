@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: [self-hosted, local, k8s]
+    needs: [build]
 
     steps:
       - name: Code checkout
@@ -49,5 +50,5 @@ jobs:
       - name: Setup JDK
         uses: ./.github/actions/setup-jdk
 
-      - name: Execute manual stress tests
+      - name: Execute stress tests
         run: mvn clean verify -DstressTests
