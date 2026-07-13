@@ -8,23 +8,9 @@ on:
       - 'main'
 
 jobs:
-#  code-quality:
-#    runs-on: [self-hosted, local, k8s]
-#
-#    steps:
-#      - name: Code checkout
-#        uses: actions/checkout@v5
-#
-#      - name: Setup JDK
-#        uses: ./.github/actions/setup-jdk
-#
-#      - name: Test and SonarQube analysis
-#        run: |
-#          mvn -B clean verify sonar:sonar \
-#            -Dsonar.host.url=http://sonarqube:9000 \
-#            -Dsonar.token=$SONAR_TOKEN \
-#            -Dsonar.qualitygate.wait=true
-#
+  code-quality:
+    uses: ./.github/workflows/job-code-quality.yml
+
 #  integration-tests:
 #    runs-on: [self-hosted, local, k8s]
 #
