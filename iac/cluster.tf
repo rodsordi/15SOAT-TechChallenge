@@ -1,55 +1,26 @@
 resource "kind_cluster" "garage_cluster" {
-  name = "cluster-local-dev"
+  name            = "cluster-local-dev"
+  kubeconfig_path = "${path.module}/cluster-local-dev-config"
 
   kind_config {
     kind        = "Cluster"
     api_version = "kind.x-k8s.io/v1alpha4"
 
-    node {
-      role  = "control-plane"
-      image = "kindest/node:v1.28.0"
-
-      extra_mounts {
-        host_path      = var.owasp_cache_host_path
-        container_path = var.owasp_cache_host_path
-      }
-
-      extra_port_mappings {
-        container_port = 80
-        host_port      = 9080
-        protocol       = "TCP"
-      }
-
-      extra_port_mappings {
-        container_port = 443
-        host_port      = 9443
-        protocol       = "TCP"
-      }
-
-      extra_port_mappings {
-        container_port = 30300
-        host_port      = 3000
-        protocol       = "TCP"
-      }
-
-      kubeadm_config_patches = [
-        <<-EOF
-        kind: InitConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "ingress-ready=true"
-        EOF
-      ]
-    }
-
     containerd_config_patches = [
-      # Mapeia tanto a requisição interna do nó quanto a externa
       <<-TOML
-      [plugins."io.containerd.grpc.v1.crt".registry.mirrors."localhost:5001"]
-        endpoint = ["http://kind-registry:5000"]
       [plugins."io.containerd.grpc.v1.crt".registry.mirrors."kind-registry:5000"]
+        endpoint = ["http://kind-registry:5000"]
+      [plugins."io.containerd.grpc.v1.crt".registry.mirrors."localhost:5001"]
         endpoint = ["http://kind-registry:5000"]
       TOML
     ]
+
+    node {
+      role = "control-plane"
+    }
   }
+
+  depends_on = [
+    docker_container.kind_registry
+  ]
 }

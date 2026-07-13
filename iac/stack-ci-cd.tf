@@ -274,11 +274,11 @@ output "sonar_token" {
   sensitive   = true
 }
 
-# 1. Container do Registro Local (Substituindo o comando manual)
 resource "docker_container" "kind_registry" {
-  name    = "kind-registry"
-  image   = "registry:2"
-  restart = "always"
+  name     = "kind-registry"
+  image    = "registry:2"
+  start    = true
+  must_run = true
 
   ports {
     internal = 5000
@@ -287,6 +287,12 @@ resource "docker_container" "kind_registry" {
 
   networks_advanced {
     name = "kind"
+  }
+
+  # O TRUQUE SIMPLES: Limpa o container do Docker antes do Terraform tentar criar o novo
+  provisioner "local-exec" {
+    when    = create
+    command = "docker rm -f kind-registry 2>/dev/null || true"
   }
 }
 
