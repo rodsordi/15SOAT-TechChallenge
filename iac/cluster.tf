@@ -17,6 +17,40 @@ resource "kind_cluster" "garage_cluster" {
 
     node {
       role = "control-plane"
+
+      labels = {
+        "ingress-ready" = "true"
+      }
+
+      # Rancher (via ingress, TLS). Porta 443 evitada propositalmente: o agente
+      # Netskope da máquina intercepta, no host, qualquer conexão de saída
+      # destinada a essa porta (mesmo entre processos locais, como o docker-proxy
+      # conectando no node kind) e trava a conexão. O pod do ingress-nginx foi
+      # configurado (rancher.tf) para expor hostPort 9443 em vez de 443, então o
+      # container_port aqui precisa casar com isso. Rancher só é acessado via
+      # HTTPS, então o hostPort http (padrão 80, sem exposição) nem é mapeado aqui.
+      extra_port_mappings {
+        container_port = 9443
+        host_port      = 9443
+      }
+
+      # Serviços NodePort expostos diretamente para o host (ver README)
+      extra_port_mappings {
+        container_port = 30300 # grafana
+        host_port      = 3000
+      }
+      extra_port_mappings {
+        container_port = 30909 # prometheus
+        host_port      = 9090
+      }
+      extra_port_mappings {
+        container_port = 31686 # jaeger UI
+        host_port      = 16686
+      }
+      extra_port_mappings {
+        container_port = 30900 # sonarqube
+        host_port      = 9000
+      }
     }
   }
 

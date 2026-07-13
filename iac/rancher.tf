@@ -37,6 +37,15 @@ resource "helm_release" "nginx_ingress" {
     value = "true"
   }
 
+  # hostPort https em 9443 (em vez de 443): nesta máquina o agente Netskope
+  # intercepta no host qualquer conexão de saída destinada à porta 443 e nunca
+  # deixa o docker-proxy alcançar o node kind. Rancher só é acessado via HTTPS,
+  # então o hostPort http nem é exposto ao host (ver cluster.tf).
+  set {
+    name  = "controller.hostPort.ports.https"
+    value = "9443"
+  }
+
   set {
     name  = "controller.nodeSelector.ingress-ready"
     value = "true"
