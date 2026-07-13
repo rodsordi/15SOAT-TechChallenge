@@ -79,4 +79,12 @@ jobs:
         run: docker build -t api-garage:${{ github.sha }} -t api-garage:latest .
 
       - name: Load image into cluster containerd
-        run: docker save api-garage:${{ github.sha }} | ctr -a /run/containerd/containerd.sock -n k8s.io images import -
+        run: |
+          # 1. Exporta a imagem do dind para um arquivo temporário
+          docker save -o api-garage.tar api-garage:${{ github.sha }}
+          
+          # 2. Importa direto no containerd do nó usando o socket mapeado em /run/containerd/containerd.sock
+          ctr -a /run/containerd/containerd.sock -n k8s.io images import api-garage.tar
+          
+          # 3. Limpa o arquivo tar
+          rm -f api-garage.tar
