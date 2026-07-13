@@ -57,7 +57,7 @@ jobs:
         uses: ./.github/actions/setup-jdk
 
       - name: Generate OWASP Dependency-Check report
-        run: mvn -B clean verify -DskipTests -Dowasp -DdataDirectory=${{ owasp_cache_host_path }}
+        run: mvn -B clean verify -DskipTests -Dowasp -DdataDirectory=${{ secrets.owasp_cache_host_path }}
 
       - name: Upload OWASP report
         if: always()
