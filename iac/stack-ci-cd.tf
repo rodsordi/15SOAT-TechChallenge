@@ -200,6 +200,29 @@ resource "kubernetes_deployment" "sonarqube" {
     template {
       metadata { labels = { app = "sonarqube" } }
       spec {
+        # O kubelet cria o diretório do hostPath como root, mas a imagem oficial do
+        # SonarQube roda como usuário não-root (uid 1000) e falha ao criar
+        # /opt/sonarqube/data/es8/config sem essa correção de permissão.
+        init_container {
+          name    = "fix-volume-permissions"
+          image   = "busybox:1.36"
+          command = ["sh", "-c", "chown -R 1000:1000 /opt/sonarqube/data /opt/sonarqube/extensions"]
+
+          security_context {
+            run_as_user = 0
+          }
+
+          volume_mount {
+            name       = "sonarqube-data"
+            mount_path = "/opt/sonarqube/data"
+          }
+
+          volume_mount {
+            name       = "sonarqube-extensions"
+            mount_path = "/opt/sonarqube/extensions"
+          }
+        }
+
         container {
           name  = "sonarqube"
           image = "sonarqube:community"
@@ -211,6 +234,38 @@ resource "kubernetes_deployment" "sonarqube" {
           env {
             name  = "SONAR_ES_BOOTSTRAP_CHECKS_DISABLE"
             value = "true"
+          }
+
+          volume_mount {
+            name       = "sonarqube-data"
+            mount_path = "/opt/sonarqube/data"
+          }
+
+          volume_mount {
+            name       = "sonarqube-extensions"
+            mount_path = "/opt/sonarqube/extensions"
+          }
+        }
+
+        # Sem isso, o banco H2 embarcado do SonarQube (usuários, senha admin,
+        # tokens) é perdido a cada restart/reagendamento do pod, invalidando o
+        # SONAR_TOKEN injetado no github-runner e quebrando o pipeline com
+        # "Not authorized".
+        volume {
+          name = "sonarqube-data"
+
+          host_path {
+            path = "${var.sonar_data_host_path}/data"
+            type = "DirectoryOrCreate"
+          }
+        }
+
+        volume {
+          name = "sonarqube-extensions"
+
+          host_path {
+            path = "${var.sonar_data_host_path}/extensions"
+            type = "DirectoryOrCreate"
           }
         }
       }
