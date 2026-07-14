@@ -13,6 +13,8 @@ jobs:
   security:
     needs: [quality-assurance]
     uses: ./.github/workflows/job-security.yml
+    secrets:
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
 
   build:
     needs: [security]
