@@ -10,7 +10,7 @@ API responsible for managing the vehicle mechanic workflow. Tech Challenge for t
 
 **Hexagonal Architecture**
 
-![Hexagonal Architecture](docs/TechChallenge-ArchDesign.png)
+![Hexagonal Architecture](docs/phase2/TechChallenge-ArchDesign.png)
 
 ### C4Model
 

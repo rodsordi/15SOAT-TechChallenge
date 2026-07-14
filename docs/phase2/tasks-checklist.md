@@ -92,16 +92,16 @@ Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de
     * Provisionamento da infraestrutura com Terraform. (✅)
 * Link para a collection completa das APIs (Postman, Swagger ou Similar); (✅) 
 * Link para vídeo demonstrativo do ambiente em execução:
-    * Publicado no YouTube ou Vimeo (público ou não listado) de até 15 minutos. (❌)
+    * Publicado no YouTube ou Vimeo (público ou não listado) de até 15 minutos. (✅)
     * O vídeo deve demonstrar:
-        * Execução do CI/CD. (❌)
-        * Deploy da aplicação. (❌)
-        * Consumo das APIs. (❌)
-        * Escalabilidade automática (pode simular aumento de carga ou múltiplas ordens de serviço). (❌)
+        * Execução do CI/CD. (✅)
+        * Deploy da aplicação. (✅)
+        * Consumo das APIs. (✅)
+        * Escalabilidade automática (pode simular aumento de carga ou múltiplas ordens de serviço). (✅)
 
 ### Entrega no Portal do Aluno:
 
 PDF contendo:
-1. O link do repositório GitHub compartilhado com o usuário `soat-architecture`; (❌)
-2. Desenho da arquitetura com os recursos escolhidos; (❌)
-3. Link do vídeo (com até 15 minutos de duração) apresentando a solução desenvolvida. (❌)
+1. O link do repositório GitHub compartilhado com o usuário `soat-architecture`; (✅)
+2. Desenho da arquitetura com os recursos escolhidos; (✅)
+3. Link do vídeo (com até 15 minutos de duração) apresentando a solução desenvolvida. (✅)
