@@ -156,6 +156,15 @@
             <version>3.1.1</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Vulnerability -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.core5</groupId>
+            <artifactId>httpcore5</artifactId>
+            <version>5.5-beta2</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <profiles>
