@@ -6,7 +6,6 @@ on:
 jobs:
   owasp-report:
     runs-on: [self-hosted, local, k8s]
-    needs: [code-quality]
 
     env:
       NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
