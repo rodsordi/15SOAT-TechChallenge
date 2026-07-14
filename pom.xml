@@ -29,6 +29,9 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <mapstruct.version>1.6.3</mapstruct.version>
         <spring-boot.version>4.0.7</spring-boot.version>
+        <spring-cloud.version>2025.1.2</spring-cloud.version>
+        <spring-cloud-aws.version>4.0.2</spring-cloud-aws.version>
+        <testcontainers-bom.version>2.0.5</testcontainers-bom.version>
         <sonar.coverage.jacoco.xmlReportPaths>
             ${maven.multiModuleProjectDirectory}/application/target/site/jacoco-aggregate/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
@@ -123,7 +126,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2025.1.2</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -131,7 +134,7 @@
             <dependency>
                 <groupId>io.awspring.cloud</groupId>
                 <artifactId>spring-cloud-aws-dependencies</artifactId>
-                <version>4.0.2</version>
+                <version>${spring-cloud-aws.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -139,7 +142,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>2.0.5</version>
+                <version>${testcontainers-bom.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -217,26 +220,6 @@
                     <exclusion>
                         <groupId>rhino</groupId>
                         <artifactId>rhino</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <!-- Vulnerability -->
-            <dependency>
-                <groupId>org.wiremock.integrations</groupId>
-                <artifactId>wiremock-spring-boot</artifactId>
-                <version>4.2.1</version>
-                <scope>test</scope>
-                <exclusions>
-                    <!-- Vulnerability -->
-                    <exclusion>
-                        <groupId>com.github.jknack</groupId>
-                        <artifactId>handlebars</artifactId>
-                    </exclusion>
-                    <!-- Vulnerability -->
-                    <exclusion>
-                        <groupId>org.eclipse.jetty.ee10</groupId>
-                        <artifactId>jetty-ee10-webapp</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
