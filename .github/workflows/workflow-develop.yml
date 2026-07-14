@@ -1,4 +1,4 @@
-name: Develop Workflow
+name: Develop Pipeline
 
 on:
   push:
@@ -7,8 +7,16 @@ on:
       - 'main'
 
 jobs:
+  quality-assurance:
+    uses: ./.github/workflows/job-quality-assurance.yml
+
+  security:
+    needs: [quality-assurance]
+    uses: ./.github/workflows/job-security.yml
+
   build:
-    uses: ./.github/workflows/build-image-job.yml
+    needs: [security]
+    uses: ./.github/workflows/job-build-image.yml
 
   deploy:
     needs: [build]

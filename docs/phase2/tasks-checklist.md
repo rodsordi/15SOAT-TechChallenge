@@ -94,8 +94,8 @@ Código-fonte atualizado e refatorado seguindo as boas práticas da abordagem de
 * Link para vídeo demonstrativo do ambiente em execução:
     * Publicado no YouTube ou Vimeo (público ou não listado) de até 15 minutos. (❌)
     * O vídeo deve demonstrar:
-        * Deploy da aplicação. (❌)
         * Execução do CI/CD. (❌)
+        * Deploy da aplicação. (❌)
         * Consumo das APIs. (❌)
         * Escalabilidade automática (pode simular aumento de carga ou múltiplas ordens de serviço). (❌)
 
