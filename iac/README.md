@@ -17,6 +17,8 @@ export TF_VAR_github_pat="your_github_pat_here"
 export TF_VAR_sonar_admin_password="Sonarqube@2026"
 export TF_VAR_owasp_cache_host_path="//run/desktop/mnt/host/c/Users/${user_here}/owasp-cache" # windows
 export TF_VAR_owasp_cache_host_path="/tmp/owasp-dependency-check-cache" # linux
+export TF_VAR_sonar_data_host_path="//run/desktop/mnt/host/c/Users/${user_here}/sonarqube-data" # windows
+export TF_VAR_sonar_data_host_path="/tmp/sonarqube-data" # linux
 ```
 
 ### OWASP Setup
@@ -110,10 +112,11 @@ kubectl describe pod github-runner-67d7d598b9-9g9nb -n garage
 
 ## 🔍 Observability
 
+- [Rancher](https://localhost:9443) *Pass:admin NewPass:Rancher@2026*
+- [Sonarqube](http://localhost:9000) *Pass: Sonarqube@2026*
 - [Grafana](http://localhost:3000)
 - [Jaeger](http://localhost:16686)
 - [Prometheus](http://localhost:9090)
-- [Rancher](https://localhost:9443) # Pass:admin NewPass:Rancher@2026
 
 > **Nota:** o ingress-nginx expõe hostPort https em 9443 (em vez do padrão 443).
 > Em máquinas com agentes de segurança corporativos (ex.: Netskope), conexões de
