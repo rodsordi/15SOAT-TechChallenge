@@ -17,6 +17,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Vulnerability -->
             <dependency>
                 <groupId>org.wiremock.integrations</groupId>
                 <artifactId>wiremock-spring-boot</artifactId>
@@ -26,6 +27,20 @@
                     <exclusion>
                         <groupId>org.apache.httpcomponents.core5</groupId>
                         <artifactId>httpcore5</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- Vulnerability -->
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>json-schema-validator</artifactId>
+                <version>${rest-assured.version}</version>
+                <exclusions>
+                    <!-- Vulnerability -->
+                    <exclusion>
+                        <groupId>rhino</groupId>
+                        <artifactId>rhino</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

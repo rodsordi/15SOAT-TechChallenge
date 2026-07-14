@@ -209,20 +209,6 @@
                 <artifactId>spring-boot-starter-jackson</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
-
-            <!-- Vulnerability -->
-            <dependency>
-                <groupId>io.rest-assured</groupId>
-                <artifactId>json-schema-validator</artifactId>
-                <version>6.0.0</version>
-                <exclusions>
-                    <!-- Vulnerability -->
-                    <exclusion>
-                        <groupId>rhino</groupId>
-                        <artifactId>rhino</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
             <dependency>
                 <groupId>com.github.jknack</groupId>
                 <artifactId>handlebars</artifactId>
