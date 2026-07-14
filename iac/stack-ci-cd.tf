@@ -170,7 +170,7 @@ resource "kubernetes_deployment" "github_runner" {
           name = "owasp-cache"
 
           host_path {
-            path = var.owasp_cache_host_path
+            path = "/var/owasp-cache-in-node"
             type = "DirectoryOrCreate"
           }
         }

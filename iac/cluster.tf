@@ -43,6 +43,11 @@ resource "kind_cluster" "garage_cluster" {
         container_port = 30900 # sonarqube
         host_port      = 9000
       }
+
+      extra_mounts {
+        host_path      = var.owasp_cache_host_path
+        container_path = "/var/owasp-cache-in-node"
+      }
     }
   }
 
