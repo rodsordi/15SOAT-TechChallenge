@@ -71,9 +71,6 @@ resource "kubernetes_deployment" "github_runner" {
       spec {
         service_account_name = kubernetes_service_account.github_runner_sa.metadata[0].name
 
-        # Pods resolvem nomes via CoreDNS, que não conhece "kind-registry" (nome de container
-        # Docker na rede "kind", fora do DNS do Kubernetes). Fixamos o IP real via /etc/hosts
-        # para o build/push do dind alcançar o registry.
         host_aliases {
           ip        = docker_container.kind_registry.network_data[0].ip_address
           hostnames = ["kind-registry"]
@@ -140,7 +137,6 @@ resource "kubernetes_deployment" "github_runner" {
         container {
           name  = "dind"
           image = "docker:27-dind"
-          # Adicione a flag do registro inseguro aqui nos args:
           args  = [
             "--host=tcp://0.0.0.0:2375",
             "--host=unix:///var/run/docker.sock",
@@ -200,9 +196,6 @@ resource "kubernetes_deployment" "sonarqube" {
     template {
       metadata { labels = { app = "sonarqube" } }
       spec {
-        # O kubelet cria o diretório do hostPath como root, mas a imagem oficial do
-        # SonarQube roda como usuário não-root (uid 1000) e falha ao criar
-        # /opt/sonarqube/data/es8/config sem essa correção de permissão.
         init_container {
           name    = "fix-volume-permissions"
           image   = "busybox:1.36"
@@ -247,10 +240,6 @@ resource "kubernetes_deployment" "sonarqube" {
           }
         }
 
-        # Sem isso, o banco H2 embarcado do SonarQube (usuários, senha admin,
-        # tokens) é perdido a cada restart/reagendamento do pod, invalidando o
-        # SONAR_TOKEN injetado no github-runner e quebrando o pipeline com
-        # "Not authorized".
         volume {
           name = "sonarqube-data"
 

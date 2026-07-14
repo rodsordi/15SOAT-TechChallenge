@@ -22,19 +22,11 @@ resource "kind_cluster" "garage_cluster" {
         "ingress-ready" = "true"
       }
 
-      # Rancher (via ingress, TLS). Porta 443 evitada propositalmente: o agente
-      # Netskope da máquina intercepta, no host, qualquer conexão de saída
-      # destinada a essa porta (mesmo entre processos locais, como o docker-proxy
-      # conectando no node kind) e trava a conexão. O pod do ingress-nginx foi
-      # configurado (rancher.tf) para expor hostPort 9443 em vez de 443, então o
-      # container_port aqui precisa casar com isso. Rancher só é acessado via
-      # HTTPS, então o hostPort http (padrão 80, sem exposição) nem é mapeado aqui.
       extra_port_mappings {
         container_port = 9443
         host_port      = 9443
       }
 
-      # Serviços NodePort expostos diretamente para o host (ver README)
       extra_port_mappings {
         container_port = 30300 # grafana
         host_port      = 3000
@@ -59,8 +51,6 @@ resource "kind_cluster" "garage_cluster" {
   ]
 }
 
-# Remove um container "kind-registry" órfão (de uma execução anterior sem tracking
-# no state) ANTES do Terraform tentar criar o novo, evitando conflito de nome.
 resource "null_resource" "kind_registry_cleanup" {
   provisioner "local-exec" {
     command = "docker rm -f kind-registry 2>/dev/null || true"
@@ -87,7 +77,6 @@ resource "docker_container" "kind_registry" {
   restart = "unless-stopped"
 }
 
-# Configuração do ConfigMap para o Kubelet descobrir o Registro (Padrão do Kind)
 resource "kubernetes_config_map" "local_registry_hosting" {
   metadata {
     name      = "local-registry-hosting"

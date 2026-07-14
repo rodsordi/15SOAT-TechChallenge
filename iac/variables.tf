@@ -15,7 +15,7 @@ variable "owasp_cache_host_path" {
 
 variable "sonar_data_host_path" {
   type        = string
-  description = "Host path onde os dados do SonarQube (usuários, senha, tokens) são persistidos entre restarts do pod."
+  description = "Host path where SonarQube data (users, password, tokens) is persisted between pod restarts."
 }
 
 variable "NVD_API_KEY" {

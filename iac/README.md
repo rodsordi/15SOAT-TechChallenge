@@ -118,12 +118,6 @@ kubectl describe pod github-runner-67d7d598b9-9g9nb -n garage
 - [Jaeger](http://localhost:16686)
 - [Prometheus](http://localhost:9090)
 
-> **Nota:** o ingress-nginx expõe hostPort https em 9443 (em vez do padrão 443).
-> Em máquinas com agentes de segurança corporativos (ex.: Netskope), conexões de
-> saída do host destinadas à porta 443 são interceptadas mesmo entre processos
-> locais (ex.: docker-proxy → node kind), travando o acesso. Ver `controller.hostPort.ports`
-> em `rancher.tf` e `extra_port_mappings` em `cluster.tf`.
-
 **Analyze Pods**
 
 ```sh
