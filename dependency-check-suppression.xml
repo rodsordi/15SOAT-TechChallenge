@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <notes><![CDATA[
+    Supressão da CVE-2024-51504 no httpcore5-5.3.6 para evitar a quebra do classpath
+    causada por versões beta incompatíveis com o Spring Cloud AWS.
+    ]]></notes>
     <suppress>
-        <notes><![CDATA[
-        file name: httpcore5-5.3.6.jar
-        ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents\.core5/httpcore5@.*$</packageUrl>
-        <cve>CVE-2026-54399</cve>
+        <cve>CVE-2024-51504</cve>
     </suppress>
 </suppressions>
