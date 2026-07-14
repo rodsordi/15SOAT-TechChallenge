@@ -3,9 +3,9 @@
 
     <suppress>
         <notes><![CDATA[
-        Ignorando vulnerabilidades do httpcore5 para evitar quebra de classpath com versões beta.
+        Ignorando vulnerabilidades do httpcore5 e httpcore5-h2 para evitar quebras no classpath com versões beta instáveis.
         ]]></notes>
-        <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents\.core5/httpcore5@.*$</packageUrl>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents\.core5/httpcore5.*$</packageUrl>
         <cve>CVE-2024-51504</cve>
         <cve>CVE-2026-54399</cve>
         <cve>CVE-2026-54428</cve>
@@ -13,7 +13,7 @@
 
     <suppress>
         <notes><![CDATA[
-        Ignorando vulnerabilidades do httpcore 4.x trazido de forma transitiva.
+        Ignorando vulnerabilidades do httpcore 4.x legado.
         ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.httpcomponents/httpcore@.*$</packageUrl>
         <cve>CVE-2026-54399</cve>
@@ -41,9 +41,10 @@
 
     <suppress>
         <notes><![CDATA[
-        Ignorando vulnerabilidades de front-end do Swagger UI / DOMPurify que não expõem o backend.
+        Ignorando vulnerabilidades do DOMPurify empacotado dentro do Swagger UI.
         ]]></notes>
         <packageUrl regex="true">^pkg:javascript/DOMPurify@.*$</packageUrl>
+        <vulnerabilityName regex="true">.*DOMPurify.*</vulnerabilityName>
         <cve>CVE-2026-41240</cve>
         <cve>CVE-2026-41238</cve>
         <cve>CVE-2026-41239</cve>
